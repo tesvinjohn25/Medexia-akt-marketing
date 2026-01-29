@@ -99,16 +99,20 @@ export function HeroFrames({
       if (raf) return;
       raf = window.requestAnimationFrame(() => {
         raf = 0;
-        const r = wrap.getBoundingClientRect();
-        const vh = window.innerHeight;
 
-        // scroll progress through this section
-        const total = r.height - vh;
-        const p = total > 0 ? clamp(-r.top / total, 0, 1) : 0;
+        // Use document scrollY so the animation begins immediately on the first scroll pixel.
+        // (getBoundingClientRect() can feel "late" on mobile Safari due to dynamic toolbars.)
+        const vh = window.innerHeight;
+        const start = wrap.offsetTop;
+        const end = start + Math.max(1, wrap.offsetHeight - vh);
+        const y = window.scrollY;
+        const p = clamp((y - start) / (end - start), 0, 1);
 
         // premium: ease in/out
         const eased = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
-        const idx = clamp(Math.round(eased * (frameCount - 1)), 0, frameCount - 1);
+
+        // Bias forward slightly so the first tiny scroll advances a frame.
+        const idx = clamp(Math.floor(eased * (frameCount - 1) + 0.6), 0, frameCount - 1);
 
         warmWindow(idx);
         draw(idx);

@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes heroDot {
+  0% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 0.65;
+  }
+  55% {
+    transform: translateX(-50%) translateY(10px);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 0.65;
+  }
+}
+
 /* Medexia Marketing — mirror app tokens */
 :root {
   --bg-ink: #0B0D12;

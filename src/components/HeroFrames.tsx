@@ -10,8 +10,8 @@ export function HeroFrames() {
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
   const wrapRef = React.useRef<HTMLDivElement | null>(null);
 
-  // We generated 8s at 60fps => 480 frames
-  const frameCount = 480;
+  // We generated 8s at 30fps => 240 frames
+  const frameCount = 240;
 
   const frames = React.useMemo(() => {
     // Important: use window.Image in the client; avoids SSR/prerender `Image is not defined`.

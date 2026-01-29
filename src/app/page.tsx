@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { ScrollPhone } from "@/components/ScrollPhone";
 import { HeroFrames } from "@/components/HeroFrames";
 
 const DEMO_URL = "https://medexia-akt.com/demo";
@@ -40,42 +39,43 @@ export default function Home() {
           <div
             className="pointer-events-none absolute inset-0"
             style={{
+              // Mobile: keep the phone readable (avoid over-darkening the whole frame)
               background:
-                "radial-gradient(1200px 800px at 18% 70%, rgba(5,6,10,.78), rgba(5,6,10,0) 55%), linear-gradient(to top, rgba(5,6,10,.82), rgba(5,6,10,0) 62%)",
+                "radial-gradient(900px 640px at 18% 78%, rgba(5,6,10,.72), rgba(5,6,10,0) 58%), linear-gradient(to top, rgba(5,6,10,.65), rgba(5,6,10,0) 68%)",
             }}
           />
 
-          {/* Overlay copy */}
-          <div className="container-x relative flex h-full items-end pb-10 md:items-center md:pb-0">
+          {/* Overlay copy (mobile: compact & low so the phone stays visible) */}
+          <div className="container-x relative flex h-full items-end pb-6 md:items-center md:pb-0">
             <div
-              className="pointer-events-auto max-w-[58ch] rounded-[28px] border px-6 py-6 md:px-7 md:py-7"
+              className="pointer-events-auto w-full max-w-[560px] rounded-[26px] border px-5 py-5 md:max-w-[58ch] md:px-7 md:py-7"
               style={{
-                background: "rgba(6,7,12,.55)",
+                background: "rgba(6,7,12,.44)",
                 borderColor: "rgba(255,255,255,.10)",
                 backdropFilter: "blur(14px)",
-                boxShadow: "0 30px 90px rgba(0,0,0,.55)",
+                boxShadow: "0 26px 80px rgba(0,0,0,.55)",
               }}
             >
-              {/* Brand header only on md+ (saves vertical space on mobile) */}
+              {/* Desktop header only */}
               <div className="hidden md:flex items-center justify-between">
                 <Logo />
                 <a
                   className="btn-secondary text-sm"
-                  href="#how"
+                  href={DEMO_URL}
                   style={{ padding: "10px 12px" }}
                 >
-                  See how it works
+                  Try the demo
                 </a>
               </div>
 
-              <div className="mt-0 md:mt-5 faint text-xs tracking-[0.16em] uppercase">
+              <div className="faint text-[11px] tracking-[0.18em] uppercase">
                 Guided revision for UK GP trainees
               </div>
               <h1
-                className="mt-3 text-[38px] leading-[1.03] md:text-[60px]"
+                className="mt-2 text-[34px] leading-[1.02] md:mt-3 md:text-[60px]"
                 style={{
                   fontFamily: "var(--font-display)",
-                  letterSpacing: "-0.035em",
+                  letterSpacing: "-0.04em",
                   textShadow: "0 18px 60px rgba(0,0,0,.65)",
                 }}
               >
@@ -86,29 +86,29 @@ export default function Home() {
                 </span>
               </h1>
               <p
-                className="mt-4 text-[16px] leading-[1.65]"
-                style={{ color: "rgba(232,236,255,.78)", textShadow: "0 14px 40px rgba(0,0,0,.6)" }}
+                className="mt-3 text-[15px] leading-[1.55] md:mt-4 md:text-[16px] md:leading-[1.65]"
+                style={{ color: "rgba(232,236,255,.80)", textShadow: "0 14px 40px rgba(0,0,0,.6)" }}
               >
-                Scroll to play the phone motion. Then try a brutal 5‑question demo.
+                Scroll to move the phone into place. (Full app scroll-demo coming next.)
               </p>
 
-              <div className="mt-7 flex flex-wrap gap-3">
-                <a className="btn-primary" href={DEMO_URL}>
+              <div className="mt-5 flex flex-col gap-3 md:mt-7 md:flex-row md:flex-wrap">
+                <a className="btn-primary w-full md:w-auto" href={DEMO_URL}>
                   Just revise
                 </a>
-                <a className="btn-secondary" href={DEMO_URL}>
+                <a className="btn-secondary w-full md:w-auto" href={DEMO_URL}>
                   Try the 5‑question demo
                 </a>
               </div>
 
-              <div className="mt-5 text-sm" style={{ color: "rgba(232,236,255,.62)" }}>
+              <div className="mt-4 text-[13px]" style={{ color: "rgba(232,236,255,.62)" }}>
                 No signup. Under 90 seconds. Most people get 1/5.
               </div>
 
               {/* Subtle scroll hint */}
-              <div className="mt-6 flex items-center gap-3" style={{ color: "rgba(232,236,255,.55)" }}>
+              <div className="mt-4 flex items-center gap-3" style={{ color: "rgba(232,236,255,.55)" }}>
                 <div
-                  className="h-[38px] w-[24px] rounded-full border"
+                  className="h-[34px] w-[22px] rounded-full border"
                   style={{ borderColor: "rgba(255,255,255,.18)", position: "relative" }}
                   aria-hidden
                 >
@@ -118,100 +118,20 @@ export default function Home() {
                       background: "rgba(255,255,255,.65)",
                       position: "absolute",
                       left: "50%",
-                      top: 8,
+                      top: 7,
                       transform: "translateX(-50%)",
                       animation: "heroDot 1.6s ease-in-out infinite",
                     }}
                   />
                 </div>
-                <div className="text-xs tracking-[0.14em] uppercase">Scroll</div>
+                <div className="text-[11px] tracking-[0.16em] uppercase">Scroll</div>
               </div>
             </div>
           </div>
         </HeroFrames>
       </section>
 
-      {/* HOW IT WORKS */}
-      <section id="how" className="container-x py-14 md:py-18">
-        <div className="grid gap-6 md:grid-cols-3">
-          {[
-            {
-              k: "01",
-              h: "Try 5 brutal questions",
-              p: "No signup. Designed to trip common AKT misconceptions and guideline edges.",
-            },
-            {
-              k: "02",
-              h: "Get the explanation style",
-              p: "Senior‑colleague logic, distractor teardown, and a learning point that sticks.",
-            },
-            {
-              k: "03",
-              h: "Then we earn the email",
-              p: "Only after value: save progress, get your breakdown, and continue the plan.",
-            },
-          ].map((c) => (
-            <div key={c.k} className="card p-5">
-              <div className="faint text-xs tracking-[0.14em]">{c.k}</div>
-              <div className="mt-2 text-lg font-semibold" style={{ letterSpacing: "-0.02em" }}>
-                {c.h}
-              </div>
-              <p className="muted mt-2 text-sm leading-[1.7]">{c.p}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-10">
-          <ScrollPhone />
-        </div>
-
-        <div className="mt-10 card p-5 md:p-6">
-          <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-            <div>
-              <div className="text-lg font-semibold">Ready to feel the difference?</div>
-              <div className="muted text-sm">One CTA. One job. Under 90 seconds.</div>
-            </div>
-            <a className="btn-primary" href={DEMO_URL}>
-              Just revise
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="container-x pb-10">
-        <div className="faint text-xs">© {new Date().getFullYear()} Medexia • AKT Navigator</div>
-      </footer>
-
-      {/* FAQ Schema (starter) */}
-      <script
-        type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: [
-              {
-                "@type": "Question",
-                name: "Is there a free demo?",
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: "Yes — the landing page links to a short demo session you can try without signing up.",
-                },
-              },
-              {
-                "@type": "Question",
-                name: "Who is Medexia for?",
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: "UK GP trainees preparing for the MRCGP AKT who want guided revision and explanations that actually teach.",
-                },
-              },
-            ],
-          }),
-        }}
-      />
+      {/* (Temporarily removed everything below — this will be replaced by the scroll-scrub app demo section.) */}
     </main>
   );
 }

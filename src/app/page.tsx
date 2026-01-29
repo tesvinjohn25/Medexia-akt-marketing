@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ScrollPhone } from "@/components/ScrollPhone";
 
 const DEMO_URL = "https://medexia-akt.com/demo";
 
@@ -152,6 +153,10 @@ export default function Home() {
               <p className="muted mt-2 text-sm leading-[1.7]">{c.p}</p>
             </div>
           ))}
+        </div>
+
+        <div className="mt-10">
+          <ScrollPhone />
         </div>
 
         <div className="mt-10 card p-5 md:p-6">

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ScrollPhone } from "@/components/ScrollPhone";
+import { HeroFrames } from "@/components/HeroFrames";
 
 const DEMO_URL = "https://medexia-akt.com/demo";
 
@@ -46,8 +47,8 @@ export default function Home() {
             </a>
           </header>
 
-          <div className="mt-10 grid gap-10 md:grid-cols-12 md:items-center">
-            <div className="md:col-span-6">
+          <div className="mt-10 grid gap-10 md:grid-cols-12 md:items-start">
+            <div className="md:col-span-5 md:pt-12">
               <div className="faint text-xs tracking-[0.16em] uppercase">
                 Guided revision for UK GP trainees
               </div>
@@ -66,7 +67,7 @@ export default function Home() {
                 reveals the explanation style that actually sticks.
               </p>
 
-              <div className="mt-7 flex gap-3">
+              <div className="mt-7 flex flex-wrap gap-3">
                 <a className="btn-primary" href={DEMO_URL}>
                   Just revise
                 </a>
@@ -78,47 +79,18 @@ export default function Home() {
               <div className="mt-5 faint text-sm">
                 No signup. Under 90 seconds. Most people get 1/5.
               </div>
+
+              <div className="mt-6 card p-4">
+                <div className="text-sm font-semibold">What you’ll feel</div>
+                <div className="muted mt-1 text-sm">
+                  Wrong answer → instant clarity. That “oh… that’s what they’re testing” moment.
+                </div>
+              </div>
             </div>
 
-            <div className="md:col-span-6">
-              <div className="card p-4 md:p-5">
-                <div className="text-sm font-semibold">The “wow” moment</div>
-                <div className="muted mt-1 text-sm">
-                  The explanation reveal: why correct is correct, why every distractor is wrong, and the
-                  one thing you’ll remember on exam day.
-                </div>
-
-                <div className="mt-4 grid gap-3">
-                  {[
-                    { title: "Understanding the Question", accent: "rgba(155,107,255,.95)" },
-                    { title: "Key points to take away for your AKT exam", accent: "rgba(155,107,255,.95)" },
-                    { title: "Why the other options are wrong", accent: "rgba(155,107,255,.95)" },
-                    { title: "Check your understanding", accent: "rgba(245,158,11,.9)" },
-                  ].map((row) => (
-                    <div
-                      key={row.title}
-                      className="rounded-2xl border px-4 py-4"
-                      style={{
-                        background: "rgba(255,255,255,.03)",
-                        borderColor: "rgba(255,255,255,.10)",
-                      }}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div
-                          className="text-sm font-semibold"
-                          style={{ color: row.accent, letterSpacing: "-0.01em" }}
-                        >
-                          {row.title}
-                        </div>
-                        <div className="faint text-xs">▾</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-4 text-xs faint">
-                  Clinical content is reviewed before it ships.
-                </div>
+            <div className="md:col-span-7">
+              <div className="card overflow-hidden">
+                <HeroFrames />
               </div>
             </div>
           </div>

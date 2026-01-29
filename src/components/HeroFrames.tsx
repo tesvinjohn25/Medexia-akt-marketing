@@ -6,7 +6,11 @@ function clamp(n: number, a: number, b: number) {
   return Math.max(a, Math.min(b, n));
 }
 
-export function HeroFrames() {
+export function HeroFrames({
+  children,
+}: {
+  children?: React.ReactNode;
+}) {
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
   const wrapRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -124,8 +128,9 @@ export function HeroFrames() {
 
   return (
     <div ref={wrapRef} className="relative" style={{ height: "260vh" }}>
-      <div className="sticky top-0 h-screen">
-        <canvas ref={canvasRef} className="h-full w-full" />
+      <div className="sticky top-0 h-screen overflow-hidden">
+        <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
+        {children ? <div className="relative z-10 h-full w-full">{children}</div> : null}
       </div>
     </div>
   );

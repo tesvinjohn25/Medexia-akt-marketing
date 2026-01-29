@@ -29,31 +29,35 @@ function Logo() {
 export default function Home() {
   return (
     <main>
-      {/* HERO */}
+      {/* HERO (scrolly, full-screen lock) */}
       <section className="relative overflow-hidden">
         <div className="hero-mesh" />
         <div className="hero-grid" />
         <div className="hero-noise" />
 
-        <div className="container-x relative py-12 md:py-16">
-          <header className="flex items-center justify-between">
-            <Logo />
-            <a
-              className="btn-secondary text-sm"
-              href="#how"
-              style={{ padding: "10px 12px" }}
-            >
-              See how it works
-            </a>
-          </header>
+        <HeroFrames>
+          {/* Overlay copy */}
+          <div className="container-x flex h-full items-end pb-10 md:items-center md:pb-0">
+            <div className="max-w-[56ch]">
+              {/* Removed top bar on mobile; keep brand only on md+ */}
+              <div className="hidden md:block">
+                <div className="mb-5 flex items-center justify-between">
+                  <Logo />
+                  <a
+                    className="btn-secondary text-sm"
+                    href="#how"
+                    style={{ padding: "10px 12px" }}
+                  >
+                    See how it works
+                  </a>
+                </div>
+              </div>
 
-          <div className="mt-10 grid gap-10 md:grid-cols-12 md:items-start">
-            <div className="md:col-span-5 md:pt-12">
               <div className="faint text-xs tracking-[0.16em] uppercase">
                 Guided revision for UK GP trainees
               </div>
               <h1
-                className="mt-3 text-[40px] leading-[1.04] md:text-[56px]"
+                className="mt-3 text-[38px] leading-[1.04] md:text-[60px]"
                 style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.03em" }}
               >
                 The AKT covers everything.
@@ -63,8 +67,7 @@ export default function Home() {
                 </span>
               </h1>
               <p className="muted mt-4 text-[16px] leading-[1.65] max-w-[58ch]">
-                Don’t read about the idea. Experience the engine: a brutal 5‑question demo that
-                reveals the explanation style that actually sticks.
+                Scroll. Watch the engine come to you — then try a brutal 5‑question demo.
               </p>
 
               <div className="mt-7 flex flex-wrap gap-3">
@@ -79,22 +82,9 @@ export default function Home() {
               <div className="mt-5 faint text-sm">
                 No signup. Under 90 seconds. Most people get 1/5.
               </div>
-
-              <div className="mt-6 card p-4">
-                <div className="text-sm font-semibold">What you’ll feel</div>
-                <div className="muted mt-1 text-sm">
-                  Wrong answer → instant clarity. That “oh… that’s what they’re testing” moment.
-                </div>
-              </div>
-            </div>
-
-            <div className="md:col-span-7">
-              <div className="card overflow-hidden">
-                <HeroFrames />
-              </div>
             </div>
           </div>
-        </div>
+        </HeroFrames>
       </section>
 
       {/* HOW IT WORKS */}

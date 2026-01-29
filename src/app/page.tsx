@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <main>
       {/* HERO (scrolly, full-screen lock) */}
-      <section className="relative overflow-hidden">
+      <section className="relative">
         <div className="hero-mesh" />
         <div className="hero-grid" />
         <div className="hero-noise" />

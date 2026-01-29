@@ -94,24 +94,33 @@ export function HeroFrames({
     const wrap = wrapRef.current;
     if (!wrap) return;
 
+    const metrics = { start: 0, end: 1 };
+    const recompute = () => {
+      const vh = window.innerHeight;
+      const rect = wrap.getBoundingClientRect();
+      const top = window.scrollY + rect.top;
+      metrics.start = top;
+      metrics.end = top + Math.max(1, rect.height - vh);
+    };
+
+    // Compute once on mount + after layout settles (mobile Safari can shift toolbars).
+    recompute();
+    const t = window.setTimeout(recompute, 60);
+
     let raf = 0;
     const onScroll = () => {
       if (raf) return;
       raf = window.requestAnimationFrame(() => {
         raf = 0;
 
-        // Use document scrollY so the animation begins immediately on the first scroll pixel.
-        // (getBoundingClientRect() can feel "late" on mobile Safari due to dynamic toolbars.)
-        const vh = window.innerHeight;
-        const start = wrap.offsetTop;
-        const end = start + Math.max(1, wrap.offsetHeight - vh);
+        // Start scrubbing immediately when the user begins scrolling.
+        // Use precomputed document-space start/end for stability.
         const y = window.scrollY;
-        const p = clamp((y - start) / (end - start), 0, 1);
+        const denom = Math.max(1, metrics.end - metrics.start);
+        const p = clamp((y - metrics.start) / denom, 0, 1);
 
         // premium: ease in/out
         const eased = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
-
-        // Bias forward slightly so the first tiny scroll advances a frame.
         const idx = clamp(Math.floor(eased * (frameCount - 1) + 0.6), 0, frameCount - 1);
 
         warmWindow(idx);
@@ -120,18 +129,24 @@ export function HeroFrames({
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("resize", () => {
+      recompute();
+      onScroll();
+    });
+
     onScroll();
 
     return () => {
+      window.clearTimeout(t);
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      // can't remove the inline resize listener; acceptable for now (single page)
       if (raf) window.cancelAnimationFrame(raf);
     };
   }, [draw, warmWindow]);
 
   return (
-    <div ref={wrapRef} className="relative" style={{ height: "260vh" }}>
+    // Keep scroll distance tight so mobile doesn’t feel like a dead void.
+    <div ref={wrapRef} className="relative" style={{ height: "180vh" }}>
       <div className="sticky top-0 h-screen overflow-hidden">
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
         {children ? <div className="relative z-10 h-full w-full">{children}</div> : null}

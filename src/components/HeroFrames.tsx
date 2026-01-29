@@ -146,7 +146,7 @@ export function HeroFrames({
 
   return (
     // Keep scroll distance tight so mobile doesn’t feel like a dead void.
-    <div ref={wrapRef} className="relative" style={{ height: "150vh" }}>
+    <div ref={wrapRef} className="relative" style={{ height: "135vh" }}>
       <div className="sticky top-0 h-screen overflow-hidden">
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
         {children ? <div className="relative z-10 h-full w-full">{children}</div> : null}

@@ -70,9 +70,9 @@ export function HeroFrames({
       const rw = iw * s;
       const rh = ih * s;
 
-      // Slightly bias upward so the phone stays framed (less dead space above on tall screens)
+      // Bias upward so the phone stays framed (avoid dead space above on tall mobile screens)
       const x = (w - rw) / 2;
-      const y = (h - rh) / 2 - rh * 0.06;
+      const y = (h - rh) / 2 - rh * 0.14;
 
       ctx.clearRect(0, 0, w, h);
       ctx.imageSmoothingEnabled = true;

@@ -35,30 +35,43 @@ export function HeroOverlay({
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="flex w-full items-center justify-between px-5 py-4"
-            style={{
-              WebkitTapHighlightColor: "transparent",
-            }}
+            className="flex w-full items-center justify-between px-5 py-3"
+            style={{ WebkitTapHighlightColor: "transparent" }}
             aria-expanded={open}
           >
             <div className="text-left">
               <div className="faint text-[11px] tracking-[0.18em] uppercase">
                 Guided revision for UK GP trainees
               </div>
-              <div
-                className="mt-2 text-[30px] leading-[1.02]"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  letterSpacing: "-0.04em",
-                  textShadow: "0 18px 60px rgba(0,0,0,.65)",
-                }}
-              >
-                The AKT covers everything.
-                <br />
-                <span style={{ color: "var(--brand-violet-light)" }}>
+
+              {/* Collapsed: keep it short so the phone stays visible */}
+              {!open ? (
+                <div
+                  className="mt-2 text-[18px] leading-[1.15]"
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    letterSpacing: "-0.03em",
+                    textShadow: "0 18px 60px rgba(0,0,0,.65)",
+                  }}
+                >
                   Medexia covers what matters.
-                </span>
-              </div>
+                </div>
+              ) : (
+                <div
+                  className="mt-2 text-[30px] leading-[1.02]"
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    letterSpacing: "-0.04em",
+                    textShadow: "0 18px 60px rgba(0,0,0,.65)",
+                  }}
+                >
+                  The AKT covers everything.
+                  <br />
+                  <span style={{ color: "var(--brand-violet-light)" }}>
+                    Medexia covers what matters.
+                  </span>
+                </div>
+              )}
             </div>
 
             <div
@@ -106,15 +119,17 @@ export function HeroOverlay({
             </p>
           </div>
 
-          {/* Actions are always visible, but more compact to avoid hiding the phone */}
+          {/* Actions: collapsed = single CTA; expanded = both */}
           <div className="px-5 pb-5">
             <div className="grid gap-3">
               <a className="btn-primary w-full" href={demoUrl}>
                 Just revise
               </a>
-              <a className="btn-secondary w-full" href={demoUrl}>
-                Try the 5‑question demo
-              </a>
+              {open ? (
+                <a className="btn-secondary w-full" href={demoUrl}>
+                  Try the 5‑question demo
+                </a>
+              ) : null}
             </div>
 
             <div className="mt-4 flex items-center justify-between">

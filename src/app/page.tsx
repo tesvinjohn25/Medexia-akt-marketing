@@ -111,7 +111,28 @@ export default function Home() {
         </HeroFrames>
       </section>
 
-      {/* (Temporarily removed everything below — this will be replaced by the scroll-scrub app demo section.) */}
+      {/* End-cap so the scroll section doesn’t drop into an empty void */}
+      <section className="relative overflow-hidden" style={{ background: "rgba(6,7,12,1)" }}>
+        <div className="container-x py-10">
+          <div
+            className="rounded-[22px] border p-5"
+            style={{
+              borderColor: "rgba(255,255,255,.10)",
+              background: "rgba(255,255,255,.03)",
+            }}
+          >
+            <div className="text-sm font-semibold">Next: scroll‑scrubbed app walkthrough</div>
+            <div className="muted mt-1 text-sm">
+              When you send the screen recording + timestamps, this page becomes the full interactive demo.
+            </div>
+            <div className="mt-4">
+              <a className="btn-primary" href={DEMO_URL}>
+                Try the demo now
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

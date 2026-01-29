@@ -63,14 +63,16 @@ export function HeroFrames({
         canvas.height = h;
       }
 
-      // contain fit (keep full image visible)
+      // cover fit (fill the viewport — avoids letterboxing / blank bands on mobile)
       const iw = img.naturalWidth || 720;
       const ih = img.naturalHeight || 1280;
-      const s = Math.min(w / iw, h / ih);
+      const s = Math.max(w / iw, h / ih);
       const rw = iw * s;
       const rh = ih * s;
+
+      // Slightly bias upward so the phone stays framed (less dead space above on tall screens)
       const x = (w - rw) / 2;
-      const y = (h - rh) / 2;
+      const y = (h - rh) / 2 - rh * 0.06;
 
       ctx.clearRect(0, 0, w, h);
       ctx.imageSmoothingEnabled = true;

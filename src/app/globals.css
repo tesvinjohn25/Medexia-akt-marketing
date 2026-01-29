@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Medexia Marketing — mirror app tokens */
+:root {
+  --bg-ink: #0B0D12;
+  --bg-surface: #11131A;
+  --bg-elevated: #161924;
+  --fg-high: #F5F7FF;
+  --fg-mid: #B7C0D8;
+  --fg-muted: #7B8399;
+  --brand-iris: #6D6AE8;
+  --brand-violet: #9B6BFF;
+  --brand-violet-light: #C5AAFF;
+  --brand-grad: linear-gradient(135deg, var(--brand-iris), var(--brand-violet));
+  --border: #222639;
+  --divider: #1A1F2E;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --selection: rgba(139, 92, 246, 0.25);
+
+  --radius-button: 12px;
+  --radius-card: 14px;
+  --radius-modal: 16px;
+  --radius-chip: 999px;
+
+  --font-ui: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-display: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+}
+
+::selection { background: var(--selection); }
+
+html, body { height: 100%; }
+body {
+  background: var(--bg-ink);
+  color: var(--fg-high);
+  font-family: var(--font-ui);
+}
+
+/* Utilities */
+.container-x {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.card {
+  background: linear-gradient(180deg, rgba(17,19,26,.88), rgba(17,19,26,.64));
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 18px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.45);
+  backdrop-filter: blur(10px);
+}
+
+.btn-primary {
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-weight: 700;
+  background: var(--brand-grad);
+  color: white;
+  box-shadow: 0 18px 50px rgba(109,106,232,.22);
+  transition: transform .12s ease, filter .12s ease, box-shadow .12s ease;
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: 0 22px 60px rgba(109,106,232,.28);
+}
+.btn-primary:active { transform: translateY(0px) scale(.99); }
+
+.btn-secondary {
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-weight: 650;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.10);
+  color: var(--fg-high);
+}
+
+.muted { color: var(--fg-mid); }
+.faint { color: var(--fg-muted); }
+
+/* Hero background */
+.hero-mesh {
+  position: absolute; inset: -20%;
+  background:
+    radial-gradient(900px 600px at 18% 22%, rgba(109,106,232,.30), transparent 60%),
+    radial-gradient(700px 500px at 78% 28%, rgba(155,107,255,.26), transparent 62%),
+    radial-gradient(700px 520px at 58% 78%, rgba(96,165,250,.16), transparent 64%),
+    radial-gradient(800px 640px at 20% 80%, rgba(34,197,94,.10), transparent 65%);
+  filter: blur(10px);
+  opacity: .95;
+  pointer-events: none;
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(closest-side at 50% 20%, black 40%, transparent 78%);
+  opacity: .25;
+  pointer-events: none;
+}
+.hero-noise {
+  position: absolute; inset: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: .20;
+  pointer-events: none;
+}

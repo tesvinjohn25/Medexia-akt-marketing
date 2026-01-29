@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://medexia-akt.com/sitemap.xml

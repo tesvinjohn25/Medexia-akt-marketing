@@ -1,6 +1,9 @@
+"use client";
+
+import React from "react";
 import Image from "next/image";
 import { HeroFrames } from "@/components/HeroFrames";
-import { HeroOverlay } from "@/components/HeroOverlay";
+import { HeroNarration } from "@/components/HeroNarration";
 
 const DEMO_URL = "https://medexia-akt.com/demo";
 
@@ -27,15 +30,17 @@ function Logo() {
 }
 
 export default function Home() {
+  const [p, setP] = React.useState(0);
+
   return (
     <main>
-      {/* HERO (scrolly, full-screen lock) */}
+      {/* HERO (locked scrolly) */}
       <section className="relative">
         <div className="hero-mesh" />
         <div className="hero-grid" />
         <div className="hero-noise" />
 
-        <HeroFrames>
+        <HeroFrames onProgress={setP}>
           {/* Subtle global scrim (keep the phone visible) */}
           <div
             className="pointer-events-none absolute inset-0"
@@ -45,7 +50,7 @@ export default function Home() {
             }}
           />
 
-          {/* Desktop overlay (left-aligned, does not cover phone) */}
+          {/* Desktop overlay (left aligned, copy updated) */}
           <div className="hidden md:block">
             <div className="container-x relative flex h-full items-center">
               <div
@@ -60,37 +65,32 @@ export default function Home() {
                 <div className="mb-5 flex items-center justify-between">
                   <Logo />
                   <a className="btn-secondary text-sm" href={DEMO_URL} style={{ padding: "10px 12px" }}>
-                    Try the demo
+                    Start now
                   </a>
                 </div>
 
                 <div className="faint text-xs tracking-[0.16em] uppercase">
-                  Guided revision for UK GP trainees
+                  For time‑poor UK GP trainees
                 </div>
                 <h1
                   className="mt-3 text-[60px] leading-[1.03]"
                   style={{
                     fontFamily: "var(--font-display)",
-                    letterSpacing: "-0.035em",
+                    letterSpacing: "-0.04em",
                     textShadow: "0 18px 60px rgba(0,0,0,.65)",
                   }}
                 >
-                  The AKT covers everything.
+                  Feel the difference
                   <br />
-                  <span style={{ color: "var(--brand-violet-light)" }}>
-                    Medexia covers what matters.
-                  </span>
+                  <span style={{ color: "var(--brand-violet-light)" }}>in 5 questions.</span>
                 </h1>
-                <p
-                  className="mt-4 text-[16px] leading-[1.65]"
-                  style={{ color: "rgba(232,236,255,.78)", textShadow: "0 14px 40px rgba(0,0,0,.6)" }}
-                >
-                  Scroll to move the phone into place. Next: a scroll‑scrubbed walkthrough of the app.
+                <p className="mt-4 text-[16px] leading-[1.65]" style={{ color: "rgba(232,236,255,.78)" }}>
+                  No signup. Short, brutal AKT SBA sessions — with explanations that actually stick.
                 </p>
 
                 <div className="mt-7 flex flex-wrap gap-3">
                   <a className="btn-primary" href={DEMO_URL}>
-                    Just revise
+                    Start now
                   </a>
                   <a className="btn-secondary" href={DEMO_URL}>
                     Try the 5‑question demo
@@ -98,15 +98,15 @@ export default function Home() {
                 </div>
 
                 <div className="mt-5 text-sm" style={{ color: "rgba(232,236,255,.62)" }}>
-                  No signup. Under 90 seconds. Most people get 1/5.
+                  Scroll to scrub the motion.
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Mobile overlay: collapsible bottom sheet so the phone stays visible */}
+          {/* Mobile narration + CTA (no pill; no obstruction over phone screen) */}
           <div className="md:hidden">
-            <HeroOverlay demoUrl={DEMO_URL} />
+            <HeroNarration progress={p} demoUrl={DEMO_URL} />
           </div>
         </HeroFrames>
       </section>

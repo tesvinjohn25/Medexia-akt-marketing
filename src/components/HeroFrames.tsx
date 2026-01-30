@@ -8,8 +8,10 @@ function clamp(n: number, a: number, b: number) {
 
 export function HeroFrames({
   children,
+  onProgress,
 }: {
   children?: React.ReactNode;
+  onProgress?: (p: number) => void;
 }) {
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
   const wrapRef = React.useRef<HTMLDivElement | null>(null);
@@ -120,6 +122,7 @@ export function HeroFrames({
         const y = window.scrollY;
         const denom = Math.max(1, metrics.end - metrics.start);
         const p = clamp((y - metrics.start) / denom, 0, 1);
+        onProgress?.(p);
 
         // premium: ease in/out
         const eased = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
@@ -148,7 +151,8 @@ export function HeroFrames({
 
   return (
     // Keep scroll distance tight so mobile doesn’t feel like a dead void.
-    <div ref={wrapRef} className="relative" style={{ height: "135vh" }}>
+    // ~2x slower scrub (more scroll runway)
+    <div ref={wrapRef} className="relative" style={{ height: "270vh" }}>
       <div className="sticky top-0 h-screen overflow-hidden">
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
         {children ? <div className="relative z-10 h-full w-full">{children}</div> : null}

@@ -155,6 +155,19 @@ export function HeroFrames({
     <div ref={wrapRef} className="relative" style={{ height: "270vh" }}>
       <div className="sticky top-0 h-screen overflow-hidden">
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
+
+        {/* Bottom seam blender: makes the canvas feel like part of the page (not a separate “video window”). */}
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0"
+          style={{
+            height: "34vh",
+            background:
+              "linear-gradient(to bottom, rgba(6,7,12,0) 0%, rgba(6,7,12,.42) 30%, rgba(6,7,12,.86) 78%, rgba(6,7,12,1) 100%)",
+            backdropFilter: "blur(18px)",
+          }}
+          aria-hidden
+        />
+
         {children ? <div className="relative z-10 h-full w-full">{children}</div> : null}
       </div>
     </div>

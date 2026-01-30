@@ -27,7 +27,8 @@ export function HeroNarration({
   const a1 = clamp(1 - Math.abs(progress - 0.51) / (0.17 + w), 0, 1);
   const a2 = clamp((progress - (0.68 - w)) / (1 - (0.68 - w)), 0, 1);
 
-  const brandFade = clamp(1 - progress * 10, 0, 1); // fades out quickly after scroll starts
+  // Keep brand visible a bit longer; fade out smoothly once the user is engaged.
+  const brandFade = clamp(1 - Math.max(0, progress - 0.12) / 0.38, 0, 1);
 
   return (
     <>
@@ -51,7 +52,7 @@ export function HeroNarration({
             <img
               src="/brand/wordmark.jpg"
               alt="Medexia"
-              style={{ height: 20, width: "auto", opacity: 0.82 }}
+              style={{ height: 26, width: "auto", opacity: 0.86 }}
             />
           </div>
 

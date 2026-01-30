@@ -70,7 +70,7 @@ export default function Home() {
                 </div>
 
                 <div className="faint text-xs tracking-[0.16em] uppercase">
-                  For time‑poor UK GP trainees
+                  For busy UK GP trainees
                 </div>
                 <h1
                   className="mt-3 text-[60px] leading-[1.03]"

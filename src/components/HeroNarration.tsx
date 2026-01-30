@@ -70,7 +70,7 @@ export function HeroNarration({
         >
           <div className="max-w-[560px]">
             <div className="faint text-[11px] tracking-[0.20em] uppercase">
-              For time‑poor UK GP trainees
+              For busy UK GP trainees
             </div>
 
             <div className="relative mt-2">

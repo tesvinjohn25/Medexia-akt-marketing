@@ -27,14 +27,34 @@ export function HeroNarration({
   const a1 = clamp(1 - Math.abs(progress - 0.51) / (0.17 + w), 0, 1);
   const a2 = clamp((progress - (0.68 - w)) / (1 - (0.68 - w)), 0, 1);
 
+  const brandFade = clamp(1 - progress * 10, 0, 1); // fades out quickly after scroll starts
+
   return (
     <>
-      {/* Top-right CTA (no pill) */}
+      {/* Top bar: wordmark (fades out) + CTA */}
       <div
         className="pointer-events-none absolute inset-x-0 top-0 z-30"
         style={{ paddingTop: "calc(env(safe-area-inset-top) + 12px)" }}
       >
-        <div className="container-x flex items-center justify-end">
+        <div className="container-x flex items-center justify-between">
+          <div
+            className="pointer-events-none"
+            style={{
+              opacity: brandFade,
+              transform: brandFade > 0.01 ? "translateY(0px)" : "translateY(-6px)",
+              transition: "opacity 260ms ease, transform 260ms ease",
+              filter: "drop-shadow(0 18px 45px rgba(0,0,0,.45))",
+            }}
+            aria-hidden
+          >
+            {/* Wordmark kept subtle; never obstructs the phone */}
+            <img
+              src="/brand/wordmark.jpg"
+              alt="Medexia"
+              style={{ height: 20, width: "auto", opacity: 0.82 }}
+            />
+          </div>
+
           <a
             href={demoUrl}
             className="pointer-events-auto rounded-full border px-4 py-[10px] text-sm font-semibold"
@@ -62,10 +82,12 @@ export function HeroNarration({
         />
 
         <div
-          className="container-x relative pb-[calc(env(safe-area-inset-bottom)+18px)]"
+          className="container-x relative"
           style={{
-            // Keep this low so it sits below the phone screen region.
-            paddingTop: "52vh",
+            // Editorial style: lift the narration away from the browser chrome.
+            // We keep a generous bottom buffer to avoid iOS/Chrome toolbars.
+            paddingTop: "44vh",
+            paddingBottom: "calc(env(safe-area-inset-bottom) + 96px)",
           }}
         >
           <div className="max-w-[560px]">

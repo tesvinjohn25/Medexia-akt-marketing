@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { HeroFrames } from "@/components/HeroFrames";
 import { HeroNarration } from "@/components/HeroNarration";
+import { PhoneScreenDemo } from "@/components/PhoneScreenDemo";
 
 const DEMO_URL = "https://medexia-akt.com/demo";
 const LOGIN_URL = "https://app.medexia-akt.com";
@@ -32,6 +33,7 @@ function Logo() {
 
 export default function Home() {
   const [p, setP] = React.useState(0);
+  const [t, setT] = React.useState<{ x: number; y: number; s: number } | null>(null);
 
   return (
     <main>
@@ -41,7 +43,7 @@ export default function Home() {
         <div className="hero-grid" />
         <div className="hero-noise" />
 
-        <HeroFrames onProgress={setP}>
+        <HeroFrames onProgress={setP} onTransform={setT}>
           {/* Subtle global scrim (keep the phone visible) */}
           <div
             className="pointer-events-none absolute inset-0"
@@ -105,7 +107,10 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Mobile narration + CTA (no pill; no obstruction over phone screen) */}
+          {/* Phone screen demo video (prototype). Later this becomes scroll-scrubbed frames. */}
+          <PhoneScreenDemo progress={p} demoUrl="/demo/video/app-demo.mp4" transform={t} />
+
+          {/* Mobile narration + CTA */}
           <div className="md:hidden">
             <HeroNarration progress={p} demoUrl={DEMO_URL} />
           </div>

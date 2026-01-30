@@ -9,9 +9,11 @@ function clamp(n: number, a: number, b: number) {
 export function HeroFrames({
   children,
   onProgress,
+  onTransform,
 }: {
   children?: React.ReactNode;
   onProgress?: (p: number) => void;
+  onTransform?: (t: { x: number; y: number; s: number }) => void;
 }) {
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
   const wrapRef = React.useRef<HTMLDivElement | null>(null);
@@ -75,6 +77,9 @@ export function HeroFrames({
       // Bias upward so the phone stays framed (avoid dead space above on tall mobile screens)
       const x = (w - rw) / 2;
       const y = (h - rh) / 2 - rh * 0.14;
+
+      // Expose the image->viewport transform in CSS pixels so overlays can align to the phone screen.
+      onTransform?.({ x: x / dpr, y: y / dpr, s: s / dpr });
 
       ctx.clearRect(0, 0, w, h);
       ctx.imageSmoothingEnabled = true;

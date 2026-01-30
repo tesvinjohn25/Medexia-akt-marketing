@@ -5,8 +5,9 @@ import React from "react";
 // Screen rect in SOURCE hero frame pixels (the underlying 1080x1920 frame image).
 // These were estimated manually; we compute final CSS coords using the same cover-fit transform as the canvas.
 const SCREEN = {
-  left: 210,
-  top: 330,
+  // Calibrated by eye against the centered hero frame.
+  left: 222,
+  top: 332,
   width: 660,
   height: 1200,
   // slightly rounded corners (in source px)

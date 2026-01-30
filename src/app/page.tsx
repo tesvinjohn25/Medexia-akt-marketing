@@ -6,6 +6,7 @@ import { HeroFrames } from "@/components/HeroFrames";
 import { HeroNarration } from "@/components/HeroNarration";
 
 const DEMO_URL = "https://medexia-akt.com/demo";
+const LOGIN_URL = "https://app.medexia-akt.com";
 
 function Logo() {
   return (

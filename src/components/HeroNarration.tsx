@@ -49,25 +49,60 @@ export function HeroNarration({
             aria-hidden
           >
             {/* Wordmark kept subtle; never obstructs the phone */}
-            <img
-              src="/brand/wordmark.jpg"
-              alt="Medexia"
-              style={{ height: 26, width: "auto", opacity: 0.86 }}
-            />
+            <div
+              style={{
+                display: "inline-block",
+                padding: 6,
+                borderRadius: 14,
+                background: "radial-gradient(60px 40px at 50% 40%, rgba(6,7,12,.48), rgba(6,7,12,0))",
+                backdropFilter: "blur(10px)",
+              }}
+            >
+              <img
+                src="/brand/wordmark.jpg"
+                alt="Medexia"
+                style={{ height: 32, width: "auto", opacity: 0.90 }}
+              />
+            </div>
           </div>
 
-          <a
-            href={demoUrl}
-            className="pointer-events-auto rounded-full border px-4 py-[10px] text-sm font-semibold"
-            style={{
-              borderColor: "rgba(255,255,255,.16)",
-              background: "rgba(6,7,12,.36)",
-              backdropFilter: "blur(14px)",
-              boxShadow: "0 18px 55px rgba(0,0,0,.45)",
-            }}
-          >
-            Start now
-          </a>
+          <div className="pointer-events-auto flex items-center gap-2">
+            <a
+              href={"https://app.medexia-akt.com"}
+              className="rounded-full border px-3 py-[10px] text-sm font-semibold"
+              style={{
+                borderColor: "rgba(255,255,255,.14)",
+                background: "rgba(6,7,12,.28)",
+                backdropFilter: "blur(14px)",
+                color: "rgba(245,247,255,.86)",
+              }}
+            >
+              Log in
+            </a>
+
+            {/* Start now — match app’s neon border style (compact) */}
+            <a
+              href={demoUrl}
+              className="relative rounded-2xl transition-all duration-300 overflow-visible hover:scale-[1.01] active:scale-[0.99]"
+              style={{
+                WebkitTapHighlightColor: "transparent",
+              }}
+            >
+              <span
+                className="absolute inset-0 rounded-2xl p-[2px]"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #6366f1 0%, #a78bfa 30%, #ec4899 70%, #f472b6 100%)",
+                }}
+                aria-hidden
+              >
+                <span className="block h-full w-full rounded-[14px]" style={{ background: "rgba(2,6,23,.92)" }} />
+              </span>
+              <span className="relative z-10 flex items-center justify-center gap-2 py-[10px] px-[14px]">
+                <span className="text-sm font-semibold text-white">Start now</span>
+              </span>
+            </a>
+          </div>
         </div>
       </div>
 

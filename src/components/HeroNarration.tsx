@@ -6,12 +6,6 @@ function clamp(n: number, a: number, b: number) {
   return Math.max(a, Math.min(b, n));
 }
 
-function stepFromProgress(p: number) {
-  if (p < 0.34) return 0;
-  if (p < 0.68) return 1;
-  return 2;
-}
-
 export function HeroNarration({
   progress,
   demoUrl,
@@ -19,16 +13,11 @@ export function HeroNarration({
   progress: number;
   demoUrl: string;
 }) {
-  const step = stepFromProgress(progress);
-
-  // Soft crossfade window around step boundaries for polish.
-  const w = 0.08;
-  const a0 = clamp(1 - progress / (0.34 - w), 0, 1);
-  const a1 = clamp(1 - Math.abs(progress - 0.51) / (0.17 + w), 0, 1);
-  const a2 = clamp((progress - (0.68 - w)) / (1 - (0.68 - w)), 0, 1);
-
   // Keep brand visible a bit longer; fade out smoothly once the user is engaged.
   const brandFade = clamp(1 - Math.max(0, progress - 0.12) / 0.38, 0, 1);
+
+  // Hero text fades out as we approach the demo section
+  const heroTextFade = clamp(1 - Math.max(0, progress - 0.85) / 0.12, 0, 1);
 
   return (
     <>
@@ -48,7 +37,6 @@ export function HeroNarration({
             }}
             aria-hidden
           >
-            {/* Wordmark kept subtle; never obstructs the phone */}
             <div
               style={{
                 display: "inline-block",
@@ -80,7 +68,6 @@ export function HeroNarration({
               Log in
             </a>
 
-            {/* Start now — match app’s neon border style (compact) */}
             <a
               href={demoUrl}
               className="relative rounded-2xl transition-all duration-300 overflow-visible hover:scale-[1.01] active:scale-[0.99]"
@@ -106,13 +93,13 @@ export function HeroNarration({
         </div>
       </div>
 
-      {/* Bottom narration track (keeps phone screen unobstructed) */}
+      {/* Bottom narration track - MOVED UP to avoid Chrome nav bar */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20">
         <div
-          className="absolute inset-x-0 bottom-0 h-[48vh]"
+          className="absolute inset-x-0 bottom-0 h-[55vh]"
           style={{
             background:
-              "linear-gradient(to top, rgba(6,7,12,.92), rgba(6,7,12,.55) 40%, rgba(6,7,12,0) 100%)",
+              "linear-gradient(to top, rgba(6,7,12,.95), rgba(6,7,12,.55) 45%, rgba(6,7,12,0) 100%)",
           }}
           aria-hidden
         />
@@ -120,111 +107,57 @@ export function HeroNarration({
         <div
           className="container-x relative"
           style={{
-            // Editorial style: lift the narration away from the browser chrome.
-            // We keep a generous bottom buffer to avoid iOS/Chrome toolbars.
-            paddingTop: "44vh",
-            paddingBottom: "calc(env(safe-area-inset-bottom) + 96px)",
+            // Moved UP significantly to avoid Chrome bottom nav
+            paddingTop: "35vh",
+            paddingBottom: "calc(env(safe-area-inset-bottom) + 140px)",
           }}
         >
-          <div className="max-w-[560px]">
-            <div className="faint text-[11px] tracking-[0.20em] uppercase">
-              For busy UK GP trainees
+          <div
+            className="max-w-[560px]"
+            style={{
+              opacity: heroTextFade,
+              transform: heroTextFade > 0.01 ? "translateY(0px)" : "translateY(8px)",
+              transition: "opacity 200ms ease, transform 200ms ease",
+            }}
+          >
+            <div
+              className="text-[11px] tracking-[0.22em] uppercase font-semibold"
+              style={{ color: "rgba(167,139,250,.85)" }}
+            >
+              Built for busy GP-Trainees
             </div>
 
-            <div className="relative mt-2">
-              <div
-                className="transition-all duration-300"
-                style={{
-                  opacity: a0,
-                  transform: a0 > 0.01 ? "translateY(0px)" : "translateY(6px)",
-                }}
-              >
-                <div
-                  className="text-[30px] leading-[1.06]"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    letterSpacing: "-0.04em",
-                    textShadow: "0 22px 70px rgba(0,0,0,.7)",
-                  }}
-                >
-                  Feel the difference
-                  <br />
-                  in 5 questions.
-                </div>
-                <div className="mt-2 text-[15px] leading-[1.55]" style={{ color: "rgba(232,236,255,.78)" }}>
-                  No signup. Scroll to scrub the demo.
-                </div>
-              </div>
+            <div
+              className="mt-3 text-[28px] leading-[1.08]"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.04em",
+                textShadow: "0 22px 70px rgba(0,0,0,.7)",
+              }}
+            >
+              Know Exactly What to Revise Next.
+            </div>
 
-              <div
-                className="absolute inset-0 transition-all duration-300"
-                style={{
-                  opacity: a1,
-                  transform: a1 > 0.01 ? "translateY(0px)" : "translateY(6px)",
-                }}
-              >
-                <div
-                  className="text-[28px] leading-[1.10]"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    letterSpacing: "-0.035em",
-                    textShadow: "0 22px 70px rgba(0,0,0,.7)",
-                  }}
-                >
-                  Short, brutal
-                  <br />
-                  AKT SBA sessions.
-                </div>
-                <div className="mt-2 text-[15px] leading-[1.55]" style={{ color: "rgba(232,236,255,.78)" }}>
-                  Built for nights, commutes, and stolen minutes.
-                </div>
-              </div>
-
-              <div
-                className="absolute inset-0 transition-all duration-300"
-                style={{
-                  opacity: a2,
-                  transform: a2 > 0.01 ? "translateY(0px)" : "translateY(6px)",
-                }}
-              >
-                <div
-                  className="text-[28px] leading-[1.10]"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    letterSpacing: "-0.035em",
-                    textShadow: "0 22px 70px rgba(0,0,0,.7)",
-                  }}
-                >
-                  Explanations
-                  <br />
-                  that actually stick.
-                </div>
-                <div className="mt-2 text-[15px] leading-[1.55]" style={{ color: "rgba(232,236,255,.78)" }}>
-                  Why correct is correct — and why every distractor is wrong.
-                </div>
-              </div>
+            <div className="mt-3 text-[15px] leading-[1.55]" style={{ color: "rgba(232,236,255,.78)" }}>
+              Smart question targeting based on your actual weak spots.
             </div>
 
             <div className="mt-5 flex items-center gap-3" style={{ color: "rgba(232,236,255,.55)" }}>
               <div
-                className="h-[34px] w-[22px] rounded-full border"
-                style={{ borderColor: "rgba(255,255,255,.18)", position: "relative" }}
+                className="h-10 w-6 rounded-full border-2 flex items-start justify-center pt-1.5"
+                style={{ borderColor: "rgba(255,255,255,.22)" }}
                 aria-hidden
               >
                 <div
-                  className="h-[6px] w-[6px] rounded-full"
+                  className="h-2 w-2 rounded-full"
                   style={{
                     background: "rgba(255,255,255,.65)",
-                    position: "absolute",
-                    left: "50%",
-                    top: 7,
-                    transform: "translateX(-50%)",
                     animation: "heroDot 1.6s ease-in-out infinite",
                   }}
                 />
               </div>
-              <div className="text-[11px] tracking-[0.16em] uppercase">
-                {step === 0 ? "Scroll" : step === 1 ? "Keep scrolling" : "Almost there"}
+              <div className="text-[12px] tracking-[0.12em]">
+                Scroll to take a test drive
               </div>
             </div>
           </div>

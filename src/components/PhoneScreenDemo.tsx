@@ -2,188 +2,201 @@
 
 import React from "react";
 
-function clamp(n: number, a: number, b: number) {
-  return Math.max(a, Math.min(b, n));
-}
-
 // Screen rect in SOURCE hero frame pixels (the underlying 1080x1920 frame image).
+// These were estimated manually; we compute final CSS coords using the same cover-fit transform as the canvas.
 const SCREEN = {
+  // Calibrated by eye against the centered hero frame.
   left: 222,
   top: 332,
   width: 660,
   height: 1200,
+  // slightly rounded corners (in source px)
   radius: 36,
 };
 
-export type FrameTransform = {
-  x: number;
-  y: number;
-  s: number;
-};
+// Demo frames configuration
+const DEMO_FRAME_COUNT = 827;
+const DEMO_FPS = 15;
 
-// NEW EDL-BASED OVERLAYS - synced to edited video triggers
-// Total frames: 825 at 15fps = 55 seconds
-// Frame ranges calculated based on EDL timing:
-// Step 1: 00:00-00:06 = 0-90 frames (90 frames, 6s)
-// Step 3: 00:08-00:18 @ 400% = 90-128 frames (38 frames, 2.5s)
-// Step 4: 00:18-00:20 = 128-158 frames (30 frames, 2s)
-// Step 5: 00:20-00:42 = 158-488 frames (330 frames, 22s) - THE MOAT
-// Step 7: 00:48-01:03 = 488-713 frames (225 frames, 15s)
-// Step 9: 01:05-01:09 @ 300% = 713-733 frames (20 frames, ~1.33s)
-// Step 10: 01:09-01:12 @ 200% = 733-755 frames (22 frames, 1.5s)
-
-const OVERLAYS = [
+// Text overlay configuration - frame ranges and content
+const TEXT_OVERLAYS = [
   {
-    // Section 1: The Dashboard - Trigger: Video Start (00:00)
-    startFrame: 0,
+    startFrame: 1,
     endFrame: 90,
-    title: "Stop Guessing. Start Passing.",
-    subtitle: "You don't have time for vague feedback. See your exact probability of passing and visualise your curriculum coverage in real-time.",
+    headline: "Stop Guessing. Start Passing.",
+    subtext:
+      "You don't have time for vague feedback. See your exact probability of passing and visualise your curriculum coverage in real-time.",
   },
   {
-    // Section 2: The Question - Trigger: Step 3 (00:08-00:18, question appears)
-    startFrame: 90,
-    endFrame: 158,
-    title: 'The "10-Minute Gap" Revision.',
-    subtitle: "Designed for the car park or between consults. High-yield clinical vignettes that fit into the tightest schedule.",
+    startFrame: 91,
+    endFrame: 180,
+    headline: "The '10-Minute Gap' Revision.",
+    subtext:
+      "Designed for the car park or between consults. High-yield clinical vignettes that fit into the tightest schedule.",
   },
   {
-    // Section 3: The "Moat" - Trigger: Step 5 (00:20-00:42, explanation scroll)
-    startFrame: 158,
-    endFrame: 488,
-    title: "The Examiner's Playbook.",
-    subtitle: "Don't just know the answer. Understand the clinical clues, the red herrings, and exactly why the other options were wrong.",
+    startFrame: 181,
+    endFrame: 630,
+    headline: "The Examiner's Playbook.",
+    subtext:
+      "Don't just know the answer. Understand the clinical clues, the red herrings, and exactly why the other options were wrong.",
   },
   {
-    // Section 4: The AI Tutor - Trigger: Step 7 (00:48-01:03, tutor response)
-    startFrame: 488,
-    endFrame: 713,
-    title: "Your On-Demand Clinical Supervisor.",
-    subtitle: 'Stuck? Ask "Why?" Challenge the guidelines or clarify a concept. Your AI Supervisor bridges the gap between the textbook and real practice.',
+    startFrame: 631,
+    endFrame: 780,
+    headline: "Your On-Demand Clinical Supervisor.",
+    subtext:
+      "Stuck? Ask 'Why?' Challenge the guidelines or clarify a concept. Your AI Supervisor bridges the gap between the textbook and real practice.",
   },
   {
-    // Section 5: History & Retention - Trigger: Step 9/10 (01:05-01:12, History/Learning Point)
-    startFrame: 713,
-    endFrame: 825,
-    title: "Active Recall, Automated.",
-    subtitle: "Every mistake becomes a lesson. We auto-generate high-yield Learning Points for you to review minutes before the exam.",
+    startFrame: 781,
+    endFrame: 827,
+    headline: "Active Recall, Automated.",
+    subtext:
+      "Every mistake becomes a lesson. We auto-generate high-yield Learning Points for you to review minutes before the exam.",
   },
 ];
 
+export type FrameTransform = {
+  // CSS-space (not device pixels)
+  x: number; // left offset where the source image begins (after cover fit)
+  y: number; // top offset
+  s: number; // scale factor applied to source pixels
+};
+
+function clamp(n: number, a: number, b: number) {
+  return Math.max(a, Math.min(b, n));
+}
+
 export function PhoneScreenDemo({
   progress,
+  demoProgress,
   transform,
 }: {
   progress: number;
+  demoProgress: number;
   transform: FrameTransform | null;
 }) {
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
-  const frameCount = 825; // Orlistat Case: Edited video frames at 15fps (55s)
+  const framesRef = React.useRef<HTMLImageElement[]>([]);
+  const loadedRef = React.useRef<Set<number>>(new Set());
+  const currentFrameRef = React.useRef<number>(0);
+  const rafRef = React.useRef<number>(0);
 
-  // Preload frames using Image objects
-  const frames = React.useMemo(() => {
-    const ImgCtor = (typeof window !== "undefined" ? window.Image : null) as any;
-    const arr: HTMLImageElement[] = [];
-    for (let i = 1; i <= frameCount; i++) {
-      const img: HTMLImageElement = ImgCtor ? new ImgCtor() : ({} as any);
-      const id = String(i).padStart(4, "0");
-      (img as any).src = `/demo/frames/frame_${id}.jpg`;
-      arr.push(img);
+  // Fade in only at the very end of the hero motion.
+  const t0 = 0.965;
+  const fade = Math.min(1, Math.max(0, (progress - t0) / (1 - t0)));
+
+  // Calculate current frame from demo progress
+  const targetFrame = Math.floor(demoProgress * (DEMO_FRAME_COUNT - 1));
+
+  // Initialize frames array once
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (framesRef.current.length > 0) return;
+
+    const frames: HTMLImageElement[] = [];
+    for (let i = 0; i < DEMO_FRAME_COUNT; i++) {
+      const img = new window.Image();
+      frames.push(img);
     }
-    return arr;
+    framesRef.current = frames;
   }, []);
 
-  // Warm window for smooth scrubbing
-  const warmWindow = React.useCallback(
-    (idx: number) => {
-      const start = clamp(idx - 8, 0, frameCount - 1);
-      const end = clamp(idx + 16, 0, frameCount - 1);
-      for (let i = start; i <= end; i++) {
-        void frames[i]!.src;
+  // Preload frames around current position
+  const preloadWindow = React.useCallback((centerIdx: number) => {
+    const frames = framesRef.current;
+    if (frames.length === 0) return;
+
+    const start = clamp(centerIdx - 10, 0, DEMO_FRAME_COUNT - 1);
+    const end = clamp(centerIdx + 10, 0, DEMO_FRAME_COUNT - 1);
+
+    for (let i = start; i <= end; i++) {
+      if (!loadedRef.current.has(i)) {
+        const id = String(i + 1).padStart(4, "0");
+        frames[i]!.src = `/demo/frames/frame_${id}.jpg`;
+        loadedRef.current.add(i);
       }
-    },
-    [frames]
-  );
+    }
+  }, []);
 
   // Draw frame to canvas
-  const draw = React.useCallback(
-    (idx: number) => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return;
+  const drawFrame = React.useCallback((frameIdx: number) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-      const img = frames[idx];
-      if (!img || !img.complete) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-      const dpr = Math.max(1, window.devicePixelRatio || 1);
-      const rect = canvas.getBoundingClientRect();
-      const w = Math.floor(rect.width * dpr);
-      const h = Math.floor(rect.height * dpr);
+    const frames = framesRef.current;
+    const img = frames[frameIdx];
+    if (!img || !img.complete || img.naturalWidth === 0) return;
 
-      if (canvas.width !== w || canvas.height !== h) {
-        canvas.width = w;
-        canvas.height = h;
+    const rect = canvas.getBoundingClientRect();
+    const dpr = Math.max(1, window.devicePixelRatio || 1);
+    const w = Math.floor(rect.width * dpr);
+    const h = Math.floor(rect.height * dpr);
+
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width = w;
+      canvas.height = h;
+    }
+
+    ctx.clearRect(0, 0, w, h);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
+
+    // Fill entire canvas with the frame (aspect-fill / cover)
+    const iw = img.naturalWidth;
+    const ih = img.naturalHeight;
+    const s = Math.max(w / iw, h / ih);
+    const rw = iw * s;
+    const rh = ih * s;
+    const x = (w - rw) / 2;
+    const y = (h - rh) / 2;
+
+    ctx.drawImage(img, x, y, rw, rh);
+  }, []);
+
+  // Animation loop for smooth frame updates
+  React.useEffect(() => {
+    if (fade < 0.01) return;
+
+    const animate = () => {
+      const current = currentFrameRef.current;
+      const target = targetFrame;
+
+      // Smoothly interpolate toward target frame
+      let next = current;
+      if (current !== target) {
+        const diff = target - current;
+        const step = Math.sign(diff) * Math.max(1, Math.abs(diff) * 0.3);
+        next = Math.round(current + step);
+        next = clamp(next, 0, DEMO_FRAME_COUNT - 1);
       }
 
-      ctx.clearRect(0, 0, w, h);
-      ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = "high";
-      ctx.drawImage(img, 0, 0, w, h);
-    },
-    [frames]
-  );
+      currentFrameRef.current = next;
+      preloadWindow(next);
+      drawFrame(next);
 
-  // Initial draw
+      rafRef.current = requestAnimationFrame(animate);
+    };
+
+    rafRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, [fade, targetFrame, preloadWindow, drawFrame]);
+
+  // Initial preload when component becomes visible
   React.useEffect(() => {
-    const first = frames[0];
-    if (!first) return;
-    const onLoad = () => draw(0);
-    if (first.complete) onLoad();
-    else first.addEventListener("load", onLoad, { once: true });
-    return () => first.removeEventListener("load", onLoad);
-  }, [frames, draw]);
-
-  // Scroll-scrub effect with eased progression
-  React.useEffect(() => {
-    const eased = progress < 0.5 ? 2 * progress * progress : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-    const idx = clamp(Math.floor(eased * (frameCount - 1)), 0, frameCount - 1);
-    warmWindow(idx);
-    draw(idx);
-  }, [progress, draw, warmWindow]);
-
-  // Calculate current frame index from progress
-  const currentFrame = React.useMemo(() => {
-    const eased = progress < 0.5 ? 2 * progress * progress : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-    return clamp(Math.floor(eased * (frameCount - 1)), 0, frameCount - 1);
-  }, [progress]);
-
-  // Get active overlay based on current frame
-  const activeOverlay = React.useMemo(() => {
-    return OVERLAYS.find(
-      (o) => currentFrame >= o.startFrame && currentFrame <= o.endFrame
-    );
-  }, [currentFrame]);
-
-  // Calculate overlay opacity with fade transitions (20 frame fade window)
-  const getOverlayOpacity = (overlay: typeof OVERLAYS[0]) => {
-    const fadeWindow = 20; // frames for fade in/out
-    
-    if (currentFrame < overlay.startFrame - fadeWindow || currentFrame > overlay.endFrame + fadeWindow) {
-      return 0;
+    if (fade > 0.01) {
+      preloadWindow(0);
     }
-    
-    // Fade in
-    if (currentFrame < overlay.startFrame) {
-      return (currentFrame - (overlay.startFrame - fadeWindow)) / fadeWindow;
-    }
-    // Fade out
-    if (currentFrame > overlay.endFrame) {
-      return 1 - (currentFrame - overlay.endFrame) / fadeWindow;
-    }
-    // Fully visible
-    return 1;
-  };
+  }, [fade, preloadWindow]);
 
   if (!transform) return null;
 
@@ -193,98 +206,155 @@ export function PhoneScreenDemo({
   const height = SCREEN.height * transform.s;
   const r = SCREEN.radius * transform.s;
 
+  // Calculate current text overlay
+  const currentFrame = currentFrameRef.current || targetFrame;
+  const activeOverlay = TEXT_OVERLAYS.find(
+    (o) => currentFrame >= o.startFrame && currentFrame <= o.endFrame
+  );
+
+  // Calculate fade for text overlay
+  const getOverlayOpacity = (overlay: (typeof TEXT_OVERLAYS)[0]) => {
+    const frame = currentFrame;
+    const fadeFrames = 15; // Fade over ~1 second at 15fps
+
+    if (frame < overlay.startFrame || frame > overlay.endFrame) return 0;
+
+    // Fade in at start
+    const fadeInEnd = overlay.startFrame + fadeFrames;
+    if (frame < fadeInEnd) {
+      return (frame - overlay.startFrame) / fadeFrames;
+    }
+
+    // Fade out at end
+    const fadeOutStart = overlay.endFrame - fadeFrames;
+    if (frame > fadeOutStart) {
+      return (overlay.endFrame - frame) / fadeFrames;
+    }
+
+    return 1;
+  };
+
   return (
     <>
-      {/* Phone screen with scroll-scrubbed demo frames */}
+      {/* Phone screen canvas overlay */}
       <div
-        className="absolute z-[5] overflow-hidden"
-        style={{ 
-          left, 
-          top, 
-          width, 
-          height, 
-          borderRadius: r,
-          background: "rgba(0,0,0,.25)",
-        }}
+        className="pointer-events-none absolute z-[5]"
+        style={{ left, top, width, height, opacity: fade }}
+        aria-hidden
       >
-        <canvas
-          ref={canvasRef}
-          className="h-full w-full"
-          style={{ objectFit: "cover" }}
-        />
+        {/* Canvas mapped into phone screen */}
+        <div
+          className="absolute inset-0 overflow-hidden"
+          style={{ borderRadius: r, background: "rgba(0,0,0,.25)" }}
+        >
+          <canvas ref={canvasRef} className="h-full w-full" style={{ display: "block" }} />
 
-        {/* Glass / lighting treatment to match hero */}
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(140deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 22%, rgba(255,255,255,0) 62%, rgba(0,0,0,.18) 100%)",
-            mixBlendMode: "screen",
-            opacity: 0.22,
-          }}
-        />
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(120% 80% at 30% 30%, rgba(0,0,0,0) 0%, rgba(0,0,0,.35) 70%, rgba(0,0,0,.55) 100%)",
-            opacity: 0.35,
-          }}
-        />
+          {/* Glass / lighting treatment to match hero */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(140deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 22%, rgba(255,255,255,0) 62%, rgba(0,0,0,.18) 100%)",
+              mixBlendMode: "screen",
+              opacity: 0.22,
+            }}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(120% 80% at 30% 30%, rgba(0,0,0,0) 0%, rgba(0,0,0,.35) 70%, rgba(0,0,0,.55) 100%)",
+              opacity: 0.35,
+            }}
+          />
+        </div>
       </div>
 
-      {/* Text overlays positioned near the phone (desktop only) */}
-      <div className="pointer-events-none absolute inset-0 hidden md:block">
-        {OVERLAYS.map((overlay, idx) => {
-          const opacity = getOverlayOpacity(overlay);
-          if (opacity < 0.01) return null;
+      {/* Text overlays - positioned to the left of the phone on desktop, below on mobile */}
+      {fade > 0.01 && (
+        <div
+          className="pointer-events-none absolute inset-0 z-[6]"
+          style={{ opacity: fade }}
+        >
+          {TEXT_OVERLAYS.map((overlay, idx) => {
+            const opacity = getOverlayOpacity(overlay);
+            if (opacity < 0.01) return null;
 
-          // Position overlays to the right of the phone screen
-          const overlayLeft = left + width + 40;
-          const overlayTop = top + height * 0.25;
-
-          return (
-            <div
-              key={idx}
-              className="absolute max-w-[320px] transition-all"
-              style={{
-                left: overlayLeft,
-                top: overlayTop,
-                opacity,
-                transform: opacity > 0.5 ? "translateY(0)" : "translateY(12px)",
-                transitionDuration: "150ms",
-              }}
-            >
+            return (
               <div
-                className="rounded-2xl border px-6 py-5"
-                style={{
-                  background: "rgba(6,7,12,.78)",
-                  borderColor: "rgba(255,255,255,.10)",
-                  backdropFilter: "blur(16px)",
-                  boxShadow: "0 24px 80px rgba(0,0,0,.55)",
-                }}
+                key={idx}
+                className="absolute inset-0 flex items-center"
+                style={{ opacity }}
               >
-                <div
-                  className="text-[15px] font-semibold leading-tight"
-                  style={{ 
-                    color: "var(--brand-violet-light)",
-                    fontFamily: "var(--font-display)",
-                    letterSpacing: "-0.01em",
-                  }}
-                >
-                  {overlay.title}
+                {/* Desktop: left side */}
+                <div className="container-x hidden md:block">
+                  <div
+                    className="max-w-[480px] rounded-[24px] border px-6 py-5"
+                    style={{
+                      background: "rgba(6,7,12,.65)",
+                      borderColor: "rgba(255,255,255,.10)",
+                      backdropFilter: "blur(16px)",
+                      boxShadow: "0 24px 70px rgba(0,0,0,.55)",
+                    }}
+                  >
+                    <h2
+                      className="text-[32px] leading-[1.10]"
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        letterSpacing: "-0.035em",
+                        textShadow: "0 18px 50px rgba(0,0,0,.65)",
+                      }}
+                    >
+                      {overlay.headline}
+                    </h2>
+                    <p
+                      className="mt-3 text-[15px] leading-[1.60]"
+                      style={{ color: "rgba(232,236,255,.78)" }}
+                    >
+                      {overlay.subtext}
+                    </p>
+                  </div>
                 </div>
-                <div
-                  className="mt-2 text-[14px] leading-[1.55]"
-                  style={{ color: "rgba(232,236,255,.78)" }}
-                >
-                  {overlay.subtitle}
+
+                {/* Mobile: bottom overlay */}
+                <div className="absolute inset-x-0 bottom-0 md:hidden">
+                  <div
+                    className="absolute inset-x-0 bottom-0 h-[50vh]"
+                    style={{
+                      background:
+                        "linear-gradient(to top, rgba(6,7,12,.95), rgba(6,7,12,.60) 50%, rgba(6,7,12,0) 100%)",
+                    }}
+                  />
+                  <div
+                    className="container-x relative"
+                    style={{
+                      paddingTop: "40vh",
+                      paddingBottom: "calc(env(safe-area-inset-bottom) + 80px)",
+                    }}
+                  >
+                    <h2
+                      className="text-[26px] leading-[1.10]"
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        letterSpacing: "-0.035em",
+                        textShadow: "0 18px 50px rgba(0,0,0,.65)",
+                      }}
+                    >
+                      {overlay.headline}
+                    </h2>
+                    <p
+                      className="mt-2 text-[14px] leading-[1.55]"
+                      style={{ color: "rgba(232,236,255,.78)" }}
+                    >
+                      {overlay.subtext}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </>
   );
 }

@@ -6,11 +6,43 @@ function clamp(n: number, a: number, b: number) {
   return Math.max(a, Math.min(b, n));
 }
 
+// NEW: 5 sections synced to the EDL-based video
 function stepFromProgress(p: number) {
-  if (p < 0.34) return 0;
-  if (p < 0.68) return 1;
-  return 2;
+  if (p < 0.20) return 0;      // Section 1: Dashboard
+  if (p < 0.35) return 1;      // Section 2: The Question
+  if (p < 0.60) return 2;      // Section 3: The Moat
+  if (p < 0.85) return 3;      // Section 4: AI Tutor
+  return 4;                     // Section 5: History
 }
+
+// Copy for each section per the brief
+const SECTIONS = [
+  {
+    tagline: "Built for the 10-minute gap",
+    headline: "Stop Revising Blindly.",
+    subtext: "High-yield clinical vignettes, predictive scoring, and deep-dive explanations. See why 5 questions here is worth 50 elsewhere.",
+  },
+  {
+    tagline: "The 10-Minute Gap",
+    headline: 'The "10-Minute Gap" Revision.',
+    subtext: "Designed for the car park or between consults. High-yield clinical vignettes that fit into the tightest schedule.",
+  },
+  {
+    tagline: "Deep Explanations",
+    headline: "The Examiner's Playbook.",
+    subtext: "Don't just know the answer. Understand the clinical clues, the red herrings, and exactly why the other options were wrong.",
+  },
+  {
+    tagline: "AI Powered",
+    headline: "Your On-Demand Clinical Supervisor.",
+    subtext: 'Stuck? Ask "Why?" Challenge the guidelines or clarify a concept. Your AI Supervisor bridges the gap between the textbook and real practice.',
+  },
+  {
+    tagline: "Retention",
+    headline: "Active Recall, Automated.",
+    subtext: "Every mistake becomes a lesson. We auto-generate high-yield Learning Points for you to review minutes before the exam.",
+  },
+];
 
 export function HeroNarration({
   progress,
@@ -22,10 +54,16 @@ export function HeroNarration({
   const step = stepFromProgress(progress);
 
   // Soft crossfade window around step boundaries for polish.
-  const w = 0.08;
-  const a0 = clamp(1 - progress / (0.34 - w), 0, 1);
-  const a1 = clamp(1 - Math.abs(progress - 0.51) / (0.17 + w), 0, 1);
-  const a2 = clamp((progress - (0.68 - w)) / (1 - (0.68 - w)), 0, 1);
+  // Section boundaries: 0.20, 0.35, 0.60, 0.85
+  const fadeWindow = 0.04;
+  
+  const getOpacity = (idx: number) => {
+    const centers = [0.10, 0.275, 0.475, 0.725, 0.925];
+    const center = centers[idx];
+    const dist = Math.abs(progress - center);
+    const maxDist = 0.15 + fadeWindow;
+    return clamp(1 - dist / maxDist, 0, 1);
+  };
 
   // Keep brand visible a bit longer; fade out smoothly once the user is engaged.
   const brandFade = clamp(1 - Math.max(0, progress - 0.12) / 0.38, 0, 1);
@@ -80,7 +118,7 @@ export function HeroNarration({
               Log in
             </a>
 
-            {/* Start now — match app’s neon border style (compact) */}
+            {/* Start now — match app's neon border style (compact) */}
             <a
               href={demoUrl}
               className="relative rounded-2xl transition-all duration-300 overflow-visible hover:scale-[1.01] active:scale-[0.99]"
@@ -109,10 +147,10 @@ export function HeroNarration({
       {/* Bottom narration track (keeps phone screen unobstructed) */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20">
         <div
-          className="absolute inset-x-0 bottom-0 h-[48vh]"
+          className="absolute inset-x-0 bottom-0 h-[52vh]"
           style={{
             background:
-              "linear-gradient(to top, rgba(6,7,12,.92), rgba(6,7,12,.55) 40%, rgba(6,7,12,0) 100%)",
+              "linear-gradient(to top, rgba(6,7,12,.95), rgba(6,7,12,.70) 35%, rgba(6,7,12,0) 100%)",
           }}
           aria-hidden
         />
@@ -122,90 +160,51 @@ export function HeroNarration({
           style={{
             // Editorial style: lift the narration away from the browser chrome.
             // We keep a generous bottom buffer to avoid iOS/Chrome toolbars.
-            paddingTop: "44vh",
+            paddingTop: "42vh",
             paddingBottom: "calc(env(safe-area-inset-bottom) + 96px)",
           }}
         >
           <div className="max-w-[560px]">
-            <div className="faint text-[11px] tracking-[0.20em] uppercase">
-              For busy UK GP trainees
+            {/* Dynamic narration based on progress */}
+            <div className="relative">
+              {SECTIONS.map((section, idx) => {
+                const opacity = getOpacity(idx);
+                if (opacity < 0.01) return null;
+                
+                return (
+                  <div
+                    key={idx}
+                    className="absolute inset-0 transition-all duration-300"
+                    style={{
+                      opacity,
+                      transform: opacity > 0.5 ? "translateY(0px)" : "translateY(10px)",
+                    }}
+                  >
+                    <div 
+                      className="text-[10px] font-semibold tracking-[0.20em] uppercase"
+                      style={{ color: "var(--brand-violet-light)" }}
+                    >
+                      {section.tagline}
+                    </div>
+                    <div
+                      className="mt-2 text-[28px] leading-[1.08]"
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        letterSpacing: "-0.035em",
+                        textShadow: "0 22px 70px rgba(0,0,0,.7)",
+                      }}
+                    >
+                      {section.headline}
+                    </div>
+                    <div className="mt-3 text-[15px] leading-[1.55]" style={{ color: "rgba(232,236,255,.78)" }}>
+                      {section.subtext}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
-            <div className="relative mt-2">
-              <div
-                className="transition-all duration-300"
-                style={{
-                  opacity: a0,
-                  transform: a0 > 0.01 ? "translateY(0px)" : "translateY(6px)",
-                }}
-              >
-                <div
-                  className="text-[30px] leading-[1.06]"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    letterSpacing: "-0.04em",
-                    textShadow: "0 22px 70px rgba(0,0,0,.7)",
-                  }}
-                >
-                  Feel the difference
-                  <br />
-                  in 5 questions.
-                </div>
-                <div className="mt-2 text-[15px] leading-[1.55]" style={{ color: "rgba(232,236,255,.78)" }}>
-                  No signup. Scroll to scrub the demo.
-                </div>
-              </div>
-
-              <div
-                className="absolute inset-0 transition-all duration-300"
-                style={{
-                  opacity: a1,
-                  transform: a1 > 0.01 ? "translateY(0px)" : "translateY(6px)",
-                }}
-              >
-                <div
-                  className="text-[28px] leading-[1.10]"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    letterSpacing: "-0.035em",
-                    textShadow: "0 22px 70px rgba(0,0,0,.7)",
-                  }}
-                >
-                  Short, brutal
-                  <br />
-                  AKT SBA sessions.
-                </div>
-                <div className="mt-2 text-[15px] leading-[1.55]" style={{ color: "rgba(232,236,255,.78)" }}>
-                  Built for nights, commutes, and stolen minutes.
-                </div>
-              </div>
-
-              <div
-                className="absolute inset-0 transition-all duration-300"
-                style={{
-                  opacity: a2,
-                  transform: a2 > 0.01 ? "translateY(0px)" : "translateY(6px)",
-                }}
-              >
-                <div
-                  className="text-[28px] leading-[1.10]"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    letterSpacing: "-0.035em",
-                    textShadow: "0 22px 70px rgba(0,0,0,.7)",
-                  }}
-                >
-                  Explanations
-                  <br />
-                  that actually stick.
-                </div>
-                <div className="mt-2 text-[15px] leading-[1.55]" style={{ color: "rgba(232,236,255,.78)" }}>
-                  Why correct is correct — and why every distractor is wrong.
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-5 flex items-center gap-3" style={{ color: "rgba(232,236,255,.55)" }}>
+            <div className="mt-28 flex items-center gap-3" style={{ color: "rgba(232,236,255,.55)" }}>
               <div
                 className="h-[34px] w-[22px] rounded-full border"
                 style={{ borderColor: "rgba(255,255,255,.18)", position: "relative" }}
@@ -224,7 +223,7 @@ export function HeroNarration({
                 />
               </div>
               <div className="text-[11px] tracking-[0.16em] uppercase">
-                {step === 0 ? "Scroll" : step === 1 ? "Keep scrolling" : "Almost there"}
+                {step === 0 ? "Scroll to explore" : step === 4 ? "Almost there" : "Keep scrolling"}
               </div>
             </div>
           </div>

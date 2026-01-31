@@ -6,13 +6,20 @@ function clamp(n: number, a: number, b: number) {
   return Math.max(a, Math.min(b, n));
 }
 
+// Hero animation takes 270vh of scroll, demo takes additional 1000vh
+const HERO_SCROLL_VH = 270;
+const DEMO_SCROLL_VH = 1000;
+const TOTAL_SCROLL_VH = HERO_SCROLL_VH + DEMO_SCROLL_VH;
+
 export function HeroFrames({
   children,
   onProgress,
+  onDemoProgress,
   onTransform,
 }: {
   children?: React.ReactNode;
   onProgress?: (p: number) => void;
+  onDemoProgress?: (p: number) => void;
   onTransform?: (t: { x: number; y: number; s: number }) => void;
 }) {
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
@@ -103,13 +110,17 @@ export function HeroFrames({
     const wrap = wrapRef.current;
     if (!wrap) return;
 
-    const metrics = { start: 0, end: 1 };
+    const metrics = { start: 0, heroEnd: 1, totalEnd: 1 };
     const recompute = () => {
       const vh = window.innerHeight;
       const rect = wrap.getBoundingClientRect();
       const top = window.scrollY + rect.top;
       metrics.start = top;
-      metrics.end = top + Math.max(1, rect.height - vh);
+      // Hero portion ends after HERO_SCROLL_VH worth of scroll
+      const heroScrollPx = (HERO_SCROLL_VH / 100) * vh - vh;
+      metrics.heroEnd = top + Math.max(1, heroScrollPx);
+      // Total scroll ends at full height
+      metrics.totalEnd = top + Math.max(1, rect.height - vh);
     };
 
     // Compute once on mount + after layout settles (mobile Safari can shift toolbars).
@@ -122,15 +133,22 @@ export function HeroFrames({
       raf = window.requestAnimationFrame(() => {
         raf = 0;
 
-        // Start scrubbing immediately when the user begins scrolling.
-        // Use precomputed document-space start/end for stability.
         const y = window.scrollY;
-        const denom = Math.max(1, metrics.end - metrics.start);
-        const p = clamp((y - metrics.start) / denom, 0, 1);
-        onProgress?.(p);
 
-        // premium: ease in/out
-        const eased = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+        // Calculate hero progress (0-1 over first HERO_SCROLL_VH)
+        const heroDenom = Math.max(1, metrics.heroEnd - metrics.start);
+        const heroP = clamp((y - metrics.start) / heroDenom, 0, 1);
+        onProgress?.(heroP);
+
+        // Calculate demo progress (0-1 over remaining scroll after hero)
+        const demoStart = metrics.heroEnd;
+        const demoDenom = Math.max(1, metrics.totalEnd - demoStart);
+        const demoP = clamp((y - demoStart) / demoDenom, 0, 1);
+        onDemoProgress?.(demoP);
+
+        // Hero animation: ease in/out, show frames 0-239
+        // After hero completes (heroP >= 1), stay on final frame (239)
+        const eased = heroP < 0.5 ? 2 * heroP * heroP : 1 - Math.pow(-2 * heroP + 2, 2) / 2;
         const idx = clamp(Math.floor(eased * (frameCount - 1) + 0.6), 0, frameCount - 1);
 
         warmWindow(idx);
@@ -149,19 +167,17 @@ export function HeroFrames({
     return () => {
       window.clearTimeout(t);
       window.removeEventListener("scroll", onScroll);
-      // can't remove the inline resize listener; acceptable for now (single page)
       if (raf) window.cancelAnimationFrame(raf);
     };
   }, [draw, warmWindow]);
 
   return (
-    // Keep scroll distance tight so mobile doesn’t feel like a dead void.
-    // ~2x slower scrub (more scroll runway)
-    <div ref={wrapRef} className="relative" style={{ height: "270vh" }}>
+    // Single tall wrapper for both hero and demo scroll
+    <div ref={wrapRef} className="relative" style={{ height: `${TOTAL_SCROLL_VH}vh` }}>
       <div className="sticky top-0 h-screen overflow-hidden">
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
 
-        {/* Bottom seam blender: makes the canvas feel like part of the page (not a separate “video window”). */}
+        {/* Bottom seam blender: makes the canvas feel like part of the page (not a separate "video window"). */}
         <div
           className="pointer-events-none absolute inset-x-0 bottom-0"
           style={{

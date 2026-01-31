@@ -37,7 +37,6 @@ export function HeroNarration({
             }}
             aria-hidden
           >
-            {/* Wordmark kept subtle; never obstructs the phone */}
             <div
               style={{
                 display: "inline-block",
@@ -69,7 +68,6 @@ export function HeroNarration({
               Log in
             </a>
 
-            {/* Start now — match app's neon border style (compact) */}
             <a
               href={demoUrl}
               className="relative rounded-2xl transition-all duration-300 overflow-visible hover:scale-[1.01] active:scale-[0.99]"
@@ -95,13 +93,13 @@ export function HeroNarration({
         </div>
       </div>
 
-      {/* Bottom narration track (keeps phone screen unobstructed) */}
+      {/* Bottom narration track - MOVED UP to avoid Chrome nav bar */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20">
         <div
-          className="absolute inset-x-0 bottom-0 h-[48vh]"
+          className="absolute inset-x-0 bottom-0 h-[55vh]"
           style={{
             background:
-              "linear-gradient(to top, rgba(6,7,12,.92), rgba(6,7,12,.55) 40%, rgba(6,7,12,0) 100%)",
+              "linear-gradient(to top, rgba(6,7,12,.95), rgba(6,7,12,.55) 45%, rgba(6,7,12,0) 100%)",
           }}
           aria-hidden
         />
@@ -109,10 +107,9 @@ export function HeroNarration({
         <div
           className="container-x relative"
           style={{
-            // Editorial style: lift the narration away from the browser chrome.
-            // We keep a generous bottom buffer to avoid iOS/Chrome toolbars.
-            paddingTop: "44vh",
-            paddingBottom: "calc(env(safe-area-inset-bottom) + 96px)",
+            // Moved UP significantly to avoid Chrome bottom nav
+            paddingTop: "35vh",
+            paddingBottom: "calc(env(safe-area-inset-bottom) + 140px)",
           }}
         >
           <div
@@ -127,44 +124,40 @@ export function HeroNarration({
               className="text-[11px] tracking-[0.22em] uppercase font-semibold"
               style={{ color: "rgba(167,139,250,.85)" }}
             >
-              Built for the 10-minute gap
+              Built for busy GP-Trainees
             </div>
 
             <div
-              className="mt-3 text-[32px] leading-[1.06]"
+              className="mt-3 text-[28px] leading-[1.08]"
               style={{
                 fontFamily: "var(--font-display)",
                 letterSpacing: "-0.04em",
                 textShadow: "0 22px 70px rgba(0,0,0,.7)",
               }}
             >
-              Stop Revising Blindly.
+              Know Exactly What to Revise Next.
             </div>
 
             <div className="mt-3 text-[15px] leading-[1.55]" style={{ color: "rgba(232,236,255,.78)" }}>
-              High-yield clinical vignettes, predictive scoring, and deep-dive explanations.
+              Smart question targeting based on your actual weak spots.
             </div>
 
             <div className="mt-5 flex items-center gap-3" style={{ color: "rgba(232,236,255,.55)" }}>
               <div
-                className="h-[34px] w-[22px] rounded-full border"
-                style={{ borderColor: "rgba(255,255,255,.18)", position: "relative" }}
+                className="h-10 w-6 rounded-full border-2 flex items-start justify-center pt-1.5"
+                style={{ borderColor: "rgba(255,255,255,.22)" }}
                 aria-hidden
               >
                 <div
-                  className="h-[6px] w-[6px] rounded-full"
+                  className="h-2 w-2 rounded-full"
                   style={{
                     background: "rgba(255,255,255,.65)",
-                    position: "absolute",
-                    left: "50%",
-                    top: 7,
-                    transform: "translateX(-50%)",
                     animation: "heroDot 1.6s ease-in-out infinite",
                   }}
                 />
               </div>
               <div className="text-[12px] tracking-[0.12em]">
-                Scroll to take a test drive. No signup.
+                Scroll to take a test drive
               </div>
             </div>
           </div>

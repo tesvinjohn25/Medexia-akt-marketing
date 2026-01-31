@@ -8,6 +8,48 @@ import { PhoneScreenDemo } from "@/components/PhoneScreenDemo";
 
 const DEMO_URL = "https://medexia-akt.com/demo";
 
+// Text overlay configuration - frame ranges and content
+const TEXT_OVERLAYS = [
+  {
+    startFrame: 1,
+    endFrame: 180,
+    headline: "Stop Guessing. Start Passing.",
+    subtext:
+      "You don't have time for vague feedback. See your exact probability of passing and visualise your curriculum coverage in real-time.",
+  },
+  {
+    startFrame: 181,
+    endFrame: 360,
+    headline: "The '10-Minute Gap' Revision.",
+    subtext:
+      "Designed for the car park or between consults. High-yield clinical vignettes that fit into the tightest schedule.",
+  },
+  {
+    startFrame: 361,
+    endFrame: 560,
+    headline: "The Examiner's Playbook.",
+    subtext:
+      "Don't just know the answer. Understand the clinical clues, the red herrings, and exactly why the other options were wrong.",
+  },
+  {
+    startFrame: 561,
+    endFrame: 720,
+    headline: "Your On-Demand Clinical Supervisor.",
+    subtext:
+      "Stuck? Ask 'Why?' Challenge the guidelines or clarify a concept. Your AI Supervisor bridges the gap between the textbook and real practice.",
+  },
+  {
+    startFrame: 721,
+    endFrame: 827,
+    headline: "Active Recall, Automated.",
+    subtext:
+      "Every mistake becomes a lesson. We auto-generate high-yield Learning Points for you to review minutes before the exam.",
+  },
+];
+
+// Frame thresholds for dot navigation (midpoint of each section)
+const DOT_FRAME_TARGETS = [90, 270, 460, 640, 774];
+
 function clamp(n: number, a: number, b: number) {
   return Math.max(a, Math.min(b, n));
 }
@@ -34,72 +76,191 @@ function Logo() {
   );
 }
 
+// Calculate text overlay opacity based on frame
+function getOverlayOpacity(overlay: (typeof TEXT_OVERLAYS)[0], currentFrame: number): number {
+  const fadeFrames = 30;
+
+  if (currentFrame < overlay.startFrame || currentFrame > overlay.endFrame) return 0;
+
+  const fadeInEnd = overlay.startFrame + fadeFrames;
+  if (currentFrame < fadeInEnd) {
+    return (currentFrame - overlay.startFrame) / fadeFrames;
+  }
+
+  const fadeOutStart = overlay.endFrame - fadeFrames;
+  if (currentFrame > fadeOutStart) {
+    return (overlay.endFrame - currentFrame) / fadeFrames;
+  }
+
+  return 1;
+}
+
+// Get active section index from frame
+function getActiveSectionFromFrame(frame: number): number {
+  for (let i = 0; i < TEXT_OVERLAYS.length; i++) {
+    if (frame >= TEXT_OVERLAYS[i].startFrame && frame <= TEXT_OVERLAYS[i].endFrame) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+// Dot Navigation Component
+function DotNavigation({
+  currentFrame,
+  demoProgress,
+  isVisible,
+  onDotClick,
+}: {
+  currentFrame: number;
+  demoProgress: number;
+  isVisible: boolean;
+  onDotClick: (frameTarget: number) => void;
+}) {
+  const activeSection = getActiveSectionFromFrame(currentFrame);
+
+  return (
+    <div
+      className="fixed right-4 md:right-8 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-3"
+      style={{
+        opacity: isVisible ? 0.8 : 0,
+        transition: "opacity 300ms ease",
+        pointerEvents: isVisible ? "auto" : "none",
+      }}
+    >
+      {TEXT_OVERLAYS.map((overlay, idx) => {
+        const isActive = idx === activeSection;
+        const isPast = currentFrame > overlay.endFrame;
+
+        return (
+          <button
+            key={idx}
+            onClick={() => onDotClick(DOT_FRAME_TARGETS[idx])}
+            className="group relative flex items-center justify-end"
+            aria-label={`Jump to: ${overlay.headline}`}
+          >
+            {/* Tooltip on hover */}
+            <span
+              className="absolute right-6 whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+              style={{
+                background: "rgba(6,7,12,.85)",
+                border: "1px solid rgba(255,255,255,.12)",
+                backdropFilter: "blur(8px)",
+              }}
+            >
+              {overlay.headline}
+            </span>
+
+            {/* Dot */}
+            <div
+              className="h-3 w-3 rounded-full transition-all duration-200"
+              style={{
+                background: isActive
+                  ? "rgba(167,139,250,.9)"
+                  : isPast
+                  ? "rgba(167,139,250,.4)"
+                  : "rgba(255,255,255,.25)",
+                transform: isActive ? "scale(1.3)" : "scale(1)",
+                boxShadow: isActive ? "0 0 12px rgba(167,139,250,.5)" : "none",
+              }}
+            />
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+// Scroll indicator component
+function ScrollIndicator({ isVisible }: { isVisible: boolean }) {
+  return (
+    <div
+      className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2"
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transition: "opacity 400ms ease",
+      }}
+    >
+      <span
+        className="text-[11px] tracking-[0.18em] uppercase font-medium"
+        style={{ color: "rgba(255,255,255,.55)" }}
+      >
+        Scroll to explore
+      </span>
+      <div
+        className="h-12 w-7 rounded-full border-2 flex items-start justify-center pt-2"
+        style={{ borderColor: "rgba(255,255,255,.25)" }}
+      >
+        <div
+          className="h-2 w-2 rounded-full"
+          style={{
+            background: "rgba(255,255,255,.7)",
+            animation: "scrollBounce 1.8s ease-in-out infinite",
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [heroProgress, setHeroProgress] = React.useState(0);
   const [demoProgress, setDemoProgress] = React.useState(0);
   const [transform, setTransform] = React.useState<{ x: number; y: number; s: number } | null>(null);
-  const [lastTransform, setLastTransform] = React.useState<{ x: number; y: number; s: number } | null>(null);
-  const demoSectionRef = React.useRef<HTMLDivElement | null>(null);
+  const [currentFrame, setCurrentFrame] = React.useState(0);
 
-  // Store the transform when hero reaches completion (progress 0.965+)
-  React.useEffect(() => {
-    if (heroProgress >= 0.965 && transform) {
-      setLastTransform(transform);
-    }
-  }, [heroProgress, transform]);
+  // Hero card fades out as hero animation completes
+  const heroCardOpacity = clamp(1 - Math.max(0, heroProgress - 0.85) / 0.12, 0, 1);
+  const heroCardTransform = heroProgress < 0.85 ? 0 : (heroProgress - 0.85) * 60;
 
-  // Use lastTransform when in demo section for stable positioning
-  const effectiveTransform = heroProgress >= 0.965 && lastTransform ? lastTransform : transform;
+  // Demo content visibility - stays visible once hero completes, even when scrolling back
+  const showDemo = heroProgress >= 0.965;
+  const demoFadeIn = clamp((heroProgress - 0.965) / (1 - 0.965), 0, 1);
 
-  // Track demo section scroll progress
-  React.useEffect(() => {
-    const demoSection = demoSectionRef.current;
-    if (!demoSection) return;
+  // Scroll indicator visible only at the start
+  const showScrollIndicator = heroProgress < 0.1;
 
-    let raf = 0;
+  // Dot navigation visible during demo
+  const showDotNav = demoProgress > 0.01 || heroProgress >= 0.99;
 
-    const onScroll = () => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        raf = 0;
+  // Handle dot click - scroll to target frame
+  const handleDotClick = React.useCallback((targetFrame: number) => {
+    // Calculate scroll position for target frame
+    // Hero scroll: 270vh, Demo scroll: 1000vh
+    // demoProgress = targetFrame / 826
+    const targetDemoProgress = targetFrame / 826;
+    const vh = window.innerHeight;
+    const heroScrollPx = (270 / 100) * vh - vh; // 170vh in pixels
+    const demoScrollPx = (1000 / 100) * vh - vh; // 900vh in pixels
+    const targetScroll = heroScrollPx + targetDemoProgress * demoScrollPx;
 
-        const rect = demoSection.getBoundingClientRect();
-        const vh = window.innerHeight;
-
-        // Demo progress starts when demo section enters viewport
-        // and completes when we've scrolled through it
-        const demoHeight = demoSection.offsetHeight;
-        const scrollIntoDemo = -rect.top; // How far we've scrolled into the demo section
-        const totalScrollRange = demoHeight - vh;
-
-        if (scrollIntoDemo <= 0) {
-          setDemoProgress(0);
-        } else {
-          const p = clamp(scrollIntoDemo / Math.max(1, totalScrollRange), 0, 1);
-          setDemoProgress(p);
-        }
-      });
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
+    window.scrollTo({
+      top: targetScroll,
+      behavior: "smooth",
+    });
   }, []);
 
   return (
     <main>
-      {/* HERO (locked scrolly) */}
+      {/* Scroll bounce animation */}
+      <style jsx global>{`
+        @keyframes scrollBounce {
+          0%, 100% { transform: translateY(0); opacity: 1; }
+          50% { transform: translateY(16px); opacity: 0.3; }
+        }
+      `}</style>
+
       <section className="relative">
         <div className="hero-mesh" />
         <div className="hero-grid" />
         <div className="hero-noise" />
 
-        <HeroFrames onProgress={setHeroProgress} onTransform={setTransform}>
-          {/* Subtle global scrim (keep the phone visible) */}
+        <HeroFrames
+          onProgress={setHeroProgress}
+          onDemoProgress={setDemoProgress}
+          onTransform={setTransform}
+        >
+          {/* Subtle global scrim */}
           <div
             className="pointer-events-none absolute inset-0"
             style={{
@@ -108,9 +269,18 @@ export default function Home() {
             }}
           />
 
-          {/* Desktop overlay (left aligned, copy updated) */}
+          {/* Phone screen demo */}
+          <PhoneScreenDemo
+            progress={heroProgress}
+            demoProgress={demoProgress}
+            transform={transform}
+            onFrameChange={setCurrentFrame}
+          />
+
+          {/* Desktop: Left card area */}
           <div className="hidden md:block">
             <div className="container-x relative flex h-full items-center">
+              {/* Hero card */}
               <div
                 className="pointer-events-auto max-w-[58ch] rounded-[28px] border px-7 py-7"
                 style={{
@@ -118,11 +288,8 @@ export default function Home() {
                   borderColor: "rgba(255,255,255,.10)",
                   backdropFilter: "blur(14px)",
                   boxShadow: "0 30px 90px rgba(0,0,0,.55)",
-                  opacity: clamp(1 - Math.max(0, heroProgress - 0.85) / 0.12, 0, 1),
-                  transform:
-                    heroProgress < 0.85
-                      ? "translateY(0px)"
-                      : `translateY(${(heroProgress - 0.85) * 60}px)`,
+                  opacity: heroCardOpacity,
+                  transform: `translateY(${heroCardTransform}px)`,
                   transition: "opacity 150ms ease",
                 }}
               >
@@ -137,7 +304,7 @@ export default function Home() {
                   className="text-[11px] tracking-[0.22em] uppercase font-semibold"
                   style={{ color: "rgba(167,139,250,.85)" }}
                 >
-                  Built for the 10-minute gap
+                  Built for busy GP-Trainees
                 </div>
                 <h1
                   className="mt-3 text-[52px] leading-[1.03]"
@@ -147,12 +314,12 @@ export default function Home() {
                     textShadow: "0 18px 60px rgba(0,0,0,.65)",
                   }}
                 >
-                  Stop Revising
+                  Know Exactly What
                   <br />
-                  <span style={{ color: "var(--brand-violet-light)" }}>Blindly.</span>
+                  <span style={{ color: "var(--brand-violet-light)" }}>to Revise Next.</span>
                 </h1>
                 <p className="mt-4 text-[16px] leading-[1.65]" style={{ color: "rgba(232,236,255,.78)" }}>
-                  High-yield clinical vignettes, predictive scoring, and deep-dive explanations.
+                  Smart question targeting based on your actual weak spots.
                 </p>
 
                 <div className="mt-7 flex flex-wrap gap-3">
@@ -181,108 +348,151 @@ export default function Home() {
                   <span className="text-[13px]">Scroll to take a test drive. No signup.</span>
                 </div>
               </div>
+
+              {/* Demo text overlays - same styling as hero card */}
+              {showDemo &&
+                TEXT_OVERLAYS.map((overlay, idx) => {
+                  const opacity = getOverlayOpacity(overlay, currentFrame) * demoFadeIn;
+                  if (opacity < 0.01) return null;
+
+                  return (
+                    <div
+                      key={idx}
+                      className="pointer-events-none absolute max-w-[58ch] rounded-[28px] border px-7 py-7"
+                      style={{
+                        background: "rgba(6,7,12,.55)",
+                        borderColor: "rgba(255,255,255,.10)",
+                        backdropFilter: "blur(14px)",
+                        boxShadow: "0 30px 90px rgba(0,0,0,.55)",
+                        opacity,
+                        transform: opacity > 0.01 ? "translateY(0px)" : "translateY(8px)",
+                        transition: "transform 200ms ease",
+                      }}
+                    >
+                      <h2
+                        className="text-[52px] leading-[1.03]"
+                        style={{
+                          fontFamily: "var(--font-display)",
+                          letterSpacing: "-0.04em",
+                          textShadow: "0 18px 60px rgba(0,0,0,.65)",
+                        }}
+                      >
+                        {overlay.headline}
+                      </h2>
+                      <p
+                        className="mt-4 text-[16px] leading-[1.65]"
+                        style={{ color: "rgba(232,236,255,.78)" }}
+                      >
+                        {overlay.subtext}
+                      </p>
+                    </div>
+                  );
+                })}
             </div>
           </div>
 
-          {/* Mobile narration + CTA */}
+          {/* Mobile: Bottom narration area - MOVED UP to avoid Chrome nav */}
           <div className="md:hidden">
-            <HeroNarration progress={heroProgress} demoUrl={DEMO_URL} />
+            {/* Hero narration */}
+            <div style={{ opacity: heroCardOpacity }}>
+              <HeroNarration progress={heroProgress} demoUrl={DEMO_URL} />
+            </div>
+
+            {/* Demo text overlays for mobile - positioned HIGHER */}
+            {showDemo && (
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20">
+                <div
+                  className="absolute inset-x-0 bottom-0 h-[55vh]"
+                  style={{
+                    background:
+                      "linear-gradient(to top, rgba(6,7,12,.98), rgba(6,7,12,.70) 50%, rgba(6,7,12,0) 100%)",
+                  }}
+                  aria-hidden
+                />
+
+                <div
+                  className="container-x relative"
+                  style={{
+                    // Moved UP significantly to avoid Chrome bottom nav
+                    paddingTop: "35vh",
+                    paddingBottom: "calc(env(safe-area-inset-bottom) + 140px)",
+                  }}
+                >
+                  {TEXT_OVERLAYS.map((overlay, idx) => {
+                    const opacity = getOverlayOpacity(overlay, currentFrame);
+                    if (opacity < 0.01) return null;
+
+                    return (
+                      <div
+                        key={idx}
+                        className="absolute inset-x-0 max-w-[560px]"
+                        style={{
+                          opacity,
+                          transform: opacity > 0.01 ? "translateY(0px)" : "translateY(6px)",
+                          transition: "transform 200ms ease",
+                        }}
+                      >
+                        <div
+                          className="text-[28px] leading-[1.08]"
+                          style={{
+                            fontFamily: "var(--font-display)",
+                            letterSpacing: "-0.04em",
+                            textShadow: "0 22px 70px rgba(0,0,0,.7)",
+                          }}
+                        >
+                          {overlay.headline}
+                        </div>
+                        <div
+                          className="mt-3 text-[15px] leading-[1.55]"
+                          style={{ color: "rgba(232,236,255,.78)" }}
+                        >
+                          {overlay.subtext}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
-        </HeroFrames>
-      </section>
 
-      {/* DEMO SCROLL SECTION - provides scroll runway for frame scrubbing */}
-      <section
-        ref={demoSectionRef}
-        className="relative"
-        style={{
-          height: "500vh",
-          background: "rgba(6,7,12,1)",
-        }}
-      >
-        {/* Sticky container to keep phone screen demo in place during scroll */}
-        <div className="sticky top-0 h-screen overflow-hidden">
-          {/* Background continuity */}
-          <div className="hero-mesh" />
-          <div className="hero-grid" />
-          <div className="hero-noise" />
+          {/* Scroll indicator - visible at start */}
+          <ScrollIndicator isVisible={showScrollIndicator} />
 
-          {/* Subtle vignette */}
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(980px 700px at 50% 50%, rgba(5,6,10,.40), rgba(5,6,10,0) 58%)",
-            }}
-          />
-
-          {/* Phone screen demo with frame scrubbing */}
-          <PhoneScreenDemo
-            progress={heroProgress >= 0.965 ? 1 : heroProgress}
+          {/* Dot navigation - visible during demo */}
+          <DotNavigation
+            currentFrame={currentFrame}
             demoProgress={demoProgress}
-            transform={effectiveTransform}
+            isVisible={showDotNav}
+            onDotClick={handleDotClick}
           />
 
-          {/* Progress indicator */}
+          {/* Progress bar at bottom */}
           <div
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30"
+            className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30"
             style={{
-              opacity: demoProgress > 0.01 && demoProgress < 0.99 ? 0.6 : 0,
+              opacity: demoProgress > 0.01 && demoProgress < 0.99 ? 0.4 : 0,
               transition: "opacity 300ms ease",
             }}
           >
             <div
               className="h-1 rounded-full overflow-hidden"
               style={{
-                width: 120,
-                background: "rgba(255,255,255,.15)",
+                width: 80,
+                background: "rgba(255,255,255,.12)",
               }}
             >
               <div
                 className="h-full rounded-full"
                 style={{
                   width: `${demoProgress * 100}%`,
-                  background: "rgba(167,139,250,.7)",
-                  transition: "width 100ms ease-out",
+                  background: "rgba(167,139,250,.6)",
+                  transition: "width 80ms ease-out",
                 }}
               />
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* End CTA section */}
-      <section
-        className="relative py-24"
-        style={{
-          background: "rgba(6,7,12,1)",
-        }}
-      >
-        <div className="hero-mesh" style={{ opacity: 0.5 }} />
-        <div className="container-x relative z-10">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2
-              className="text-[36px] md:text-[48px] leading-[1.08]"
-              style={{
-                fontFamily: "var(--font-display)",
-                letterSpacing: "-0.04em",
-              }}
-            >
-              Ready to feel the difference?
-            </h2>
-            <p
-              className="mt-4 text-[17px] leading-[1.6]"
-              style={{ color: "rgba(232,236,255,.72)" }}
-            >
-              Join thousands of GP trainees who've already upgraded their AKT prep.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <a className="btn-primary text-lg px-8 py-4" href={DEMO_URL}>
-                Start now — it's free
-              </a>
-            </div>
-          </div>
-        </div>
+        </HeroFrames>
       </section>
     </main>
   );

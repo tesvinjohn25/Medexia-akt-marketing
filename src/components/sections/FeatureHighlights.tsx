@@ -216,7 +216,7 @@ export function FeatureHighlights() {
                 className="text-[20px] leading-[1.2] font-semibold pt-1"
                 style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
               >
-                Built for busy trainees.
+                Built for busy GP trainees.
               </h3>
             </div>
             <p

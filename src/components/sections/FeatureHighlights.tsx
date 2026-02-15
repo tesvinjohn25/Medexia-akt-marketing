@@ -216,15 +216,15 @@ export function FeatureHighlights() {
                 className="text-[20px] leading-[1.2] font-semibold pt-1"
                 style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
               >
-                Built for busy parents.
+                Built for busy trainees.
               </h3>
             </div>
             <p
               className="text-[14px] md:text-[15px] leading-[1.65]"
               style={{ color: "rgba(232,236,255,.68)" }}
             >
-              10-minute high-yield sessions designed for the school run, between
-              consults, on the commute, or while the kids nap.
+              10-minute high-yield sessions designed for between consults,
+              on the commute, or whenever you have a spare moment.
             </p>
           </div>
 

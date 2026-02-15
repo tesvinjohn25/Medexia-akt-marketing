@@ -6,20 +6,16 @@ function clamp(n: number, a: number, b: number) {
   return Math.max(a, Math.min(b, n));
 }
 
-// Hero animation: 180vh (snappier scroll-to-video), video phase: 200vh additional
+// Hero animation only — no sticky video phase
 const HERO_SCROLL_VH = 180;
-const VIDEO_SCROLL_VH = 200;
-const TOTAL_SCROLL_VH = HERO_SCROLL_VH + VIDEO_SCROLL_VH;
 
 export function HeroFrames({
   children,
   onProgress,
-  onVideoPhase,
   onTransform,
 }: {
   children?: React.ReactNode;
   onProgress?: (p: number) => void;
-  onVideoPhase?: (inVideoPhase: boolean) => void;
   onTransform?: (t: { x: number; y: number; s: number }) => void;
 }) {
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
@@ -108,7 +104,7 @@ export function HeroFrames({
     const wrap = wrapRef.current;
     if (!wrap) return;
 
-    const metrics = { start: 0, heroEnd: 1, totalEnd: 1 };
+    const metrics = { start: 0, heroEnd: 1 };
     const recompute = () => {
       const vh = window.innerHeight;
       const rect = wrap.getBoundingClientRect();
@@ -116,7 +112,6 @@ export function HeroFrames({
       metrics.start = top;
       const heroScrollPx = (HERO_SCROLL_VH / 100) * vh - vh;
       metrics.heroEnd = top + Math.max(1, heroScrollPx);
-      metrics.totalEnd = top + Math.max(1, rect.height - vh);
     };
 
     recompute();
@@ -134,10 +129,6 @@ export function HeroFrames({
         const heroDenom = Math.max(1, metrics.heroEnd - metrics.start);
         const heroP = clamp((y - metrics.start) / heroDenom, 0, 1);
         onProgress?.(heroP);
-
-        // Video phase: past hero animation, before section scrolls away
-        const inVideoPhase = y > metrics.heroEnd && y <= metrics.totalEnd;
-        onVideoPhase?.(inVideoPhase);
 
         // Hero animation frames
         const eased = heroP < 0.5 ? 2 * heroP * heroP : 1 - Math.pow(-2 * heroP + 2, 2) / 2;
@@ -164,7 +155,7 @@ export function HeroFrames({
   }, [draw, warmWindow]);
 
   return (
-    <div ref={wrapRef} className="relative" style={{ height: `${TOTAL_SCROLL_VH}vh` }}>
+    <div ref={wrapRef} className="relative" style={{ height: `${HERO_SCROLL_VH}vh` }}>
       <div className="sticky top-0 h-screen overflow-hidden">
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
 

@@ -142,9 +142,53 @@ body {
   border-left: 3px solid rgba(155,107,255,.35) !important;
 }
 
-/* Pricing tier recommended gradient border */
-.tier-recommended {
-  background: linear-gradient(135deg, var(--brand-iris), var(--brand-violet), #c084fc);
+/* Pricing tier — animated gradient border */
+.pricing-border-glow {
+  background: linear-gradient(135deg, var(--brand-iris), var(--brand-violet), #ec4899, var(--brand-iris));
+  background-size: 300% 300%;
+  animation: borderRotate 4s ease infinite;
+}
+@keyframes borderRotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Shimmer sweep across urgency banner */
+.pricing-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255,255,255,.06) 45%,
+    rgba(255,255,255,.12) 50%,
+    rgba(255,255,255,.06) 55%,
+    transparent 60%
+  );
+  background-size: 200% 100%;
+  animation: shimmerSweep 3s ease-in-out infinite;
+}
+@keyframes shimmerSweep {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Pulsing dot for scarcity */
+.pricing-dot-pulse {
+  animation: pricingDot 2s ease-in-out infinite;
+}
+@keyframes pricingDot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(251,191,36,.4); }
+  50% { opacity: .6; box-shadow: 0 0 0 5px rgba(251,191,36,0); }
+}
+
+/* CTA glow on pricing card */
+.pricing-cta-glow {
+  box-shadow: 0 18px 50px rgba(109,106,232,.22), 0 0 40px rgba(109,106,232,.12);
+}
+.pricing-cta-glow:hover {
+  box-shadow: 0 22px 60px rgba(109,106,232,.32), 0 0 50px rgba(109,106,232,.18);
 }
 
 /* ── Scroll Reveal Animations ─────────────────────────────── */

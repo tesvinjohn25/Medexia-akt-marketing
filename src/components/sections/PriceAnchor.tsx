@@ -2,7 +2,7 @@
 
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
-const DEMO_URL = "https://medexia-akt.com/demo";
+const DEMO_URL = "https://app.medexia-akt.com/demo";
 
 export function PriceAnchor() {
   const { ref, visible } = useScrollReveal();

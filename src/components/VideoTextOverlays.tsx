@@ -2,7 +2,7 @@
 
 import React from "react";
 
-const DEMO_URL = "https://medexia-akt.com/demo";
+const DEMO_URL = "https://app.medexia-akt.com/demo";
 
 const CHAPTERS = [
   {

@@ -120,12 +120,36 @@ export function HeroNarration({
               transition: "opacity 200ms ease, transform 200ms ease",
             }}
           >
+            {/* AKT exam identifier */}
+            <div className="flex items-center gap-2 mb-3">
+              <div
+                className="inline-flex items-center rounded-md px-2 py-[3px]"
+                style={{
+                  background: "rgba(96,165,250,.08)",
+                  border: "1px solid rgba(96,165,250,.18)",
+                }}
+              >
+                <span
+                  className="text-[10px] tracking-[0.2em] uppercase font-bold"
+                  style={{ color: "rgba(96,165,250,.9)" }}
+                >
+                  MRCGP AKT
+                </span>
+              </div>
+              <span
+                className="text-[10px] tracking-[0.08em] font-medium"
+                style={{ color: "rgba(232,236,255,.4)" }}
+              >
+                Exam Preparation
+              </span>
+            </div>
+
             <div className="flex items-center gap-3 flex-wrap">
               <div
                 className="text-[11px] tracking-[0.22em] uppercase font-semibold"
                 style={{ color: "rgba(167,139,250,.85)" }}
               >
-                Built for busy GP-Trainees
+                Built for busy GP Trainees
               </div>
 
               {/* Founding cohort badge */}
@@ -137,7 +161,7 @@ export function HeroNarration({
                   color: "rgba(167,139,250,.8)",
                 }}
               >
-                April Cohort &mdash; Founding Access
+                April &amp; July Cohort &mdash; Founding Access
               </span>
             </div>
 
@@ -153,7 +177,7 @@ export function HeroNarration({
             </div>
 
             <div className="mt-3 text-[15px] leading-[1.55]" style={{ color: "rgba(232,236,255,.78)" }}>
-              Smart question targeting based on your actual weak spots.
+              The AKT revision system that adapts to your weak spots.
             </div>
 
             <div className="mt-5 flex items-center gap-3" style={{ color: "rgba(232,236,255,.55)" }}>

@@ -3,6 +3,7 @@
 import React from "react";
 import { HeroFrames } from "@/components/HeroFrames";
 import { HeroNarration } from "@/components/HeroNarration";
+import { AppDemoSection } from "@/components/sections/AppDemoSection";
 import { PriceAnchor } from "@/components/sections/PriceAnchor";
 import { FeatureHighlights } from "@/components/sections/FeatureHighlights";
 import { PricingTiers } from "@/components/sections/PricingTiers";
@@ -87,6 +88,9 @@ export default function Home() {
           </div>
         </HeroFrames>
       </section>
+
+      {/* APP DEMO */}
+      <AppDemoSection />
 
       {/* LANDING PAGE SECTIONS */}
       <PriceAnchor />

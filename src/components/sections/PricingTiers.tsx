@@ -140,7 +140,7 @@ export function PricingTiers() {
                       className="text-[13px] font-semibold uppercase tracking-wider"
                       style={{ color: "rgba(167,139,250,.85)" }}
                     >
-                      April Founding Cohort
+                      April &amp; July Founding Cohort
                     </div>
                     <div className="mt-1 flex items-baseline gap-1">
                       <span
@@ -221,7 +221,7 @@ export function PricingTiers() {
                 className="text-[12px] font-medium"
                 style={{ color: "rgba(251,191,36,.75)" }}
               >
-                Founding price for the April sitting only. Standard pricing from October.
+                Founding price for the April &amp; July sittings only. Standard pricing from October.
               </span>
             </div>
           </div>

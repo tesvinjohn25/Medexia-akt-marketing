@@ -68,7 +68,7 @@ export function PriceAnchor() {
               className="r-up mt-3 text-[13px] italic"
               style={{ color: "rgba(167,139,250,.6)", "--i": 4 } as React.CSSProperties}
             >
-              Founding access for the April sitting. Standard pricing begins after.
+              Founding access for the April &amp; July sittings. Standard pricing begins after.
             </p>
 
             <div

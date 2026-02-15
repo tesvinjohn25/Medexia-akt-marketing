@@ -120,11 +120,25 @@ export function HeroNarration({
               transition: "opacity 200ms ease, transform 200ms ease",
             }}
           >
-            <div
-              className="text-[11px] tracking-[0.22em] uppercase font-semibold"
-              style={{ color: "rgba(167,139,250,.85)" }}
-            >
-              Built for busy GP-Trainees
+            <div className="flex items-center gap-3 flex-wrap">
+              <div
+                className="text-[11px] tracking-[0.22em] uppercase font-semibold"
+                style={{ color: "rgba(167,139,250,.85)" }}
+              >
+                Built for busy GP-Trainees
+              </div>
+
+              {/* Founding cohort badge */}
+              <span
+                className="inline-flex items-center rounded-full px-2.5 py-[3px] text-[9px] tracking-[0.16em] uppercase font-semibold"
+                style={{
+                  background: "rgba(167,139,250,.1)",
+                  border: "1px solid rgba(167,139,250,.2)",
+                  color: "rgba(167,139,250,.8)",
+                }}
+              >
+                April Cohort &mdash; Founding Access
+              </span>
             </div>
 
             <div

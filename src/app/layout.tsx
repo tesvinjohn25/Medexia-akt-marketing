@@ -8,11 +8,11 @@ export const metadata: Metadata = {
     template: "%s — Medexia AKT Navigator",
   },
   description:
-    "60hrs of audio revision, adaptive learning, and examiner-level explanations. Founding cohort — £35 for everything.",
+    "RCGP AKT revision with 60hrs of audio, adaptive learning, and examiner-level explanations. Founding cohort — £35 for everything.",
   openGraph: {
     title: "Medexia AKT Navigator",
     description:
-      "60hrs of audio revision, adaptive learning, and examiner-level explanations. Founding cohort — £35 for everything.",
+      "RCGP AKT revision with 60hrs of audio, adaptive learning, and examiner-level explanations. Founding cohort — £35 for everything.",
     type: "website",
     url: "https://medexia-akt.com",
     images: [
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Medexia AKT Navigator",
     description:
-      "60hrs of audio revision, adaptive learning, and examiner-level explanations. Founding cohort — £35 for everything.",
+      "RCGP AKT revision with 60hrs of audio, adaptive learning, and examiner-level explanations. Founding cohort — £35 for everything.",
     images: ["https://medexia-akt.com/og-image.png"],
   },
   robots: {

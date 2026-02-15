@@ -29,8 +29,6 @@ export default function Home() {
   // Hero narration fades out as hero animation completes
   const heroNarrationOpacity = clamp(1 - Math.max(0, heroProgress - 0.85) / 0.12, 0, 1);
 
-  const showScrollIndicator = heroProgress < 0.1;
-
   const handleTimeUpdate = React.useCallback((currentTime: number, _duration: number) => {
     setVideoTime(currentTime);
   }, []);
@@ -45,14 +43,7 @@ export default function Home() {
 
   return (
     <main>
-      <style jsx global>{`
-        @keyframes scrollBounce {
-          0%, 100% { transform: translateY(0); opacity: 1; }
-          50% { transform: translateY(16px); opacity: 0.3; }
-        }
-      `}</style>
-
-      {/* HERO + VIDEO (300vh total: 180vh animation + 120vh video phase) */}
+      {/* HERO + VIDEO (230vh total: 180vh animation + 50vh video phase) */}
       <section className="relative">
         <div className="hero-mesh" />
         <div className="hero-grid" />
@@ -98,33 +89,7 @@ export default function Home() {
             />
           )}
 
-          {/* Scroll indicator — visible at start */}
-          <div
-            className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2"
-            style={{
-              opacity: showScrollIndicator ? 1 : 0,
-              transition: "opacity 400ms ease",
-            }}
-          >
-            <span
-              className="text-[11px] tracking-[0.18em] uppercase font-medium"
-              style={{ color: "rgba(255,255,255,.55)" }}
-            >
-              Scroll to explore
-            </span>
-            <div
-              className="h-12 w-7 rounded-full border-2 flex items-start justify-center pt-2"
-              style={{ borderColor: "rgba(255,255,255,.25)" }}
-            >
-              <div
-                className="h-2 w-2 rounded-full"
-                style={{
-                  background: "rgba(255,255,255,.7)",
-                  animation: "scrollBounce 1.8s ease-in-out infinite",
-                }}
-              />
-            </div>
-          </div>
+          {/* Scroll indicator lives in HeroNarration */}
         </HeroFrames>
       </section>
 

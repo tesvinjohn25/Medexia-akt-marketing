@@ -120,8 +120,8 @@ export function HeroNarration({
               transition: "opacity 200ms ease, transform 200ms ease",
             }}
           >
-            {/* AKT exam identifier */}
-            <div className="flex items-center gap-2 mb-3">
+            {/* Single badge line: exam + cohort */}
+            <div className="flex items-center gap-2 flex-wrap">
               <div
                 className="inline-flex items-center rounded-md px-2 py-[3px]"
                 style={{
@@ -137,31 +137,16 @@ export function HeroNarration({
                 </span>
               </div>
               <span
-                className="text-[10px] tracking-[0.08em] font-medium"
-                style={{ color: "rgba(232,236,255,.4)" }}
+                className="text-[10px] tracking-[0.06em] font-medium"
+                style={{ color: "rgba(232,236,255,.35)" }}
               >
-                Exam Preparation
+                &middot;
               </span>
-            </div>
-
-            <div className="flex items-center gap-3 flex-wrap">
-              <div
-                className="text-[11px] tracking-[0.22em] uppercase font-semibold"
-                style={{ color: "rgba(167,139,250,.85)" }}
-              >
-                Built for busy GP Trainees
-              </div>
-
-              {/* Founding cohort badge */}
               <span
-                className="inline-flex items-center rounded-full px-2.5 py-[3px] text-[9px] tracking-[0.16em] uppercase font-semibold"
-                style={{
-                  background: "rgba(167,139,250,.1)",
-                  border: "1px solid rgba(167,139,250,.2)",
-                  color: "rgba(167,139,250,.8)",
-                }}
+                className="text-[10px] tracking-[0.12em] uppercase font-semibold"
+                style={{ color: "rgba(167,139,250,.7)" }}
               >
-                April &amp; July Cohort &mdash; Founding Access
+                April &amp; July Founding Cohort
               </span>
             </div>
 
@@ -176,26 +161,26 @@ export function HeroNarration({
               Know Exactly What to Revise Next.
             </div>
 
-            <div className="mt-3 text-[15px] leading-[1.55]" style={{ color: "rgba(232,236,255,.78)" }}>
-              The AKT revision system that adapts to your weak spots.
+            <div className="mt-2.5 text-[15px] leading-[1.5]" style={{ color: "rgba(232,236,255,.7)" }}>
+              AKT revision that adapts to your weak spots. Built for busy trainees.
             </div>
 
-            <div className="mt-5 flex items-center gap-3" style={{ color: "rgba(232,236,255,.55)" }}>
+            <div className="mt-4 flex items-center gap-2.5" style={{ color: "rgba(232,236,255,.45)" }}>
               <div
-                className="h-10 w-6 rounded-full border-2 flex items-start justify-center pt-1.5"
-                style={{ borderColor: "rgba(255,255,255,.22)" }}
+                className="h-8 w-5 rounded-full border-[1.5px] flex items-start justify-center pt-1"
+                style={{ borderColor: "rgba(255,255,255,.18)" }}
                 aria-hidden
               >
                 <div
-                  className="h-2 w-2 rounded-full"
+                  className="h-1.5 w-1.5 rounded-full"
                   style={{
-                    background: "rgba(255,255,255,.65)",
+                    background: "rgba(255,255,255,.55)",
                     animation: "heroDot 1.6s ease-in-out infinite",
                   }}
                 />
               </div>
-              <div className="text-[12px] tracking-[0.12em]">
-                Scroll to take a test drive
+              <div className="text-[11px] tracking-[0.1em]">
+                Scroll to explore
               </div>
             </div>
           </div>

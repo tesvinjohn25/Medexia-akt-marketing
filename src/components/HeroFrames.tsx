@@ -8,7 +8,7 @@ function clamp(n: number, a: number, b: number) {
 
 // Hero animation: 180vh, video phase: 120vh (shorter so users can scroll past)
 const HERO_SCROLL_VH = 180;
-const VIDEO_SCROLL_VH = 120;
+const VIDEO_SCROLL_VH = 50;
 const TOTAL_SCROLL_VH = HERO_SCROLL_VH + VIDEO_SCROLL_VH;
 
 export function HeroFrames({

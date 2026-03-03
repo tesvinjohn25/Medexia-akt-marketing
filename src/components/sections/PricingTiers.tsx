@@ -150,7 +150,7 @@ export function PricingTiers() {
                           letterSpacing: "-0.04em",
                         }}
                       >
-                        £35
+                        £45
                       </span>
                       <span
                         className="text-[14px]"
@@ -170,6 +170,45 @@ export function PricingTiers() {
                   >
                     Full access
                   </span>
+                </div>
+
+                {/* Friend referral pricing */}
+                <div
+                  className="mt-4 rounded-[12px] px-4 py-3"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, rgba(109,106,232,.10), rgba(236,72,153,.08))",
+                    border: "1px solid rgba(167,139,250,.18)",
+                  }}
+                >
+                  <div className="flex items-baseline gap-2">
+                    <span
+                      className="text-[28px] font-bold"
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        letterSpacing: "-0.04em",
+                        background:
+                          "linear-gradient(135deg, #a78bfa 0%, #c084fc 50%, #ec4899 100%)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                      }}
+                    >
+                      £35
+                    </span>
+                    <span
+                      className="text-[13px]"
+                      style={{ color: "rgba(232,236,255,.5)" }}
+                    >
+                      / 4 months — with a friend
+                    </span>
+                  </div>
+                  <p
+                    className="mt-1 text-[12px] leading-[1.5]"
+                    style={{ color: "rgba(232,236,255,.55)" }}
+                  >
+                    Refer a friend and get £10 back when they subscribe,
+                    or sign up via a friend&apos;s referral link to pay £35 directly.
+                  </p>
                 </div>
 
                 <ul className="mt-7 space-y-3">

@@ -37,8 +37,14 @@ export function PriceAnchor() {
               className="r-blur price-display mt-4"
               style={{ "--i": 1 } as React.CSSProperties}
             >
-              £35
+              £35<span className="text-[0.35em] align-super">*</span>
             </div>
+            <p
+              className="r-up mt-1 text-[14px] italic"
+              style={{ color: "rgba(167,139,250,.65)", "--i": 1.5 } as React.CSSProperties}
+            >
+              *with a friend
+            </p>
           </div>
 
           {/* Right: Copy */}
@@ -52,7 +58,7 @@ export function PriceAnchor() {
               } as React.CSSProperties}
             >
               60 hours of audio revision. An engine that knows your weak spots.
-              Examiner-level explanations for every question. Four months. £35.
+              Examiner-level explanations for every question. Four months. £45 — or just £35 with a friend.
             </p>
 
             <p
@@ -61,7 +67,7 @@ export function PriceAnchor() {
             >
               Other platforms charge £100+ for a question bank. We&apos;re giving our
               founding cohort the full system — questions, audiobooks, adaptive
-              engine, everything — for £35. This price won&apos;t last.
+              engine, everything — for £45. Refer a friend and you both pay just £35. This price won&apos;t last.
             </p>
 
             <p

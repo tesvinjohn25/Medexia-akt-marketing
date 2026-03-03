@@ -47,9 +47,9 @@ export function HeroNarration({
               }}
             >
               <img
-                src="/brand/wordmark.jpg"
-                alt="Medexia"
-                style={{ height: 32, width: "auto", opacity: 0.90 }}
+                src="/brand/wordmark.png"
+                alt="AKT Navigator by Medexia"
+                style={{ height: 40, width: "auto", opacity: 0.95 }}
               />
             </div>
           </div>

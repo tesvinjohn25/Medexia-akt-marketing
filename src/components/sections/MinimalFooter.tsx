@@ -15,7 +15,7 @@ export function MinimalFooter() {
             className="h-8 w-8 overflow-hidden rounded-xl border"
             style={{ borderColor: "rgba(255,255,255,.08)" }}
           >
-            <Image src="/logo.jpg" alt="Medexia" width={64} height={64} />
+            <Image src="/logo.png" alt="AKT Navigator" width={64} height={64} />
           </div>
           <span
             className="text-[14px] font-semibold"

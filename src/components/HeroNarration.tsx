@@ -168,21 +168,14 @@ export function HeroNarration({
             <div className="pointer-events-auto mt-5">
               <a
                 href={demoUrl}
-                className="inline-flex items-center gap-2 rounded-[14px] px-5 py-3 text-[14px] font-semibold transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-                style={{
-                  background: "rgba(255,255,255,.06)",
-                  border: "1px solid rgba(167,139,250,.25)",
-                  color: "rgba(232,236,255,.9)",
-                  backdropFilter: "blur(12px)",
-                  boxShadow: "0 0 20px rgba(109,106,232,.08)",
-                }}
+                className="btn-secondary inline-flex items-center gap-2"
               >
                 <svg
-                  width="16"
-                  height="16"
+                  width="15"
+                  height="15"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  style={{ color: "rgba(167,139,250,.85)" }}
+                  style={{ color: "rgba(167,139,250,.9)" }}
                 >
                   <polygon points="5 3 19 12 5 21 5 3" />
                 </svg>

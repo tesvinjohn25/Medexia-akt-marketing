@@ -47,8 +47,8 @@ export function FinalCTA() {
           className="r-scale mt-8 flex flex-wrap items-center justify-center gap-3"
           style={{ "--i": 3 } as React.CSSProperties}
         >
-          <a className="btn-primary" href={DEMO_URL}>
-            Start now
+          <a className="btn-primary" href="https://app.medexia-akt.com/buy">
+            Buy now
           </a>
           <a className="btn-secondary" href={DEMO_URL}>
             Try the 5-question demo

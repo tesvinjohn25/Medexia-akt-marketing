@@ -224,12 +224,20 @@ export function PricingTiers() {
                   ))}
                 </ul>
 
-                <a
-                  className="btn-primary mt-8 block w-full text-center pricing-cta-glow"
-                  href={DEMO_URL}
-                >
-                  Start free trial
-                </a>
+                <div className="mt-8 flex gap-3">
+                  <a
+                    className="btn-primary block flex-1 text-center pricing-cta-glow"
+                    href={DEMO_URL}
+                  >
+                    Start free trial
+                  </a>
+                  <a
+                    className="btn-primary block flex-1 text-center pricing-cta-glow"
+                    href="https://app.medexia-akt.com/buy"
+                  >
+                    Buy now
+                  </a>
+                </div>
                 <p
                   className="mt-2 text-center text-[12px]"
                   style={{ color: "rgba(232,236,255,.42)" }}

@@ -69,7 +69,7 @@ export function HeroNarration({
             </a>
 
             <a
-              href={demoUrl}
+              href="https://app.medexia-akt.com/buy"
               className="relative rounded-2xl transition-all duration-300 overflow-visible hover:scale-[1.01] active:scale-[0.99]"
               style={{
                 WebkitTapHighlightColor: "transparent",
@@ -86,7 +86,7 @@ export function HeroNarration({
                 <span className="block h-full w-full rounded-[14px]" style={{ background: "rgba(2,6,23,.92)" }} />
               </span>
               <span className="relative z-10 flex items-center justify-center gap-2 py-[10px] px-[14px]">
-                <span className="text-sm font-semibold text-white">Start now</span>
+                <span className="text-sm font-semibold text-white">Buy now</span>
               </span>
             </a>
           </div>

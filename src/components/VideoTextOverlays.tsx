@@ -241,8 +241,8 @@ export function VideoTextOverlays({
               5 free questions. No signup. No card.
             </div>
             <div className="mt-5 flex flex-wrap gap-3">
-              <a className="btn-primary" href={DEMO_URL}>
-                Start now
+              <a className="btn-primary" href="https://app.medexia-akt.com/buy">
+                Buy now
               </a>
               <a className="btn-secondary" href={DEMO_URL}>
                 Try the 5-question demo

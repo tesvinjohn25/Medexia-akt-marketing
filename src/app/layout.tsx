@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     siteName: "AKT Navigator by Medexia",
     images: [
       {
-        url: "https://medexia-akt.com/A5CC7455-E840-4438-A6CE-E11FE09C4273.jpeg",
+        url: "https://medexia-akt.com/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "AKT Navigator by Medexia — MRCGP AKT revision",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: "AKT Navigator by Medexia",
     description:
       "AKT Navigator — the smart MRCGP AKT revision tool. 60 hrs of audio, adaptive learning, and examiner-level explanations. Founding cohort — just £45, or £35 with a friend.",
-    images: ["https://medexia-akt.com/A5CC7455-E840-4438-A6CE-E11FE09C4273.jpeg"],
+    images: ["https://medexia-akt.com/og-image.jpg"],
   },
   alternates: {
     canonical: "https://medexia-akt.com",

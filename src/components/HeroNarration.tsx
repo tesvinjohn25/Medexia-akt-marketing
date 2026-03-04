@@ -165,6 +165,24 @@ export function HeroNarration({
               AKT revision that adapts to your weak spots. Built for busy trainees.
             </div>
 
+            <div className="pointer-events-auto mt-5">
+              <a
+                href={demoUrl}
+                className="btn-secondary inline-flex items-center gap-2"
+              >
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  style={{ color: "rgba(167,139,250,.9)" }}
+                >
+                  <polygon points="5 3 19 12 5 21 5 3" />
+                </svg>
+                Try demo
+              </a>
+            </div>
+
             <div className="mt-4 flex items-center gap-2.5" style={{ color: "rgba(232,236,255,.45)" }}>
               <div
                 className="h-8 w-5 rounded-full border-[1.5px] flex items-start justify-center pt-1"

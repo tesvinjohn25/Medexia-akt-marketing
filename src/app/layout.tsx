@@ -4,35 +4,74 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://medexia-akt.com"),
   title: {
-    default: "Medexia AKT Navigator — Guided revision for the MRCGP AKT",
-    template: "%s — Medexia AKT Navigator",
+    default: "AKT Navigator by Medexia — Guided Revision for the MRCGP AKT",
+    template: "%s | AKT Navigator by Medexia",
   },
   description:
-    "RCGP AKT revision with 60hrs of audio, adaptive learning, and examiner-level explanations. Founding cohort — just £45, or £35 with a friend.",
+    "AKT Navigator — the smart MRCGP AKT revision tool by Medexia. 60 hrs of audio, adaptive learning that targets your weak spots, and examiner-level explanations. Founding cohort — just £45, or £35 with a friend.",
+  keywords: [
+    "AKT",
+    "AKT Navigator",
+    "Navigator",
+    "MRCGP AKT",
+    "AKT revision",
+    "MRCGP revision",
+    "AKT question bank",
+    "GP training",
+    "Medexia",
+  ],
   openGraph: {
-    title: "Medexia AKT Navigator",
+    title: "AKT Navigator by Medexia",
     description:
-      "RCGP AKT revision with 60hrs of audio, adaptive learning, and examiner-level explanations. Founding cohort — just £45, or £35 with a friend.",
+      "AKT Navigator — the smart MRCGP AKT revision tool. 60 hrs of audio, adaptive learning, and examiner-level explanations. Founding cohort — just £45, or £35 with a friend.",
     type: "website",
     url: "https://medexia-akt.com",
+    siteName: "AKT Navigator by Medexia",
     images: [
       {
         url: "https://medexia-akt.com/og-image.png",
         width: 1200,
         height: 630,
+        alt: "AKT Navigator by Medexia — MRCGP AKT revision",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Medexia AKT Navigator",
+    title: "AKT Navigator by Medexia",
     description:
-      "RCGP AKT revision with 60hrs of audio, adaptive learning, and examiner-level explanations. Founding cohort — just £45, or £35 with a friend.",
+      "AKT Navigator — the smart MRCGP AKT revision tool. 60 hrs of audio, adaptive learning, and examiner-level explanations. Founding cohort — just £45, or £35 with a friend.",
     images: ["https://medexia-akt.com/og-image.png"],
+  },
+  alternates: {
+    canonical: "https://medexia-akt.com",
   },
   robots: {
     index: true,
     follow: true,
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "AKT Navigator",
+  alternateName: "AKT Navigator by Medexia",
+  description:
+    "Smart MRCGP AKT revision tool with 60 hours of audio, adaptive learning, and examiner-level explanations.",
+  url: "https://medexia-akt.com",
+  applicationCategory: "EducationalApplication",
+  operatingSystem: "Web",
+  offers: {
+    "@type": "Offer",
+    price: "45.00",
+    priceCurrency: "GBP",
+    description: "Founding cohort — 4 months full access",
+  },
+  creator: {
+    "@type": "Organization",
+    name: "Medexia",
+    url: "https://medexia-akt.com",
   },
 };
 
@@ -41,6 +80,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body>{children}</body>
     </html>
   );

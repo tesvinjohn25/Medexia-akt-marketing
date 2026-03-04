@@ -150,7 +150,7 @@ export function HeroNarration({
               </span>
             </div>
 
-            <div
+            <h1
               className="mt-3 text-[28px] leading-[1.08]"
               style={{
                 fontFamily: "var(--font-display)",
@@ -159,11 +159,11 @@ export function HeroNarration({
               }}
             >
               Know Exactly What to Revise Next.
-            </div>
+            </h1>
 
-            <div className="mt-2.5 text-[15px] leading-[1.5]" style={{ color: "rgba(232,236,255,.7)" }}>
-              AKT revision that adapts to your weak spots. Built for busy trainees.
-            </div>
+            <p className="mt-2.5 text-[15px] leading-[1.5]" style={{ color: "rgba(232,236,255,.7)" }}>
+              AKT Navigator — revision that adapts to your weak spots. Built for busy trainees.
+            </p>
 
             <div className="pointer-events-auto mt-5">
               <a

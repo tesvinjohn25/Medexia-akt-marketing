@@ -57,7 +57,7 @@ export function PriceAnchor() {
                 "--i": 2,
               } as React.CSSProperties}
             >
-              60 hours of audio revision. An engine that knows your weak spots.
+              50+ hours of audio revision — 15+ live now, 35+ more this month. An engine that knows your weak spots.
               Examiner-level explanations for every question. Four months. £45 — or just £35 with a friend.
             </p>
 

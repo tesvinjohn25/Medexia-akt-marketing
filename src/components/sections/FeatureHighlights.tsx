@@ -40,6 +40,16 @@ function ClockIcon() {
   );
 }
 
+function ClipboardCheckIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(244,114,82,.7)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+      <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
+      <path d="M9 14l2 2 4-4" />
+    </svg>
+  );
+}
+
 function MapIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(251,191,36,.7)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -100,7 +110,7 @@ export function FeatureHighlights() {
                       letterSpacing: "-0.02em",
                     }}
                   >
-                    60 hours of audio revision.
+                    50+ hours of audio revision.
                   </h3>
                   <span
                     className="inline-flex items-center rounded-full px-2 py-[2px] text-[9px] tracking-[0.14em] uppercase font-bold"
@@ -117,7 +127,7 @@ export function FeatureHighlights() {
                   className="mt-2 text-[15px] md:text-[16px] leading-[1.65] max-w-[580px]"
                   style={{ color: "rgba(232,236,255,.72)" }}
                 >
-                  Our killer feature. A full audiobook revision bank covering the entire curriculum.
+                  Our killer feature. 15+ hours live now, with 35+ more landing this month — covering the entire curriculum.
                   Revise on your commute, in the gym, or eyes closed before bed. Learning that fits
                   around your life, not the other way around.
                 </p>
@@ -260,6 +270,64 @@ export function FeatureHighlights() {
               All RCGP domains mapped and tracked — clinical, statistics &amp; EBM,
               and prescribing. See exactly where you stand.
             </p>
+          </div>
+
+          {/* Mock Generator — spans full width */}
+          <div
+            className="r-scale relative overflow-hidden rounded-[18px] p-6 md:p-8 md:col-span-2"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(244,114,82,.08) 0%, rgba(17,19,26,.88) 40%, rgba(17,19,26,.88) 60%, rgba(251,191,36,.06) 100%)",
+              border: "1px solid rgba(244,114,82,.18)",
+              "--i": 6,
+            } as React.CSSProperties}
+          >
+            <div
+              className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full"
+              style={{
+                background: "radial-gradient(circle, rgba(244,114,82,.10) 0%, transparent 70%)",
+              }}
+              aria-hidden
+            />
+            <div className="flex items-start gap-4">
+              <div
+                className="flex-shrink-0 grid place-items-center h-12 w-12 rounded-2xl"
+                style={{ background: "rgba(244,114,82,.10)" }}
+              >
+                <ClipboardCheckIcon />
+              </div>
+              <div>
+                <div className="flex items-center gap-3 flex-wrap">
+                  <h3
+                    className="text-[22px] md:text-[26px] leading-[1.15] font-semibold"
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
+                    Unlimited mock exams.
+                  </h3>
+                  <span
+                    className="inline-flex items-center rounded-full px-2 py-[2px] text-[9px] tracking-[0.14em] uppercase font-bold"
+                    style={{
+                      background: "rgba(244,114,82,.12)",
+                      border: "1px solid rgba(244,114,82,.25)",
+                      color: "rgba(244,114,82,.85)",
+                    }}
+                  >
+                    New
+                  </span>
+                </div>
+                <p
+                  className="mt-2 text-[15px] md:text-[16px] leading-[1.65] max-w-[580px]"
+                  style={{ color: "rgba(232,236,255,.72)" }}
+                >
+                  Create timed mock tests from our vast question bank — choose 40, 80, or 160 questions
+                  depending on the time you have. Every mock comes with detailed analytics so you can
+                  debrief and dig into your performance beyond what you got right and wrong.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

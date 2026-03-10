@@ -5,7 +5,8 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 const DEMO_URL = "https://app.medexia-akt.com/demo";
 
 const ALL_FEATURES = [
-  "60hrs audiobook revision bank",
+  "50+ hrs audiobook library (15+ hrs live, 35+ more this month)",
+  "Unlimited mock test generator with detailed analytics",
   "Adaptive autopilot engine",
   "Structured examiner explanations",
   "Full RCGP curriculum coverage",

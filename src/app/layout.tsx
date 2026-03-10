@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     template: "%s | AKT Navigator by Medexia",
   },
   description:
-    "AKT Navigator — the smart MRCGP AKT revision tool by Medexia. 60 hrs of audio, adaptive learning that targets your weak spots, and examiner-level explanations. Founding cohort — just £45, or £35 with a friend.",
+    "AKT Navigator — the smart MRCGP AKT revision tool by Medexia. 50+ hrs of audio (15+ live now, 35+ more this month), adaptive learning that targets your weak spots, and examiner-level explanations. Founding cohort — just £45, or £35 with a friend.",
   keywords: [
     "AKT",
     "AKT Navigator",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AKT Navigator by Medexia",
     description:
-      "AKT Navigator — the smart MRCGP AKT revision tool. 60 hrs of audio, adaptive learning, and examiner-level explanations. Founding cohort — just £45, or £35 with a friend.",
+      "AKT Navigator — the smart MRCGP AKT revision tool. 50+ hrs of audio (15+ live now, 35+ more this month), adaptive learning, and examiner-level explanations. Founding cohort — just £45, or £35 with a friend.",
     type: "website",
     url: "https://medexia-akt.com",
     siteName: "AKT Navigator by Medexia",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "AKT Navigator by Medexia",
     description:
-      "AKT Navigator — the smart MRCGP AKT revision tool. 60 hrs of audio, adaptive learning, and examiner-level explanations. Founding cohort — just £45, or £35 with a friend.",
+      "AKT Navigator — the smart MRCGP AKT revision tool. 50+ hrs of audio (15+ live now, 35+ more this month), adaptive learning, and examiner-level explanations. Founding cohort — just £45, or £35 with a friend.",
     images: ["https://medexia-akt.com/og-image.jpg"],
   },
   alternates: {
@@ -58,7 +58,7 @@ const jsonLd = {
   name: "AKT Navigator",
   alternateName: "AKT Navigator by Medexia",
   description:
-    "Smart MRCGP AKT revision tool with 60 hours of audio, adaptive learning, and examiner-level explanations.",
+    "Smart MRCGP AKT revision tool with 50+ hours of audio (15+ hrs live, 35+ more this month), adaptive learning, and examiner-level explanations.",
   url: "https://medexia-akt.com",
   applicationCategory: "EducationalApplication",
   operatingSystem: "Web",

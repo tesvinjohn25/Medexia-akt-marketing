@@ -34,9 +34,9 @@ export function Nav() {
           }}
         >
           <img
-            src="/brand/wordmark.jpg"
+            src="/brand/wordmark.png"
             alt="Medexia AKT Navigator"
-            style={{ height: 28, width: "auto", opacity: 0.9 }}
+            style={{ height: 32, width: "auto" }}
           />
         </div>
 

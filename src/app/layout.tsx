@@ -4,15 +4,15 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://medexia-akt.com"),
   title: {
-    default: "Medexia AKT Navigator — Guided revision for the MRCGP AKT",
+    default: "Medexia AKT Navigator — Free MRCGP AKT revision for April & July",
     template: "%s — Medexia AKT Navigator",
   },
   description:
-    "RCGP AKT revision with 60hrs of audio, adaptive learning, and examiner-level explanations. Founding cohort — £35 for everything.",
+    "Free AKT revision for the April & July sittings. 50+ hours of audio, adaptive learning, deep explanations. Like a senior GP sat next to you.",
   openGraph: {
-    title: "Medexia AKT Navigator",
+    title: "Medexia AKT Navigator — Free for April & July",
     description:
-      "RCGP AKT revision with 60hrs of audio, adaptive learning, and examiner-level explanations. Founding cohort — £35 for everything.",
+      "Free AKT revision for the April & July sittings. 50+ hours of audio, adaptive learning, deep explanations. Like a senior GP sat next to you.",
     type: "website",
     url: "https://medexia-akt.com",
     images: [
@@ -25,9 +25,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Medexia AKT Navigator",
+    title: "Medexia AKT Navigator — Free for April & July",
     description:
-      "RCGP AKT revision with 60hrs of audio, adaptive learning, and examiner-level explanations. Founding cohort — £35 for everything.",
+      "Free AKT revision for the April & July sittings. 50+ hours of audio, adaptive learning, deep explanations. Like a senior GP sat next to you.",
     images: ["https://medexia-akt.com/og-image.png"],
   },
   robots: {

@@ -1,8 +1,7 @@
 "use client";
 
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-
-const DEMO_URL = "https://app.medexia-akt.com/demo";
+import { ExamCountdown } from "./ExamCountdown";
 
 export function FinalCTA() {
   const { ref, visible } = useScrollReveal();
@@ -23,35 +22,38 @@ export function FinalCTA() {
         ref={ref}
         className={`container-x relative text-center reveal-group ${visible ? "is-visible" : ""}`}
       >
+        {/* Countdown */}
+        <div
+          className="r-up mx-auto max-w-[340px]"
+          style={{ "--i": 0 } as React.CSSProperties}
+        >
+          <ExamCountdown variant="compact" />
+        </div>
+
         <h2
-          className="r-blur text-[32px] md:text-[48px] leading-[1.08]"
+          className="r-blur mt-6 text-[32px] md:text-[48px] leading-[1.08]"
           style={{
             fontFamily: "var(--font-display)",
             letterSpacing: "-0.04em",
-            "--i": 0,
+            "--i": 1,
           } as React.CSSProperties}
         >
-          You&apos;re closer to passing
-          <br />
-          than you think.
+          Every day counts.
         </h2>
 
         <p
-          className="r-up mx-auto mt-5 max-w-[480px] text-[15px] md:text-[17px] leading-[1.6]"
+          className="r-up mx-auto mt-4 max-w-[480px] text-[15px] md:text-[17px] leading-[1.6]"
           style={{ color: "rgba(232,236,255,.68)", "--i": 2 } as React.CSSProperties}
         >
-          Start with 5 free questions. No signup. No card.
+          AKT Navigator is free. Your time is the only investment.
         </p>
 
         <div
-          className="r-scale mt-8 flex flex-wrap items-center justify-center gap-3"
+          className="r-scale mt-8"
           style={{ "--i": 3 } as React.CSSProperties}
         >
-          <a className="btn-primary" href={DEMO_URL}>
-            Start now
-          </a>
-          <a className="btn-secondary" href={DEMO_URL}>
-            Try the 5-question demo
+          <a className="btn-primary inline-block" href="https://app.medexia-akt.com">
+            Start revising free &rarr;
           </a>
         </div>
       </div>

@@ -2,21 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@keyframes heroDot {
-  0% {
-    transform: translateX(-50%) translateY(0);
-    opacity: 0.65;
-  }
-  55% {
-    transform: translateX(-50%) translateY(10px);
-    opacity: 0.95;
-  }
-  100% {
-    transform: translateX(-50%) translateY(0);
-    opacity: 0.65;
-  }
-}
-
 /* Medexia Marketing — mirror app tokens */
 :root {
   --bg-ink: #0B0D12;
@@ -96,108 +81,79 @@ body {
 .muted { color: var(--fg-mid); }
 .faint { color: var(--fg-muted); }
 
-/* Hero background */
-.hero-mesh {
-  position: absolute; inset: -20%;
+/* ── Hero — Cosmic Nebula Background ──────────────────────── */
+.hero-nebula {
+  position: absolute;
+  inset: -20%;
   background:
-    radial-gradient(900px 600px at 18% 22%, rgba(109,106,232,.30), transparent 60%),
-    radial-gradient(700px 500px at 78% 28%, rgba(155,107,255,.26), transparent 62%),
-    radial-gradient(700px 520px at 58% 78%, rgba(96,165,250,.16), transparent 64%),
-    radial-gradient(800px 640px at 20% 80%, rgba(34,197,94,.10), transparent 65%);
+    /* Layer 2: violet cloud, center-left */
+    radial-gradient(900px 600px at 20% 40%, rgba(109,106,232,.15), transparent 60%),
+    /* Layer 3: purple cloud, top-right */
+    radial-gradient(700px 500px at 78% 20%, rgba(155,107,255,.12), transparent 62%),
+    /* Layer 4: iris glow, bottom-center */
+    radial-gradient(800px 500px at 50% 85%, rgba(124,58,237,.08), transparent 65%);
   filter: blur(10px);
   opacity: .95;
   pointer-events: none;
 }
-.hero-grid {
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: radial-gradient(closest-side at 50% 20%, black 40%, transparent 78%);
-  opacity: .25;
+
+/* Layer 5: Star particles — tiny dots with staggered pulse */
+.hero-stars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,.45), transparent),
+    radial-gradient(1px 1px at 28% 42%, rgba(255,255,255,.35), transparent),
+    radial-gradient(1.5px 1.5px at 45% 12%, rgba(167,139,250,.55), transparent),
+    radial-gradient(1px 1px at 62% 35%, rgba(255,255,255,.30), transparent),
+    radial-gradient(1.5px 1.5px at 75% 58%, rgba(155,107,255,.45), transparent),
+    radial-gradient(1px 1px at 88% 22%, rgba(255,255,255,.40), transparent),
+    radial-gradient(1px 1px at 35% 68%, rgba(255,255,255,.25), transparent),
+    radial-gradient(1.5px 1.5px at 55% 78%, rgba(109,106,232,.40), transparent),
+    radial-gradient(1px 1px at 82% 72%, rgba(255,255,255,.35), transparent),
+    radial-gradient(1px 1px at 18% 85%, rgba(255,255,255,.30), transparent),
+    radial-gradient(1.5px 1.5px at 92% 48%, rgba(167,139,250,.35), transparent),
+    radial-gradient(1px 1px at 8% 55%, rgba(255,255,255,.28), transparent),
+    radial-gradient(1px 1px at 42% 92%, rgba(255,255,255,.22), transparent),
+    radial-gradient(1.5px 1.5px at 68% 8%, rgba(155,107,255,.38), transparent),
+    radial-gradient(1px 1px at 52% 52%, rgba(255,255,255,.20), transparent),
+    radial-gradient(1px 1px at 95% 88%, rgba(255,255,255,.32), transparent),
+    radial-gradient(1px 1px at 22% 32%, rgba(109,106,232,.30), transparent),
+    radial-gradient(1.5px 1.5px at 38% 25%, rgba(255,255,255,.35), transparent),
+    radial-gradient(1px 1px at 72% 45%, rgba(255,255,255,.25), transparent),
+    radial-gradient(1px 1px at 5% 75%, rgba(167,139,250,.28), transparent);
+  animation: starTwinkle 6s ease-in-out infinite alternate;
   pointer-events: none;
 }
+
+@keyframes starTwinkle {
+  0% { opacity: .6; }
+  50% { opacity: .9; }
+  100% { opacity: .65; }
+}
+
+/* Layer 6: noise overlay */
+.hero-noise {
+  position: absolute; inset: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: .20;
+  pointer-events: none;
+}
+
 /* Section spacing */
 .section-padding {
   padding-top: clamp(64px, 10vw, 120px);
   padding-bottom: clamp(64px, 10vw, 120px);
 }
 
-/* Massive price display with gradient text */
-.price-display {
-  font-size: clamp(100px, 22vw, 280px);
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.06em;
-  font-family: var(--font-display);
-  background: linear-gradient(135deg, var(--brand-iris) 0%, var(--brand-violet) 40%, #c084fc 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Feature card left violet accent border */
+/* Feature card left accent border */
 .feature-accent {
   border-left: 3px solid rgba(155,107,255,.35) !important;
 }
 
-/* Pricing tier — animated gradient border */
-.pricing-border-glow {
-  background: linear-gradient(135deg, var(--brand-iris), var(--brand-violet), #ec4899, var(--brand-iris));
-  background-size: 300% 300%;
-  animation: borderRotate 4s ease infinite;
-}
-@keyframes borderRotate {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Shimmer sweep across urgency banner */
-.pricing-shimmer {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 40%,
-    rgba(255,255,255,.06) 45%,
-    rgba(255,255,255,.12) 50%,
-    rgba(255,255,255,.06) 55%,
-    transparent 60%
-  );
-  background-size: 200% 100%;
-  animation: shimmerSweep 3s ease-in-out infinite;
-}
-@keyframes shimmerSweep {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-/* Pulsing dot for scarcity */
-.pricing-dot-pulse {
-  animation: pricingDot 2s ease-in-out infinite;
-}
-@keyframes pricingDot {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(251,191,36,.4); }
-  50% { opacity: .6; box-shadow: 0 0 0 5px rgba(251,191,36,0); }
-}
-
-/* CTA glow on pricing card */
-.pricing-cta-glow {
-  box-shadow: 0 18px 50px rgba(109,106,232,.22), 0 0 40px rgba(109,106,232,.12);
-}
-.pricing-cta-glow:hover {
-  box-shadow: 0 22px 60px rgba(109,106,232,.32), 0 0 50px rgba(109,106,232,.18);
-}
-
 /* ── Scroll Reveal Animations ─────────────────────────────── */
-
-/* Active dot pulse for chapter nav */
-@keyframes dotPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(167,139,250,.55); }
-  50% { box-shadow: 0 0 0 7px rgba(167,139,250,0); }
-}
 
 /* Hidden states — dramatic transforms */
 .reveal-group .r-up {
@@ -252,11 +208,17 @@ body {
   transition-delay: calc(var(--i, 0) * 0.14s);
 }
 
-.hero-noise {
-  position: absolute; inset: 0;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
-  mix-blend-mode: overlay;
-  opacity: .20;
-  pointer-events: none;
+/* Reduced motion: respect user preference */
+@media (prefers-reduced-motion: reduce) {
+  .hero-stars { animation: none; opacity: .7; }
+  .reveal-group .r-up,
+  .reveal-group .r-scale,
+  .reveal-group .r-left,
+  .reveal-group .r-right,
+  .reveal-group .r-blur {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
 }

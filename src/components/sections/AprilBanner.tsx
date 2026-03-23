@@ -29,26 +29,31 @@ export function AprilBanner() {
         role="alert"
         className="rounded-xl px-4 py-3 md:px-6 md:py-4 flex items-center gap-3"
         style={{
-          background: "rgba(251,191,36,.06)",
-          border: "1px solid rgba(251,191,36,.18)",
+          background: "var(--bg-surface)",
+          border: "1px solid var(--border)",
         }}
       >
-        <span className="text-xl flex-shrink-0" aria-hidden>
-          &#9200;
-        </span>
+        <div
+          className="flex-shrink-0 h-2 w-2 rounded-full"
+          style={{ background: "var(--brand-iris)", boxShadow: "0 0 8px rgba(109,106,232,.5)" }}
+          aria-hidden
+        />
         <div
           className="flex-1 text-[13px] md:text-[14px] leading-[1.55]"
-          style={{ color: "var(--fg-high)" }}
+          style={{ color: "var(--fg-mid)" }}
         >
-          <strong style={{ color: "rgba(251,191,36,.9)" }}>
-            Sitting the April AKT?
-          </strong>{" "}
-          {mounted ? daysLeft : "--"} days left. Start a free mock exam and see
-          where you stand.{" "}
+          <strong style={{ color: "var(--fg-high)" }}>
+            April sitting
+          </strong>
+          {" "}&mdash;{" "}
+          <span className="tabular-nums font-semibold" style={{ color: "var(--brand-iris)" }}>
+            {mounted ? daysLeft : "--"} days
+          </span>{" "}
+          remaining.{" "}
           <a
             href="https://app.medexia-akt.com"
-            className="font-semibold underline underline-offset-2"
-            style={{ color: "rgba(251,191,36,.9)" }}
+            className="font-semibold transition-colors hover:text-white"
+            style={{ color: "var(--brand-violet-light)", textDecoration: "none" }}
           >
             Start a mock &rarr;
           </a>

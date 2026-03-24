@@ -49,13 +49,13 @@ export function LiveCounter() {
         className={`container-x reveal-group ${visible ? "is-visible" : ""}`}
       >
         <div
-          className="mx-auto max-w-[680px] rounded-2xl px-6 py-8 md:px-10 md:py-10"
+          className="mx-auto max-w-[800px] rounded-2xl px-6 py-6 md:px-10 md:py-8"
           style={{
             background: "var(--bg-elevated)",
             border: "1px solid var(--border)",
           }}
         >
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-14">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 justify-items-center">
             {showLive && (
               <div
                 className="r-scale text-center"

@@ -5,19 +5,19 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const STEPS = [
   {
-    title: "Start a session",
-    description: "The app picks your weakest topic and serves targeted questions.",
-    image: "/appshots/01_Predicted_akt.jpg",
+    title: "Track your score",
+    description: "See your predicted AKT score update daily as you revise.",
+    image: "/appshots/01-hero-1206x2622.png",
   },
   {
-    title: "Learn as you answer",
-    description: "Every question comes with a deep explanation — like a senior GP breaking it down.",
-    image: "/appshots/05_Deep_explaination2.jpg",
+    title: "Smart sessions",
+    description: "Every session targets your weakest areas with warm-up, combat, and repair phases.",
+    image: "/appshots/02-sessions-1206x2622.png",
   },
   {
-    title: "See your gaps",
-    description: "After each session, see exactly where you're strong and where to focus next.",
-    image: "/appshots/04_Generate_mocks.jpg",
+    title: "Listen anywhere",
+    description: "50+ hours of audio you can take on your commute, walk, or gym session.",
+    image: "/appshots/03-audio-1206x2622.png",
   },
 ];
 
@@ -54,8 +54,8 @@ export function HowItWorks() {
                 <Image
                   src={step.image}
                   alt={step.title}
-                  width={220}
-                  height={476}
+                  width={603}
+                  height={1311}
                   className="w-full h-auto"
                 />
               </div>

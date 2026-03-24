@@ -1,15 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const STATIC_STATS = [
-  { value: "50+", label: "hours of audio" },
-  { value: "32", label: "AKT topics" },
-  { value: "3", label: "mock sizes" },
+  { value: "50+", label: "hours of audio", accent: "var(--brand-iris)" },
+  { value: "32", label: "AKT topics", accent: "var(--brand-violet)" },
+  { value: "20,000+", label: "questions", accent: "rgba(52,211,153,.85)" },
 ];
 
 export function LiveCounter() {
   const [userCount, setUserCount] = useState<number | null>(null);
+  const { ref, visible } = useScrollReveal();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -38,51 +40,72 @@ export function LiveCounter() {
     };
   }, []);
 
-  // Show live counter if >= 20, otherwise static stats
   const showLive = userCount !== null && userCount >= 20;
 
   return (
-    <section className="section-padding" style={{ paddingTop: 0 }}>
-      <div className="container-x">
-        <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10">
-          {showLive && (
-            <div className="text-center">
+    <section className="section-padding">
+      <div
+        ref={ref}
+        className={`container-x reveal-group ${visible ? "is-visible" : ""}`}
+      >
+        <div
+          className="mx-auto max-w-[680px] rounded-2xl px-6 py-8 md:px-10 md:py-10"
+          style={{
+            background: "var(--bg-elevated)",
+            border: "1px solid var(--border)",
+          }}
+        >
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-14">
+            {showLive && (
               <div
-                className="text-[32px] font-bold tabular-nums"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  color: "var(--brand-iris)",
-                }}
+                className="r-scale text-center"
+                style={{ "--i": 0 } as React.CSSProperties}
               >
-                {userCount}
+                <div
+                  className="text-[36px] md:text-[42px] font-bold tabular-nums"
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    letterSpacing: "-0.02em",
+                    background: "linear-gradient(135deg, var(--brand-iris), var(--brand-violet))",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                  }}
+                >
+                  {userCount}
+                </div>
+                <div
+                  className="text-[12px] tracking-[0.08em] uppercase font-semibold mt-1"
+                  style={{ color: "var(--fg-muted)" }}
+                >
+                  trainees revising now
+                </div>
               </div>
+            )}
+            {STATIC_STATS.map((stat, i) => (
               <div
-                className="text-[12px] font-medium"
-                style={{ color: "var(--fg-muted)" }}
+                key={i}
+                className="r-up text-center"
+                style={{ "--i": (showLive ? 1 : 0) + i } as React.CSSProperties}
               >
-                trainees revising
+                <div
+                  className="text-[28px] md:text-[32px] font-bold tabular-nums"
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    letterSpacing: "-0.02em",
+                    color: stat.accent,
+                  }}
+                >
+                  {stat.value}
+                </div>
+                <div
+                  className="text-[12px] tracking-[0.08em] uppercase font-semibold mt-1"
+                  style={{ color: "var(--fg-muted)" }}
+                >
+                  {stat.label}
+                </div>
               </div>
-            </div>
-          )}
-          {STATIC_STATS.map((stat, i) => (
-            <div key={i} className="text-center">
-              <div
-                className="text-[28px] font-bold tabular-nums"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  color: "var(--fg-high)",
-                }}
-              >
-                {stat.value}
-              </div>
-              <div
-                className="text-[12px] font-medium"
-                style={{ color: "var(--fg-muted)" }}
-              >
-                {stat.label}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

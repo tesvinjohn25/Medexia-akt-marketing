@@ -35,16 +35,16 @@ export function WhyFree() {
           >
             <p>
               <strong style={{ color: "var(--fg-high)" }}>
-                Honest answer:
+                We think this is a game-changer.
               </strong>{" "}
-              We&apos;ve built what we believe is the best AKT revision tool
-              available, but we have zero reviews and zero reputation.
+              AKT Navigator gives you the most optimal way to study for
+              your AKT &mdash; adaptive sessions, deep explanations, and 50+
+              hours of audio revision all in one place.
             </p>
             <p>
-              So instead of asking you to trust us with your money, we&apos;re
-              asking you to trust us with your time. Use AKT Navigator for free
-              for the April and July sittings. If it helps you, leave us a
-              review. That&apos;s the deal.
+              We want you to experience it for yourself. Use AKT Navigator
+              completely free for the April and July sittings. No trial, no
+              credit card &mdash; just start revising.
             </p>
           </div>
         </div>

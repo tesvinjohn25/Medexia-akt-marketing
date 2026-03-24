@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 
-const WHATSAPP_URL =
-  "https://wa.me/?text=Hey%20%E2%80%94%20found%20this%20free%20AKT%20revision%20tool.%2050%2B%20hours%20of%20audio%2C%20mock%20exams%2C%20deep%20explanations.%20Free%20until%20July.%20https%3A%2F%2Fmedexia-akt.com";
-const EMAIL_URL =
-  "mailto:?subject=Free%20AKT%20revision%20tool&body=Hey%20%E2%80%94%20found%20this%20free%20AKT%20revision%20tool.%2050%2B%20hours%20of%20audio%2C%20mock%20exams%2C%20deep%20explanations.%20Free%20until%20July.%20https%3A%2F%2Fmedexia-akt.com";
+const SHARE_TEXT =
+  "Hey — found this free AKT revision tool. 50+ hours of audio, mock exams, deep explanations. Free until July. https://medexia-akt.com";
+const WHATSAPP_URL = `whatsapp://send?text=${encodeURIComponent(SHARE_TEXT)}`;
+const EMAIL_URL = `mailto:?subject=${encodeURIComponent("Free AKT revision tool")}&body=${encodeURIComponent(SHARE_TEXT)}`;
 
 function WhatsAppIcon() {
   return (
@@ -61,10 +61,18 @@ export function SharePrompt() {
         Know someone sitting the AKT?
       </p>
       <div className="flex items-center justify-center gap-2">
-        <a
-          href={WHATSAPP_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={() => {
+            if (navigator.share) {
+              navigator.share({
+                title: "Free AKT revision tool",
+                text: SHARE_TEXT,
+                url: "https://medexia-akt.com",
+              }).catch(() => {});
+            } else {
+              window.open(WHATSAPP_URL, "_blank", "noopener,noreferrer");
+            }
+          }}
           className="inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-colors hover:bg-white/[.06]"
           style={{
             background: "var(--bg-elevated)",
@@ -74,7 +82,7 @@ export function SharePrompt() {
           }}
         >
           <WhatsAppIcon /> WhatsApp
-        </a>
+        </button>
         <button
           onClick={copyLink}
           className="inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-colors hover:bg-white/[.06]"

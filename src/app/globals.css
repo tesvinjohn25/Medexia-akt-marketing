@@ -312,6 +312,7 @@ body > * { position: relative; z-index: 1; }
 
 /* Reduced motion: respect user preference */
 @media (prefers-reduced-motion: reduce) {
+  body::after { animation: none; }
   .hero-nebula::before,
   .hero-nebula::after { animation: none; }
   .hero-stars { animation: none; }

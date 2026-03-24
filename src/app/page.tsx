@@ -1,5 +1,4 @@
 import { Nav } from "@/components/Nav";
-import { ScreenshotCarousel } from "@/components/sections/ScreenshotCarousel";
 import { AprilBanner } from "@/components/sections/AprilBanner";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { FeatureHighlights } from "@/components/sections/FeatureHighlights";
@@ -17,8 +16,6 @@ export default function Home() {
     <main>
       <SchemaJsonLd />
       <Nav />
-
-      <ScreenshotCarousel />
 
       <HeroSection />
 

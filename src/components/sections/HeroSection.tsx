@@ -1,30 +1,138 @@
 "use client";
 
+import { useCallback, useEffect, useState } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
+import Image from "next/image";
 import { ExamCountdown } from "./ExamCountdown";
 
+const SLIDES = [
+  { src: "/appshots/01-hero-1206x2622.png", alt: "Your predicted AKT score, updated daily" },
+  { src: "/appshots/02-sessions-1206x2622.png", alt: "Smart sessions that target your weakest areas" },
+  { src: "/appshots/03-audio-1206x2622.png", alt: "50+ hours of audio revision across all topics" },
+  { src: "/appshots/04-mocks-1206x2622.png", alt: "Generate hundreds of mock exams" },
+  { src: "/appshots/05-explanations-1206x2622.png", alt: "Deep explanations written like an examiner taught you" },
+  { src: "/appshots/06-everything-1206x2622.png", alt: "Everything you need to pass the AKT" },
+];
+
 export function HeroSection() {
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: "center" },
+    [Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true })]
+  );
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    emblaApi.on("select", onSelect);
+    onSelect();
+    return () => {
+      emblaApi.off("select", onSelect);
+    };
+  }, [emblaApi, onSelect]);
+
+  const scrollTo = useCallback(
+    (index: number) => emblaApi?.scrollTo(index),
+    [emblaApi]
+  );
+
   return (
-    <section className="relative min-h-[100svh] flex items-end overflow-hidden">
+    <section className="relative overflow-hidden">
       {/* Cosmic nebula background */}
       <div className="hero-nebula" aria-hidden />
       <div className="hero-stars" aria-hidden />
       <div className="hero-noise" />
 
-      {/* Bottom gradient for readability */}
+      {/* Carousel area — constrained height, fades at bottom */}
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-[55vh]"
-        style={{
-          background:
-            "linear-gradient(to top, rgba(11,13,18,.95), rgba(11,13,18,.55) 45%, rgba(11,13,18,0) 100%)",
-        }}
-        aria-hidden
-      />
+        className="relative z-[1] pt-16 md:pt-20"
+        style={{ maxHeight: "65vh", overflow: "hidden" }}
+      >
+        <div
+          role="region"
+          aria-label="App screenshots"
+          aria-roledescription="carousel"
+        >
+          <div ref={emblaRef} className="overflow-hidden">
+            <div className="flex">
+              {SLIDES.map((slide, i) => (
+                <div
+                  key={i}
+                  className="flex-[0_0_60%] sm:flex-[0_0_45%] md:flex-[0_0_32%] lg:flex-[0_0_24%] min-w-0 px-1.5 md:px-2"
+                  style={{
+                    opacity: i === selectedIndex ? 1 : 0.4,
+                    transform: i === selectedIndex ? "scale(1)" : "scale(0.88)",
+                    transition: "opacity 0.4s ease, transform 0.4s ease",
+                  }}
+                >
+                  <div
+                    className="overflow-hidden rounded-2xl md:rounded-3xl"
+                    style={{
+                      boxShadow:
+                        i === selectedIndex
+                          ? "0 16px 60px rgba(109,106,232,.35), 0 0 100px rgba(109,106,232,.1)"
+                          : "0 4px 20px rgba(0,0,0,.3)",
+                    }}
+                  >
+                    <Image
+                      src={slide.src}
+                      alt={slide.alt}
+                      width={603}
+                      height={1311}
+                      className="w-full h-auto"
+                      priority={i === 0}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
+        {/* Bottom fade on the carousel */}
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-[40%]"
+          style={{
+            background:
+              "linear-gradient(to top, rgba(11,13,18,1) 0%, rgba(11,13,18,.7) 50%, transparent 100%)",
+          }}
+          aria-hidden
+        />
+      </div>
+
+      {/* Dots — between carousel and text */}
+      <div className="relative z-[2] flex justify-center gap-1.5 -mt-6 mb-6">
+        {SLIDES.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => scrollTo(i)}
+            className="rounded-full transition-all duration-300"
+            style={{
+              width: i === selectedIndex ? 20 : 6,
+              height: 6,
+              background:
+                i === selectedIndex
+                  ? "linear-gradient(135deg, var(--brand-iris), var(--brand-violet))"
+                  : "rgba(255,255,255,.15)",
+              border: "none",
+              padding: 0,
+              cursor: "pointer",
+            }}
+            aria-label={`Go to screenshot ${i + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* Text content */}
       <div
-        className="container-x relative z-10 w-full"
+        className="relative z-[2] container-x"
         style={{
-          paddingTop: "max(30vh, 200px)",
-          paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 60px)",
+          paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 48px)",
         }}
       >
         <div className="max-w-[600px]">

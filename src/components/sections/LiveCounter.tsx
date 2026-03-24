@@ -20,13 +20,16 @@ export function LiveCounter() {
     fetch("https://app.medexia-akt.com/api/public/stats", {
       signal: controller.signal,
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error("API error");
+        return res.json();
+      })
       .then((data) => {
         if (
           typeof data?.userCount === "number" &&
           data.userCount >= 0
         ) {
-          setUserCount(data.userCount);
+          setUserCount(Math.min(Math.floor(data.userCount), 99999));
         }
       })
       .catch(() => {

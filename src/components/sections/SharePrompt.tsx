@@ -69,7 +69,11 @@ export function SharePrompt() {
                 text: SHARE_TEXT,
               }).catch(() => {});
             } else {
-              window.open(WHATSAPP_URL, "_blank", "noopener,noreferrer");
+              window.open(
+                `https://web.whatsapp.com/send?text=${encodeURIComponent(SHARE_TEXT)}`,
+                "_blank",
+                "noopener,noreferrer"
+              );
             }
           }}
           className="inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-colors hover:bg-white/[.06]"

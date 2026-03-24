@@ -81,40 +81,108 @@ body {
 .muted { color: var(--fg-mid); }
 .faint { color: var(--fg-muted); }
 
-/* ── Hero — Premium violet atmosphere ─────────────────────── */
-/* Deep navy with visible violet glow from brand palette.        */
-/* Feels like the app icon's world without going sci-fi.         */
+/* ── Hero — Dynamic violet atmosphere ─────────────────────── */
 .hero-nebula {
   position: absolute;
-  inset: -15%;
-  background:
-    /* Primary iris glow — center-left, visible but soft */
-    radial-gradient(900px 650px at 22% 50%, rgba(109,106,232,.12), transparent 58%),
-    /* Violet bloom — upper right, adds depth */
-    radial-gradient(700px 500px at 72% 22%, rgba(155,107,255,.09), transparent 55%),
-    /* Deep indigo base wash — ties it together */
-    radial-gradient(1200px 800px at 50% 60%, rgba(88,80,180,.06), transparent 70%);
-  filter: blur(14px);
+  inset: -20%;
   pointer-events: none;
 }
 
-/* Subtle particle field — gives depth, not decoration */
+/* Cloud layer 1: primary iris — drifts slowly */
+.hero-nebula::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(900px 600px at 20% 45%, rgba(109,106,232,.18), transparent 55%),
+    radial-gradient(600px 450px at 70% 25%, rgba(155,107,255,.12), transparent 50%),
+    radial-gradient(1000px 700px at 50% 70%, rgba(88,80,180,.08), transparent 60%);
+  filter: blur(40px);
+  animation: nebulaFloat1 20s ease-in-out infinite alternate;
+}
+
+/* Cloud layer 2: deeper violet — counter-drifts */
+.hero-nebula::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(700px 500px at 65% 55%, rgba(124,58,237,.10), transparent 50%),
+    radial-gradient(800px 550px at 30% 30%, rgba(109,106,232,.08), transparent 55%);
+  filter: blur(50px);
+  animation: nebulaFloat2 25s ease-in-out infinite alternate;
+}
+
+@keyframes nebulaFloat1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(30px, -20px) scale(1.05); }
+}
+@keyframes nebulaFloat2 {
+  0%   { transform: translate(0, 0) scale(1.02); }
+  100% { transform: translate(-25px, 15px) scale(0.98); }
+}
+
+/* Particle field — visible dots with gentle drift */
 .hero-stars {
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,.22), transparent),
-    radial-gradient(1px 1px at 38% 32%, rgba(255,255,255,.14), transparent),
-    radial-gradient(1px 1px at 58% 12%, rgba(167,139,250,.18), transparent),
-    radial-gradient(1px 1px at 75% 42%, rgba(255,255,255,.12), transparent),
-    radial-gradient(1px 1px at 88% 25%, rgba(255,255,255,.16), transparent),
-    radial-gradient(1px 1px at 28% 65%, rgba(255,255,255,.10), transparent),
-    radial-gradient(1px 1px at 65% 72%, rgba(155,107,255,.12), transparent),
-    radial-gradient(1px 1px at 48% 55%, rgba(255,255,255,.08), transparent),
-    radial-gradient(1px 1px at 82% 68%, rgba(255,255,255,.11), transparent),
-    radial-gradient(1px 1px at 18% 82%, rgba(255,255,255,.09), transparent),
-    radial-gradient(1px 1px at 92% 52%, rgba(167,139,250,.10), transparent),
-    radial-gradient(1px 1px at 5% 45%, rgba(255,255,255,.13), transparent);
+    radial-gradient(1.5px 1.5px at 10% 15%, rgba(255,255,255,.35), transparent),
+    radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,.20), transparent),
+    radial-gradient(2px 2px at 42% 10%, rgba(167,139,250,.40), transparent),
+    radial-gradient(1px 1px at 58% 30%, rgba(255,255,255,.25), transparent),
+    radial-gradient(1.5px 1.5px at 72% 55%, rgba(155,107,255,.35), transparent),
+    radial-gradient(1px 1px at 88% 20%, rgba(255,255,255,.30), transparent),
+    radial-gradient(1px 1px at 32% 65%, rgba(255,255,255,.18), transparent),
+    radial-gradient(2px 2px at 50% 75%, rgba(109,106,232,.30), transparent),
+    radial-gradient(1px 1px at 80% 70%, rgba(255,255,255,.22), transparent),
+    radial-gradient(1.5px 1.5px at 15% 80%, rgba(255,255,255,.20), transparent),
+    radial-gradient(1px 1px at 90% 45%, rgba(167,139,250,.25), transparent),
+    radial-gradient(1px 1px at 5% 50%, rgba(255,255,255,.28), transparent),
+    radial-gradient(1.5px 1.5px at 62% 85%, rgba(155,107,255,.22), transparent),
+    radial-gradient(1px 1px at 45% 48%, rgba(255,255,255,.15), transparent),
+    radial-gradient(1px 1px at 78% 12%, rgba(255,255,255,.32), transparent),
+    radial-gradient(2px 2px at 35% 22%, rgba(109,106,232,.25), transparent);
+  animation: starDrift 30s linear infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes starDrift {
+  0%   { transform: translate(0, 0); }
+  100% { transform: translate(-8px, 6px); }
+}
+
+/* Card border shimmer — sunlight glint effect */
+@keyframes borderShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.card-shimmer {
+  position: relative;
+}
+.card-shimmer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    105deg,
+    rgba(255,255,255,.0) 0%,
+    rgba(255,255,255,.0) 35%,
+    rgba(167,139,250,.25) 42%,
+    rgba(255,255,255,.18) 50%,
+    rgba(109,106,232,.20) 58%,
+    rgba(255,255,255,.0) 65%,
+    rgba(255,255,255,.0) 100%
+  );
+  background-size: 250% 100%;
+  animation: borderShimmer 6s ease-in-out infinite;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
   pointer-events: none;
 }
 
@@ -196,6 +264,10 @@ body {
 
 /* Reduced motion: respect user preference */
 @media (prefers-reduced-motion: reduce) {
+  .hero-nebula::before,
+  .hero-nebula::after { animation: none; }
+  .hero-stars { animation: none; }
+  .card-shimmer::before { animation: none; opacity: 0; }
   .reveal-group .r-up,
   .reveal-group .r-scale,
   .reveal-group .r-left,

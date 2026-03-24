@@ -67,7 +67,7 @@ export function FeatureHighlights() {
         <div className="grid gap-4 md:grid-cols-2">
           {/* HERO CARD: Audiobook — spans full width */}
           <div
-            className="r-scale relative overflow-hidden rounded-[18px] p-6 md:p-8 md:col-span-2"
+            className="r-scale card-shimmer relative overflow-hidden rounded-[18px] p-6 md:p-8 md:col-span-2"
             style={{
               background:
                 "linear-gradient(135deg, rgba(236,72,153,.08) 0%, rgba(17,19,26,.88) 40%, rgba(17,19,26,.88) 60%, rgba(167,139,250,.06) 100%)",
@@ -124,7 +124,7 @@ export function FeatureHighlights() {
 
           {/* Adaptive Engine */}
           <div
-            className="r-left rounded-[18px] p-6 md:p-7"
+            className="r-left card-shimmer rounded-[18px] p-6 md:p-7"
             style={{
               background: "linear-gradient(180deg, rgba(17,19,26,.88), rgba(17,19,26,.64))",
               border: "1px solid rgba(255,255,255,.08)",
@@ -158,7 +158,7 @@ export function FeatureHighlights() {
 
           {/* Explanations */}
           <div
-            className="r-right rounded-[18px] p-6 md:p-7"
+            className="r-right card-shimmer rounded-[18px] p-6 md:p-7"
             style={{
               background: "linear-gradient(180deg, rgba(17,19,26,.88), rgba(17,19,26,.64))",
               border: "1px solid rgba(255,255,255,.08)",
@@ -192,7 +192,7 @@ export function FeatureHighlights() {
 
           {/* Realistic mock exams */}
           <div
-            className="r-left rounded-[18px] p-6 md:p-7"
+            className="r-left card-shimmer rounded-[18px] p-6 md:p-7"
             style={{
               background: "linear-gradient(180deg, rgba(17,19,26,.88), rgba(17,19,26,.64))",
               border: "1px solid rgba(255,255,255,.08)",
@@ -226,7 +226,7 @@ export function FeatureHighlights() {
 
           {/* AI Supervisor */}
           <div
-            className="r-right rounded-[18px] p-6 md:p-7"
+            className="r-right card-shimmer rounded-[18px] p-6 md:p-7"
             style={{
               background: "linear-gradient(180deg, rgba(17,19,26,.88), rgba(17,19,26,.64))",
               border: "1px solid rgba(255,255,255,.08)",

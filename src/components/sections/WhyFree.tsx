@@ -46,10 +46,6 @@ export function WhyFree() {
               for the April and July sittings. If it helps you, leave us a
               review. That&apos;s the deal.
             </p>
-            <p style={{ color: "var(--fg-muted)", fontSize: "14px" }}>
-              After July, pricing will depend on what our users tell us. Right
-              now, just focus on revising.
-            </p>
           </div>
         </div>
       </div>

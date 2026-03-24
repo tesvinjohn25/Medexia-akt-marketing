@@ -1,6 +1,7 @@
 "use client";
 
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { SharePrompt } from "./SharePrompt";
 
 const FEATURES = [
   {
@@ -102,6 +103,8 @@ export function WhatYouGet() {
             Start revising free &rarr;
           </a>
         </div>
+
+        <SharePrompt />
       </div>
     </section>
   );

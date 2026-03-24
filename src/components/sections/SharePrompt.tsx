@@ -67,7 +67,6 @@ export function SharePrompt() {
               navigator.share({
                 title: "Free AKT revision tool",
                 text: SHARE_TEXT,
-                url: "https://medexia-akt.com",
               }).catch(() => {});
             } else {
               window.open(WHATSAPP_URL, "_blank", "noopener,noreferrer");

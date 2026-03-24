@@ -81,55 +81,36 @@ body {
 .muted { color: var(--fg-mid); }
 .faint { color: var(--fg-muted); }
 
-/* ── Hero — Cosmic Nebula Background ──────────────────────── */
+/* ── Hero — Restrained premium background ─────────────────── */
+/* Deep navy base with subtle violet glow. Clinical credibility  */
+/* first, cosmic atmosphere second. The logo carries the magic.  */
 .hero-nebula {
   position: absolute;
-  inset: -20%;
+  inset: -10%;
   background:
-    /* Layer 2: violet cloud, center-left */
-    radial-gradient(900px 600px at 20% 40%, rgba(109,106,232,.15), transparent 60%),
-    /* Layer 3: purple cloud, top-right */
-    radial-gradient(700px 500px at 78% 20%, rgba(155,107,255,.12), transparent 62%),
-    /* Layer 4: iris glow, bottom-center */
-    radial-gradient(800px 500px at 50% 85%, rgba(124,58,237,.08), transparent 65%);
-  filter: blur(10px);
-  opacity: .95;
+    /* Single soft violet glow — off-center, restrained */
+    radial-gradient(800px 600px at 25% 55%, rgba(109,106,232,.07), transparent 60%),
+    /* Faint secondary warmth top-right */
+    radial-gradient(600px 400px at 75% 25%, rgba(155,107,255,.04), transparent 55%);
+  filter: blur(20px);
   pointer-events: none;
 }
 
-/* Layer 5: Star particles — tiny dots with staggered pulse */
+/* Faint particle field — barely visible, adds depth without sci-fi */
 .hero-stars {
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,.45), transparent),
-    radial-gradient(1px 1px at 28% 42%, rgba(255,255,255,.35), transparent),
-    radial-gradient(1.5px 1.5px at 45% 12%, rgba(167,139,250,.55), transparent),
-    radial-gradient(1px 1px at 62% 35%, rgba(255,255,255,.30), transparent),
-    radial-gradient(1.5px 1.5px at 75% 58%, rgba(155,107,255,.45), transparent),
-    radial-gradient(1px 1px at 88% 22%, rgba(255,255,255,.40), transparent),
-    radial-gradient(1px 1px at 35% 68%, rgba(255,255,255,.25), transparent),
-    radial-gradient(1.5px 1.5px at 55% 78%, rgba(109,106,232,.40), transparent),
-    radial-gradient(1px 1px at 82% 72%, rgba(255,255,255,.35), transparent),
-    radial-gradient(1px 1px at 18% 85%, rgba(255,255,255,.30), transparent),
-    radial-gradient(1.5px 1.5px at 92% 48%, rgba(167,139,250,.35), transparent),
-    radial-gradient(1px 1px at 8% 55%, rgba(255,255,255,.28), transparent),
-    radial-gradient(1px 1px at 42% 92%, rgba(255,255,255,.22), transparent),
-    radial-gradient(1.5px 1.5px at 68% 8%, rgba(155,107,255,.38), transparent),
-    radial-gradient(1px 1px at 52% 52%, rgba(255,255,255,.20), transparent),
-    radial-gradient(1px 1px at 95% 88%, rgba(255,255,255,.32), transparent),
-    radial-gradient(1px 1px at 22% 32%, rgba(109,106,232,.30), transparent),
-    radial-gradient(1.5px 1.5px at 38% 25%, rgba(255,255,255,.35), transparent),
-    radial-gradient(1px 1px at 72% 45%, rgba(255,255,255,.25), transparent),
-    radial-gradient(1px 1px at 5% 75%, rgba(167,139,250,.28), transparent);
-  animation: starTwinkle 6s ease-in-out infinite alternate;
+    radial-gradient(1px 1px at 15% 20%, rgba(255,255,255,.15), transparent),
+    radial-gradient(1px 1px at 42% 35%, rgba(255,255,255,.10), transparent),
+    radial-gradient(1px 1px at 68% 15%, rgba(255,255,255,.12), transparent),
+    radial-gradient(1px 1px at 85% 45%, rgba(255,255,255,.08), transparent),
+    radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,.10), transparent),
+    radial-gradient(1px 1px at 55% 60%, rgba(255,255,255,.07), transparent),
+    radial-gradient(1px 1px at 78% 75%, rgba(255,255,255,.09), transparent),
+    radial-gradient(1px 1px at 20% 50%, rgba(255,255,255,.06), transparent);
+  opacity: .8;
   pointer-events: none;
-}
-
-@keyframes starTwinkle {
-  0% { opacity: .6; }
-  50% { opacity: .9; }
-  100% { opacity: .65; }
 }
 
 /* Layer 6: noise overlay */
@@ -210,7 +191,6 @@ body {
 
 /* Reduced motion: respect user preference */
 @media (prefers-reduced-motion: reduce) {
-  .hero-stars { animation: none; opacity: .7; }
   .reveal-group .r-up,
   .reveal-group .r-scale,
   .reveal-group .r-left,

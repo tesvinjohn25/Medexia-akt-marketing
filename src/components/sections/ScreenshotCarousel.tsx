@@ -39,61 +39,80 @@ export function ScreenshotCarousel() {
   );
 
   return (
-    <div
-      className="relative"
-      role="region"
-      aria-label="App screenshots"
-      aria-roledescription="carousel"
-    >
-      {/* Viewport */}
-      <div ref={emblaRef} className="overflow-hidden rounded-3xl">
-        <div className="flex">
-          {SLIDES.map((slide, i) => (
-            <div
-              key={i}
-              className="flex-[0_0_85%] md:flex-[0_0_100%] min-w-0 px-2"
-            >
+    <section className="relative pt-24 pb-6 md:pt-28 md:pb-10 overflow-hidden">
+      {/* Subtle glow behind carousel */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 50% 40%, rgba(109,106,232,.12) 0%, transparent 70%)",
+        }}
+        aria-hidden
+      />
+
+      <div
+        className="relative"
+        role="region"
+        aria-label="App screenshots"
+        aria-roledescription="carousel"
+      >
+        {/* Viewport — full bleed on mobile */}
+        <div ref={emblaRef} className="overflow-hidden">
+          <div className="flex">
+            {SLIDES.map((slide, i) => (
               <div
-                className="overflow-hidden rounded-3xl"
+                key={i}
+                className="flex-[0_0_72%] sm:flex-[0_0_55%] md:flex-[0_0_38%] lg:flex-[0_0_28%] min-w-0 px-2"
                 style={{
-                  boxShadow: "0 8px 40px rgba(109,106,232,.2)",
+                  opacity: i === selectedIndex ? 1 : 0.5,
+                  transform: i === selectedIndex ? "scale(1)" : "scale(0.92)",
+                  transition: "opacity 0.4s ease, transform 0.4s ease",
                 }}
               >
-                <Image
-                  src={slide.src}
-                  alt={slide.alt}
-                  width={603}
-                  height={1311}
-                  className="w-full h-auto"
-                  priority={i === 0}
-                />
+                <div
+                  className="overflow-hidden rounded-2xl md:rounded-3xl"
+                  style={{
+                    boxShadow: i === selectedIndex
+                      ? "0 12px 50px rgba(109,106,232,.3), 0 0 80px rgba(109,106,232,.08)"
+                      : "0 4px 20px rgba(0,0,0,.2)",
+                  }}
+                >
+                  <Image
+                    src={slide.src}
+                    alt={slide.alt}
+                    width={603}
+                    height={1311}
+                    className="w-full h-auto"
+                    priority={i === 0}
+                  />
+                </div>
               </div>
-            </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Dot navigation */}
+        <div className="flex justify-center gap-1.5 mt-5">
+          {SLIDES.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => scrollTo(i)}
+              className="rounded-full transition-all duration-300"
+              style={{
+                width: i === selectedIndex ? 20 : 6,
+                height: 6,
+                background: i === selectedIndex
+                  ? "linear-gradient(135deg, var(--brand-iris), var(--brand-violet))"
+                  : "rgba(255,255,255,.15)",
+                border: "none",
+                padding: 0,
+                cursor: "pointer",
+              }}
+              aria-label={`Go to screenshot ${i + 1}`}
+            />
           ))}
         </div>
       </div>
-
-      {/* Dot navigation */}
-      <div className="flex justify-center gap-1.5 mt-4">
-        {SLIDES.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => scrollTo(i)}
-            className="rounded-full transition-all duration-300"
-            style={{
-              width: i === selectedIndex ? 20 : 6,
-              height: 6,
-              background: i === selectedIndex
-                ? "linear-gradient(135deg, var(--brand-iris), var(--brand-violet))"
-                : "rgba(255,255,255,.15)",
-              border: "none",
-              padding: 0,
-              cursor: "pointer",
-            }}
-            aria-label={`Go to screenshot ${i + 1}`}
-          />
-        ))}
-      </div>
-    </div>
+    </section>
   );
 }

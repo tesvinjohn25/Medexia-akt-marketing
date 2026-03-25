@@ -1,29 +1,34 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://medexia-akt.com"),
+  alternates: {
+    canonical: "https://medexia-akt.com",
+  },
   title: {
-    default: "AKT Navigator by Medexia — Guided Revision for the MRCGP AKT",
+    default:
+      "AKT Navigator by Medexia — Free AKT Revision | 20,000+ Questions, 50+ Hours Audio",
     template: "%s | AKT Navigator by Medexia",
   },
   description:
-    "AKT Navigator — the smart MRCGP AKT revision tool by Medexia. 50+ hrs of audio (15+ live now, 35+ more this month), adaptive learning that targets your weak spots, and examiner-level explanations. Founding cohort — just £45, or £35 with a friend.",
+    "Free RCGP AKT revision for GP trainees. 20,000+ questions, 50+ hours of audio, adaptive learning, unlimited mock exams and AI-powered debriefs. Free for the April and July 2026 sittings.",
   keywords: [
     "AKT",
     "AKT Navigator",
-    "Navigator",
     "MRCGP AKT",
     "AKT revision",
     "MRCGP revision",
     "AKT question bank",
     "GP training",
     "Medexia",
+    "free AKT revision",
   ],
   openGraph: {
-    title: "AKT Navigator by Medexia",
+    title: "AKT Navigator by Medexia — Free AKT Revision for GP Trainees",
     description:
-      "AKT Navigator — the smart MRCGP AKT revision tool. 50+ hrs of audio (15+ live now, 35+ more this month), adaptive learning, and examiner-level explanations. Founding cohort — just £45, or £35 with a friend.",
+      "Free RCGP AKT revision for GP trainees. 20,000+ questions, 50+ hours of audio, adaptive learning, unlimited mock exams and AI-powered debriefs.",
     type: "website",
     url: "https://medexia-akt.com",
     siteName: "AKT Navigator by Medexia",
@@ -32,19 +37,16 @@ export const metadata: Metadata = {
         url: "https://medexia-akt.com/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "AKT Navigator by Medexia — MRCGP AKT revision",
+        alt: "AKT Navigator by Medexia — Free MRCGP AKT revision",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AKT Navigator by Medexia",
+    title: "AKT Navigator by Medexia — Free AKT Revision for GP Trainees",
     description:
-      "AKT Navigator — the smart MRCGP AKT revision tool. 50+ hrs of audio (15+ live now, 35+ more this month), adaptive learning, and examiner-level explanations. Founding cohort — just £45, or £35 with a friend.",
+      "Free RCGP AKT revision for GP trainees. 20,000+ questions, 50+ hours of audio, adaptive learning, unlimited mock exams and AI-powered debriefs.",
     images: ["https://medexia-akt.com/og-image.jpg"],
-  },
-  alternates: {
-    canonical: "https://medexia-akt.com",
   },
   robots: {
     index: true,
@@ -58,15 +60,15 @@ const jsonLd = {
   name: "AKT Navigator",
   alternateName: "AKT Navigator by Medexia",
   description:
-    "Smart MRCGP AKT revision tool with 50+ hours of audio (15+ hrs live, 35+ more this month), adaptive learning, and examiner-level explanations.",
+    "Free RCGP AKT revision for GP trainees. 20,000+ questions, 50+ hours of audio, adaptive learning, unlimited mock exams and AI-powered debriefs.",
   url: "https://medexia-akt.com",
   applicationCategory: "EducationalApplication",
   operatingSystem: "Web",
   offers: {
     "@type": "Offer",
-    price: "45.00",
+    price: "0",
     priceCurrency: "GBP",
-    description: "Founding cohort — 4 months full access",
+    description: "Free for the April and July 2026 sittings",
   },
   creator: {
     "@type": "Organization",
@@ -86,7 +88,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

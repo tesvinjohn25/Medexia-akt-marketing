@@ -31,11 +31,11 @@ function BookIcon() {
   );
 }
 
-function ClockIcon() {
+function MockIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(52,211,153,.7)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10" />
-      <polyline points="12 6 12 12 16 14" />
+      <path d="M9 11l3 3L22 4" />
+      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
     </svg>
   );
 }
@@ -50,12 +50,10 @@ function ClipboardCheckIcon() {
   );
 }
 
-function MapIcon() {
+function AIIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(251,191,36,.7)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
-      <line x1="8" y1="2" x2="8" y2="18" />
-      <line x1="16" y1="6" x2="16" y2="22" />
+      <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1.27c.34-.6.99-1 1.73-1a2 2 0 1 1 0 4c-.74 0-1.39-.4-1.73-1H21a7 7 0 0 1-7 7v1.27c.6.34 1 .99 1 1.73a2 2 0 1 1-4 0c0-.74.4-1.39 1-1.73V23a7 7 0 0 1-7-7H3.73c-.34.6-.99 1-1.73 1a2 2 0 1 1 0-4c.74 0 1.39.4 1.73 1H5a7 7 0 0 1 7-7V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z" />
     </svg>
   );
 }
@@ -79,7 +77,7 @@ export function FeatureHighlights() {
         <div className="grid gap-4 md:grid-cols-2">
           {/* HERO CARD: Audiobook — spans full width */}
           <div
-            className="r-scale relative overflow-hidden rounded-[18px] p-6 md:p-8 md:col-span-2"
+            className="r-scale card-shimmer relative overflow-hidden rounded-[18px] p-6 md:p-8 md:col-span-2"
             style={{
               background:
                 "linear-gradient(135deg, rgba(236,72,153,.08) 0%, rgba(17,19,26,.88) 40%, rgba(17,19,26,.88) 60%, rgba(167,139,250,.06) 100%)",
@@ -127,9 +125,8 @@ export function FeatureHighlights() {
                   className="mt-2 text-[15px] md:text-[16px] leading-[1.65] max-w-[580px]"
                   style={{ color: "rgba(232,236,255,.72)" }}
                 >
-                  Our killer feature. 15+ hours live now, with 35+ more landing this month — covering the entire curriculum.
-                  Revise on your commute, in the gym, or eyes closed before bed. Learning that fits
-                  around your life, not the other way around.
+                  Revise on your commute, at the gym, between patients. The full AKT
+                  curriculum in audio &mdash; no other tool offers this at scale.
                 </p>
               </div>
             </div>
@@ -137,10 +134,9 @@ export function FeatureHighlights() {
 
           {/* Adaptive Engine */}
           <div
-            className="r-left rounded-[18px] p-6 md:p-7"
+            className="r-left card-shimmer rounded-[18px] p-6 md:p-7"
             style={{
               background: "linear-gradient(180deg, rgba(17,19,26,.88), rgba(17,19,26,.64))",
-              borderLeft: "3px solid rgba(167,139,250,.35)",
               border: "1px solid rgba(255,255,255,.08)",
               borderLeftColor: "rgba(167,139,250,.35)",
               borderLeftWidth: 3,
@@ -158,21 +154,21 @@ export function FeatureHighlights() {
                 className="text-[20px] leading-[1.2] font-semibold pt-1"
                 style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
               >
-                It knows what you don&apos;t.
+                Adapts to your weak spots.
               </h3>
             </div>
             <p
               className="text-[14px] md:text-[15px] leading-[1.65]"
               style={{ color: "rgba(232,236,255,.68)" }}
             >
-              Our adaptive autopilot engine targets your weakest areas first.
-              Every session is calibrated to close your knowledge gaps.
+              The adaptive algorithm identifies what you don&apos;t know and targets it.
+              No more wasting time on topics you&apos;ve mastered.
             </p>
           </div>
 
           {/* Explanations */}
           <div
-            className="r-right rounded-[18px] p-6 md:p-7"
+            className="r-right card-shimmer rounded-[18px] p-6 md:p-7"
             style={{
               background: "linear-gradient(180deg, rgba(17,19,26,.88), rgba(17,19,26,.64))",
               border: "1px solid rgba(255,255,255,.08)",
@@ -199,14 +195,14 @@ export function FeatureHighlights() {
               className="text-[14px] md:text-[15px] leading-[1.65]"
               style={{ color: "rgba(232,236,255,.68)" }}
             >
-              Structured, examiner-level explanations that walk through clinical
-              reasoning step-by-step. Understand the &lsquo;why&rsquo;, not just the &lsquo;what&rsquo;.
+              Not textbook extracts. Every answer explained like a senior GP
+              breaking it down for you step-by-step.
             </p>
           </div>
 
-          {/* 10-minute sessions */}
+          {/* Realistic mock exams */}
           <div
-            className="r-left rounded-[18px] p-6 md:p-7"
+            className="r-left card-shimmer rounded-[18px] p-6 md:p-7"
             style={{
               background: "linear-gradient(180deg, rgba(17,19,26,.88), rgba(17,19,26,.64))",
               border: "1px solid rgba(255,255,255,.08)",
@@ -220,27 +216,27 @@ export function FeatureHighlights() {
                 className="flex-shrink-0 grid place-items-center h-10 w-10 rounded-xl"
                 style={{ background: "rgba(52,211,153,.08)" }}
               >
-                <ClockIcon />
+                <MockIcon />
               </div>
               <h3
                 className="text-[20px] leading-[1.2] font-semibold pt-1"
                 style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
               >
-                Built for busy GP trainees.
+                Realistic mock exams.
               </h3>
             </div>
             <p
               className="text-[14px] md:text-[15px] leading-[1.65]"
               style={{ color: "rgba(232,236,255,.68)" }}
             >
-              10-minute high-yield sessions designed for between consults,
-              on the commute, or whenever you have a spare moment.
+              Generate mocks at 40, 80, or 160 questions. Balanced or weighted to
+              your weak areas. Full debrief analysis after.
             </p>
           </div>
 
-          {/* Curriculum coverage */}
+          {/* AI Supervisor */}
           <div
-            className="r-right rounded-[18px] p-6 md:p-7"
+            className="r-right card-shimmer rounded-[18px] p-6 md:p-7"
             style={{
               background: "linear-gradient(180deg, rgba(17,19,26,.88), rgba(17,19,26,.64))",
               border: "1px solid rgba(255,255,255,.08)",
@@ -254,21 +250,21 @@ export function FeatureHighlights() {
                 className="flex-shrink-0 grid place-items-center h-10 w-10 rounded-xl"
                 style={{ background: "rgba(251,191,36,.08)" }}
               >
-                <MapIcon />
+                <AIIcon />
               </div>
               <h3
                 className="text-[20px] leading-[1.2] font-semibold pt-1"
                 style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
               >
-                Complete curriculum coverage.
+                AI Supervisor.
               </h3>
             </div>
             <p
               className="text-[14px] md:text-[15px] leading-[1.65]"
               style={{ color: "rgba(232,236,255,.68)" }}
             >
-              All RCGP domains mapped and tracked — clinical, statistics &amp; EBM,
-              and prescribing. See exactly where you stand.
+              Stuck on a concept? Ask a follow-up question at any point.
+              On-demand clinical reasoning help.
             </p>
           </div>
 

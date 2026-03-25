@@ -2,21 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@keyframes heroDot {
-  0% {
-    transform: translateX(-50%) translateY(0);
-    opacity: 0.65;
-  }
-  55% {
-    transform: translateX(-50%) translateY(10px);
-    opacity: 0.95;
-  }
-  100% {
-    transform: translateX(-50%) translateY(0);
-    opacity: 0.65;
-  }
-}
-
 /* Medexia Marketing — mirror app tokens */
 :root {
   --bg-ink: #0B0D12;
@@ -48,10 +33,58 @@
 html, body { height: 100%; }
 html, body { overflow-x: clip; }
 body {
-  background: var(--bg-ink);
+  background: #0B0D12;
   color: var(--fg-high);
   font-family: var(--font-ui);
 }
+
+/* Global cosmic atmosphere — luminous violet orbs matching brand assets */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    /* Primary orb — top-left, like the app icon's main glow */
+    radial-gradient(600px 600px at 15% 10%, rgba(109,106,232,.20), transparent 60%),
+    /* Secondary orb — right side, violet accent */
+    radial-gradient(500px 500px at 85% 35%, rgba(155,107,255,.16), transparent 55%),
+    /* Deep orb — center-bottom, purple depth */
+    radial-gradient(800px 600px at 50% 75%, rgba(124,58,237,.12), transparent 50%),
+    /* Accent glow — mid-left */
+    radial-gradient(400px 400px at 10% 55%, rgba(88,80,180,.14), transparent 50%),
+    /* Accent glow — bottom-right */
+    radial-gradient(500px 400px at 80% 90%, rgba(109,106,232,.10), transparent 55%);
+}
+
+/* Global star particles — extends cosmic feel beyond hero */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(1.2px 1.2px at 12% 25%, rgba(255,255,255,.18), transparent),
+    radial-gradient(1px 1px at 28% 55%, rgba(167,139,250,.22), transparent),
+    radial-gradient(1.5px 1.5px at 45% 15%, rgba(255,255,255,.14), transparent),
+    radial-gradient(1px 1px at 65% 42%, rgba(255,255,255,.16), transparent),
+    radial-gradient(1.3px 1.3px at 78% 68%, rgba(155,107,255,.20), transparent),
+    radial-gradient(1px 1px at 92% 30%, rgba(255,255,255,.12), transparent),
+    radial-gradient(1px 1px at 8% 78%, rgba(255,255,255,.15), transparent),
+    radial-gradient(1.5px 1.5px at 55% 88%, rgba(109,106,232,.18), transparent),
+    radial-gradient(1px 1px at 38% 72%, rgba(255,255,255,.10), transparent),
+    radial-gradient(1.2px 1.2px at 82% 12%, rgba(167,139,250,.16), transparent);
+  animation: globalStarDrift 40s linear infinite alternate;
+}
+
+@keyframes globalStarDrift {
+  0%   { transform: translate(0, 0); }
+  100% { transform: translate(-5px, 4px); }
+}
+
+body > * { position: relative; z-index: 1; }
 
 /* Utilities */
 .container-x {
@@ -96,108 +129,133 @@ body {
 .muted { color: var(--fg-mid); }
 .faint { color: var(--fg-muted); }
 
-/* Hero background */
-.hero-mesh {
-  position: absolute; inset: -20%;
-  background:
-    radial-gradient(900px 600px at 18% 22%, rgba(109,106,232,.30), transparent 60%),
-    radial-gradient(700px 500px at 78% 28%, rgba(155,107,255,.26), transparent 62%),
-    radial-gradient(700px 520px at 58% 78%, rgba(96,165,250,.16), transparent 64%),
-    radial-gradient(800px 640px at 20% 80%, rgba(34,197,94,.10), transparent 65%);
-  filter: blur(10px);
-  opacity: .95;
+/* ── Hero — Dynamic violet atmosphere ─────────────────────── */
+.hero-nebula {
+  position: absolute;
+  inset: -20%;
   pointer-events: none;
 }
-.hero-grid {
+
+/* Cloud layer 1: primary iris — drifts slowly */
+.hero-nebula::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(900px 600px at 20% 45%, rgba(109,106,232,.18), transparent 55%),
+    radial-gradient(600px 450px at 70% 25%, rgba(155,107,255,.12), transparent 50%),
+    radial-gradient(1000px 700px at 50% 70%, rgba(88,80,180,.08), transparent 60%);
+  filter: blur(40px);
+  animation: nebulaFloat1 20s ease-in-out infinite alternate;
+}
+
+/* Cloud layer 2: deeper violet — counter-drifts */
+.hero-nebula::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(700px 500px at 65% 55%, rgba(124,58,237,.10), transparent 50%),
+    radial-gradient(800px 550px at 30% 30%, rgba(109,106,232,.08), transparent 55%);
+  filter: blur(50px);
+  animation: nebulaFloat2 25s ease-in-out infinite alternate;
+}
+
+@keyframes nebulaFloat1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(30px, -20px) scale(1.05); }
+}
+@keyframes nebulaFloat2 {
+  0%   { transform: translate(0, 0) scale(1.02); }
+  100% { transform: translate(-25px, 15px) scale(0.98); }
+}
+
+/* Particle field — visible dots with gentle drift */
+.hero-stars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 10% 15%, rgba(255,255,255,.35), transparent),
+    radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,.20), transparent),
+    radial-gradient(2px 2px at 42% 10%, rgba(167,139,250,.40), transparent),
+    radial-gradient(1px 1px at 58% 30%, rgba(255,255,255,.25), transparent),
+    radial-gradient(1.5px 1.5px at 72% 55%, rgba(155,107,255,.35), transparent),
+    radial-gradient(1px 1px at 88% 20%, rgba(255,255,255,.30), transparent),
+    radial-gradient(1px 1px at 32% 65%, rgba(255,255,255,.18), transparent),
+    radial-gradient(2px 2px at 50% 75%, rgba(109,106,232,.30), transparent),
+    radial-gradient(1px 1px at 80% 70%, rgba(255,255,255,.22), transparent),
+    radial-gradient(1.5px 1.5px at 15% 80%, rgba(255,255,255,.20), transparent),
+    radial-gradient(1px 1px at 90% 45%, rgba(167,139,250,.25), transparent),
+    radial-gradient(1px 1px at 5% 50%, rgba(255,255,255,.28), transparent),
+    radial-gradient(1.5px 1.5px at 62% 85%, rgba(155,107,255,.22), transparent),
+    radial-gradient(1px 1px at 45% 48%, rgba(255,255,255,.15), transparent),
+    radial-gradient(1px 1px at 78% 12%, rgba(255,255,255,.32), transparent),
+    radial-gradient(2px 2px at 35% 22%, rgba(109,106,232,.25), transparent);
+  animation: starDrift 30s linear infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes starDrift {
+  0%   { transform: translate(0, 0); }
+  100% { transform: translate(-8px, 6px); }
+}
+
+/* Card border shimmer — sunlight glint effect */
+@keyframes borderShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.card-shimmer {
+  position: relative;
+}
+.card-shimmer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    105deg,
+    rgba(255,255,255,.0) 0%,
+    rgba(255,255,255,.0) 35%,
+    rgba(167,139,250,.25) 42%,
+    rgba(255,255,255,.18) 50%,
+    rgba(109,106,232,.20) 58%,
+    rgba(255,255,255,.0) 65%,
+    rgba(255,255,255,.0) 100%
+  );
+  background-size: 250% 100%;
+  animation: borderShimmer 6s ease-in-out infinite;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+}
+
+/* Layer 6: noise overlay */
+.hero-noise {
   position: absolute; inset: 0;
-  background:
-    linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: radial-gradient(closest-side at 50% 20%, black 40%, transparent 78%);
-  opacity: .25;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: .20;
   pointer-events: none;
 }
-/* Section spacing */
+
+/* Section spacing — tighter to avoid dead space */
 .section-padding {
-  padding-top: clamp(64px, 10vw, 120px);
-  padding-bottom: clamp(64px, 10vw, 120px);
+  padding-top: clamp(40px, 6vw, 72px);
+  padding-bottom: clamp(40px, 6vw, 72px);
 }
 
-/* Massive price display with gradient text */
-.price-display {
-  font-size: clamp(100px, 22vw, 280px);
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.06em;
-  font-family: var(--font-display);
-  background: linear-gradient(135deg, var(--brand-iris) 0%, var(--brand-violet) 40%, #c084fc 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Feature card left violet accent border */
+/* Feature card left accent border */
 .feature-accent {
   border-left: 3px solid rgba(155,107,255,.35) !important;
 }
 
-/* Pricing tier — animated gradient border */
-.pricing-border-glow {
-  background: linear-gradient(135deg, var(--brand-iris), var(--brand-violet), #ec4899, var(--brand-iris));
-  background-size: 300% 300%;
-  animation: borderRotate 4s ease infinite;
-}
-@keyframes borderRotate {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Shimmer sweep across urgency banner */
-.pricing-shimmer {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 40%,
-    rgba(255,255,255,.06) 45%,
-    rgba(255,255,255,.12) 50%,
-    rgba(255,255,255,.06) 55%,
-    transparent 60%
-  );
-  background-size: 200% 100%;
-  animation: shimmerSweep 3s ease-in-out infinite;
-}
-@keyframes shimmerSweep {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-/* Pulsing dot for scarcity */
-.pricing-dot-pulse {
-  animation: pricingDot 2s ease-in-out infinite;
-}
-@keyframes pricingDot {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(251,191,36,.4); }
-  50% { opacity: .6; box-shadow: 0 0 0 5px rgba(251,191,36,0); }
-}
-
-/* CTA glow on pricing card */
-.pricing-cta-glow {
-  box-shadow: 0 18px 50px rgba(109,106,232,.22), 0 0 40px rgba(109,106,232,.12);
-}
-.pricing-cta-glow:hover {
-  box-shadow: 0 22px 60px rgba(109,106,232,.32), 0 0 50px rgba(109,106,232,.18);
-}
-
 /* ── Scroll Reveal Animations ─────────────────────────────── */
-
-/* Active dot pulse for chapter nav */
-@keyframes dotPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(167,139,250,.55); }
-  50% { box-shadow: 0 0 0 7px rgba(167,139,250,0); }
-}
 
 /* Hidden states — dramatic transforms */
 .reveal-group .r-up {
@@ -252,11 +310,21 @@ body {
   transition-delay: calc(var(--i, 0) * 0.14s);
 }
 
-.hero-noise {
-  position: absolute; inset: 0;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
-  mix-blend-mode: overlay;
-  opacity: .20;
-  pointer-events: none;
+/* Reduced motion: respect user preference */
+@media (prefers-reduced-motion: reduce) {
+  body::after { animation: none; }
+  .hero-nebula::before,
+  .hero-nebula::after { animation: none; }
+  .hero-stars { animation: none; }
+  .card-shimmer::before { animation: none; opacity: 0; }
+  .reveal-group .r-up,
+  .reveal-group .r-scale,
+  .reveal-group .r-left,
+  .reveal-group .r-right,
+  .reveal-group .r-blur {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
 }

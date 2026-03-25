@@ -15,7 +15,7 @@ export function MinimalFooter() {
             className="h-8 w-8 overflow-hidden rounded-xl border"
             style={{ borderColor: "rgba(255,255,255,.08)" }}
           >
-            <Image src="/logo.png" alt="AKT Navigator" width={64} height={64} />
+            <Image src="/app-icon.png" alt="AKT Navigator" width={32} height={32} className="rounded-lg" />
           </div>
           <span
             className="text-[14px] font-semibold"
@@ -46,7 +46,7 @@ export function MinimalFooter() {
           className="text-[12px]"
           style={{ color: "rgba(232,236,255,.35)" }}
         >
-          &copy; 2025 Medexia Ltd.
+          &copy; 2026 Medexia Ltd.
         </div>
       </div>
     </footer>

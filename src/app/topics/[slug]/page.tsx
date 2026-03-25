@@ -19,11 +19,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!topic) return {};
 
   const title = `${topic.name} — AKT Revision`;
-  const description = topic.description;
+  const description = topic.metaDescription || topic.description;
 
   return {
     title,
     description,
+    alternates: {
+      canonical: `https://medexia-akt.com/topics/${topic.slug}`,
+    },
     openGraph: {
       title,
       description,
@@ -126,6 +129,18 @@ export default async function TopicPage({ params }: Props) {
             </div>
           )}
 
+          {/* Enriched content */}
+          {topic.content && (
+            <div
+              className="mt-10 text-[16px] leading-[1.7] space-y-4"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              {topic.content.split("\n\n").map((paragraph, i) => (
+                <p key={i}>{paragraph}</p>
+              ))}
+            </div>
+          )}
+
           {/* CTA */}
           <div className="mt-8">
             <a
@@ -136,9 +151,69 @@ export default async function TopicPage({ params }: Props) {
             </a>
           </div>
 
+          {/* Explore more */}
+          <div className="mt-12">
+            <h2
+              className="text-[20px] md:text-[24px] leading-[1.15]"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Explore more
+            </h2>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {[
+                {
+                  href: "/how-to-pass-the-akt",
+                  title: "How to pass the AKT",
+                  desc: "Complete study guide with exam strategy",
+                },
+                {
+                  href: "/akt-audio-revision",
+                  title: "AKT audio revision",
+                  desc: "50+ hours of audio across all 32 topics",
+                },
+                {
+                  href: "/akt-mock-exam",
+                  title: "AKT mock exams",
+                  desc: "Unlimited mocks from 20,000+ questions",
+                },
+                {
+                  href: "/best-akt-question-bank",
+                  title: "Best AKT question bank",
+                  desc: "Honest comparison of all options",
+                },
+              ].map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="block rounded-xl p-4 transition-colors hover:bg-white/[.03]"
+                  style={{
+                    background: "var(--bg-elevated)",
+                    border: "1px solid var(--border)",
+                  }}
+                >
+                  <h3
+                    className="text-[15px] font-semibold"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {link.title}
+                  </h3>
+                  <p
+                    className="mt-1 text-[13px]"
+                    style={{ color: "var(--fg-muted)" }}
+                  >
+                    {link.desc}
+                  </p>
+                </a>
+              ))}
+            </div>
+          </div>
+
           {/* Related topics */}
           {related.length > 0 && (
-            <div className="mt-16">
+            <div className="mt-12">
               <h2
                 className="text-[13px] tracking-[0.22em] uppercase font-semibold mb-4"
                 style={{ color: "rgba(167,139,250,.85)" }}
@@ -173,6 +248,15 @@ export default async function TopicPage({ params }: Props) {
               </div>
             </div>
           )}
+
+          {/* E-E-A-T trust signal */}
+          <p
+            className="mt-10 text-[12px]"
+            style={{ color: "var(--fg-muted)" }}
+          >
+            Content aligned to NICE CKS guidelines and the RCGP AKT curriculum.
+            Last reviewed March 2026.
+          </p>
         </div>
       </section>
 

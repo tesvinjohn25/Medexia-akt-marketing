@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { APRIL_SITTING, JULY_SITTING } from "@/data/exam-dates";
 
-// UTC noon to avoid BST hydration mismatch
-const APRIL_DATE = new Date("2026-04-27T12:00:00Z");
-const JULY_DATE = new Date("2026-07-07T12:00:00Z");
+const APRIL_DATE = APRIL_SITTING.date;
+const JULY_DATE = JULY_SITTING.date;
 
 function getDaysUntil(target: Date): number {
   const now = new Date();

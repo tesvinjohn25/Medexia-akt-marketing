@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { APRIL_SITTING } from "@/data/exam-dates";
 
-const APRIL_DATE = new Date("2026-04-27T12:00:00Z");
+const APRIL_DATE = APRIL_SITTING.date;
 
 export function AprilBanner() {
   const [mounted, setMounted] = useState(false);

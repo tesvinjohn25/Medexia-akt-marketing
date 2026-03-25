@@ -9,6 +9,7 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { StickyMobileCTA } from "@/components/sections/StickyMobileCTA";
+import { TopicGrid } from "@/components/sections/TopicGrid";
 import { SchemaJsonLd } from "@/components/SchemaJsonLd";
 
 export default function Home() {
@@ -28,6 +29,8 @@ export default function Home() {
       <WhyFree />
 
       <LiveCounter />
+
+      <TopicGrid />
 
       <WhatYouGet />
 

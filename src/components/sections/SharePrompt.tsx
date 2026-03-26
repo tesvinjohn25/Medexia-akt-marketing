@@ -53,10 +53,16 @@ export function SharePrompt() {
   };
 
   return (
-    <div className="mt-8 text-center">
+    <div
+      className="mt-10 mx-auto max-w-[480px] rounded-2xl px-6 py-5 text-center"
+      style={{
+        background: "rgba(255,255,255,.02)",
+        border: "1px solid rgba(255,255,255,.07)",
+      }}
+    >
       <p
-        className="text-[14px] mb-3"
-        style={{ color: "var(--fg-muted)" }}
+        className="text-[14px] font-semibold mb-3"
+        style={{ color: "var(--fg-mid)" }}
       >
         Know someone sitting the AKT?
       </p>

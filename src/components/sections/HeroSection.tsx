@@ -192,19 +192,19 @@ export function HeroSection() {
             </div>
 
             {/* Dots */}
-            <div className="flex justify-center gap-1.5 mt-3">
+            <div className="flex justify-center items-center gap-2 md:gap-1.5 mt-3">
               {SLIDES.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => scrollTo(i)}
                   className="rounded-full transition-all duration-300"
                   style={{
-                    width: i === selectedIndex ? 20 : 6,
-                    height: 6,
+                    width: i === selectedIndex ? 24 : 10,
+                    height: 10,
                     background:
                       i === selectedIndex
                         ? "linear-gradient(135deg, var(--brand-iris), var(--brand-violet))"
-                        : "rgba(255,255,255,.15)",
+                        : "rgba(255,255,255,.2)",
                     border: "none",
                     padding: 0,
                     cursor: "pointer",
@@ -213,6 +213,14 @@ export function HeroSection() {
                 />
               ))}
             </div>
+            {selectedIndex === 0 && (
+              <p
+                className="text-center mt-2 text-[11px] tracking-[0.06em] md:hidden animate-pulse"
+                style={{ color: "rgba(232,236,255,.35)" }}
+              >
+                Swipe to explore &rarr;
+              </p>
+            )}
           </div>
         </div>
       </div>

@@ -42,10 +42,25 @@ export function WhatYouGet() {
   const { ref, visible } = useScrollReveal();
 
   return (
-    <section className="section-padding">
+    <section className="section-padding relative overflow-hidden">
+      {/* Visual break: gradient shift to distinguish from FAQ above */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(600px 400px at 50% 30%, rgba(109,106,232,.06), transparent 70%), radial-gradient(400px 300px at 60% 70%, rgba(155,107,255,.04), transparent 60%)",
+        }}
+        aria-hidden
+      />
+      <div className="container-x mb-12">
+        <div
+          className="mx-auto max-w-[200px] h-px"
+          style={{ background: "linear-gradient(90deg, transparent, rgba(167,139,250,.25), transparent)" }}
+        />
+      </div>
       <div
         ref={ref}
-        className={`container-x reveal-group ${visible ? "is-visible" : ""}`}
+        className={`container-x relative reveal-group ${visible ? "is-visible" : ""}`}
       >
         <div className="mx-auto max-w-[640px] text-center">
           <h2

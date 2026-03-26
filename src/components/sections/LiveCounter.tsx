@@ -1,13 +1,41 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const STATIC_STATS = [
-  { value: "50+", label: "hours of audio", accent: "var(--brand-iris)" },
-  { value: "32", label: "AKT topics", accent: "var(--brand-violet)" },
-  { value: "20,000+", label: "questions", accent: "rgba(52,211,153,.85)" },
+  { value: 50, suffix: "+", label: "hours of audio", accent: "var(--brand-iris)" },
+  { value: 32, suffix: "", label: "AKT topics", accent: "var(--brand-violet)" },
+  { value: 20000, suffix: "+", label: "questions", accent: "rgba(52,211,153,.85)" },
 ];
+
+function useCountUp(target: number, duration: number, trigger: boolean) {
+  const [count, setCount] = useState(0);
+  const started = useRef(false);
+
+  useEffect(() => {
+    if (!trigger || started.current) return;
+    started.current = true;
+
+    const start = performance.now();
+    const step = (now: number) => {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease-out quad
+      const eased = 1 - (1 - progress) * (1 - progress);
+      setCount(Math.floor(eased * target));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [target, duration, trigger]);
+
+  return count;
+}
+
+function formatNumber(n: number): string {
+  if (n >= 1000) return n.toLocaleString("en-GB");
+  return String(n);
+}
 
 export function LiveCounter() {
   const [userCount, setUserCount] = useState<number | null>(null);
@@ -45,6 +73,13 @@ export function LiveCounter() {
 
   const showLive = userCount !== null && userCount >= 20;
 
+  const liveAnimated = useCountUp(userCount ?? 0, 1200, visible && showLive);
+  const audioAnimated = useCountUp(50, 1000, visible);
+  const topicsAnimated = useCountUp(32, 800, visible);
+  const questionsAnimated = useCountUp(20000, 1400, visible);
+
+  const animatedValues = [audioAnimated, topicsAnimated, questionsAnimated];
+
   return (
     <section className="section-padding">
       <div
@@ -52,20 +87,24 @@ export function LiveCounter() {
         className={`container-x reveal-group ${visible ? "is-visible" : ""}`}
       >
         <div
-          className="mx-auto max-w-[800px] rounded-2xl px-6 py-6 md:px-10 md:py-8"
+          className="mx-auto max-w-[860px] rounded-2xl px-6 py-8 md:px-12 md:py-10"
           style={{
             background: "var(--bg-elevated)",
             border: "1px solid var(--border)",
           }}
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 justify-items-center">
+          <div
+            className={`grid gap-8 md:gap-10 justify-items-center ${
+              showLive ? "grid-cols-2 md:grid-cols-4" : "grid-cols-3"
+            }`}
+          >
             {showLive && (
               <div
                 className="r-scale text-center"
                 style={{ "--i": 0 } as React.CSSProperties}
               >
                 <div
-                  className="text-[36px] md:text-[42px] font-bold tabular-nums"
+                  className="text-[40px] md:text-[52px] font-bold tabular-nums"
                   style={{
                     fontFamily: "var(--font-display)",
                     letterSpacing: "-0.02em",
@@ -74,10 +113,10 @@ export function LiveCounter() {
                     WebkitTextFillColor: "transparent",
                   }}
                 >
-                  {userCount}
+                  {formatNumber(liveAnimated)}
                 </div>
                 <div
-                  className="text-[12px] tracking-[0.08em] uppercase font-semibold mt-1"
+                  className="text-[12px] md:text-[13px] tracking-[0.08em] uppercase font-semibold mt-2"
                   style={{ color: "var(--fg-muted)" }}
                 >
                   trainees revising now
@@ -91,17 +130,17 @@ export function LiveCounter() {
                 style={{ "--i": (showLive ? 1 : 0) + i } as React.CSSProperties}
               >
                 <div
-                  className="text-[28px] md:text-[32px] font-bold tabular-nums"
+                  className="text-[36px] md:text-[48px] font-bold tabular-nums"
                   style={{
                     fontFamily: "var(--font-display)",
                     letterSpacing: "-0.02em",
                     color: stat.accent,
                   }}
                 >
-                  {stat.value}
+                  {formatNumber(animatedValues[i])}{stat.suffix}
                 </div>
                 <div
-                  className="text-[12px] tracking-[0.08em] uppercase font-semibold mt-1"
+                  className="text-[12px] md:text-[13px] tracking-[0.08em] uppercase font-semibold mt-2"
                   style={{ color: "var(--fg-muted)" }}
                 >
                   {stat.label}

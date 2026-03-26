@@ -6,10 +6,32 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const CATEGORIES = ["Clinical", "Professional", "Life Stages"] as const;
 
-const CATEGORY_META: Record<string, { label: string; count: number }> = {
-  Clinical: { label: "Clinical", count: aktTopics.filter((t) => t.category === "Clinical").length },
-  Professional: { label: "Professional", count: aktTopics.filter((t) => t.category === "Professional").length },
-  "Life Stages": { label: "Life Stages", count: aktTopics.filter((t) => t.category === "Life Stages").length },
+const CATEGORY_META: Record<
+  string,
+  { label: string; count: number; note?: string; chipBg: string; chipBorder: string; chipColor: string }
+> = {
+  Clinical: {
+    label: "Clinical",
+    count: aktTopics.filter((t) => t.category === "Clinical").length,
+    note: "~80% of the exam",
+    chipBg: "rgba(167,139,250,.06)",
+    chipBorder: "rgba(167,139,250,.18)",
+    chipColor: "rgba(232,236,255,.88)",
+  },
+  Professional: {
+    label: "Professional",
+    count: aktTopics.filter((t) => t.category === "Professional").length,
+    chipBg: "rgba(255,255,255,.04)",
+    chipBorder: "rgba(255,255,255,.07)",
+    chipColor: "var(--fg-mid)",
+  },
+  "Life Stages": {
+    label: "Life Stages",
+    count: aktTopics.filter((t) => t.category === "Life Stages").length,
+    chipBg: "rgba(255,255,255,.04)",
+    chipBorder: "rgba(255,255,255,.07)",
+    chipColor: "var(--fg-mid)",
+  },
 };
 
 export function TopicGrid() {
@@ -48,19 +70,27 @@ export function TopicGrid() {
               <div className="flex items-center gap-2 mb-3">
                 <h3
                   className="text-[13px] font-semibold tracking-[0.06em] uppercase"
-                  style={{ color: "var(--fg-muted)" }}
+                  style={{ color: cat === "Clinical" ? "rgba(167,139,250,.85)" : "var(--fg-muted)" }}
                 >
                   {CATEGORY_META[cat].label}
                 </h3>
                 <span
                   className="text-[11px] px-2 py-0.5 rounded-full"
                   style={{
-                    background: "rgba(255,255,255,.06)",
-                    color: "var(--fg-muted)",
+                    background: cat === "Clinical" ? "rgba(167,139,250,.10)" : "rgba(255,255,255,.06)",
+                    color: cat === "Clinical" ? "rgba(167,139,250,.85)" : "var(--fg-muted)",
                   }}
                 >
                   {CATEGORY_META[cat].count}
                 </span>
+                {CATEGORY_META[cat].note && (
+                  <span
+                    className="text-[11px]"
+                    style={{ color: "rgba(167,139,250,.55)" }}
+                  >
+                    {CATEGORY_META[cat].note}
+                  </span>
+                )}
               </div>
 
               <div className="flex flex-wrap gap-2">
@@ -72,9 +102,9 @@ export function TopicGrid() {
                       href={`/topics/${topic.slug}`}
                       className="inline-block rounded-lg px-3 py-1.5 text-[13px] transition-colors hover:bg-white/[.08]"
                       style={{
-                        background: "rgba(255,255,255,.04)",
-                        border: "1px solid rgba(255,255,255,.07)",
-                        color: "var(--fg-mid)",
+                        background: CATEGORY_META[cat].chipBg,
+                        border: `1px solid ${CATEGORY_META[cat].chipBorder}`,
+                        color: CATEGORY_META[cat].chipColor,
                       }}
                     >
                       {topic.name}

@@ -84,7 +84,7 @@ export default function GeneratePage() {
           borderColor: "var(--border)",
         }}
       >
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Job type */}
           <div>
             <label
@@ -236,15 +236,15 @@ export default function GeneratePage() {
               borderColor: "var(--border)",
             }}
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 min-w-0 flex-1">
               <span
                 className="w-2 h-2 rounded-full shrink-0"
                 style={{
                   background: STATUS_COLORS[job.status] || "var(--fg-muted)",
                 }}
               />
-              <div>
-                <p className="text-sm" style={{ color: "var(--fg-high)" }}>
+              <div className="min-w-0">
+                <p className="text-sm truncate" style={{ color: "var(--fg-high)" }}>
                   {job.job_type} &middot; {job.style}
                   {job.question_uid && (
                     <span style={{ color: "var(--fg-muted)" }}>
@@ -268,7 +268,7 @@ export default function GeneratePage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 shrink-0">
               <span
                 className="text-xs px-2 py-0.5 rounded-full font-medium"
                 style={{
@@ -280,7 +280,7 @@ export default function GeneratePage() {
               </span>
               {job.error && (
                 <span
-                  className="text-xs max-w-48 truncate"
+                  className="text-xs max-w-28 sm:max-w-48 truncate"
                   style={{ color: "#EF4444" }}
                   title={job.error}
                 >

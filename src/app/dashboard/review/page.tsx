@@ -121,9 +121,9 @@ export default function ReviewPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <h2
-          className="text-2xl font-semibold"
+          className="text-xl sm:text-2xl font-semibold"
           style={{ color: "var(--fg-high)" }}
         >
           Review Content
@@ -131,7 +131,7 @@ export default function ReviewPage() {
 
         {/* Filter tabs */}
         <div
-          className="flex rounded-lg border overflow-hidden"
+          className="flex rounded-lg border overflow-hidden self-start"
           style={{ borderColor: "var(--border)" }}
         >
           {(["pending", "approved", "rejected", "all"] as Filter[]).map((f) => (
@@ -159,7 +159,7 @@ export default function ReviewPage() {
         </p>
       )}
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
         {assets.map((asset) => (
           <button
             key={asset.id}
@@ -251,7 +251,7 @@ export default function ReviewPage() {
           }}
         >
           <div
-            className="w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl border p-6"
+            className="w-full max-w-3xl max-h-[100vh] sm:max-h-[90vh] overflow-y-auto rounded-none sm:rounded-2xl border-0 sm:border p-4 sm:p-6"
             style={{
               background: "var(--bg-surface)",
               borderColor: "var(--border)",
@@ -282,12 +282,12 @@ export default function ReviewPage() {
             </div>
 
             {/* Preview */}
-            <div className="flex gap-3 mb-4">
+            <div className="flex flex-col sm:flex-row gap-3 mb-4">
               {selected.slide1_url && (
                 <img
                   src={selected.slide1_url}
                   alt="Slide 1"
-                  className="w-1/2 rounded-lg"
+                  className="w-full sm:w-1/2 rounded-lg"
                   style={{ background: "var(--bg-elevated)" }}
                 />
               )}
@@ -295,7 +295,7 @@ export default function ReviewPage() {
                 <img
                   src={selected.slide2_url}
                   alt="Slide 2"
-                  className="w-1/2 rounded-lg"
+                  className="w-full sm:w-1/2 rounded-lg"
                   style={{ background: "var(--bg-elevated)" }}
                 />
               )}

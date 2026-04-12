@@ -22,10 +22,10 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen flex" style={{ background: "var(--bg-ink)" }}>
-      {/* Sidebar */}
+    <div className="min-h-screen flex flex-col md:flex-row" style={{ background: "var(--bg-ink)" }}>
+      {/* Sidebar — hidden on mobile */}
       <aside
-        className="w-56 shrink-0 border-r flex flex-col"
+        className="hidden md:flex w-56 shrink-0 border-r flex-col"
         style={{
           background: "var(--bg-surface)",
           borderColor: "var(--border)",
@@ -64,9 +64,36 @@ export default function DashboardLayout({
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 overflow-auto">
-        <div className="max-w-5xl mx-auto p-6 md:p-8">{children}</div>
+      <main className="flex-1 overflow-auto pb-20 md:pb-0">
+        <div className="max-w-5xl mx-auto p-4 md:p-8">{children}</div>
       </main>
+
+      {/* Bottom tab bar — mobile only */}
+      <nav
+        className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex border-t"
+        style={{
+          background: "var(--bg-surface)",
+          borderColor: "var(--border)",
+          paddingBottom: "env(safe-area-inset-bottom)",
+        }}
+      >
+        {navItems.map((item) => {
+          const active = pathname.startsWith(item.href);
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="flex-1 flex flex-col items-center gap-0.5 py-2.5 text-center transition-colors"
+              style={{
+                color: active ? "var(--fg-high)" : "var(--fg-muted)",
+              }}
+            >
+              <span className="text-lg">{item.icon}</span>
+              <span className="text-[10px] font-medium">{item.label}</span>
+            </Link>
+          );
+        })}
+      </nav>
     </div>
   );
 }

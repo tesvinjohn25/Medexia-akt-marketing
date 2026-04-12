@@ -310,6 +310,62 @@ export default function ReviewPage() {
               />
             )}
 
+            {/* Download buttons */}
+            <div className="flex flex-wrap gap-2 mb-4">
+              {selected.slide1_url && (
+                <a
+                  href={selected.slide1_url}
+                  download={`${selected.slug}-slide1.png`}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium border flex items-center gap-1.5"
+                  style={{
+                    borderColor: "var(--border)",
+                    color: "var(--fg-mid)",
+                  }}
+                >
+                  <span>&#8681;</span> Slide 1
+                </a>
+              )}
+              {selected.slide2_url && (
+                <a
+                  href={selected.slide2_url}
+                  download={`${selected.slug}-slide2.png`}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium border flex items-center gap-1.5"
+                  style={{
+                    borderColor: "var(--border)",
+                    color: "var(--fg-mid)",
+                  }}
+                >
+                  <span>&#8681;</span> Slide 2
+                </a>
+              )}
+              {selected.video_url && (
+                <a
+                  href={selected.video_url}
+                  download={`${selected.slug}-reel.mp4`}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium border flex items-center gap-1.5"
+                  style={{
+                    borderColor: "var(--border)",
+                    color: "var(--fg-mid)",
+                  }}
+                >
+                  <span>&#8681;</span> Reel
+                </a>
+              )}
+              {selected.thumbnail_url && (
+                <a
+                  href={selected.thumbnail_url}
+                  download={`${selected.slug}-thumbnail.png`}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium border flex items-center gap-1.5"
+                  style={{
+                    borderColor: "var(--border)",
+                    color: "var(--fg-mid)",
+                  }}
+                >
+                  <span>&#8681;</span> Thumbnail
+                </a>
+              )}
+            </div>
+
             {/* Caption tabs */}
             <div
               className="flex rounded-lg border overflow-hidden mb-2"

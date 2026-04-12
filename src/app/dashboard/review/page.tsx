@@ -244,14 +244,14 @@ export default function ReviewPage() {
       {/* Detail panel */}
       {selected && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4"
           style={{ background: "rgba(0,0,0,0.7)" }}
           onClick={(e) => {
             if (e.target === e.currentTarget) setSelected(null);
           }}
         >
           <div
-            className="w-full max-w-3xl max-h-[100vh] sm:max-h-[90vh] overflow-y-auto rounded-none sm:rounded-2xl border-0 sm:border p-4 sm:p-6"
+            className="w-full max-w-3xl max-h-[85vh] sm:max-h-[90vh] overflow-y-auto rounded-t-2xl sm:rounded-2xl border-0 sm:border p-4 pb-24 sm:p-6 sm:pb-6"
             style={{
               background: "var(--bg-surface)",
               borderColor: "var(--border)",

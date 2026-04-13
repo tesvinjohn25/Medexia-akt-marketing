@@ -16,6 +16,20 @@ interface Job {
   error: string | null;
 }
 
+interface Question {
+  question_uid: string;
+  stem: string;
+  topic: string;
+  subtopic: string;
+  difficulty: string;
+  correct: string;
+  option_a: string;
+  option_b: string;
+  option_c: string;
+  option_d: string;
+  rationale_preview: string;
+}
+
 const STATUS_COLORS: Record<string, string> = {
   pending: "#F59E0B",
   running: "#6D6AE8",
@@ -23,14 +37,34 @@ const STATUS_COLORS: Record<string, string> = {
   failed: "#EF4444",
 };
 
+const DIFF_COLORS: Record<string, string> = {
+  hard: "#EF4444",
+  medium: "#F59E0B",
+  easy: "#22C55E",
+};
+
 export default function GeneratePage() {
   const [jobType, setJobType] = useState("both");
   const [style, setStyle] = useState("both");
-  const [topic, setTopic] = useState("");
-  const [uid, setUid] = useState("");
-  const [count, setCount] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [jobs, setJobs] = useState<Job[]>([]);
+
+  // Question search state
+  const [topics, setTopics] = useState<string[]>([]);
+  const [selectedTopic, setSelectedTopic] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [selectedUids, setSelectedUids] = useState<Set<string>>(new Set());
+  const [searching, setSearching] = useState(false);
+  const [expandedUid, setExpandedUid] = useState<string | null>(null);
+
+  // Load topics on mount
+  useEffect(() => {
+    fetch("/api/dashboard/questions")
+      .then((r) => r.json())
+      .then((data) => setTopics(data.topics || []))
+      .catch(() => {});
+  }, []);
 
   const fetchJobs = useCallback(async () => {
     const res = await fetch("/api/dashboard/jobs");
@@ -46,46 +80,80 @@ export default function GeneratePage() {
     return () => clearInterval(interval);
   }, [fetchJobs]);
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  async function searchQuestions() {
+    if (!selectedTopic && !searchQuery.trim()) return;
+    setSearching(true);
+    const params = new URLSearchParams();
+    if (selectedTopic) params.set("topic", selectedTopic);
+    if (searchQuery.trim()) params.set("q", searchQuery.trim());
+
+    const res = await fetch(`/api/dashboard/questions?${params}`);
+    if (res.ok) {
+      const data = await res.json();
+      setQuestions(data.questions || []);
+    }
+    setSearching(false);
+  }
+
+  function toggleSelect(uid: string) {
+    setSelectedUids((prev) => {
+      const next = new Set(prev);
+      if (next.has(uid)) next.delete(uid);
+      else next.add(uid);
+      return next;
+    });
+  }
+
+  function selectAll() {
+    if (selectedUids.size === questions.length) {
+      setSelectedUids(new Set());
+    } else {
+      setSelectedUids(new Set(questions.map((q) => q.question_uid)));
+    }
+  }
+
+  async function handleGenerate() {
+    if (selectedUids.size === 0) return;
     setSubmitting(true);
 
-    await fetch("/api/dashboard/jobs", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        job_type: jobType,
-        style,
-        topic: topic || null,
-        question_uid: uid || null,
-        count,
-      }),
-    });
+    // Create one job per selected question
+    const uids = Array.from(selectedUids);
+    for (const uid of uids) {
+      await fetch("/api/dashboard/jobs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          job_type: jobType,
+          style,
+          question_uid: uid,
+          count: 1,
+        }),
+      });
+    }
 
     setSubmitting(false);
+    setSelectedUids(new Set());
     fetchJobs();
   }
 
   return (
     <div>
       <h2
-        className="text-2xl font-semibold mb-6"
+        className="text-xl sm:text-2xl font-semibold mb-6"
         style={{ color: "var(--fg-high)" }}
       >
         Generate Content
       </h2>
 
-      {/* Job creation form */}
-      <form
-        onSubmit={handleSubmit}
-        className="p-6 rounded-2xl border mb-8 space-y-4"
+      {/* Settings row */}
+      <div
+        className="p-4 sm:p-6 rounded-2xl border mb-4 space-y-4"
         style={{
           background: "var(--bg-surface)",
           borderColor: "var(--border)",
         }}
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Job type */}
           <div>
             <label
               className="block text-xs mb-1.5 font-medium"
@@ -109,7 +177,6 @@ export default function GeneratePage() {
             </select>
           </div>
 
-          {/* Style */}
           <div>
             <label
               className="block text-xs mb-1.5 font-medium"
@@ -133,66 +200,70 @@ export default function GeneratePage() {
             </select>
           </div>
         </div>
+      </div>
 
-        {/* Topic (optional) */}
-        <div>
-          <label
-            className="block text-xs mb-1.5 font-medium"
-            style={{ color: "var(--fg-muted)" }}
-          >
-            Topic (optional)
-          </label>
-          <input
-            type="text"
-            value={topic}
-            onChange={(e) => setTopic(e.target.value)}
-            placeholder="e.g. dermatology, statistics"
-            className="w-full px-3 py-2 rounded-lg text-sm border outline-none"
-            style={{
-              background: "var(--bg-elevated)",
-              color: "var(--fg-high)",
-              borderColor: "var(--border)",
-            }}
-          />
-        </div>
+      {/* Question search */}
+      <div
+        className="p-4 sm:p-6 rounded-2xl border mb-8 space-y-4"
+        style={{
+          background: "var(--bg-surface)",
+          borderColor: "var(--border)",
+        }}
+      >
+        <h3
+          className="text-sm font-semibold"
+          style={{ color: "var(--fg-high)" }}
+        >
+          Find Questions
+        </h3>
 
-        {/* Question UID */}
-        <div>
-          <label
-            className="block text-xs mb-1.5 font-medium"
-            style={{ color: "var(--fg-muted)" }}
-          >
-            Question UID (optional, overrides topic)
-          </label>
-          <input
-            type="text"
-            value={uid}
-            onChange={(e) => setUid(e.target.value)}
-            placeholder="e.g. abc123-def456"
-            className="w-full px-3 py-2 rounded-lg text-sm border outline-none"
-            style={{
-              background: "var(--bg-elevated)",
-              color: "var(--fg-high)",
-              borderColor: "var(--border)",
-            }}
-          />
-        </div>
-
-        {/* Count */}
-        <div className="flex items-end gap-4">
-          <div className="flex-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {/* Topic dropdown */}
+          <div>
             <label
               className="block text-xs mb-1.5 font-medium"
               style={{ color: "var(--fg-muted)" }}
             >
-              Count
+              Topic
+            </label>
+            <select
+              value={selectedTopic}
+              onChange={(e) => setSelectedTopic(e.target.value)}
+              className="w-full px-3 py-2 rounded-lg text-sm border outline-none"
+              style={{
+                background: "var(--bg-elevated)",
+                color: "var(--fg-high)",
+                borderColor: "var(--border)",
+              }}
+            >
+              <option value="">All topics</option>
+              {topics.map((t) => (
+                <option key={t} value={t}>
+                  {t}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Keyword search */}
+          <div>
+            <label
+              className="block text-xs mb-1.5 font-medium"
+              style={{ color: "var(--fg-muted)" }}
+            >
+              Keyword (stem, explanation, or subtopic)
             </label>
             <input
-              type="number"
-              min={1}
-              max={10}
-              value={count}
-              onChange={(e) => setCount(Number(e.target.value))}
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  searchQuestions();
+                }
+              }}
+              placeholder="e.g. eczema, p-value, atrial fibrillation"
               className="w-full px-3 py-2 rounded-lg text-sm border outline-none"
               style={{
                 background: "var(--bg-elevated)",
@@ -201,17 +272,201 @@ export default function GeneratePage() {
               }}
             />
           </div>
-
-          <button
-            type="submit"
-            disabled={submitting}
-            className="px-6 py-2 rounded-xl text-sm font-medium transition-opacity disabled:opacity-40"
-            style={{ background: "var(--brand-grad)", color: "white" }}
-          >
-            {submitting ? "Creating..." : "Generate"}
-          </button>
         </div>
-      </form>
+
+        <button
+          onClick={searchQuestions}
+          disabled={searching || (!selectedTopic && !searchQuery.trim())}
+          className="px-5 py-2 rounded-xl text-sm font-medium transition-opacity disabled:opacity-40"
+          style={{
+            background: "var(--bg-elevated)",
+            color: "var(--fg-high)",
+            borderWidth: 1,
+            borderColor: "var(--border)",
+          }}
+        >
+          {searching ? "Searching..." : "Search"}
+        </button>
+
+        {/* Results */}
+        {questions.length > 0 && (
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <p className="text-xs" style={{ color: "var(--fg-muted)" }}>
+                {questions.length} result{questions.length !== 1 ? "s" : ""}
+                {selectedUids.size > 0 && (
+                  <span style={{ color: "var(--brand-iris)" }}>
+                    {" "}
+                    &middot; {selectedUids.size} selected
+                  </span>
+                )}
+              </p>
+              <button
+                onClick={selectAll}
+                className="text-xs font-medium"
+                style={{ color: "var(--brand-iris)" }}
+              >
+                {selectedUids.size === questions.length
+                  ? "Deselect all"
+                  : "Select all"}
+              </button>
+            </div>
+
+            <div
+              className="max-h-80 overflow-y-auto space-y-1.5 rounded-lg p-2"
+              style={{ background: "var(--bg-elevated)" }}
+            >
+              {questions.map((q) => {
+                const isSelected = selectedUids.has(q.question_uid);
+                const isExpanded = expandedUid === q.question_uid;
+                return (
+                  <div key={q.question_uid}>
+                    <div
+                      className="flex items-start gap-2.5 p-2.5 rounded-lg cursor-pointer transition-colors"
+                      style={{
+                        background: isSelected
+                          ? "rgba(109, 106, 232, 0.15)"
+                          : "transparent",
+                      }}
+                      onClick={() => toggleSelect(q.question_uid)}
+                    >
+                      {/* Checkbox */}
+                      <div
+                        className="w-4 h-4 mt-0.5 rounded border-2 shrink-0 flex items-center justify-center"
+                        style={{
+                          borderColor: isSelected
+                            ? "var(--brand-iris)"
+                            : "var(--fg-muted)",
+                          background: isSelected
+                            ? "var(--brand-iris)"
+                            : "transparent",
+                        }}
+                      >
+                        {isSelected && (
+                          <span className="text-white text-[10px]">&#10003;</span>
+                        )}
+                      </div>
+
+                      <div className="min-w-0 flex-1">
+                        <p
+                          className="text-sm leading-snug"
+                          style={{ color: "var(--fg-high)" }}
+                        >
+                          {q.stem.length > 150
+                            ? q.stem.slice(0, 150) + "..."
+                            : q.stem}
+                        </p>
+                        <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
+                          <span
+                            className="text-[10px] px-1.5 py-0.5 rounded font-medium"
+                            style={{
+                              background: "rgba(109, 106, 232, 0.2)",
+                              color: "var(--brand-iris)",
+                            }}
+                          >
+                            {q.subtopic}
+                          </span>
+                          <span
+                            className="text-[10px] px-1.5 py-0.5 rounded font-medium capitalize"
+                            style={{
+                              background: `${DIFF_COLORS[q.difficulty] || "var(--fg-muted)"}20`,
+                              color:
+                                DIFF_COLORS[q.difficulty] || "var(--fg-muted)",
+                            }}
+                          >
+                            {q.difficulty}
+                          </span>
+                          <span
+                            className="text-[10px]"
+                            style={{ color: "var(--fg-muted)" }}
+                          >
+                            Ans: {q.correct}
+                          </span>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setExpandedUid(
+                                isExpanded ? null : q.question_uid,
+                              );
+                            }}
+                            className="text-[10px] ml-auto"
+                            style={{ color: "var(--fg-muted)" }}
+                          >
+                            {isExpanded ? "Hide" : "Details"}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Expanded details */}
+                    {isExpanded && (
+                      <div
+                        className="ml-6.5 pl-4 pb-2 text-xs space-y-1.5"
+                        style={{ color: "var(--fg-mid)" }}
+                      >
+                        <div className="grid grid-cols-1 gap-1 mt-1">
+                          {["a", "b", "c", "d"].map((letter) => {
+                            const optKey = `option_${letter}` as keyof Question;
+                            const isCorrect =
+                              q.correct.toLowerCase() === letter;
+                            return (
+                              <p
+                                key={letter}
+                                style={{
+                                  color: isCorrect
+                                    ? "#22C55E"
+                                    : "var(--fg-muted)",
+                                }}
+                              >
+                                {letter.toUpperCase()}.{" "}
+                                {q[optKey] as string}
+                                {isCorrect && " \u2713"}
+                              </p>
+                            );
+                          })}
+                        </div>
+                        {q.rationale_preview && (
+                          <p
+                            className="text-xs mt-1"
+                            style={{ color: "var(--fg-muted)" }}
+                          >
+                            {q.rationale_preview}
+                            {q.rationale_preview.length >= 200 ? "..." : ""}
+                          </p>
+                        )}
+                        <p
+                          className="text-[10px] font-mono mt-1"
+                          style={{ color: "var(--fg-muted)" }}
+                        >
+                          {q.question_uid}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Generate button */}
+            <button
+              onClick={handleGenerate}
+              disabled={submitting || selectedUids.size === 0}
+              className="w-full py-2.5 rounded-xl text-sm font-medium transition-opacity disabled:opacity-40"
+              style={{ background: "var(--brand-grad)", color: "white" }}
+            >
+              {submitting
+                ? "Creating jobs..."
+                : `Generate ${selectedUids.size} question${selectedUids.size !== 1 ? "s" : ""}`}
+            </button>
+          </div>
+        )}
+
+        {questions.length === 0 && selectedTopic && !searching && (
+          <p className="text-xs" style={{ color: "var(--fg-muted)" }}>
+            No results. Try a different topic or keyword.
+          </p>
+        )}
+      </div>
 
       {/* Job list */}
       <h3
@@ -224,7 +479,7 @@ export default function GeneratePage() {
       <div className="space-y-2">
         {jobs.length === 0 && (
           <p className="text-sm" style={{ color: "var(--fg-muted)" }}>
-            No jobs yet. Create one above.
+            No jobs yet.
           </p>
         )}
         {jobs.map((job) => (
@@ -244,7 +499,10 @@ export default function GeneratePage() {
                 }}
               />
               <div className="min-w-0">
-                <p className="text-sm truncate" style={{ color: "var(--fg-high)" }}>
+                <p
+                  className="text-sm truncate"
+                  style={{ color: "var(--fg-high)" }}
+                >
                   {job.job_type} &middot; {job.style}
                   {job.question_uid && (
                     <span style={{ color: "var(--fg-muted)" }}>

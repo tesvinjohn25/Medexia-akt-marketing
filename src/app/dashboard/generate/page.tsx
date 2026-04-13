@@ -62,8 +62,11 @@ export default function GeneratePage() {
   useEffect(() => {
     fetch("/api/dashboard/questions")
       .then((r) => r.json())
-      .then((data) => setTopics(data.topics || []))
-      .catch(() => {});
+      .then((data) => {
+        if (data.topics) setTopics(data.topics);
+        else console.error("Topics API error:", data.error);
+      })
+      .catch((err) => console.error("Topics fetch failed:", err));
   }, []);
 
   const fetchJobs = useCallback(async () => {

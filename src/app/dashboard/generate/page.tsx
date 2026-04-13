@@ -355,9 +355,11 @@ export default function GeneratePage() {
                           className="text-sm leading-snug"
                           style={{ color: "var(--fg-high)" }}
                         >
-                          {q.stem.length > 150
-                            ? q.stem.slice(0, 150) + "..."
-                            : q.stem}
+                          {isExpanded
+                            ? q.stem
+                            : q.stem.length > 150
+                              ? q.stem.slice(0, 150) + "..."
+                              : q.stem}
                         </p>
                         <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
                           <span

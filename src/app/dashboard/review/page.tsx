@@ -137,6 +137,28 @@ export default function ReviewPage() {
     reel_tight: "#F59E0B",
   };
 
+  // Group assets by question_uid
+  const grouped: { uid: string; label: string; assets: Asset[] }[] = [];
+  const uidMap = new Map<string, Asset[]>();
+  for (const asset of assets) {
+    const uid = asset.question_uid || "unknown";
+    if (!uidMap.has(uid)) uidMap.set(uid, []);
+    uidMap.get(uid)!.push(asset);
+  }
+  for (const [uid, group] of uidMap) {
+    // Use the shortest slug as the group label (strip style suffixes)
+    const label = group
+      .map((a) => a.slug)
+      .sort((a, b) => a.length - b.length)[0]
+      .replace(/-tight$/, "");
+    grouped.push({ uid, label, assets: group });
+  }
+
+  const TYPE_ORDER: Record<string, number> = { carousel: 0, reel_classic: 1, reel_tight: 2 };
+  for (const g of grouped) {
+    g.assets.sort((a, b) => (TYPE_ORDER[a.asset_type] ?? 9) - (TYPE_ORDER[b.asset_type] ?? 9));
+  }
+
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
@@ -170,92 +192,111 @@ export default function ReviewPage() {
         </div>
       </div>
 
-      {/* Asset grid */}
+      {/* Asset grid — grouped by question */}
       {assets.length === 0 && (
         <p className="text-sm" style={{ color: "var(--fg-muted)" }}>
           No assets matching &ldquo;{filter}&rdquo;.
         </p>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-        {assets.map((asset) => (
-          <button
-            key={asset.id}
-            onClick={() => {
-              setSelected(asset);
-              setNotes("");
-              setCaptionTab("carousel_ig");
-              setShowRegen(false);
-              setRegenInstructions("");
-            }}
-            className="text-left p-3 rounded-xl border transition-colors hover:border-[var(--brand-iris)]"
-            style={{
-              background: "var(--bg-surface)",
-              borderColor:
-                selected?.id === asset.id
-                  ? "var(--brand-iris)"
-                  : "var(--border)",
-            }}
-          >
-            {/* Thumbnail */}
-            {(asset.thumbnail_url || asset.slide1_url) && (
-              <img
-                src={asset.thumbnail_url || asset.slide1_url || ""}
-                alt={asset.slug}
-                className="w-full aspect-[4/5] object-cover rounded-lg mb-2"
-                style={{ background: "var(--bg-elevated)" }}
-              />
-            )}
-            {!asset.thumbnail_url && !asset.slide1_url && (
-              <div
-                className="w-full aspect-[4/5] rounded-lg mb-2 flex items-center justify-center text-xs"
-                style={{
-                  background: "var(--bg-elevated)",
-                  color: "var(--fg-muted)",
-                }}
+      <div className="space-y-6">
+        {grouped.map((group) => (
+          <div key={group.uid}>
+            {/* Group header */}
+            <div className="mb-2">
+              <p
+                className="text-sm font-medium truncate"
+                style={{ color: "var(--fg-high)" }}
               >
-                No preview
-              </div>
-            )}
+                {group.label.replace(/-/g, " ")}
+              </p>
+              <p
+                className="text-[10px] font-mono"
+                style={{ color: "var(--fg-muted)" }}
+              >
+                {group.uid.length > 40
+                  ? group.uid.slice(0, 20) + "..." + group.uid.slice(-12)
+                  : group.uid}
+              </p>
+            </div>
 
-            <div className="flex items-center gap-1.5">
-              <span
-                className="text-[10px] px-1.5 py-0.5 rounded font-medium"
-                style={{
-                  background: `${BADGE_COLORS[asset.asset_type] || "var(--fg-muted)"}20`,
-                  color:
-                    BADGE_COLORS[asset.asset_type] || "var(--fg-muted)",
-                }}
-              >
-                {asset.asset_type}
-              </span>
-              {asset.review_status !== "pending" && (
-                <span
-                  className="text-[10px] px-1.5 py-0.5 rounded font-medium capitalize"
+            {/* Assets row */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+              {group.assets.map((asset) => (
+                <button
+                  key={asset.id}
+                  onClick={() => {
+                    setSelected(asset);
+                    setNotes("");
+                    setCaptionTab("carousel_ig");
+                    setShowRegen(false);
+                    setRegenInstructions("");
+                  }}
+                  className="text-left p-3 rounded-xl border transition-colors hover:border-[var(--brand-iris)]"
                   style={{
-                    color:
-                      asset.review_status === "approved"
-                        ? "#22C55E"
-                        : "#EF4444",
+                    background: "var(--bg-surface)",
+                    borderColor:
+                      selected?.id === asset.id
+                        ? "var(--brand-iris)"
+                        : "var(--border)",
                   }}
                 >
-                  {asset.review_status}
-                </span>
-              )}
+                  {/* Thumbnail */}
+                  {(asset.thumbnail_url || asset.slide1_url) && (
+                    <img
+                      src={asset.thumbnail_url || asset.slide1_url || ""}
+                      alt={asset.slug}
+                      className="w-full aspect-[4/5] object-cover rounded-lg mb-2"
+                      style={{ background: "var(--bg-elevated)" }}
+                    />
+                  )}
+                  {!asset.thumbnail_url && !asset.slide1_url && (
+                    <div
+                      className="w-full aspect-[4/5] rounded-lg mb-2 flex items-center justify-center text-xs"
+                      style={{
+                        background: "var(--bg-elevated)",
+                        color: "var(--fg-muted)",
+                      }}
+                    >
+                      No preview
+                    </div>
+                  )}
+
+                  <div className="flex items-center gap-1.5">
+                    <span
+                      className="text-[10px] px-1.5 py-0.5 rounded font-medium"
+                      style={{
+                        background: `${BADGE_COLORS[asset.asset_type] || "var(--fg-muted)"}20`,
+                        color:
+                          BADGE_COLORS[asset.asset_type] || "var(--fg-muted)",
+                      }}
+                    >
+                      {asset.asset_type.replace("_", " ")}
+                    </span>
+                    {asset.review_status !== "pending" && (
+                      <span
+                        className="text-[10px] px-1.5 py-0.5 rounded font-medium capitalize"
+                        style={{
+                          color:
+                            asset.review_status === "approved"
+                              ? "#22C55E"
+                              : "#EF4444",
+                        }}
+                      >
+                        {asset.review_status}
+                      </span>
+                    )}
+                  </div>
+                  <p
+                    className="text-[10px] mt-1"
+                    style={{ color: "var(--fg-muted)" }}
+                  >
+                    {new Date(asset.created_at).toLocaleDateString()}
+                  </p>
+                </button>
+              ))}
             </div>
-            <p
-              className="text-xs mt-1 truncate"
-              style={{ color: "var(--fg-mid)" }}
-            >
-              {asset.slug}
-            </p>
-            <p
-              className="text-[10px] mt-0.5"
-              style={{ color: "var(--fg-muted)" }}
-            >
-              {new Date(asset.created_at).toLocaleDateString()}
-            </p>
-          </button>
+          </div>
         ))}
       </div>
 

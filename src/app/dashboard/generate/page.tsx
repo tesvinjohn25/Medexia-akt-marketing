@@ -115,6 +115,11 @@ export default function GeneratePage() {
     }
   }
 
+  async function handleCancel(jobId: string) {
+    await fetch(`/api/dashboard/jobs/${jobId}/cancel`, { method: "POST" });
+    fetchJobs();
+  }
+
   async function handleGenerate() {
     if (selectedUids.size === 0) return;
     setSubmitting(true);
@@ -541,6 +546,18 @@ export default function GeneratePage() {
               >
                 {job.status}
               </span>
+              {(job.status === "pending" || job.status === "running") && (
+                <button
+                  onClick={() => handleCancel(job.id)}
+                  className="text-xs px-2 py-0.5 rounded-full font-medium"
+                  style={{
+                    background: "rgba(239, 68, 68, 0.15)",
+                    color: "#EF4444",
+                  }}
+                >
+                  Kill
+                </button>
+              )}
               {job.error && (
                 <span
                   className="text-xs max-w-28 sm:max-w-48 truncate"

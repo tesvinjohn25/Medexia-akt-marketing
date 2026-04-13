@@ -113,6 +113,24 @@ export default function ReviewPage() {
       }
     : { carousel_ig: null, reel_ig: null, reel_tiktok: null };
 
+  async function handleDownload(url: string, filename: string) {
+    try {
+      const res = await fetch(url);
+      const blob = await res.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(blobUrl);
+    } catch {
+      // Fallback: open in new tab
+      window.open(url, "_blank");
+    }
+  }
+
   const BADGE_COLORS: Record<string, string> = {
     carousel: "#6D6AE8",
     reel_classic: "#9B6BFF",
@@ -313,9 +331,8 @@ export default function ReviewPage() {
             {/* Download buttons */}
             <div className="flex flex-wrap gap-2 mb-4">
               {selected.slide1_url && (
-                <a
-                  href={selected.slide1_url}
-                  download={`${selected.slug}-slide1.png`}
+                <button
+                  onClick={() => handleDownload(selected.slide1_url!, `${selected.slug}-slide1.png`)}
                   className="px-3 py-1.5 rounded-lg text-xs font-medium border flex items-center gap-1.5"
                   style={{
                     borderColor: "var(--border)",
@@ -323,12 +340,11 @@ export default function ReviewPage() {
                   }}
                 >
                   <span>&#8681;</span> Slide 1
-                </a>
+                </button>
               )}
               {selected.slide2_url && (
-                <a
-                  href={selected.slide2_url}
-                  download={`${selected.slug}-slide2.png`}
+                <button
+                  onClick={() => handleDownload(selected.slide2_url!, `${selected.slug}-slide2.png`)}
                   className="px-3 py-1.5 rounded-lg text-xs font-medium border flex items-center gap-1.5"
                   style={{
                     borderColor: "var(--border)",
@@ -336,12 +352,11 @@ export default function ReviewPage() {
                   }}
                 >
                   <span>&#8681;</span> Slide 2
-                </a>
+                </button>
               )}
               {selected.video_url && (
-                <a
-                  href={selected.video_url}
-                  download={`${selected.slug}-reel.mp4`}
+                <button
+                  onClick={() => handleDownload(selected.video_url!, `${selected.slug}-reel.mp4`)}
                   className="px-3 py-1.5 rounded-lg text-xs font-medium border flex items-center gap-1.5"
                   style={{
                     borderColor: "var(--border)",
@@ -349,12 +364,11 @@ export default function ReviewPage() {
                   }}
                 >
                   <span>&#8681;</span> Reel
-                </a>
+                </button>
               )}
               {selected.thumbnail_url && (
-                <a
-                  href={selected.thumbnail_url}
-                  download={`${selected.slug}-thumbnail.png`}
+                <button
+                  onClick={() => handleDownload(selected.thumbnail_url!, `${selected.slug}-thumbnail.png`)}
                   className="px-3 py-1.5 rounded-lg text-xs font-medium border flex items-center gap-1.5"
                   style={{
                     borderColor: "var(--border)",
@@ -362,7 +376,7 @@ export default function ReviewPage() {
                   }}
                 >
                   <span>&#8681;</span> Thumbnail
-                </a>
+                </button>
               )}
             </div>
 

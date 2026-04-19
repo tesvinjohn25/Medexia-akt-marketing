@@ -2,6 +2,7 @@ import { Nav } from "@/components/Nav";
 import { AprilBanner } from "@/components/sections/AprilBanner";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { FeatureHighlights } from "@/components/sections/FeatureHighlights";
+import { Testimonials } from "@/components/sections/Testimonials";
 import { WhyFree } from "@/components/sections/WhyFree";
 import { LiveCounter } from "@/components/sections/LiveCounter";
 import { WhatYouGet } from "@/components/sections/WhatYouGet";
@@ -26,6 +27,8 @@ export default function Home() {
       <HowItWorks />
 
       <FeatureHighlights />
+
+      <Testimonials />
 
       <WhyFree />
 

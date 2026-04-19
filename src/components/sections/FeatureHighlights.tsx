@@ -128,6 +128,23 @@ export function FeatureHighlights() {
                   Revise on your commute, at the gym, between patients. The full AKT
                   curriculum in audio &mdash; no other tool offers this at scale.
                 </p>
+                <blockquote
+                  className="mt-5 italic text-[13px] md:text-[14px] leading-[1.6] max-w-[560px]"
+                  style={{
+                    fontFamily: 'Georgia, "Times New Roman", Times, serif',
+                    color: "rgba(232,236,255,.78)",
+                    borderLeft: "2px solid var(--brand-violet)",
+                    paddingLeft: 12,
+                  }}
+                >
+                  &ldquo;Audiobooks have been the bulk of my revision. Really useful.&rdquo;
+                  <footer
+                    className="mt-1 not-italic text-[10px] tracking-[0.18em] uppercase font-semibold"
+                    style={{ color: "rgba(167,139,250,.75)" }}
+                  >
+                    &mdash; Anna, ST2
+                  </footer>
+                </blockquote>
               </div>
             </div>
           </div>

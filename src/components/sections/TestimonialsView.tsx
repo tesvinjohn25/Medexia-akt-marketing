@@ -24,7 +24,7 @@ export function TestimonialsView({
         ref={ref}
         className={`container-x reveal-group ${visible ? "is-visible" : ""}`}
       >
-        <div className="text-center mb-10">
+        <div className="text-center mb-12 md:mb-16">
           <div
             className="r-blur text-[13px] tracking-[0.22em] uppercase font-semibold"
             style={{ color: "rgba(167,139,250,.85)", "--i": 0 } as React.CSSProperties}
@@ -39,7 +39,7 @@ export function TestimonialsView({
               "--i": 1,
             } as React.CSSProperties}
           >
-            Trainees, not marketing copy.
+            Their words, not ours.
           </h2>
           <p
             className="r-up mt-2 text-[15px] md:text-[16px]"
@@ -50,34 +50,35 @@ export function TestimonialsView({
         </div>
 
         <figure
-          className="r-up relative mx-auto max-w-[820px] overflow-hidden rounded-[20px] px-6 py-8 md:px-12 md:py-12"
+          className="r-up relative mx-auto max-w-[760px] pl-6 md:pl-10"
           style={{
-            background:
-              "linear-gradient(180deg, rgba(17,19,26,.78), rgba(17,19,26,.55))",
-            border: "1px solid rgba(255,255,255,.06)",
-            borderLeftWidth: 4,
-            borderLeftColor: "var(--brand-violet)",
+            borderLeft: "3px solid var(--brand-violet)",
             "--i": 3,
           } as React.CSSProperties}
         >
           <div
-            className="pointer-events-none absolute inset-0"
+            className="pointer-events-none absolute -left-32 -top-24 -z-10 h-[420px] w-[640px]"
             aria-hidden
             style={{
               background:
-                "radial-gradient(620px 320px at 28% 50%, rgba(155,107,255,.16), transparent 70%)",
+                "radial-gradient(closest-side, rgba(155,107,255,.18), transparent 70%)",
+              filter: "blur(20px)",
             }}
           />
           <blockquote
-            className="relative italic text-[22px] md:text-[30px] leading-[1.4]"
-            style={{ fontFamily: SERIF, color: "var(--fg-high)" }}
+            className="italic text-[26px] md:text-[38px] leading-[1.32]"
+            style={{
+              fontFamily: SERIF,
+              color: "var(--fg-high)",
+              letterSpacing: "-0.005em",
+            }}
           >
-            <span aria-hidden style={{ color: "rgba(155,107,255,.55)" }}>&ldquo;</span>
+            <span aria-hidden style={{ color: "rgba(155,107,255,.6)" }}>&ldquo;</span>
             {hero.quote}
-            <span aria-hidden style={{ color: "rgba(155,107,255,.55)" }}>&rdquo;</span>
+            <span aria-hidden style={{ color: "rgba(155,107,255,.6)" }}>&rdquo;</span>
           </blockquote>
           <figcaption
-            className="relative mt-6 text-[11px] tracking-[0.20em] uppercase font-semibold"
+            className="mt-6 text-[11px] tracking-[0.22em] uppercase font-semibold"
             style={{ color: "rgba(167,139,250,.85)" }}
           >
             {attribution(hero)}
@@ -85,26 +86,24 @@ export function TestimonialsView({
         </figure>
 
         {supporting.length > 0 && (
-          <div className="mx-auto mt-4 grid max-w-[820px] gap-4 md:grid-cols-2">
+          <div className="mx-auto mt-14 md:mt-20 grid max-w-[820px] gap-10 md:gap-12 md:grid-cols-2">
             {supporting.map((t, i) => (
               <figure
                 key={t.id}
-                className="r-up rounded-[16px] p-5 md:p-6"
+                className="r-up pl-5"
                 style={{
-                  background:
-                    "linear-gradient(180deg, rgba(17,19,26,.7), rgba(17,19,26,.5))",
-                  border: "1px solid rgba(255,255,255,.06)",
+                  borderLeft: "2px solid rgba(155,107,255,.45)",
                   "--i": 4 + i,
                 } as React.CSSProperties}
               >
                 <blockquote
-                  className="italic text-[15px] md:text-[16px] leading-[1.6]"
+                  className="italic text-[16px] md:text-[18px] leading-[1.55]"
                   style={{ fontFamily: SERIF, color: "rgba(232,236,255,.85)" }}
                 >
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
                 <figcaption
-                  className="mt-4 text-[10px] tracking-[0.18em] uppercase font-semibold"
+                  className="mt-4 text-[10px] tracking-[0.20em] uppercase font-semibold"
                   style={{ color: "rgba(167,139,250,.75)" }}
                 >
                   {attribution(t)}

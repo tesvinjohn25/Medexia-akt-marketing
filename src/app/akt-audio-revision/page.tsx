@@ -5,16 +5,16 @@ import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { aktTopics } from "@/data/akt-topics";
 
 export const metadata: Metadata = {
-  title: "AKT Audio Revision — 50+ Hours Free | Listen on Your Commute",
+  title: "AKT Audio Revision — 90+ Hours Free | Listen on Your Commute",
   description:
-    "Over 50 hours of free AKT audio revision across all 32 RCGP topics. Listen on your commute, at the gym, or between patients. Covers everything from cardiovascular to evidence-based practice.",
+    "Over 90 hours of free AKT audio revision across all 32 RCGP topics. Listen on your commute, at the gym, or between patients. Covers everything from cardiovascular to evidence-based practice.",
   alternates: {
     canonical: "https://medexia-akt.com/akt-audio-revision",
   },
   openGraph: {
-    title: "AKT Audio Revision — 50+ Hours Free",
+    title: "AKT Audio Revision — 90+ Hours Free",
     description:
-      "Over 50 hours of free AKT audio revision across all 32 RCGP topics. Listen anywhere, learn everywhere.",
+      "Over 90 hours of free AKT audio revision across all 32 RCGP topics. Listen anywhere, learn everywhere.",
     type: "website",
     url: "https://medexia-akt.com/akt-audio-revision",
   },
@@ -26,7 +26,7 @@ export default function AktAudioRevisionPage() {
     "@type": "Course",
     name: "AKT Audio Revision by AKT Navigator",
     description:
-      "Over 50 hours of audio revision covering all 32 RCGP AKT curriculum topics. Free for the April and July 2026 sittings.",
+      "Over 90 hours of audio revision covering all 32 RCGP AKT curriculum topics. Free for the April and July 2026 sittings.",
     provider: {
       "@type": "Organization",
       name: "Medexia",
@@ -34,7 +34,7 @@ export default function AktAudioRevisionPage() {
     },
     isAccessibleForFree: true,
     courseMode: "audio",
-    numberOfCredits: "50+ hours",
+    numberOfCredits: "90+ hours",
   };
 
   const clinical = aktTopics.filter((t) => t.category === "Clinical");
@@ -68,7 +68,7 @@ export default function AktAudioRevisionPage() {
             className="mt-4 text-[16px] md:text-[18px] leading-[1.7]"
             style={{ color: "var(--fg-mid)" }}
           >
-            Over 50 hours of audio covering every topic in the RCGP AKT
+            Over 90 hours of audio covering every topic in the RCGP AKT
             curriculum. Built for GP trainees who are short on time and need
             revision that fits around clinical work.
           </p>
@@ -76,7 +76,7 @@ export default function AktAudioRevisionPage() {
           {/* Key stats */}
           <div className="mt-8 grid gap-4 grid-cols-3">
             {[
-              { stat: "50+", label: "Hours of audio" },
+              { stat: "90+", label: "Hours of audio" },
               { stat: "32", label: "AKT topics" },
               { stat: "Free", label: "For April & July" },
             ].map((item) => (
@@ -130,8 +130,8 @@ export default function AktAudioRevisionPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
-              AKT Navigator gives you over 50 hours of audio across all 32
-              curriculum topics. That is more than seven times what Arora Medical
+              AKT Navigator gives you over 90 hours of audio across all 32
+              curriculum topics. That is more than twelve times what Arora Medical
               Education offers (7 hours), and it is completely free for the April
               and July 2026 sittings.
             </p>
@@ -298,7 +298,7 @@ export default function AktAudioRevisionPage() {
                     <td className="p-3 font-semibold" style={{ color: "var(--brand-iris)" }}>
                       AKT Navigator
                     </td>
-                    <td className="p-3">50+ hours</td>
+                    <td className="p-3">90+ hours</td>
                     <td className="p-3">Free</td>
                   </tr>
                   <tr style={{ borderBottom: "1px solid var(--border)" }}>

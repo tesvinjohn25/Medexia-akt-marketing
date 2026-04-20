@@ -5,7 +5,6 @@ import { FeatureHighlights } from "@/components/sections/FeatureHighlights";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { WhyFree } from "@/components/sections/WhyFree";
 import { LiveCounter } from "@/components/sections/LiveCounter";
-import { WhatYouGet } from "@/components/sections/WhatYouGet";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { HeroSection } from "@/components/sections/HeroSection";
@@ -37,8 +36,6 @@ export default function Home() {
       <TopicGrid />
 
       <FAQ />
-
-      <WhatYouGet />
 
       <FinalCTA />
 

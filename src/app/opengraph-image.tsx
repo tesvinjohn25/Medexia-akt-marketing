@@ -112,7 +112,7 @@ export default function OGImage() {
             color: "#9B6BFF",
           }}
         >
-          <span>50+ hrs Audio</span>
+          <span>90+ hrs Audio</span>
           <span style={{ color: "rgba(155,107,255,.4)" }}>|</span>
           <span>Adaptive Learning</span>
           <span style={{ color: "rgba(155,107,255,.4)" }}>|</span>

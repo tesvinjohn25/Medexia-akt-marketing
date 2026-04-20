@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 const SHARE_TEXT =
-  "Hey — found this free AKT revision tool. 50+ hours of audio, mock exams, deep explanations. Free until July. https://medexia-akt.com";
+  "Hey — found this free AKT revision tool. 90+ hours of audio, mock exams, deep explanations. Free until July. https://medexia-akt.com";
 const WHATSAPP_URL = `whatsapp://send?text=${encodeURIComponent(SHARE_TEXT)}`;
 const EMAIL_URL = `mailto:?subject=${encodeURIComponent("Free AKT revision tool")}&body=${encodeURIComponent(SHARE_TEXT)}`;
 

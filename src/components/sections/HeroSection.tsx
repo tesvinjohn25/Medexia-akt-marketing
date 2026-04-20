@@ -9,7 +9,7 @@ import { ExamCountdown } from "./ExamCountdown";
 const SLIDES = [
   { src: "/appshots/01-hero-1206x2622.png", alt: "Your predicted AKT score, updated daily" },
   { src: "/appshots/02-sessions-1206x2622.png", alt: "Smart sessions that target your weakest areas" },
-  { src: "/appshots/03-audio-1206x2622.png", alt: "50+ hours of audio revision across all topics" },
+  { src: "/appshots/03-audio-1206x2622.png", alt: "90+ hours of audio revision across all topics" },
   { src: "/appshots/04-mocks-1206x2622.png", alt: "Generate hundreds of mock exams" },
   { src: "/appshots/05-explanations-1206x2622.png", alt: "Deep explanations written like an examiner taught you" },
   { src: "/appshots/06-everything-1206x2622.png", alt: "Everything you need to pass the AKT" },
@@ -112,7 +112,7 @@ export function HeroSection() {
               style={{ color: "rgba(232,236,255,.72)" }}
             >
               AKT revision that adapts to your weak spots. Deep explanations
-              that teach &mdash; not just tell you the answer. 50+ hours of
+              that teach &mdash; not just tell you the answer. 90+ hours of
               audio you can take anywhere.
             </p>
 

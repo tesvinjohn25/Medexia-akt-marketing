@@ -108,7 +108,7 @@ export function FeatureHighlights() {
                       letterSpacing: "-0.02em",
                     }}
                   >
-                    50+ hours of audio revision.
+                    90+ hours of audio revision.
                   </h3>
                   <span
                     className="inline-flex items-center rounded-full px-2 py-[2px] text-[9px] tracking-[0.14em] uppercase font-bold"

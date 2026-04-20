@@ -14,7 +14,7 @@ export function SchemaJsonLd() {
           description: "Free for the April and July 2026 AKT sittings",
         },
         description:
-          "Free AKT revision for the April & July sittings. 50+ hours of audio, adaptive learning, deep explanations.",
+          "Free AKT revision for the April & July sittings. 90+ hours of audio, adaptive learning, deep explanations.",
         url: "https://app.medexia-akt.com",
         author: {
           "@type": "Organization",
@@ -30,7 +30,7 @@ export function SchemaJsonLd() {
             name: "How long do I need to revise for the AKT?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Most trainees start 3 to 6 months before the exam and study a few evenings a week. AKT Navigator sessions take 15 to 20 minutes with 10 questions picked for your weak areas. You can pause and come back anytime. If you're short on time, there are over 50 hours of audio revision you can listen to on your commute, at the gym, or between patients.",
+              text: "Most trainees start 3 to 6 months before the exam and study a few evenings a week. AKT Navigator sessions take 15 to 20 minutes with 10 questions picked for your weak areas. You can pause and come back anytime. If you're short on time, there are over 90 hours of audio revision you can listen to on your commute, at the gym, or between patients.",
             },
           },
           {
@@ -70,7 +70,7 @@ export function SchemaJsonLd() {
             name: "Is there a free AKT question bank?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "AKT Navigator is completely free for the April and July 2026 sittings. No trial, no credit card, no catch. You get access to over 20,000 questions, 50+ hours of audio revision, adaptive learning, mock exams with debriefs, and an AI supervisor. A competitive pricing plan will be introduced after that.",
+              text: "AKT Navigator is completely free for the April and July 2026 sittings. No trial, no credit card, no catch. You get access to over 20,000 questions, 90+ hours of audio revision, adaptive learning, mock exams with debriefs, and an AI supervisor. A competitive pricing plan will be introduced after that.",
             },
           },
           {
@@ -86,7 +86,7 @@ export function SchemaJsonLd() {
             name: "Can I revise for the AKT while working full time?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "AKT Navigator was built by a GP trainee who knows what it is like balancing work, family, and revision. Sessions are 15 to 20 minutes of targeted questions. The audiobooks give you over 50 hours of content you can absorb on the go. The algorithm remembers where you left off and what you need next. No planning required.",
+              text: "AKT Navigator was built by a GP trainee who knows what it is like balancing work, family, and revision. Sessions are 15 to 20 minutes of targeted questions. The audiobooks give you over 90 hours of content you can absorb on the go. The algorithm remembers where you left off and what you need next. No planning required.",
             },
           },
         ],

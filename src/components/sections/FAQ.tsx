@@ -6,7 +6,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 const FAQS = [
   {
     q: "How long do I need to revise for the AKT?",
-    a: "Most trainees start 3 to 6 months before the exam and study a few evenings a week. But if you're short on time, AKT Navigator is built around that. A typical session is 15 to 20 minutes where you work through 10 questions picked specifically for your weak areas. You can pause and come back anytime. And if you don't even have 15 minutes, put the audiobooks on. Over 50 hours of exam focused content you can listen to on your commute, at the gym, or between patients. It's designed to fit around a busy trainee's life, not replace it.",
+    a: "Most trainees start 3 to 6 months before the exam and study a few evenings a week. But if you're short on time, AKT Navigator is built around that. A typical session is 15 to 20 minutes where you work through 10 questions picked specifically for your weak areas. You can pause and come back anytime. And if you don't even have 15 minutes, put the audiobooks on. Over 90 hours of exam focused content you can listen to on your commute, at the gym, or between patients. It's designed to fit around a busy trainee's life, not replace it.",
   },
   {
     q: "What's the best way to revise for the AKT?",
@@ -14,7 +14,7 @@ const FAQS = [
   },
   {
     q: "What topics does the AKT cover?",
-    a: "The RCGP AKT spans 32 topics across three areas. Clinical topics make up 80% of the exam and include things like cardiovascular, dermatology, mental health, respiratory, and musculoskeletal. Evidence in practice covers critical appraisal and statistics (10%), and organisation and management covers ethics, prescribing, and professional topics (10%). AKT Navigator covers every single one of these 32 topics with questions, over 50 hours of audio, and detailed explanations for each.",
+    a: "The RCGP AKT spans 32 topics across three areas. Clinical topics make up 80% of the exam and include things like cardiovascular, dermatology, mental health, respiratory, and musculoskeletal. Evidence in practice covers critical appraisal and statistics (10%), and organisation and management covers ethics, prescribing, and professional topics (10%). AKT Navigator covers every single one of these 32 topics with questions, over 90 hours of audio, and detailed explanations for each.",
   },
   {
     q: "How many questions are on the AKT?",
@@ -26,7 +26,7 @@ const FAQS = [
   },
   {
     q: "Is there a free AKT question bank?",
-    a: "AKT Navigator is completely free for the April and July 2026 sittings. No trial period, no credit card, no hidden catch. You get full access to over 20,000 questions, 50+ hours of audio revision, adaptive learning sessions, mock exams with detailed debriefs, and an AI supervisor you can ask questions to at any point. A pricing plan will come after that and it will be competitive compared to other AKT resources.",
+    a: "AKT Navigator is completely free for the April and July 2026 sittings. No trial period, no credit card, no hidden catch. You get full access to over 20,000 questions, 90+ hours of audio revision, adaptive learning sessions, mock exams with detailed debriefs, and an AI supervisor you can ask questions to at any point. A pricing plan will come after that and it will be competitive compared to other AKT resources.",
   },
   {
     q: "How do I know if I'm ready for the AKT?",
@@ -34,7 +34,7 @@ const FAQS = [
   },
   {
     q: "Can I revise for the AKT while working full time?",
-    a: "That's exactly why this was built. The founder is a GP trainee who knows what it's like juggling work, family, and AKT revision. Nothing out there made it easier so we built something that did. Sessions are 15 to 20 minutes of targeted questions designed around your weak spots. The audiobooks give you over 50 hours of exam content you can absorb while doing something else. You can study on the bus, between patients, or before bed. The algorithm remembers where you left off and what you need next. No planning, no wasted time, just open it and go.",
+    a: "That's exactly why this was built. The founder is a GP trainee who knows what it's like juggling work, family, and AKT revision. Nothing out there made it easier so we built something that did. Sessions are 15 to 20 minutes of targeted questions designed around your weak spots. The audiobooks give you over 90 hours of exam content you can absorb while doing something else. You can study on the bus, between patients, or before bed. The algorithm remembers where you left off and what you need next. No planning, no wasted time, just open it and go.",
   },
 ];
 

@@ -9,7 +9,7 @@ const FEATURES = [
     accent: "rgba(96,165,250,.7)",
   },
   {
-    text: "50+ hours of audio revision across all 32 AKT topics",
+    text: "90+ hours of audio revision across all 32 AKT topics",
     accent: "rgba(236,72,153,.7)",
   },
   {

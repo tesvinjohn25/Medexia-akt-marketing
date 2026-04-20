@@ -251,7 +251,7 @@ Certification of death, cremation forms, and referral to the coroner are practic
     description:
       "Allergic conditions in primary care including anaphylaxis management, food allergy, drug allergy, immunodeficiency, and immunisation.",
     metaDescription:
-      "Free AKT revision for allergy and immunology. Cover anaphylaxis management, food allergy, drug allergy, and immunodeficiency with questions and 50+ hours of audio.",
+      "Free AKT revision for allergy and immunology. Cover anaphylaxis management, food allergy, drug allergy, and immunodeficiency with questions and 90+ hours of audio.",
     content: `Allergy and immunology questions in the AKT focus on recognition, management, and emergency treatment of allergic conditions. Anaphylaxis management is the highest priority topic and questions about it appear regularly.
 
 Anaphylaxis follows the Resuscitation Council UK guidelines. The first-line treatment is intramuscular adrenaline (1:1000, 0.5ml in adults, 0.3ml in children 6-12, 0.15ml in children under 6) given into the anterolateral thigh. This should be repeated at 5-minute intervals if there is no improvement. After adrenaline, the patient needs airway management, high-flow oxygen, IV fluid resuscitation, and observation. Tryptase levels should be taken at the time of reaction, 1-2 hours after, and at baseline (24 hours or at follow-up). Every patient who experiences anaphylaxis should be prescribed two adrenaline auto-injectors and referred to an allergy clinic.
@@ -645,7 +645,7 @@ Renal stones present with acute colicky loin pain radiating to the groin. Non-co
     description:
       "Respiratory conditions including asthma, COPD, pneumonia, lung cancer, and sleep apnoea. Covers inhaler technique, spirometry, and BTS guidelines.",
     metaDescription:
-      "Free AKT revision for respiratory health. Cover asthma, COPD, pneumonia, lung cancer, and sleep apnoea with 20,000+ questions and 50+ hours of audio.",
+      "Free AKT revision for respiratory health. Cover asthma, COPD, pneumonia, lung cancer, and sleep apnoea with 20,000+ questions and 90+ hours of audio.",
     content: `Respiratory conditions are a major AKT topic. Asthma and COPD are the most heavily tested, but you also need to know about pneumonia, lung cancer recognition, and sleep apnoea.
 
 Asthma diagnosis in adults requires demonstration of variable airflow obstruction. NICE recommends spirometry (FEV1/FVC ratio below 0.7 supports obstruction), bronchodilator reversibility (improvement of 12% and 200ml in FEV1), FeNO (above 40 ppb supports eosinophilic inflammation), and peak flow variability (more than 20% variation). Treatment follows a stepwise approach: SABA reliever as needed (step 1), add low-dose ICS (step 2), add LTRA or LABA (step 3), increase ICS to medium dose (step 4), refer to specialist (step 5). NICE and BTS/SIGN guidelines differ slightly: NICE recommends LTRA before LABA at step 3, while BTS/SIGN recommends LABA first. Check which guideline the question references.

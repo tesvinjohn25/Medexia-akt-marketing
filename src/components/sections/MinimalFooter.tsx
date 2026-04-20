@@ -28,10 +28,20 @@ export function MinimalFooter() {
         {/* Links */}
         <div className="flex items-center gap-5 text-[13px]" style={{ color: "rgba(232,236,255,.45)" }}>
           <a
-            href="/privacy"
+            href="https://app.medexia-akt.com/privacy"
+            target="_blank"
+            rel="noopener"
             className="transition-colors hover:text-white/70"
           >
             Privacy
+          </a>
+          <a
+            href="https://app.medexia-akt.com/terms"
+            target="_blank"
+            rel="noopener"
+            className="transition-colors hover:text-white/70"
+          >
+            Terms
           </a>
           <a
             href="mailto:hello@medexia-akt.com"

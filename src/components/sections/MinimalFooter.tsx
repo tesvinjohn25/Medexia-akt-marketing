@@ -44,7 +44,7 @@ export function MinimalFooter() {
             Terms
           </a>
           <a
-            href="mailto:hello@medexia-akt.com"
+            href="mailto:support@medexia-akt.com"
             className="transition-colors hover:text-white/70"
           >
             Contact

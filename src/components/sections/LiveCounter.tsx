@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const STATIC_STATS = [
-  { value: 50, suffix: "+", label: "hours of audio", accent: "var(--brand-iris)" },
+  { value: 90, suffix: "+", label: "hours of audio", accent: "var(--brand-iris)" },
   { value: 32, suffix: "", label: "AKT topics", accent: "var(--brand-violet)" },
   { value: 20000, suffix: "+", label: "questions", accent: "rgba(52,211,153,.85)" },
 ];
@@ -74,7 +74,7 @@ export function LiveCounter() {
   const showLive = userCount !== null && userCount >= 20;
 
   const liveAnimated = useCountUp(userCount ?? 0, 1200, visible && showLive);
-  const audioAnimated = useCountUp(50, 1000, visible);
+  const audioAnimated = useCountUp(90, 1000, visible);
   const topicsAnimated = useCountUp(32, 800, visible);
   const questionsAnimated = useCountUp(20000, 1400, visible);
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
-import { FAQ, FAQS } from "@/components/sections/FAQ";
+import { FAQ } from "@/components/sections/FAQ";
+import { FAQS } from "@/data/faq";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 

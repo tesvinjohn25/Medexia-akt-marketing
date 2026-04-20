@@ -40,6 +40,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.8,
     },
+    {
+      url: "https://medexia-akt.com/topics",
+      lastModified: new Date("2026-04-20"),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    {
+      url: "https://medexia-akt.com/faq",
+      lastModified: new Date("2026-04-20"),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
   ];
 
   return [

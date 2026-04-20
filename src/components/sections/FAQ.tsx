@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
-const FAQS = [
+export const FAQS = [
   {
     q: "How long do I need to revise for the AKT?",
     a: "Most trainees start 3 to 6 months before the exam and study a few evenings a week. But if you're short on time, AKT Navigator is built around that. A typical session is 15 to 20 minutes where you work through 10 questions picked specifically for your weak areas. You can pause and come back anytime. And if you don't even have 15 minutes, put the audiobooks on. Over 90 hours of exam focused content you can listen to on your commute, at the gym, or between patients. It's designed to fit around a busy trainee's life, not replace it.",
@@ -57,7 +57,9 @@ function ChevronIcon({ open }: { open: boolean }) {
   );
 }
 
-export function FAQ() {
+export function FAQ({
+  showHeader = true,
+}: { showHeader?: boolean } = {}) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const { ref, visible } = useScrollReveal();
 
@@ -67,24 +69,28 @@ export function FAQ() {
         ref={ref}
         className={`container-x reveal-group ${visible ? "is-visible" : ""}`}
       >
-        <p
-          className="r-up text-center text-[11px] md:text-[12px] font-semibold tracking-[0.12em] uppercase"
-          style={{ color: "var(--fg-muted)", "--i": 0 } as React.CSSProperties}
-        >
-          Common Questions
-        </p>
-        <h2
-          className="r-blur mt-3 text-center text-[24px] md:text-[32px] font-semibold"
-          style={{
-            fontFamily: "var(--font-display)",
-            letterSpacing: "-0.03em",
-            "--i": 1,
-          } as React.CSSProperties}
-        >
-          Everything you need to know about the AKT
-        </h2>
+        {showHeader && (
+          <>
+            <p
+              className="r-up text-center text-[11px] md:text-[12px] font-semibold tracking-[0.12em] uppercase"
+              style={{ color: "var(--fg-muted)", "--i": 0 } as React.CSSProperties}
+            >
+              Common Questions
+            </p>
+            <h2
+              className="r-blur mt-3 text-center text-[24px] md:text-[32px] font-semibold"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.03em",
+                "--i": 1,
+              } as React.CSSProperties}
+            >
+              Everything you need to know about the AKT
+            </h2>
+          </>
+        )}
 
-        <div className="mx-auto mt-10 max-w-[720px] space-y-2">
+        <div className={`mx-auto ${showHeader ? "mt-10" : ""} max-w-[720px] space-y-2`}>
           {FAQS.map((faq, i) => {
             const isOpen = openIndex === i;
             return (

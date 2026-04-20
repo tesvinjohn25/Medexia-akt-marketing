@@ -34,7 +34,9 @@ const CATEGORY_META: Record<
   },
 };
 
-export function TopicGrid() {
+export function TopicGrid({
+  showHeader = true,
+}: { showHeader?: boolean } = {}) {
   const { ref, visible } = useScrollReveal();
 
   return (
@@ -43,24 +45,28 @@ export function TopicGrid() {
         ref={ref}
         className={`container-x reveal-group ${visible ? "is-visible" : ""}`}
       >
-        <p
-          className="r-up text-center text-[11px] md:text-[12px] font-semibold tracking-[0.12em] uppercase"
-          style={{ color: "var(--fg-muted)", "--i": 0 } as React.CSSProperties}
-        >
-          Full RCGP Curriculum
-        </p>
-        <h2
-          className="r-blur mt-3 text-center text-[24px] md:text-[32px] font-semibold"
-          style={{
-            fontFamily: "var(--font-display)",
-            letterSpacing: "-0.03em",
-            "--i": 1,
-          } as React.CSSProperties}
-        >
-          32 AKT topics. Audio + questions for every one.
-        </h2>
+        {showHeader && (
+          <>
+            <p
+              className="r-up text-center text-[11px] md:text-[12px] font-semibold tracking-[0.12em] uppercase"
+              style={{ color: "var(--fg-muted)", "--i": 0 } as React.CSSProperties}
+            >
+              Full RCGP Curriculum
+            </p>
+            <h2
+              className="r-blur mt-3 text-center text-[24px] md:text-[32px] font-semibold"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.03em",
+                "--i": 1,
+              } as React.CSSProperties}
+            >
+              32 AKT topics. Audio + questions for every one.
+            </h2>
+          </>
+        )}
 
-        <div className="mt-10 space-y-8">
+        <div className={`${showHeader ? "mt-10" : ""} space-y-8`}>
           {CATEGORIES.map((cat, ci) => (
             <div
               key={cat}

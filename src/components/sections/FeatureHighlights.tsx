@@ -104,7 +104,7 @@ export function FeatureHighlights() {
                 <HeadphonesIcon />
               </div>
               <div>
-                <div className="flex items-center gap-3 flex-wrap">
+                <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-3 md:flex-wrap">
                   <h3
                     className="text-[22px] md:text-[26px] leading-[1.15] font-semibold"
                     style={{
@@ -115,7 +115,7 @@ export function FeatureHighlights() {
                     90+ hours. The whole RCGP curriculum.
                   </h3>
                   <span
-                    className="inline-flex items-center rounded-full px-2 py-[2px] text-[9px] tracking-[0.14em] uppercase font-bold"
+                    className="inline-flex self-start items-center rounded-full px-2 py-[2px] text-[9px] tracking-[0.14em] uppercase font-bold"
                     style={{
                       background: "rgba(236,72,153,.12)",
                       border: "1px solid rgba(236,72,153,.25)",

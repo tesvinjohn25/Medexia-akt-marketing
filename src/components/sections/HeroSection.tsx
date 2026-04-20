@@ -11,8 +11,8 @@ export function HeroSection() {
 
       <div className="relative z-[1] container-x pt-20 md:pt-24 pb-12 md:pb-16">
         <div className="flex flex-col md:flex-row md:items-center md:gap-12 lg:gap-16">
-          {/* Left on desktop: text content */}
-          <div className="order-2 md:order-1 md:flex-1 max-w-[580px]">
+          {/* Text — first on mobile (top) and desktop (left) */}
+          <div className="md:flex-1 max-w-[580px]">
             {/* Badges */}
             <div className="flex items-center gap-2 flex-wrap">
               <div
@@ -90,9 +90,9 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Right on desktop / top on mobile: single phone */}
-          <div className="order-1 md:order-2 md:flex-1 flex justify-center mb-8 md:mb-0">
-            <div className="relative" style={{ maxWidth: 320 }}>
+          {/* Phone — below text on mobile, right on desktop */}
+          <div className="md:flex-1 flex justify-center mt-8 md:mt-0">
+            <div className="relative w-full max-w-[220px] md:max-w-[300px] lg:max-w-[320px]">
               {/* Aura glow */}
               <div
                 className="pointer-events-none absolute inset-0"

@@ -14,7 +14,7 @@ export function NotesVsAudio() {
       >
         <div className="mx-auto max-w-[960px]">
           <h2
-            className="r-blur text-center text-[28px] md:text-[40px] lg:text-[44px] font-semibold leading-[1.08]"
+            className="r-blur text-center text-[24px] md:text-[40px] lg:text-[44px] font-semibold leading-[1.08]"
             style={{
               fontFamily: "var(--font-display)",
               letterSpacing: "-0.03em",
@@ -51,7 +51,7 @@ export function NotesVsAudio() {
                 The old way
               </div>
               <h3
-                className="text-[26px] md:text-[32px] font-semibold mb-6"
+                className="text-[22px] md:text-[32px] font-semibold mb-4 md:mb-6"
                 style={{
                   fontFamily: "var(--font-display)",
                   letterSpacing: "-0.02em",
@@ -62,10 +62,9 @@ export function NotesVsAudio() {
               </h3>
 
               {/* Notebook illustration */}
-              <div className="flex-1 flex items-center justify-center py-4">
+              <div className="flex-1 flex items-center justify-center py-2 md:py-4">
                 <svg
-                  width="200"
-                  height="150"
+                  className="w-[150px] md:w-[200px] h-auto"
                   viewBox="0 0 240 180"
                   fill="none"
                   aria-hidden
@@ -140,11 +139,10 @@ export function NotesVsAudio() {
               </h3>
 
               {/* Phone screenshot */}
-              <div className="flex-1 flex items-center justify-center py-2 relative">
+              <div className="flex-1 flex items-center justify-center py-2 md:py-4 relative">
                 <div
-                  className="overflow-hidden rounded-[20px]"
+                  className="overflow-hidden rounded-[20px] w-[130px] md:w-[170px]"
                   style={{
-                    maxWidth: 170,
                     boxShadow:
                       "0 18px 60px rgba(236,72,153,.38), 0 0 80px rgba(236,72,153,.14)",
                   }}

@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 export const alt =
-  "Medexia AKT Navigator — Free MRCGP AKT revision for April & July";
+  "Medexia AKT Navigator — The whole AKT, in 90 hours of audio. Free for April & July 2026.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -17,12 +17,13 @@ export default function OGImage() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "60px 80px",
-          background: "linear-gradient(135deg, #0B0D12 0%, #110C20 40%, #0E0A1A 100%)",
+          background:
+            "linear-gradient(135deg, #0B0D12 0%, #110C20 40%, #0E0A1A 100%)",
           position: "relative",
           overflow: "hidden",
         }}
       >
-        {/* Glow orbs */}
+        {/* Cosmic glow orbs — same palette as the site hero */}
         <div
           style={{
             position: "absolute",
@@ -31,7 +32,8 @@ export default function OGImage() {
             width: "500px",
             height: "500px",
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(109,106,232,.25), transparent 65%)",
+            background:
+              "radial-gradient(circle, rgba(109,106,232,.25), transparent 65%)",
           }}
         />
         <div
@@ -42,17 +44,18 @@ export default function OGImage() {
             width: "450px",
             height: "450px",
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(155,107,255,.20), transparent 65%)",
+            background:
+              "radial-gradient(circle, rgba(155,107,255,.20), transparent 65%)",
           }}
         />
 
-        {/* Top line: brand */}
+        {/* Brand row */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             gap: "12px",
-            marginBottom: "32px",
+            marginBottom: "36px",
           }}
         >
           <span
@@ -76,56 +79,57 @@ export default function OGImage() {
           </span>
         </div>
 
-        {/* Headline */}
+        {/* Headline — direct echo of homepage H1, muted setup + bold payoff */}
         <div
           style={{
-            fontSize: "72px",
+            fontSize: "78px",
             fontWeight: 800,
-            color: "#F5F7FF",
-            lineHeight: 1.05,
+            color: "rgba(232,236,255,.55)",
+            lineHeight: 1.02,
             letterSpacing: "-0.04em",
-            marginBottom: "24px",
           }}
         >
-          RCGP AKT Revision
+          The whole AKT.
+        </div>
+        <div
+          style={{
+            fontSize: "78px",
+            fontWeight: 800,
+            color: "#F5F7FF",
+            lineHeight: 1.02,
+            letterSpacing: "-0.04em",
+            marginBottom: "26px",
+          }}
+        >
+          In 90 hours of audio.
         </div>
 
-        {/* Divider accent */}
+        {/* Accent divider */}
         <div
           style={{
             width: "80px",
             height: "4px",
             borderRadius: "2px",
             background: "linear-gradient(90deg, #6D6AE8, #9B6BFF)",
-            marginBottom: "28px",
+            marginBottom: "20px",
           }}
         />
 
-        {/* Features line */}
+        {/* Subline — names the three homepage pillars */}
         <div
           style={{
             display: "flex",
-            alignItems: "center",
-            gap: "16px",
-            fontSize: "28px",
-            fontWeight: 600,
-            color: "#9B6BFF",
+            fontSize: "26px",
+            fontWeight: 500,
+            color: "rgba(167,139,250,.9)",
+            letterSpacing: "-0.005em",
           }}
         >
-          <span>90+ hrs Audio</span>
-          <span style={{ color: "rgba(155,107,255,.4)" }}>|</span>
-          <span>Adaptive Learning</span>
-          <span style={{ color: "rgba(155,107,255,.4)" }}>|</span>
-          <span>Deep Explanations</span>
+          The most efficient way to revise &mdash; audio &middot; algorithm &middot; mocks.
         </div>
 
         {/* Free badge */}
-        <div
-          style={{
-            display: "flex",
-            marginTop: "36px",
-          }}
-        >
+        <div style={{ display: "flex", marginTop: "40px" }}>
           <div
             style={{
               display: "flex",
@@ -140,11 +144,11 @@ export default function OGImage() {
               letterSpacing: "0.04em",
             }}
           >
-            FREE FOR APRIL & JULY 2026
+            FREE FOR APRIL &amp; JULY 2026
           </div>
         </div>
       </div>
     ),
-    { ...size }
+    { ...size },
   );
 }

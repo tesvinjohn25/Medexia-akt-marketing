@@ -22,7 +22,7 @@ export function HeroSection() {
         className="relative z-[1] container-x pb-12 md:pb-16"
         style={{
           paddingTop:
-            "calc(env(safe-area-inset-top, 0px) + clamp(64px, 7vw, 88px))",
+            "calc(env(safe-area-inset-top, 0px) + clamp(48px, 5vw, 72px))",
         }}
       >
         <div className="flex flex-col md:flex-row md:items-center md:gap-12 lg:gap-16">
@@ -86,29 +86,30 @@ export function HeroSection() {
               </span>
             </div>
 
-            {/* Headline */}
+            {/* Headline — category-shift framing: put notes aside / audiobooks are new */}
             <h1
-              className="mt-4 text-[34px] md:text-[48px] lg:text-[56px] leading-[1.02]"
+              className="mt-4 text-[30px] md:text-[48px] lg:text-[56px] leading-[1.04]"
               style={{
                 fontFamily: "var(--font-display)",
                 letterSpacing: "-0.04em",
                 textShadow: "0 22px 70px rgba(0,0,0,.7)",
               }}
             >
-              <span style={{ color: "rgba(232,236,255,.62)" }}>
-                The whole AKT.
+              <span style={{ color: "rgba(232,236,255,.58)" }}>
+                Put the notes aside.
               </span>
               <br />
-              In 90 hours of audio.
+              Audiobooks are<br className="md:hidden" /> the new way.
             </h1>
 
             {/* Two-paragraph subhead — audio + algorithm */}
             <p
               className="mt-4 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
-              style={{ color: "rgba(232,236,255,.75)" }}
+              style={{ color: "rgba(232,236,255,.78)" }}
             >
-              Audiobooks cover the entire RCGP curriculum. Listen on the drive,
-              at the gym, between patients &mdash; while you live your life.
+              The most efficient way to revise for the AKT. 90 hours of audio
+              covers the whole RCGP curriculum &mdash; on the drive, at the gym,
+              between patients. While you live your life.
             </p>
             <p
               className="mt-3 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"

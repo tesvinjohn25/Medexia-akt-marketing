@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { ExamCountdown } from "./ExamCountdown";
 
 export function HeroSection() {
@@ -9,7 +8,13 @@ export function HeroSection() {
       <div className="hero-stars" aria-hidden />
       <div className="hero-noise" />
 
-      <div className="relative z-[1] container-x pt-20 md:pt-24 pb-12 md:pb-16">
+      <div
+        className="relative z-[1] container-x pb-12 md:pb-16"
+        style={{
+          paddingTop:
+            "calc(env(safe-area-inset-top, 0px) + clamp(96px, 10vw, 120px))",
+        }}
+      >
         <div className="flex flex-col md:flex-row md:items-center md:gap-12 lg:gap-16">
           {/* Text — first on mobile (top) and desktop (left) */}
           <div className="md:flex-1 max-w-[580px]">
@@ -90,35 +95,41 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Phone — below text on mobile, right on desktop */}
+          {/* Video — below text on mobile, right on desktop.
+              Books dissolving into headphones = notes → audio transformation. */}
           <div className="md:flex-1 flex justify-center mt-8 md:mt-0">
-            <div className="relative w-full max-w-[220px] md:max-w-[300px] lg:max-w-[320px]">
+            <div className="relative w-full max-w-[340px] md:max-w-[460px] lg:max-w-[520px]">
               {/* Aura glow */}
               <div
                 className="pointer-events-none absolute inset-0"
                 aria-hidden
                 style={{
                   background:
-                    "radial-gradient(closest-side, rgba(236,72,153,.22) 0%, rgba(167,139,250,.12) 35%, transparent 70%)",
-                  filter: "blur(24px)",
-                  transform: "scale(1.35)",
+                    "radial-gradient(closest-side, rgba(236,72,153,.22) 0%, rgba(167,139,250,.14) 40%, transparent 75%)",
+                  filter: "blur(28px)",
+                  transform: "scale(1.2)",
                 }}
               />
               <div
-                className="relative overflow-hidden rounded-[28px]"
+                className="relative overflow-hidden rounded-[22px] md:rounded-[28px]"
                 style={{
                   boxShadow:
-                    "0 28px 100px rgba(236,72,153,.34), 0 0 120px rgba(167,139,250,.14)",
+                    "0 28px 100px rgba(236,72,153,.32), 0 0 120px rgba(167,139,250,.14)",
                 }}
               >
-                <Image
-                  src="/appshots/02-audio-1206x2622.png"
-                  alt="AKT Navigator audio library — 90+ hours of MRCGP revision, Must Listen Before Your Exam, topic progress tracking"
-                  width={1206}
-                  height={2622}
-                  className="w-full h-auto"
-                  priority
-                />
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  poster="/video/notes-to-audio-poster.jpg"
+                  aria-label="Textbooks dissolving into headphones — the shift from notes to audio revision"
+                  className="block w-full h-auto"
+                >
+                  <source src="/video/notes-to-audio.webm" type="video/webm" />
+                  <source src="/video/notes-to-audio.mp4" type="video/mp4" />
+                </video>
               </div>
             </div>
           </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { AlgorithmViz } from "./AlgorithmViz";
 
 export function FeatureHighlights() {
   const { ref, visible } = useScrollReveal();
@@ -114,10 +115,11 @@ export function FeatureHighlights() {
               style={{ color: "rgba(232,236,255,.68)" }}
             >
               It calibrates where you are first, then every session is rebuilt
-              around your weak spots. The algorithm picks the 10 questions you
-              need most right now. No planning &mdash; you press start, it
+              around your weak spots. No planning &mdash; you press start, it
               handles the rest.
             </p>
+
+            <AlgorithmViz />
           </div>
 
           {/* Mocks + AI debrief */}

@@ -3,14 +3,27 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Hero video wrapper — keeps the mp4/webm tags in a client boundary so we
- * can wire up loop-reliability handlers. Three known video-loop failure
- * modes we defend against:
- *   1. preload="metadata" leaves the back half of the file unloaded, so
- *      the loop can stall when reaching the end.
- *   2. Safari/Chrome pause background tabs; the video doesn't always
- *      resume on refocus.
- *   3. Some devices silently fail the HTMLMediaElement `loop` attribute.
+ * Hero video — bulletproof loop.
+ *
+ * HTMLMediaElement's `loop` attribute silently fails often enough that we
+ * defend in depth:
+ *
+ *   1. preload="auto"              — ensures the full file is loaded before
+ *                                    the first loop-point, no tail stall.
+ *   2. canplay listener            — start playback as soon as enough data
+ *                                    exists (earlier than mount-time play()).
+ *   3. ended listener              — explicit restart if loop attr fails.
+ *   4. visibilitychange listener   — resume when tab regains focus.
+ *   5. IntersectionObserver        — resume when the element scrolls back
+ *                                    into view (Safari/iOS pause off-screen
+ *                                    video to save battery; no event fires
+ *                                    on scroll-back, we have to poll).
+ *   6. 2.5s safety interval        — last resort; if the element is paused
+ *                                    for any other reason we'll notice
+ *                                    within ~2.5 seconds and call play().
+ *
+ * All six converge on a single `resume()` function that only calls play()
+ * when the element is actually paused (and not mid-seek).
  */
 export function HeroVideo() {
   const ref = useRef<HTMLVideoElement>(null);
@@ -19,25 +32,42 @@ export function HeroVideo() {
     const v = ref.current;
     if (!v) return;
 
-    const play = () => {
-      v.play().catch(() => {
-        /* autoplay blocked — poster remains. */
-      });
+    const resume = () => {
+      if (v.paused && !v.seeking) {
+        v.play().catch(() => {
+          /* autoplay blocked; poster remains until next attempt */
+        });
+      }
     };
 
-    play();
+    resume();
 
+    const onCanPlay = () => resume();
+    const onEnded = () => resume();
     const onVisibility = () => {
-      if (!document.hidden && v.paused && !v.ended) play();
+      if (!document.hidden) resume();
     };
-    const onEnded = () => play(); // defensive: redundant with loop attr
 
-    document.addEventListener("visibilitychange", onVisibility);
+    v.addEventListener("canplay", onCanPlay);
     v.addEventListener("ended", onEnded);
+    document.addEventListener("visibilitychange", onVisibility);
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) resume();
+      },
+      { threshold: 0.1 },
+    );
+    io.observe(v);
+
+    const interval = window.setInterval(resume, 2500);
 
     return () => {
-      document.removeEventListener("visibilitychange", onVisibility);
+      v.removeEventListener("canplay", onCanPlay);
       v.removeEventListener("ended", onEnded);
+      document.removeEventListener("visibilitychange", onVisibility);
+      io.disconnect();
+      window.clearInterval(interval);
     };
   }, []);
 

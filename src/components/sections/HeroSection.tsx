@@ -86,20 +86,20 @@ export function HeroSection() {
               </span>
             </div>
 
-            {/* Headline — category-shift framing: put notes aside / audiobooks are new */}
+            {/* Headline */}
             <h1
-              className="mt-4 text-[30px] md:text-[48px] lg:text-[56px] leading-[1.04]"
+              className="mt-4 text-[34px] md:text-[48px] lg:text-[56px] leading-[1.02]"
               style={{
                 fontFamily: "var(--font-display)",
                 letterSpacing: "-0.04em",
                 textShadow: "0 22px 70px rgba(0,0,0,.7)",
               }}
             >
-              <span style={{ color: "rgba(232,236,255,.58)" }}>
-                Put the notes aside.
+              <span style={{ color: "rgba(232,236,255,.62)" }}>
+                The whole AKT.
               </span>
               <br />
-              Audiobooks are<br className="md:hidden" /> the new way.
+              In 90 hours of audio.
             </h1>
 
             {/* Two-paragraph subhead — audio + algorithm */}
@@ -107,9 +107,8 @@ export function HeroSection() {
               className="mt-4 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
               style={{ color: "rgba(232,236,255,.78)" }}
             >
-              The most efficient way to revise for the AKT. 90 hours of audio
-              covers the whole RCGP curriculum &mdash; on the drive, at the gym,
-              between patients. While you live your life.
+              Audiobooks cover the entire RCGP curriculum. Listen on the drive,
+              at the gym, between patients &mdash; while you live your life.
             </p>
             <p
               className="mt-3 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"

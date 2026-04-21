@@ -127,7 +127,7 @@ export function AlgorithmViz() {
         : "rgba(167,139,250,.85)";
 
   return (
-    <div ref={ref} className="mt-5">
+    <div ref={ref} className="mt-6 text-center">
       <div
         className="text-[11px] md:text-[12px] tracking-[0.14em] uppercase font-semibold transition-colors duration-300"
         style={{ color: labelColor, minHeight: "1.4em" }}
@@ -139,7 +139,7 @@ export function AlgorithmViz() {
       <div
         role="img"
         aria-label="Visualisation of the algorithm testing 32 AKT topics, finding weak spots and drilling them to pass level."
-        className="mt-3 grid grid-cols-8 gap-[8px] max-w-[260px]"
+        className="mt-4 mx-auto grid grid-cols-8 gap-[8px] max-w-[260px]"
       >
         {Array.from({ length: TOTAL }).map((_, i) => {
           const weak = WEAK_SPOTS.find((w) => w.idx === i);

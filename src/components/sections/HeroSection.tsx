@@ -22,7 +22,7 @@ export function HeroSection() {
         className="relative z-[1] container-x pb-12 md:pb-16"
         style={{
           paddingTop:
-            "calc(env(safe-area-inset-top, 0px) + clamp(96px, 10vw, 120px))",
+            "calc(env(safe-area-inset-top, 0px) + clamp(64px, 7vw, 88px))",
         }}
       >
         <div className="flex flex-col md:flex-row md:items-center md:gap-12 lg:gap-16">

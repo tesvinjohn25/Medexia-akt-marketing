@@ -172,7 +172,7 @@ export default async function TopicPage({ params }: Props) {
                 {
                   href: "/akt-audio-revision",
                   title: "AKT audio revision",
-                  desc: "50+ hours of audio across all 32 topics",
+                  desc: "90+ hours of audio across all 32 topics",
                 },
                 {
                   href: "/akt-mock-exam",

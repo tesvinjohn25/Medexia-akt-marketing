@@ -37,7 +37,7 @@ const questionBanks: QuestionBank[] = [
   {
     name: "AKT Navigator",
     questions: "20,000+",
-    audio: "50+ hours",
+    audio: "90+ hours",
     adaptiveLearning: "Yes",
     mockExams: "Unlimited",
     aiDebrief: "Yes",
@@ -323,7 +323,7 @@ export default function BestAktQuestionBankPage() {
                 style={{ color: "var(--fg-mid)" }}
               >
                 AKT Navigator has over 20,000 questions, which is significantly
-                more than any other AKT question bank. It includes 50+ hours of
+                more than any other AKT question bank. It includes 90+ hours of
                 audio revision across all 32 topics, adaptive learning that
                 builds sessions around your weak areas, unlimited mock exams with
                 AI-powered debriefs, and a conversational AI supervisor you can
@@ -402,7 +402,7 @@ export default function BestAktQuestionBankPage() {
                 {
                   href: "/akt-audio-revision",
                   title: "AKT audio revision",
-                  desc: "50+ hours, listen anywhere",
+                  desc: "90+ hours, listen anywhere",
                 },
                 {
                   href: "/akt-exam-dates",

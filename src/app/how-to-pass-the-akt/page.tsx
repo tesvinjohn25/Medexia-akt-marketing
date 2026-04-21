@@ -206,7 +206,7 @@ export default function HowToPassTheAktPage() {
                 className="font-medium transition-colors"
                 style={{ color: "var(--brand-violet-light)" }}
               >
-                50+ hours of audio revision
+                90+ hours of audio revision
               </a>{" "}
               during your commute, gym sessions, or any time you are away from a
               screen.
@@ -472,7 +472,7 @@ export default function HowToPassTheAktPage() {
                 {
                   href: "/akt-audio-revision",
                   title: "Audio revision",
-                  desc: "50+ hours across all 32 topics",
+                  desc: "90+ hours across all 32 topics",
                 },
                 {
                   href: "/best-akt-question-bank",

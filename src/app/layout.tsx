@@ -9,11 +9,11 @@ export const metadata: Metadata = {
   },
   title: {
     default:
-      "AKT Navigator by Medexia — Free AKT Revision | 20,000+ Questions, 50+ Hours Audio",
+      "AKT Navigator by Medexia — Free AKT Revision | 20,000+ Questions, 90+ Hours Audio",
     template: "%s | AKT Navigator by Medexia",
   },
   description:
-    "Free RCGP AKT revision for GP trainees. 20,000+ questions, 50+ hours of audio, adaptive learning, unlimited mock exams and AI-powered debriefs. Free for the April and July 2026 sittings.",
+    "Free RCGP AKT revision for GP trainees. 20,000+ questions, 90+ hours of audio, adaptive learning, unlimited mock exams and AI-powered debriefs. Free for the April and July 2026 sittings.",
   keywords: [
     "AKT",
     "AKT Navigator",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AKT Navigator by Medexia — Free AKT Revision for GP Trainees",
     description:
-      "Free RCGP AKT revision for GP trainees. 20,000+ questions, 50+ hours of audio, adaptive learning, unlimited mock exams and AI-powered debriefs.",
+      "Free RCGP AKT revision for GP trainees. 20,000+ questions, 90+ hours of audio, adaptive learning, unlimited mock exams and AI-powered debriefs.",
     type: "website",
     url: "https://medexia-akt.com",
     siteName: "AKT Navigator by Medexia",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "AKT Navigator by Medexia — Free AKT Revision for GP Trainees",
     description:
-      "Free RCGP AKT revision for GP trainees. 20,000+ questions, 50+ hours of audio, adaptive learning, unlimited mock exams and AI-powered debriefs.",
+      "Free RCGP AKT revision for GP trainees. 20,000+ questions, 90+ hours of audio, adaptive learning, unlimited mock exams and AI-powered debriefs.",
     images: ["https://medexia-akt.com/og-image.jpg"],
   },
   robots: {
@@ -60,7 +60,7 @@ const jsonLd = {
   name: "AKT Navigator",
   alternateName: "AKT Navigator by Medexia",
   description:
-    "Free RCGP AKT revision for GP trainees. 20,000+ questions, 50+ hours of audio, adaptive learning, unlimited mock exams and AI-powered debriefs.",
+    "Free RCGP AKT revision for GP trainees. 20,000+ questions, 90+ hours of audio, adaptive learning, unlimited mock exams and AI-powered debriefs.",
   url: "https://medexia-akt.com",
   applicationCategory: "EducationalApplication",
   operatingSystem: "Web",

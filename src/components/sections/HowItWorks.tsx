@@ -16,7 +16,7 @@ const STEPS = [
   },
   {
     title: "Listen anywhere",
-    description: "50+ hours of audio you can take on your commute, walk, or gym session.",
+    description: "90+ hours of audio you can take on your commute, walk, or gym session.",
     image: "/appshots/03-audio-1206x2622.png",
   },
 ];

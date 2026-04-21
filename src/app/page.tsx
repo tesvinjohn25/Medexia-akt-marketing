@@ -1,17 +1,11 @@
 import { Nav } from "@/components/Nav";
 import { AprilBanner } from "@/components/sections/AprilBanner";
-import { HowItWorks } from "@/components/sections/HowItWorks";
 import { FeatureHighlights } from "@/components/sections/FeatureHighlights";
-import { Testimonials } from "@/components/sections/Testimonials";
-import { WhyFree } from "@/components/sections/WhyFree";
-import { LiveCounter } from "@/components/sections/LiveCounter";
-import { WhatYouGet } from "@/components/sections/WhatYouGet";
+import { SocialProof } from "@/components/sections/SocialProof";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { StickyMobileCTA } from "@/components/sections/StickyMobileCTA";
-import { TopicGrid } from "@/components/sections/TopicGrid";
-import { FAQ } from "@/components/sections/FAQ";
 import { SchemaJsonLd } from "@/components/SchemaJsonLd";
 
 export default function Home() {
@@ -24,21 +18,9 @@ export default function Home() {
 
       <AprilBanner />
 
-      <HowItWorks />
-
       <FeatureHighlights />
 
-      <Testimonials />
-
-      <WhyFree />
-
-      <LiveCounter />
-
-      <TopicGrid />
-
-      <FAQ />
-
-      <WhatYouGet />
+      <SocialProof />
 
       <FinalCTA />
 

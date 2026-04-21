@@ -1,11 +1,21 @@
 import { ExamCountdown } from "./ExamCountdown";
+import { HeroVideo } from "./HeroVideo";
 
 export function HeroSection() {
   return (
     <section className="relative overflow-hidden">
-      {/* Cosmic nebula background */}
-      <div className="hero-nebula" aria-hidden />
-      <div className="hero-stars" aria-hidden />
+      {/* Black backdrop that lets the video's own cosmic-dark pixels blend
+          straight into the section. Fades to transparent at the bottom so
+          the page's global cosmic body-bg bleeds into the next sections. */}
+      <div
+        className="pointer-events-none absolute inset-0 z-[0]"
+        aria-hidden
+        style={{
+          background:
+            "linear-gradient(180deg, #000 0%, #000 58%, rgba(7,5,14,0.85) 82%, transparent 100%)",
+        }}
+      />
+      {/* Subtle film-grain noise for texture — no purple clouds in the hero */}
       <div className="hero-noise" />
 
       <div
@@ -17,39 +27,22 @@ export function HeroSection() {
       >
         <div className="flex flex-col md:flex-row md:items-center md:gap-12 lg:gap-16">
           {/* Video — ABOVE text on mobile (first thing users see), right on desktop.
-              Books dissolving into headphones = notes → audio transformation. */}
+              Books dissolving into headphones = notes → audio transformation.
+              Wrapped in HeroVideo (client) for loop-reliability handlers. */}
           <div className="order-1 md:order-2 md:flex-1 flex justify-center mb-6 md:mb-0">
             <div className="relative w-full max-w-[520px] md:max-w-[560px] lg:max-w-[620px]">
-              {/* Soft aura behind — bleeds into the nebula */}
+              {/* Soft aura bleeds into the black backdrop */}
               <div
                 className="pointer-events-none absolute inset-0"
                 aria-hidden
                 style={{
                   background:
                     "radial-gradient(closest-side, rgba(236,72,153,.18) 0%, rgba(167,139,250,.10) 45%, transparent 80%)",
-                  filter: "blur(32px)",
+                  filter: "blur(34px)",
                   transform: "scale(1.2)",
                 }}
               />
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                poster="/video/notes-to-audio-poster.jpg"
-                aria-label="Textbooks dissolving into headphones — the shift from notes to audio revision"
-                className="relative block w-full h-auto"
-                style={{
-                  maskImage:
-                    "radial-gradient(ellipse 85% 80% at center, black 55%, transparent 92%)",
-                  WebkitMaskImage:
-                    "radial-gradient(ellipse 85% 80% at center, black 55%, transparent 92%)",
-                }}
-              >
-                <source src="/video/notes-to-audio.webm" type="video/webm" />
-                <source src="/video/notes-to-audio.mp4" type="video/mp4" />
-              </video>
+              <HeroVideo />
             </div>
           </div>
 
@@ -109,14 +102,20 @@ export function HeroSection() {
               In 90 hours of audio.
             </h1>
 
-            {/* Subtext */}
+            {/* Two-paragraph subhead — audio + algorithm */}
             <p
               className="mt-4 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
-              style={{ color: "rgba(232,236,255,.72)" }}
+              style={{ color: "rgba(232,236,255,.75)" }}
             >
-              Audiobooks are the most efficient way to revise for the AKT. The
-              entire RCGP curriculum, in your earphones &mdash; on the drive,
-              at the gym, between patients. While you live your life.
+              Audiobooks cover the entire RCGP curriculum. Listen on the drive,
+              at the gym, between patients &mdash; while you live your life.
+            </p>
+            <p
+              className="mt-3 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
+              style={{ color: "rgba(232,236,255,.6)" }}
+            >
+              Then an adaptive algorithm calibrates to where you are and drills
+              your weak spots. The fastest path to pass.
             </p>
 
             {/* Countdown */}

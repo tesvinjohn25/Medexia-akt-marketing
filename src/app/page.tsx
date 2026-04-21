@@ -1,7 +1,6 @@
 import { Nav } from "@/components/Nav";
 import { AprilBanner } from "@/components/sections/AprilBanner";
 import { FeatureHighlights } from "@/components/sections/FeatureHighlights";
-import { NotesVsAudio } from "@/components/sections/NotesVsAudio";
 import { SocialProof } from "@/components/sections/SocialProof";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
@@ -18,8 +17,6 @@ export default function Home() {
       <HeroSection />
 
       <AprilBanner />
-
-      <NotesVsAudio />
 
       <FeatureHighlights />
 

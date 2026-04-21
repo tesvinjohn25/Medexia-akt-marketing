@@ -16,8 +16,45 @@ export function HeroSection() {
         }}
       >
         <div className="flex flex-col md:flex-row md:items-center md:gap-12 lg:gap-16">
-          {/* Text — first on mobile (top) and desktop (left) */}
-          <div className="md:flex-1 max-w-[580px]">
+          {/* Video — ABOVE text on mobile (first thing users see), right on desktop.
+              Books dissolving into headphones = notes → audio transformation. */}
+          <div className="order-1 md:order-2 md:flex-1 flex justify-center mb-6 md:mb-0">
+            <div className="relative w-full max-w-[520px] md:max-w-[560px] lg:max-w-[620px]">
+              {/* Soft aura behind — bleeds into the nebula */}
+              <div
+                className="pointer-events-none absolute inset-0"
+                aria-hidden
+                style={{
+                  background:
+                    "radial-gradient(closest-side, rgba(236,72,153,.18) 0%, rgba(167,139,250,.10) 45%, transparent 80%)",
+                  filter: "blur(32px)",
+                  transform: "scale(1.2)",
+                }}
+              />
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster="/video/notes-to-audio-poster.jpg"
+                aria-label="Textbooks dissolving into headphones — the shift from notes to audio revision"
+                className="relative block w-full h-auto"
+                style={{
+                  maskImage:
+                    "radial-gradient(ellipse 85% 80% at center, black 55%, transparent 92%)",
+                  WebkitMaskImage:
+                    "radial-gradient(ellipse 85% 80% at center, black 55%, transparent 92%)",
+                }}
+              >
+                <source src="/video/notes-to-audio.webm" type="video/webm" />
+                <source src="/video/notes-to-audio.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+
+          {/* Text — BELOW video on mobile, left on desktop */}
+          <div className="order-2 md:order-1 md:flex-1 max-w-[580px]">
             {/* Badges */}
             <div className="flex items-center gap-2 flex-wrap">
               <div
@@ -58,14 +95,18 @@ export function HeroSection() {
 
             {/* Headline */}
             <h1
-              className="mt-4 text-[32px] md:text-[42px] lg:text-[48px] leading-[1.06]"
+              className="mt-4 text-[34px] md:text-[48px] lg:text-[56px] leading-[1.02]"
               style={{
                 fontFamily: "var(--font-display)",
                 letterSpacing: "-0.04em",
                 textShadow: "0 22px 70px rgba(0,0,0,.7)",
               }}
             >
-              The AKT revision tool that fits into a GP trainee&rsquo;s life.
+              <span style={{ color: "rgba(232,236,255,.62)" }}>
+                The whole AKT.
+              </span>
+              <br />
+              In 90 hours of audio.
             </h1>
 
             {/* Subtext */}
@@ -73,9 +114,9 @@ export function HeroSection() {
               className="mt-4 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
               style={{ color: "rgba(232,236,255,.72)" }}
             >
-              90+ hours of audiobooks covering the whole RCGP curriculum. An
-              algorithm that drags you to pass level by targeting your weak
-              spots. No notes. No wasted minutes.
+              Audiobooks are the most efficient way to revise for the AKT. The
+              entire RCGP curriculum, in your earphones &mdash; on the drive,
+              at the gym, between patients. While you live your life.
             </p>
 
             {/* Countdown */}
@@ -90,47 +131,8 @@ export function HeroSection() {
                 className="btn-primary inline-block text-[16px]"
                 href="https://app.medexia-akt.com"
               >
-                Start revising free &rarr;
+                Start listening free &rarr;
               </a>
-            </div>
-          </div>
-
-          {/* Video — below text on mobile, right on desktop.
-              Books dissolving into headphones = notes → audio transformation. */}
-          <div className="md:flex-1 flex justify-center mt-8 md:mt-0">
-            <div className="relative w-full max-w-[340px] md:max-w-[460px] lg:max-w-[520px]">
-              {/* Aura glow */}
-              <div
-                className="pointer-events-none absolute inset-0"
-                aria-hidden
-                style={{
-                  background:
-                    "radial-gradient(closest-side, rgba(236,72,153,.22) 0%, rgba(167,139,250,.14) 40%, transparent 75%)",
-                  filter: "blur(28px)",
-                  transform: "scale(1.2)",
-                }}
-              />
-              <div
-                className="relative overflow-hidden rounded-[22px] md:rounded-[28px]"
-                style={{
-                  boxShadow:
-                    "0 28px 100px rgba(236,72,153,.32), 0 0 120px rgba(167,139,250,.14)",
-                }}
-              >
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  poster="/video/notes-to-audio-poster.jpg"
-                  aria-label="Textbooks dissolving into headphones — the shift from notes to audio revision"
-                  className="block w-full h-auto"
-                >
-                  <source src="/video/notes-to-audio.webm" type="video/webm" />
-                  <source src="/video/notes-to-audio.mp4" type="video/mp4" />
-                </video>
-              </div>
             </div>
           </div>
         </div>

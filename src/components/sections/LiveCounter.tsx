@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
+import { useCountUp } from "@/hooks/useCountUp";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const STATIC_STATS = [
@@ -8,29 +9,6 @@ const STATIC_STATS = [
   { value: 32, suffix: "", label: "AKT topics", accent: "var(--brand-violet)" },
   { value: 20000, suffix: "+", label: "questions", accent: "rgba(52,211,153,.85)" },
 ];
-
-function useCountUp(target: number, duration: number, trigger: boolean) {
-  const [count, setCount] = useState(0);
-  const started = useRef(false);
-
-  useEffect(() => {
-    if (!trigger || started.current) return;
-    started.current = true;
-
-    const start = performance.now();
-    const step = (now: number) => {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      // Ease-out quad
-      const eased = 1 - (1 - progress) * (1 - progress);
-      setCount(Math.floor(eased * target));
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, [target, duration, trigger]);
-
-  return count;
-}
 
 function formatNumber(n: number): string {
   if (n >= 1000) return n.toLocaleString("en-GB");

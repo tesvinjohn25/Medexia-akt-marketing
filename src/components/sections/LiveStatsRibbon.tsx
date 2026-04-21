@@ -1,9 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useCountUp } from "@/hooks/useCountUp";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
+
+function formatNumber(n: number): string {
+  if (n >= 1000) return n.toLocaleString("en-GB");
+  return String(n);
+}
 
 export function LiveStatsRibbon() {
   const [userCount, setUserCount] = useState<number | null>(null);
+  const { ref, visible } = useScrollReveal(0.2);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -33,46 +41,94 @@ export function LiveStatsRibbon() {
 
   const showLive = userCount !== null && userCount >= 20;
 
+  // Count-up animations — fire once visible
+  const liveAnim = useCountUp(userCount ?? 0, 1200, visible && showLive);
+  const hoursAnim = useCountUp(90, 1000, visible);
+  const questionsAnim = useCountUp(20000, 1400, visible);
+  const topicsAnim = useCountUp(32, 800, visible);
+
+  const stats: {
+    value: string;
+    suffix?: string;
+    label: string;
+    accent: string;
+    gradient?: boolean;
+  }[] = [
+    ...(showLive
+      ? [
+          {
+            value: formatNumber(liveAnim),
+            label: "trainees revising now",
+            accent: "rgba(155,107,255,.9)",
+            gradient: true,
+          },
+        ]
+      : []),
+    {
+      value: formatNumber(hoursAnim),
+      suffix: "+",
+      label: "hours of audio",
+      accent: "rgba(236,72,153,.9)",
+    },
+    {
+      value: formatNumber(questionsAnim),
+      suffix: "+",
+      label: "questions",
+      accent: "rgba(52,211,153,.9)",
+    },
+    {
+      value: formatNumber(topicsAnim),
+      label: "AKT topics",
+      accent: "rgba(96,165,250,.9)",
+    },
+  ];
+
+  const cols = showLive ? "grid-cols-2 md:grid-cols-4" : "grid-cols-3";
+
   return (
     <div
-      className="mt-10 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12px] md:text-[13px] font-medium"
-      style={{ color: "rgba(232,236,255,.55)" }}
+      ref={ref}
+      className="mt-10 md:mt-14 mx-auto max-w-[860px]"
     >
-      {showLive && (
-        <>
-          <span>
-            <strong className="tabular-nums" style={{ color: "var(--fg-high)" }}>
-              {userCount!.toLocaleString("en-GB")}
-            </strong>{" "}
-            trainees revising now
-          </span>
-          <span style={{ color: "rgba(232,236,255,.2)" }}>&middot;</span>
-        </>
-      )}
-      <span>
-        <strong className="tabular-nums" style={{ color: "var(--fg-high)" }}>
-          90+
-        </strong>{" "}
-        hrs
-      </span>
-      <span style={{ color: "rgba(232,236,255,.2)" }}>&middot;</span>
-      <span>
-        <strong className="tabular-nums" style={{ color: "var(--fg-high)" }}>
-          20,000+
-        </strong>{" "}
-        questions
-      </span>
-      <span style={{ color: "rgba(232,236,255,.2)" }}>&middot;</span>
-      <span>
-        <strong className="tabular-nums" style={{ color: "var(--fg-high)" }}>
-          32
-        </strong>{" "}
-        topics
-      </span>
-      <span style={{ color: "rgba(232,236,255,.2)" }}>&middot;</span>
-      <span style={{ color: "rgba(52,211,153,.9)" }}>
+      <div className={`grid ${cols} gap-x-4 gap-y-8 md:gap-x-8 justify-items-center`}>
+        {stats.map((s, i) => (
+          <div key={i} className="text-center">
+            <div
+              className="tabular-nums font-bold text-[34px] md:text-[52px] leading-none"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.03em",
+                color: s.gradient ? "transparent" : s.accent,
+                backgroundImage: s.gradient
+                  ? "linear-gradient(135deg, var(--brand-iris), var(--brand-violet))"
+                  : undefined,
+                WebkitBackgroundClip: s.gradient ? "text" : undefined,
+                backgroundClip: s.gradient ? "text" : undefined,
+              }}
+            >
+              {s.value}
+              {s.suffix && (
+                <span className="text-[26px] md:text-[40px]" style={{ opacity: 0.85 }}>
+                  {s.suffix}
+                </span>
+              )}
+            </div>
+            <div
+              className="mt-2 text-[11px] md:text-[12px] tracking-[0.12em] uppercase font-semibold"
+              style={{ color: "rgba(232,236,255,.55)" }}
+            >
+              {s.label}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <p
+        className="mt-8 md:mt-10 text-center text-[13px] md:text-[14px] font-medium"
+        style={{ color: "rgba(52,211,153,.9)" }}
+      >
         Free for April &amp; July &mdash; no trial, no card
-      </span>
+      </p>
     </div>
   );
 }

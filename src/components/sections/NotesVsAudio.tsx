@@ -148,10 +148,10 @@ export function NotesVsAudio() {
                   }}
                 >
                   <Image
-                    src="/appshots/03-audio-1206x2622.png"
-                    alt="AKT Navigator audiobook player"
-                    width={603}
-                    height={1311}
+                    src="/appshots/02-audio-1206x2622.png"
+                    alt="AKT Navigator audiobook library"
+                    width={1206}
+                    height={2622}
                     className="w-full h-auto"
                   />
                 </div>

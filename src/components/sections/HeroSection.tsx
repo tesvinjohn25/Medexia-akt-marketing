@@ -112,10 +112,10 @@ export function HeroSection() {
                 }}
               >
                 <Image
-                  src="/appshots/03-audio-1206x2622.png"
-                  alt="AKT Navigator audio player — 90+ hours of MRCGP revision you can take anywhere"
-                  width={603}
-                  height={1311}
+                  src="/appshots/02-audio-1206x2622.png"
+                  alt="AKT Navigator audio library — 90+ hours of MRCGP revision, Must Listen Before Your Exam, topic progress tracking"
+                  width={1206}
+                  height={2622}
                   className="w-full h-auto"
                   priority
                 />

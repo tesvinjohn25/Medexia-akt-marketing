@@ -32,21 +32,15 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://medexia-akt.com",
     siteName: "AKT Navigator by Medexia",
-    images: [
-      {
-        url: "https://medexia-akt.com/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "AKT Navigator by Medexia — Free MRCGP AKT revision",
-      },
-    ],
+    // og:image auto-wired from src/app/opengraph-image.tsx — do not set
+    // `images` here or it overrides the file-based convention.
   },
   twitter: {
     card: "summary_large_image",
     title: "AKT Navigator by Medexia — Free AKT Revision for GP Trainees",
     description:
       "Free RCGP AKT revision for GP trainees. 20,000+ questions, 90+ hours of audio, adaptive learning, unlimited mock exams and AI-powered debriefs.",
-    images: ["https://medexia-akt.com/og-image.jpg"],
+    // twitter:image auto-wired from src/app/twitter-image.tsx
   },
   robots: {
     index: true,

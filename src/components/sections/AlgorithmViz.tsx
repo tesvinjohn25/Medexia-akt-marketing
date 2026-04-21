@@ -4,120 +4,165 @@ import { useEffect, useRef, useState } from "react";
 
 /**
  * Live visualisation of the adaptive algorithm inside the Algorithm pillar
- * card. Thirty-two dots map 1:1 to the 32 RCGP AKT curriculum topics.
+ * card. 32 dots map 1:1 to the 32 RCGP AKT curriculum topics.
  *
- * Four phases, triggered once when scrolled into view:
- *   calibrating — dots flicker through colours (0 → 1.1s)
- *   identified  — weak-spot dots settle red with a pulse (1.1 → 2.0s)
- *   drilling    — weak-spot dots progressively flip to violet (2.0 → 4.0s)
- *   success     — all 32 dots land on brand violet and stay (4.0s+)
+ * The animation loops continuously while in the viewport, paused otherwise.
+ * Each cycle plays out the algorithm's story in four phases:
  *
- * Informational motion — shows the algorithm working, not decorative.
+ *   scanning   — flicker across all 32 dots ("Testing across 32 AKT topics…")
+ *   identified — 6 weak-spot dots settle red ("6 weak spots found")
+ *   drilling   — each red dot is drilled to violet one-by-one, with the
+ *                specific topic name written beside the phase label
+ *                ("Drilling Cardiology…", "Drilling Statistics…", etc.)
+ *   success    — all 32 dots violet, label turns green
+ *                ("All 32 topics mastered.")
+ *
+ * Real topic names turn the dots from decoration into evidence.
  */
 
-type Phase = "idle" | "calibrating" | "identified" | "drilling" | "success";
+type Phase = "idle" | "scanning" | "identified" | "drilling" | "success";
+type Focus = { idx: number; topic: string } | null;
 
 const TOTAL = 32;
-// Deterministic "weak spot" indices across the 8×4 grid. Chosen to look
-// scattered rather than clustered.
-const WEAK: readonly number[] = [2, 6, 11, 17, 24, 29];
 
-const LABEL: Record<Phase, string> = {
-  idle: "Calibrating across 32 topics",
-  calibrating: "Calibrating across 32 topics",
-  identified: `${WEAK.length} weak spots identified`,
-  drilling: "Closing the gaps",
-  success: "On track to pass",
-};
+const WEAK_SPOTS: ReadonlyArray<{ idx: number; topic: string }> = [
+  { idx: 2, topic: "Cardiology" },
+  { idx: 6, topic: "Statistics" },
+  { idx: 11, topic: "Dermatology" },
+  { idx: 17, topic: "Neurology" },
+  { idx: 24, topic: "Prescribing" },
+  { idx: 29, topic: "Ethics" },
+];
 
 export function AlgorithmViz() {
   const ref = useRef<HTMLDivElement>(null);
   const [phase, setPhase] = useState<Phase>("idle");
   const [drilled, setDrilled] = useState<number[]>([]);
+  const [focus, setFocus] = useState<Focus>(null);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    let fired = false;
-
-    const run = async () => {
-      setPhase("calibrating");
-      await wait(1100);
-      setPhase("identified");
-      await wait(900);
-      setPhase("drilling");
-      for (let i = 0; i < WEAK.length; i++) {
-        await wait(320);
-        setDrilled((prev) => [...prev, WEAK[i]]);
-      }
-      await wait(500);
-      setPhase("success");
-    };
 
     const prefersReducedMotion =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (prefersReducedMotion) {
-      // Skip the animation entirely — go straight to success state.
-      setDrilled([...WEAK]);
+      setDrilled(WEAK_SPOTS.map((w) => w.idx));
       setPhase("success");
       return;
     }
 
+    let mounted = true;
+    let isVisible = false;
+    const waitFor = (ms: number) =>
+      new Promise<void>((r) => setTimeout(r, ms));
+    const waitForVisible = async () => {
+      while (mounted && !isVisible) {
+        await waitFor(250);
+      }
+    };
+
+    const run = async () => {
+      while (mounted) {
+        await waitForVisible();
+        if (!mounted) break;
+
+        // Reset
+        setDrilled([]);
+        setFocus(null);
+        setPhase("scanning");
+        await waitFor(1200);
+
+        setPhase("identified");
+        await waitFor(1000);
+
+        setPhase("drilling");
+        for (const w of WEAK_SPOTS) {
+          if (!mounted) break;
+          setFocus(w);
+          await waitFor(650);
+          setDrilled((prev) => [...prev, w.idx]);
+          await waitFor(120);
+        }
+        if (!mounted) break;
+        setFocus(null);
+        await waitFor(250);
+
+        setPhase("success");
+        await waitFor(3500);
+      }
+    };
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !fired) {
-          fired = true;
-          void run();
-        }
+        isVisible = entry.isIntersecting;
       },
-      { threshold: 0.4 },
+      { threshold: 0.3 },
     );
     observer.observe(el);
-    return () => observer.disconnect();
+    void run();
+
+    return () => {
+      mounted = false;
+      observer.disconnect();
+    };
   }, []);
+
+  const label = (() => {
+    if (phase === "scanning") return "Testing across 32 AKT topics\u2026";
+    if (phase === "identified") return `${WEAK_SPOTS.length} weak spots found`;
+    if (phase === "drilling" && focus) return `Drilling ${focus.topic}\u2026`;
+    if (phase === "drilling") return "Closing the gaps\u2026";
+    if (phase === "success") return "All 32 topics mastered.";
+    return "Testing across 32 AKT topics\u2026";
+  })();
+
+  const labelColor =
+    phase === "success"
+      ? "rgba(52,211,153,.95)"
+      : phase === "identified"
+        ? "rgba(239,68,68,.9)"
+        : "rgba(167,139,250,.85)";
 
   return (
     <div ref={ref} className="mt-5">
       <div
-        className="text-[10px] tracking-[0.18em] uppercase font-semibold transition-colors"
-        style={{
-          color:
-            phase === "success"
-              ? "rgba(52,211,153,.9)"
-              : phase === "identified"
-                ? "rgba(239,68,68,.85)"
-                : "rgba(167,139,250,.75)",
-        }}
+        className="text-[11px] md:text-[12px] tracking-[0.14em] uppercase font-semibold transition-colors duration-300"
+        style={{ color: labelColor, minHeight: "1.4em" }}
         aria-live="polite"
       >
-        {LABEL[phase]}
+        {label}
       </div>
 
       <div
         role="img"
-        aria-label="Visualization of the algorithm calibrating across 32 AKT curriculum topics, identifying weak spots and closing the gaps"
+        aria-label="Visualisation of the algorithm testing 32 AKT topics, finding weak spots and drilling them to pass level."
         className="mt-3 grid grid-cols-8 gap-[8px] max-w-[260px]"
       >
         {Array.from({ length: TOTAL }).map((_, i) => {
-          const isWeak = WEAK.includes(i);
+          const weak = WEAK_SPOTS.find((w) => w.idx === i);
+          const isWeak = !!weak;
           const isDrilled = drilled.includes(i);
-          const state =
+          const isFocused = focus?.idx === i;
+          const state: "idle" | "flicker" | "weak" | "drilling" | "drilled" | "success" =
             phase === "idle"
               ? "idle"
-              : phase === "calibrating"
+              : phase === "scanning"
                 ? "flicker"
                 : phase === "identified"
                   ? isWeak
                     ? "weak"
                     : "idle"
                   : phase === "drilling"
-                    ? isDrilled
-                      ? "drilled"
-                      : isWeak
-                        ? "weak"
-                        : "idle"
+                    ? isFocused
+                      ? "drilling"
+                      : isDrilled
+                        ? "drilled"
+                        : isWeak
+                          ? "weak"
+                          : "idle"
                     : "success";
           return (
             <span
@@ -130,8 +175,4 @@ export function AlgorithmViz() {
       </div>
     </div>
   );
-}
-
-function wait(ms: number) {
-  return new Promise((r) => setTimeout(r, ms));
 }

@@ -139,6 +139,13 @@ body > * { position: relative; z-index: 1; }
   box-shadow: 0 0 10px rgba(239,68,68,.45);
   animation: avWeakPulse 1.1s ease-in-out infinite;
 }
+.av-dot--drilling {
+  background: linear-gradient(135deg, rgba(239,68,68,.9), rgba(155,107,255,.95));
+  box-shadow:
+    0 0 18px rgba(155,107,255,.7),
+    0 0 4px rgba(255,255,255,.45);
+  transform: scale(1.3);
+}
 .av-dot--drilled {
   background: linear-gradient(135deg, rgba(109,106,232,.95), rgba(155,107,255,.95));
   box-shadow: 0 0 12px rgba(155,107,255,.55);

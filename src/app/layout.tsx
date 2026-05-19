@@ -9,11 +9,11 @@ export const metadata: Metadata = {
   },
   title: {
     default:
-      "AKT Navigator Pricing — Free AKT Questions + Audio from £59",
+      "AKT Navigator Pricing — Free Until 8 July + Audio from £59",
     template: "%s | AKT Navigator by Medexia",
   },
   description:
-    "AKT Navigator pricing: practise with 21,000+ AKT questions for free. Full AKT audiobook access starts from £59 early access, then £79 from 8 July 2026.",
+    "Full AKT Navigator access is free until 8 July 2026. After that, practise with 21,000+ AKT questions and 2 hours of audio for free; full AKT audio starts from £59.",
   keywords: [
     "AKT",
     "AKT Navigator",
@@ -26,9 +26,9 @@ export const metadata: Metadata = {
     "free AKT questions",
   ],
   openGraph: {
-    title: "AKT Navigator Pricing — Free AKT Questions + Audio from £59",
+    title: "AKT Navigator Pricing — Free Until 8 July + Audio from £59",
     description:
-      "AKT Navigator pricing: 21,000+ AKT questions stay free. Full AKT audio access starts from £59 early access, then £79 from 8 July 2026.",
+      "Full access is free until 8 July 2026. After that, 21,000+ AKT questions and 2 hours of audio stay free; full AKT audio starts from £59.",
     type: "website",
     url: "https://medexia-akt.com",
     siteName: "AKT Navigator by Medexia",
@@ -37,9 +37,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AKT Navigator Pricing — Free AKT Questions + Audio from £59",
+    title: "AKT Navigator Pricing — Free Until 8 July + Audio from £59",
     description:
-      "AKT Navigator pricing: 21,000+ AKT questions stay free. Full AKT audio access starts from £59 early access, then £79 from 8 July 2026.",
+      "Full access is free until 8 July 2026. After that, 21,000+ AKT questions and 2 hours of audio stay free; full AKT audio starts from £59.",
     // twitter:image auto-wired from src/app/twitter-image.tsx
   },
   robots: {

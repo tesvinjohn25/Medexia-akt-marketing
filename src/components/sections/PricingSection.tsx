@@ -11,17 +11,17 @@ const PLANS = [
     eyebrow: "Free baseline",
     price: "£0",
     priceDetail: "",
-    subtitle: "Everything you need to practise with questions.",
-    lead: "Questions stay free.",
-    includedHeading: "Included free",
+    subtitle: "Available now and after 8 July.",
+    lead: "After 8 July: free questions plus a generous 2-hour audio sample.",
+    includedHeading: "Always free after 8 July",
     features: [
       "21,000+ AKT questions",
       "Deep structured explanations",
       "Mock exams and basic practice",
-      "2 hours audiobook listening",
+      "2 hours of audiobook listening across any audiobook",
     ],
-    noteHeading: "Not included",
-    note: "Full 90+ hour audiobook library requires paid audio access.",
+    noteHeading: "Until 8 July",
+    note: "Full AKT Navigator access remains free during the current access period.",
     cta: "Start free",
     href: SIGNUP_URL,
     highlighted: false,
@@ -30,21 +30,21 @@ const PLANS = [
   },
   {
     title: "Early Access",
-    eyebrow: "Best current audio price",
+    eyebrow: "Pay before 8 July",
     price: "£59",
-    priceDetail: "for 4 months",
-    comparePrice: "£79 from 8 July",
-    subtitle: "4 months full audio access from 8 July.",
-    lead: "Adds the full 90+ hour AKT audiobook library.",
-    includedHeading: "Paid audio adds",
+    priceDetail: "4 months from 8 July",
+    comparePrice: "£79 standard price",
+    subtitle: "Your paid access starts on 8 July 2026.",
+    lead: "Lock in full audio for 8 July to 8 November 2026.",
+    includedHeading: "Early Access includes",
     features: [
       "Full 90+ hour AKT audiobook library",
-      "Access starts from 8 July 2026",
+      "Paid access period starts on 8 July 2026",
       "Future premium audio upgrades included during your access period",
       "Save £20 before standard pricing begins",
     ],
-    noteHeading: "Still free",
-    note: "Question practice and deep structured explanations remain free.",
+    noteHeading: "Today’s access",
+    note: "Full access remains free until 8 July. Early Access locks in the lower paid period after that.",
     cta: "Lock in early access",
     href: ACCESS_URL,
     highlighted: true,
@@ -53,11 +53,11 @@ const PLANS = [
   },
   {
     title: "Full Audio Access",
-    eyebrow: "Standard audio access",
+    eyebrow: "From 8 July onwards",
     price: "£79",
     priceDetail: "for 4 months",
-    subtitle: "The standard paid audio tier from 8 July.",
-    lead: "Full audiobook access after early pricing ends.",
+    subtitle: "Standard paid audio access after the free period.",
+    lead: "Full audio access begins when purchased from 8 July onwards.",
     includedHeading: "Paid audio includes",
     features: [
       "Full 90+ hour AKT audiobook library",
@@ -66,7 +66,7 @@ const PLANS = [
       "Future premium audio upgrades included during your access period",
     ],
     noteHeading: "Still free",
-    note: "Questions remain free. This is not a paid question bank.",
+    note: "Questions remain free, with 2 hours of audiobook listening included.",
     cta: "Get full audio access",
     href: ACCESS_URL,
     highlighted: false,
@@ -79,17 +79,35 @@ const SEO_FAQS = [
   {
     question: "Are AKT Navigator questions free?",
     answer:
-      "Yes. Free Practice includes 21,000+ AKT questions, deep structured explanations, mock exams and basic practice.",
+      "Yes. Free Practice includes 21,000+ AKT questions, deep structured explanations, mock exams, basic practice and 2 hours of audiobook listening.",
+  },
+  {
+    question: "When does paid audio access start?",
+    answer:
+      "Full AKT Navigator access remains free until 8 July 2026. Early Access paid audio starts on 8 July 2026 and runs for 4 months.",
   },
   {
     question: "What is paid in AKT Navigator?",
     answer:
-      "Full access to the 90+ hour AKT audiobook library is the paid audio tier. Early Access is £59 before 8 July 2026, then Full Audio Access is £79 for 4 months.",
+      "From 8 July 2026, full access to the 90+ hour AKT audiobook library is the paid audio tier. Early Access is £59 before 8 July, then Full Audio Access is £79 for 4 months.",
   },
   {
     question: "Is AKT Navigator a paid question bank?",
     answer:
       "No. AKT Navigator offers free AKT question practice with an optional paid full-audio upgrade.",
+  },
+] as const;
+
+const ACCESS_TIMELINE = [
+  {
+    title: "Now until 8 July 2026",
+    accent: "rgba(52,211,153,.9)",
+    text: "Full AKT Navigator access remains free during the current access period, including the audiobook library.",
+  },
+  {
+    title: "From 8 July 2026",
+    accent: "rgba(167,139,250,.95)",
+    text: "Questions stay free. Free Practice includes 2 hours of audio. Full 90+ hour audio access becomes paid.",
   },
 ] as const;
 
@@ -158,7 +176,7 @@ export function PricingSection() {
             className="r-blur text-[11px] md:text-[12px] tracking-[0.22em] uppercase font-semibold"
             style={{ color: "rgba(167,139,250,.85)", "--i": 0 } as React.CSSProperties}
           >
-            Clear access. No paid question bank.
+            Free now. Clear pricing from 8 July.
           </div>
           <h2
             id="pricing-heading"
@@ -169,16 +187,46 @@ export function PricingSection() {
               "--i": 1,
             } as React.CSSProperties}
           >
-            Questions stay free. Full AKT audio access starts from £59.
+            Full access is free until 8 July. Paid audio starts from £59 after that.
           </h2>
           <p
             className="r-up mx-auto mt-4 max-w-[650px] text-[15px] md:text-[17px] leading-[1.65]"
             style={{ color: "rgba(232,236,255,.68)", "--i": 2 } as React.CSSProperties}
           >
-            Practise with 21,000+ AKT questions for free. Upgrade when you want
-            the full 90+ hour audiobook library built for commutes, walks,
-            childcare and low-energy revision days.
+            Use AKT Navigator free until 8 July 2026. From 8 July,
+            questions remain free with 2 hours of audiobook listening included;
+            full 90+ hour audio access becomes paid.
           </p>
+        </div>
+
+        <div
+          className="r-up mx-auto mt-8 grid max-w-[900px] gap-3 md:grid-cols-2"
+          style={{ "--i": 3 } as React.CSSProperties}
+        >
+          {ACCESS_TIMELINE.map((item) => (
+            <div
+              key={item.title}
+              className="rounded-[16px] p-5 md:p-6"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(17,19,26,.76), rgba(17,19,26,.52))",
+                border: `1px solid ${item.accent.replace(".9", ".22").replace(".95", ".22")}`,
+              }}
+            >
+              <div
+                className="text-[11px] font-bold uppercase tracking-[0.18em]"
+                style={{ color: item.accent }}
+              >
+                {item.title}
+              </div>
+              <p
+                className="mt-2 text-[14px] md:text-[15px] leading-[1.65]"
+                style={{ color: "rgba(232,236,255,.74)" }}
+              >
+                {item.text}
+              </p>
+            </div>
+          ))}
         </div>
 
         <div className="mt-9 grid gap-4 lg:grid-cols-[minmax(0,.86fr)_minmax(0,1.18fr)_minmax(0,.96fr)] lg:items-stretch">
@@ -196,7 +244,7 @@ export function PricingSection() {
                   border: chrome.border,
                   boxShadow: chrome.boxShadow,
                   opacity: chrome.opacity,
-                  "--i": 3 + i,
+                  "--i": 4 + i,
                 } as React.CSSProperties}
               >
                 {plan.highlighted && (
@@ -366,15 +414,15 @@ export function PricingSection() {
 
         <p
           className="r-up mx-auto mt-6 max-w-[720px] text-center text-[13px] md:text-[14px] leading-[1.6]"
-          style={{ color: "rgba(232,236,255,.55)", "--i": 6 } as React.CSSProperties}
+          style={{ color: "rgba(232,236,255,.58)", "--i": 7 } as React.CSSProperties}
         >
-          Available before 8 July 2026. Standard price after 8 July: £79.
-          Questions remain free.
+          Buying Early Access before 8 July locks in the lower price. Your paid
+          4-month audio period starts on 8 July 2026, not today.
         </p>
 
         <div
           className="r-up mx-auto mt-8 grid max-w-[940px] gap-3 md:grid-cols-2"
-          style={{ "--i": 7 } as React.CSSProperties}
+          style={{ "--i": 8 } as React.CSSProperties}
         >
           <div
             className="rounded-[16px] p-5 md:p-6"
@@ -387,14 +435,15 @@ export function PricingSection() {
               className="text-[11px] font-bold uppercase tracking-[0.18em]"
               style={{ color: "rgba(52,211,153,.88)" }}
             >
-              Always free
+              2 hours included free
             </div>
             <p
               className="mt-2 text-[14px] md:text-[15px] leading-[1.65]"
               style={{ color: "rgba(232,236,255,.74)" }}
             >
-              21,000+ questions, deep structured explanations, mock exams,
-              basic practice and 2 hours audiobook listening.
+              After 8 July, Free Practice still includes a generous 2-hour
+              audiobook budget across any audiobook, so you can try the audio
+              properly before upgrading.
             </p>
           </div>
 
@@ -409,21 +458,27 @@ export function PricingSection() {
               className="text-[11px] font-bold uppercase tracking-[0.18em]"
               style={{ color: "rgba(167,139,250,.9)" }}
             >
-              Paid audio
+              Why the sample matters
             </div>
             <p
-              className="mt-2 text-[14px] md:text-[15px] leading-[1.65]"
+              className="mt-2 text-[14px] md:text-[15px] leading-[1.65] italic"
               style={{ color: "rgba(232,236,255,.74)" }}
             >
-              Adds the full 90+ hour AKT audiobook library, 4 months access and
-              future premium audio upgrades during your access period.
+              &ldquo;Helpful to listen on my way to work and get quick
+              learning.&rdquo;
             </p>
+            <div
+              className="mt-3 text-[10px] font-bold uppercase tracking-[0.18em]"
+              style={{ color: "rgba(167,139,250,.68)" }}
+            >
+              ST2 · Peninsula
+            </div>
           </div>
         </div>
 
         <div
           className="r-up mx-auto mt-10 max-w-[860px]"
-          style={{ "--i": 8 } as React.CSSProperties}
+          style={{ "--i": 9 } as React.CSSProperties}
         >
           <h3
             className="text-center text-[22px] md:text-[28px] leading-[1.15] font-semibold"

@@ -14,10 +14,10 @@ export function SchemaJsonLd() {
           priceCurrency: "GBP",
           offerCount: 3,
           description:
-            "Free AKT question practice, Early Access full audio at £59, and Full Audio Access at £79 from 8 July 2026.",
+            "Full access is free until 8 July 2026. After that, Free Practice remains £0 with 2 hours of audio, Early Access full audio is £59 from 8 July, and Full Audio Access is £79.",
         },
         description:
-          "AKT questions remain free. Full AKT audiobook access starts from £59 early access, then £79 from 8 July 2026.",
+          "Full AKT Navigator access is free until 8 July 2026. After that, AKT questions remain free with 2 hours of audio, and full AKT audiobook access starts from £59 early access.",
         url: "https://app.medexia-akt.com",
         author: {
           "@type": "Organization",
@@ -33,7 +33,15 @@ export function SchemaJsonLd() {
             name: "Are AKT Navigator questions free?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Yes. Free Practice includes 21,000+ AKT questions, deep structured explanations, mock exams and basic practice.",
+              text: "Yes. Free Practice includes 21,000+ AKT questions, deep structured explanations, mock exams, basic practice and 2 hours of audiobook listening.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "When does paid AKT audio access start?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Full AKT Navigator access remains free until 8 July 2026. Early Access paid audio starts on 8 July 2026 and runs for 4 months.",
             },
           },
           {
@@ -41,7 +49,7 @@ export function SchemaJsonLd() {
             name: "What is included in paid AKT audio access?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Paid audio access includes the full 90+ hour AKT audiobook library for 4 months. Early Access is £59 before 8 July 2026; standard Full Audio Access is £79 from 8 July.",
+              text: "Paid audio access includes the full 90+ hour AKT audiobook library for 4 months, with future premium audio upgrades included during the user's access period.",
             },
           },
         ],

@@ -33,17 +33,16 @@ export function AccessNotice() {
               style={{ color: "rgba(52,211,153,.86)" }}
             >
               {standardPricingStarted
-                ? "Questions remain free"
-                : "Free until 8 July 2026"}
+                ? "Questions and 2h audio remain free"
+                : "Full access free until 8 July 2026"}
             </div>
             <p
               className="mt-1 text-[14px] md:text-[15px] leading-[1.55]"
               style={{ color: "rgba(232,236,255,.76)" }}
             >
-              AKT questions remain free. Full audiobook access{" "}
               {standardPricingStarted
-                ? "is £79 for 4 months."
-                : "becomes paid from 8 July."}
+                ? "Free Practice includes 21,000+ questions and 2 hours of audio. Full audio is £79 for 4 months."
+                : "Use the full product free until 8 July. After that, questions and 2 hours of audio stay free; full audio becomes paid."}
             </p>
           </div>
           <a

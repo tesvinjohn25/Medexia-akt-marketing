@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 export const alt =
-  "AKT Navigator by Medexia — 21,000+ AKT questions free. Full AKT audio from £59. £79 from 8 July.";
+  "AKT Navigator by Medexia — full access free until 8 July. 21,000+ AKT questions and 2 hours audio free after. Full audio from £59.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -89,7 +89,7 @@ export default function OGImage() {
             letterSpacing: "-0.04em",
           }}
         >
-          21,000+ AKT
+          Free until
         </div>
         <div
           style={{
@@ -101,7 +101,7 @@ export default function OGImage() {
             marginBottom: "26px",
           }}
         >
-          questions free.
+          8 July.
         </div>
 
         {/* Accent divider */}
@@ -125,7 +125,7 @@ export default function OGImage() {
             letterSpacing: "-0.005em",
           }}
         >
-          Full AKT audio from £59
+          Then questions + 2h audio stay free
         </div>
 
         <div style={{ display: "flex", gap: "14px", marginTop: "38px" }}>
@@ -143,7 +143,7 @@ export default function OGImage() {
               letterSpacing: "-0.01em",
             }}
           >
-            90+ hours of AKT audiobooks
+            Full audio from £59
           </div>
           <div
             style={{
@@ -156,6 +156,22 @@ export default function OGImage() {
               fontSize: "21px",
               fontWeight: 700,
               color: "rgba(52,211,153,.95)",
+              letterSpacing: "-0.01em",
+            }}
+          >
+            90+ hours of audiobooks
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              padding: "12px 22px",
+              borderRadius: "12px",
+              background: "rgba(167,139,250,.10)",
+              border: "1.5px solid rgba(167,139,250,.24)",
+              fontSize: "21px",
+              fontWeight: 700,
+              color: "rgba(197,170,255,.96)",
               letterSpacing: "-0.01em",
             }}
           >

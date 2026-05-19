@@ -107,16 +107,15 @@ export function HeroSection() {
               className="mt-4 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
               style={{ color: "rgba(232,236,255,.78)" }}
             >
-              Practise with 21,000+ AKT questions for free. Upgrade when you
-              want the full 90+ hour audiobook library built for commutes,
-              walks, childcare and low-energy revision days.
+              Use the full AKT Navigator free until 8 July 2026. After that,
+              21,000+ questions stay free with 2 hours of audio included.
             </p>
             <p
               className="mt-3 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
               style={{ color: "rgba(232,236,255,.6)" }}
             >
-              Questions stay free. Full audiobook access is free until 8 July
-              2026, then paid from £79. Early Access is £59 before 8 July.
+              Lock in Early Access before 8 July for £59. Your 4-month paid
+              audio period starts on 8 July, not today.
             </p>
 
             {/* Countdown */}

@@ -45,7 +45,8 @@ export function FinalCTA() {
           className="r-up mx-auto mt-4 max-w-[480px] text-[15px] md:text-[17px] leading-[1.6]"
           style={{ color: "rgba(232,236,255,.68)", "--i": 2 } as React.CSSProperties}
         >
-          Questions stay free. Full audiobook access becomes paid from 8 July.
+          Full access is free until 8 July. After that, questions and 2 hours
+          of audio stay free, and full audio starts from £59 Early Access.
         </p>
 
         <div

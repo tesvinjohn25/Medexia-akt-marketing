@@ -26,7 +26,7 @@ export function WhyFree() {
               letterSpacing: "-0.02em",
             }}
           >
-            Why is this free?
+            What stays free?
           </h2>
 
           <div
@@ -37,14 +37,14 @@ export function WhyFree() {
               <strong style={{ color: "var(--fg-high)" }}>
                 We think this is a game-changer.
               </strong>{" "}
-              AKT Navigator gives you the most optimal way to study for
-              your AKT &mdash; adaptive sessions, deep explanations, and 50+
-              hours of audio revision all in one place.
+              AKT Navigator gives you focused question practice for your AKT
+              &mdash; adaptive sessions, deep structured explanations, and a
+              generous audio sample all in one place.
             </p>
             <p>
-              We want you to experience it for yourself. Use AKT Navigator
-              completely free for the April and July sittings. No trial, no
-              credit card &mdash; just start revising.
+              Free Practice includes 21,000+ questions, deep explanations, mock
+              exams and basic practice, plus 2 hours of audiobook listening. Full
+              audio access starts from £59.
             </p>
           </div>
         </div>

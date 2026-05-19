@@ -26,7 +26,7 @@ export const FAQS: Faq[] = [
   },
   {
     q: "Is there a free AKT question bank?",
-    a: "AKT Navigator is completely free for the April and July 2026 sittings. No trial period, no credit card, no hidden catch. You get full access to over 20,000 questions, 90+ hours of audio revision, adaptive learning sessions, mock exams with detailed debriefs, and an AI supervisor you can ask questions to at any point. A pricing plan will come after that and it will be competitive compared to other AKT resources.",
+    a: "Yes. AKT Navigator keeps 21,000+ AKT questions free, with deep structured explanations, mock exams and basic practice. Free Practice also includes 2 hours of audiobook listening across any audiobook. Full access to the 90+ hour audiobook library is separate: Early Access is £59 before 8 July 2026 for 4 months of access starting 8 July, then standard Full Audio Access is £79 for 4 months.",
   },
   {
     q: "How do I know if I'm ready for the AKT?",

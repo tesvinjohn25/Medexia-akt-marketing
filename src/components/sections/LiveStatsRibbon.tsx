@@ -44,7 +44,7 @@ export function LiveStatsRibbon() {
   // Count-up animations — fire once visible
   const liveAnim = useCountUp(userCount ?? 0, 1200, visible && showLive);
   const hoursAnim = useCountUp(90, 1000, visible);
-  const questionsAnim = useCountUp(20000, 1400, visible);
+  const questionsAnim = useCountUp(21000, 1400, visible);
   const topicsAnim = useCountUp(32, 800, visible);
 
   const stats: {
@@ -127,7 +127,7 @@ export function LiveStatsRibbon() {
         className="mt-8 md:mt-10 text-center text-[13px] md:text-[14px] font-medium"
         style={{ color: "rgba(52,211,153,.9)" }}
       >
-        Free for April &amp; July &mdash; no trial, no card
+        Questions stay free. Full AKT audio access starts from £59.
       </p>
     </div>
   );

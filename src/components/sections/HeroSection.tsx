@@ -81,7 +81,7 @@ export function HeroSection() {
                   className="text-[10px] tracking-[0.14em] uppercase font-bold"
                   style={{ color: "rgba(52,211,153,.85)" }}
                 >
-                  Free for April &amp; July
+                  Free until 8 July 2026
                 </span>
               </span>
             </div>
@@ -107,15 +107,16 @@ export function HeroSection() {
               className="mt-4 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
               style={{ color: "rgba(232,236,255,.78)" }}
             >
-              Audiobooks cover the entire RCGP curriculum. Listen on the drive,
-              at the gym, between patients &mdash; while you live your life.
+              Practise with 21,000+ AKT questions for free. Upgrade when you
+              want the full 90+ hour audiobook library built for commutes,
+              walks, childcare and low-energy revision days.
             </p>
             <p
               className="mt-3 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
               style={{ color: "rgba(232,236,255,.6)" }}
             >
-              Then an adaptive algorithm calibrates to where you are and drills
-              your weak spots. The fastest path to pass.
+              Questions stay free. Full audiobook access is free until 8 July
+              2026, then paid from £79. Early Access is £59 before 8 July.
             </p>
 
             {/* Countdown */}
@@ -130,7 +131,7 @@ export function HeroSection() {
                 className="btn-primary inline-block text-[16px]"
                 href="https://app.medexia-akt.com"
               >
-                Start listening free &rarr;
+                Start free &rarr;
               </a>
             </div>
           </div>

@@ -36,12 +36,12 @@ interface QuestionBank {
 const questionBanks: QuestionBank[] = [
   {
     name: "AKT Navigator",
-    questions: "20,000+",
+    questions: "21,000+",
     audio: "90+ hours",
     adaptiveLearning: "Yes",
-    mockExams: "Unlimited",
+    mockExams: "Included",
     aiDebrief: "Yes",
-    price: "Free*",
+    price: "Free questions; audio from £59",
     highlight: true,
   },
   {
@@ -208,7 +208,8 @@ export default function BestAktQuestionBankPage() {
             className="mt-3 text-[12px]"
             style={{ color: "var(--fg-muted)" }}
           >
-            *Free for the April and July 2026 AKT sittings. Prices sourced from
+            AKT Navigator questions remain free. Full audio Early Access is £59
+            before 8 July 2026, then £79 for 4 months. Prices sourced from
             provider websites, last checked {LAST_CHECKED}.
           </p>
 
@@ -322,23 +323,23 @@ export default function BestAktQuestionBankPage() {
                 className="mt-2 text-[16px] leading-[1.7]"
                 style={{ color: "var(--fg-mid)" }}
               >
-                AKT Navigator has over 20,000 questions, which is significantly
+                AKT Navigator has over 21,000 questions, which is significantly
                 more than any other AKT question bank. It includes 90+ hours of
                 audio revision across all 32 topics, adaptive learning that
                 builds sessions around your weak areas, unlimited mock exams with
-                AI-powered debriefs, and a conversational AI supervisor you can
-                chat with about any topic.
+                AI-powered debriefs, and AI support for deeper topic review.
               </p>
               <p
                 className="mt-3 text-[16px] leading-[1.7]"
                 style={{ color: "var(--fg-mid)" }}
               >
-                It is free for the April and July 2026 sittings. After that, a
-                competitive pricing plan will be introduced. AKT Navigator was
-                built by a GP trainee who wanted something better than what was
-                available, so it is designed around how trainees actually study:
-                short sessions, on-the-go audio, and smart question selection
-                that adapts to your gaps.
+                The question bank remains free. Full audio access is separate:
+                Early Access is £59 before 8 July 2026 for 4 months of access
+                starting 8 July, then standard Full Audio Access is £79 for 4
+                months. AKT Navigator was built by a GP trainee who wanted
+                something better than what was available, so it is designed
+                around how trainees actually study: short sessions, on-the-go
+                audio, and smart question selection that adapts to your gaps.
               </p>
             </div>
           </div>
@@ -359,20 +360,20 @@ export default function BestAktQuestionBankPage() {
               style={{ color: "var(--fg-mid)" }}
             >
               It depends on how you learn best. If you want the biggest question
-              bank with audio and AI features, AKT Navigator gives you more for
-              free than others charge for. If you prefer a battle-tested question
-              bank that your friends used, PassMedicine is the safe bet. If money
-              is no object and you want thorough written explanations, Pastest is
-              reliable.
+              bank with audio and AI features, AKT Navigator gives you free
+              questions with optional full audio access from £59. If you prefer a
+              battle-tested question bank that your friends used, PassMedicine is
+              the safe bet. If money is no object and you want thorough written
+              explanations, Pastest is reliable.
             </p>
             <p
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
-              Many trainees use more than one. AKT Navigator is free, so there
-              is no reason not to add it to whatever else you are using. The
-              audio alone is worth it for commute and gym time that would
-              otherwise go to waste.
+              Many trainees use more than one. AKT Navigator&apos;s questions stay
+              free, so there is no reason not to add the practice layer to
+              whatever else you are using. The full audio library is there when
+              commute and gym time would otherwise go to waste.
             </p>
           </div>
 
@@ -397,7 +398,7 @@ export default function BestAktQuestionBankPage() {
                 {
                   href: "/akt-mock-exam",
                   title: "AKT mock exams",
-                  desc: "Unlimited mocks from 20,000+ questions",
+                  desc: "Mocks from 21,000+ free questions",
                 },
                 {
                   href: "/akt-audio-revision",
@@ -442,7 +443,7 @@ export default function BestAktQuestionBankPage() {
               className="btn-primary inline-block text-[16px]"
               href="https://app.medexia-akt.com"
             >
-              Try AKT Navigator free &rarr;
+              Try free questions &rarr;
             </a>
           </div>
 

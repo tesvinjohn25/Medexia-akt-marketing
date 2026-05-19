@@ -5,16 +5,16 @@ import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { aktTopics } from "@/data/akt-topics";
 
 export const metadata: Metadata = {
-  title: "AKT Audio Revision — 90+ Hours Free | Listen on Your Commute",
+  title: "AKT Audio Revision — 90+ Hours Audio | From £59",
   description:
-    "Over 90 hours of free AKT audio revision across all 32 RCGP topics. Listen on your commute, at the gym, or between patients. Covers everything from cardiovascular to evidence-based practice.",
+    "Over 90 hours of AKT audio revision across all 32 RCGP topics. Early Access starts from £59 before 8 July 2026, then £79 for 4 months. Questions remain free.",
   alternates: {
     canonical: "https://medexia-akt.com/akt-audio-revision",
   },
   openGraph: {
-    title: "AKT Audio Revision — 90+ Hours Free",
+    title: "AKT Audio Revision — 90+ Hours Audio",
     description:
-      "Over 90 hours of free AKT audio revision across all 32 RCGP topics. Listen anywhere, learn everywhere.",
+      "Over 90 hours of AKT audio revision across all 32 RCGP topics. Questions stay free; full audio starts from £59.",
     type: "website",
     url: "https://medexia-akt.com/akt-audio-revision",
   },
@@ -26,13 +26,13 @@ export default function AktAudioRevisionPage() {
     "@type": "Course",
     name: "AKT Audio Revision by AKT Navigator",
     description:
-      "Over 90 hours of audio revision covering all 32 RCGP AKT curriculum topics. Free for the April and July 2026 sittings.",
+      "Over 90 hours of audio revision covering all 32 RCGP AKT curriculum topics. Early Access starts from £59 before 8 July 2026, then £79 for 4 months.",
     provider: {
       "@type": "Organization",
       name: "Medexia",
       url: "https://medexia-akt.com",
     },
-    isAccessibleForFree: true,
+    isAccessibleForFree: false,
     courseMode: "audio",
     numberOfCredits: "90+ hours",
   };
@@ -78,7 +78,7 @@ export default function AktAudioRevisionPage() {
             {[
               { stat: "90+", label: "Hours of audio" },
               { stat: "32", label: "AKT topics" },
-              { stat: "Free", label: "For April & July" },
+              { stat: "£59", label: "Early access" },
             ].map((item) => (
               <div
                 key={item.label}
@@ -132,8 +132,8 @@ export default function AktAudioRevisionPage() {
             >
               AKT Navigator gives you over 90 hours of audio across all 32
               curriculum topics. That is more than twelve times what Arora Medical
-              Education offers (7 hours), and it is completely free for the April
-              and July 2026 sittings.
+              Education offers (7 hours). Full library access starts from £59
+              Early Access before 8 July 2026, then £79 for 4 months.
             </p>
           </div>
 
@@ -164,7 +164,7 @@ export default function AktAudioRevisionPage() {
                 },
                 {
                   title: "Winding down",
-                  text: "Some trainees listen in the evening instead of reading a textbook. The conversational tone makes it easier to absorb after a long day.",
+                  text: "Some trainees listen in the evening instead of reading a textbook. The clear audio style makes it easier to absorb after a long day.",
                 },
               ].map((item) => (
                 <div
@@ -299,7 +299,7 @@ export default function AktAudioRevisionPage() {
                       AKT Navigator
                     </td>
                     <td className="p-3">90+ hours</td>
-                    <td className="p-3">Free</td>
+                    <td className="p-3">From £59</td>
                   </tr>
                   <tr style={{ borderBottom: "1px solid var(--border)" }}>
                     <td className="p-3">Arora Medical Education</td>
@@ -322,7 +322,7 @@ export default function AktAudioRevisionPage() {
               className="btn-primary inline-block text-[16px]"
               href="https://app.medexia-akt.com"
             >
-              Start listening free &rarr;
+              Start free &rarr;
             </a>
           </div>
 

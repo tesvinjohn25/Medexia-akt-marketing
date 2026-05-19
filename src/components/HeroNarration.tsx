@@ -146,7 +146,7 @@ export function HeroNarration({
                 className="text-[10px] tracking-[0.12em] uppercase font-semibold"
                 style={{ color: "rgba(167,139,250,.7)" }}
               >
-                April &amp; July Founding Cohort
+                Early Access
               </span>
             </div>
 

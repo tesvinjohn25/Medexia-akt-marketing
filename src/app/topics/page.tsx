@@ -8,7 +8,7 @@ import { aktTopics } from "@/data/akt-topics";
 export const metadata: Metadata = {
   title: "All 32 AKT Topics — Full RCGP Curriculum Coverage",
   description:
-    "Every topic in the RCGP AKT curriculum. Clinical (80%), Professional (10%), and Life Stages. Dedicated audio revision, questions, and explanations for each. Free for April and July 2026.",
+    "Every topic in the RCGP AKT curriculum. Clinical (80%), Professional (10%), and Life Stages. Free AKT questions and explanations, with full audio access from £59.",
   alternates: {
     canonical: "https://medexia-akt.com/topics",
   },
@@ -66,8 +66,8 @@ export default function TopicsIndexPage() {
             The RCGP AKT curriculum spans 32 topics across three areas.
             Clinical medicine makes up around 80% of the exam. Evidence in
             practice and organisation/management each make up 10%. Every topic
-            below has dedicated audio revision, questions, and examiner-level
-            explanations in AKT Navigator.
+            below has free question practice, deep structured explanations, and
+            audio-first revision in AKT Navigator.
           </p>
         </div>
       </section>

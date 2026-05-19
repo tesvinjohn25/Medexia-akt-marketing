@@ -8,14 +8,14 @@ import { EXAM_SITTINGS, EXAM_FORMAT } from "@/data/exam-dates";
 export const metadata: Metadata = {
   title: "AKT Exam Dates 2026 — April & July Sittings, Booking Windows",
   description:
-    "RCGP AKT exam dates for 2026: April 27 and July 7. Check booking windows, exam format (160 questions, 2h40m), eligibility, and start revising free with AKT Navigator.",
+    "RCGP AKT exam dates for 2026: April 27 and July 7. Check booking windows, exam format (160 questions, 2h40m), eligibility, and start free AKT question practice with AKT Navigator.",
   alternates: {
     canonical: "https://medexia-akt.com/akt-exam-dates",
   },
   openGraph: {
     title: "AKT Exam Dates 2026 — April & July Sittings",
     description:
-      "RCGP AKT exam dates for 2026: April 27 and July 7. Booking windows, exam format, eligibility, and free revision with AKT Navigator.",
+      "RCGP AKT exam dates for 2026: April 27 and July 7. Booking windows, exam format, eligibility, and free AKT question practice.",
     type: "website",
     url: "https://medexia-akt.com/akt-exam-dates",
   },
@@ -232,7 +232,7 @@ export default function AktExamDatesPage() {
                 className="font-medium transition-colors"
                 style={{ color: "var(--brand-violet-light)" }}
               >
-                start revising free
+                start free practice
               </a>
               .
             </p>
@@ -244,7 +244,7 @@ export default function AktExamDatesPage() {
               className="btn-primary inline-block text-[16px]"
               href="https://app.medexia-akt.com"
             >
-              Start revising now, free &rarr;
+              Start free practice &rarr;
             </a>
           </div>
 

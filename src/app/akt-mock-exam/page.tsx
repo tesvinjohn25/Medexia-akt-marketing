@@ -4,16 +4,16 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 
 export const metadata: Metadata = {
-  title: "AKT Mock Exam — Unlimited Free Mocks from 20,000+ Questions",
+  title: "AKT Mock Exam — Free Mocks from 21,000+ Questions",
   description:
-    "Generate unlimited AKT mock exams from a bank of over 20,000 questions. Choose 40, 80, or 160 questions. Timed to match real exam conditions with AI-powered debriefs that spot patterns you cannot see yourself.",
+    "Generate AKT mock exams from a bank of over 21,000 free questions. Choose 40, 80, or 160 questions. Timed to match real exam conditions with AI-powered debriefs that spot patterns you cannot see yourself.",
   alternates: {
     canonical: "https://medexia-akt.com/akt-mock-exam",
   },
   openGraph: {
-    title: "AKT Mock Exam — Unlimited Free Mocks",
+    title: "AKT Mock Exam — Free Practice Mocks",
     description:
-      "Generate unlimited AKT mock exams from 20,000+ questions. Timed conditions, AI debriefs, and performance analysis. Free for April and July 2026.",
+      "Generate AKT mock exams from 21,000+ free questions. Timed conditions, AI debriefs, and performance analysis.",
     type: "website",
     url: "https://medexia-akt.com/akt-mock-exam",
   },
@@ -25,7 +25,7 @@ export default function AktMockExamPage() {
     "@type": "Course",
     name: "AKT Mock Exams by AKT Navigator",
     description:
-      "Unlimited mock AKT exams from a question bank of over 20,000 questions. Timed to match real RCGP AKT conditions.",
+      "Mock AKT exams from a question bank of over 21,000 free questions. Timed to match real RCGP AKT conditions.",
     provider: {
       "@type": "Organization",
       name: "Medexia",
@@ -61,7 +61,7 @@ export default function AktMockExamPage() {
             className="mt-4 text-[16px] md:text-[18px] leading-[1.7]"
             style={{ color: "var(--fg-mid)" }}
           >
-            Generate unlimited mock exams from a question bank of over 20,000
+            Generate mock exams from a question bank of over 21,000 free
             questions. Choose your length, sit it under timed conditions, and get
             an AI-powered debrief that spots patterns you cannot see yourself.
           </p>
@@ -69,8 +69,8 @@ export default function AktMockExamPage() {
           {/* Key stats */}
           <div className="mt-8 grid gap-4 grid-cols-3">
             {[
-              { stat: "20k+", label: "Questions" },
-              { stat: "Unlimited", label: "Mock exams" },
+              { stat: "21k+", label: "Questions" },
+              { stat: "Mocks", label: "Basic practice" },
               { stat: "Free", label: "For April & July" },
             ].map((item) => (
               <div
@@ -268,7 +268,7 @@ export default function AktMockExamPage() {
               style={{ color: "var(--fg-mid)" }}
             >
               Most question banks give you a fixed set of questions that you
-              cycle through. With over 20,000 questions, AKT Navigator generates
+              cycle through. With over 21,000 questions, AKT Navigator generates
               genuinely fresh mocks every time. You will not run out of new
               questions before the exam, and every mock tests a different
               combination of topics and difficulty levels.

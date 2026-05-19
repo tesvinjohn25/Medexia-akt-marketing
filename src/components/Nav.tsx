@@ -59,7 +59,7 @@ export function Nav() {
             href="https://app.medexia-akt.com"
             className="btn-primary text-sm !py-[8px] !px-[14px]"
           >
-            Sign up free
+            Start free
           </a>
         </div>
       </div>

@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 export const alt =
-  "Medexia AKT Navigator — The whole AKT, in 90 hours of audio. Free for April & July 2026.";
+  "AKT Navigator by Medexia — 21,000+ AKT questions free. Full AKT audio from £59. £79 from 8 July.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -66,7 +66,7 @@ export default function OGImage() {
               letterSpacing: "-0.01em",
             }}
           >
-            Medexia
+            AKT Navigator
           </span>
           <span
             style={{
@@ -75,33 +75,33 @@ export default function OGImage() {
               color: "#9B6BFF",
             }}
           >
-            AKT Navigator
+            by Medexia
           </span>
         </div>
 
-        {/* Headline — direct echo of homepage H1, muted setup + bold payoff */}
+        {/* Headline — premium pricing clarity */}
         <div
           style={{
-            fontSize: "78px",
+            fontSize: "66px",
             fontWeight: 800,
-            color: "rgba(232,236,255,.55)",
-            lineHeight: 1.02,
+            color: "#F5F7FF",
+            lineHeight: 1.04,
             letterSpacing: "-0.04em",
           }}
         >
-          The whole AKT.
+          21,000+ AKT
         </div>
         <div
           style={{
-            fontSize: "78px",
+            fontSize: "66px",
             fontWeight: 800,
-            color: "#F5F7FF",
-            lineHeight: 1.02,
+            color: "rgba(232,236,255,.58)",
+            lineHeight: 1.04,
             letterSpacing: "-0.04em",
             marginBottom: "26px",
           }}
         >
-          In 90 hours of audio.
+          questions free.
         </div>
 
         {/* Accent divider */}
@@ -115,36 +115,51 @@ export default function OGImage() {
           }}
         />
 
-        {/* Subline — names the three homepage pillars */}
+        {/* Subline — pricing message */}
         <div
           style={{
             display: "flex",
-            fontSize: "26px",
-            fontWeight: 500,
+            fontSize: "32px",
+            fontWeight: 700,
             color: "rgba(167,139,250,.9)",
             letterSpacing: "-0.005em",
           }}
         >
-          The most efficient way to revise &mdash; audio &middot; algorithm &middot; mocks.
+          Full AKT audio from £59
         </div>
 
-        {/* Free badge */}
-        <div style={{ display: "flex", marginTop: "40px" }}>
+        <div style={{ display: "flex", gap: "14px", marginTop: "38px" }}>
           <div
             style={{
               display: "flex",
               alignItems: "center",
-              padding: "10px 24px",
+              padding: "12px 22px",
+              borderRadius: "12px",
+              background: "rgba(255,255,255,.055)",
+              border: "1.5px solid rgba(255,255,255,.12)",
+              fontSize: "21px",
+              fontWeight: 700,
+              color: "rgba(232,236,255,.88)",
+              letterSpacing: "-0.01em",
+            }}
+          >
+            90+ hours of AKT audiobooks
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              padding: "12px 22px",
               borderRadius: "12px",
               background: "rgba(52,211,153,.12)",
               border: "1.5px solid rgba(52,211,153,.30)",
-              fontSize: "22px",
+              fontSize: "21px",
               fontWeight: 700,
               color: "rgba(52,211,153,.95)",
-              letterSpacing: "0.04em",
+              letterSpacing: "-0.01em",
             }}
           >
-            FREE FOR APRIL &amp; JULY 2026
+            £79 from 8 July
           </div>
         </div>
       </div>

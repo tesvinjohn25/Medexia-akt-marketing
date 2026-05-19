@@ -6,13 +6,16 @@ export function SchemaJsonLd() {
     applicationCategory: "EducationalApplication",
     operatingSystem: "Web",
     offers: {
-      "@type": "Offer",
-      price: "0",
+      "@type": "AggregateOffer",
+      lowPrice: "0",
+      highPrice: "79",
       priceCurrency: "GBP",
-      description: "Free for the April and July 2026 AKT sittings",
+      offerCount: 3,
+      description:
+        "Free AKT question practice, Early Access full audio at £59, and Full Audio Access at £79 from 8 July 2026.",
     },
     description:
-      "Free AKT revision for the April & July sittings. 90+ hours of audio, adaptive learning, deep explanations.",
+      "AKT questions remain free. Full AKT audiobook access starts from £59 early access, then £79 from 8 July 2026.",
     url: "https://app.medexia-akt.com",
     author: {
       "@type": "Organization",

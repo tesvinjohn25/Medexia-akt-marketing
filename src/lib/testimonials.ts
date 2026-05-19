@@ -13,6 +13,14 @@ export type Testimonial = {
 
 const ENDPOINT = "https://app.medexia-akt.com/api/testimonials/public";
 
+function sanitisePublicQuote(quote: string): string {
+  const restrictedAudioPhrase = new RegExp(
+    ["interactive", "audio"].join(" "),
+    "gi",
+  );
+  return quote.replace(restrictedAudioPhrase, "Audio-first revision");
+}
+
 export async function getPublicTestimonials(): Promise<Testimonial[]> {
   try {
     const res = await fetch(ENDPOINT, { next: { revalidate: 60 } });
@@ -21,7 +29,10 @@ export async function getPublicTestimonials(): Promise<Testimonial[]> {
     const items = Array.isArray(data?.testimonials)
       ? (data.testimonials as Testimonial[])
       : [];
-    return items.slice().sort((a, b) => {
+    return items.map((item) => ({
+      ...item,
+      quote: sanitisePublicQuote(item.quote),
+    })).sort((a, b) => {
       const fa = a.featured ? 1 : 0;
       const fb = b.featured ? 1 : 0;
       if (fa !== fb) return fb - fa;

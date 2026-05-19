@@ -45,7 +45,7 @@ export function FinalCTA() {
           className="r-up mx-auto mt-4 max-w-[480px] text-[15px] md:text-[17px] leading-[1.6]"
           style={{ color: "rgba(232,236,255,.68)", "--i": 2 } as React.CSSProperties}
         >
-          AKT Navigator is free. Your time is the only investment.
+          Questions stay free. Full audiobook access becomes paid from 8 July.
         </p>
 
         <div
@@ -53,7 +53,7 @@ export function FinalCTA() {
           style={{ "--i": 3 } as React.CSSProperties}
         >
           <a className="btn-primary inline-block" href="https://app.medexia-akt.com">
-            Start revising free &rarr;
+            Start free &rarr;
           </a>
         </div>
       </div>

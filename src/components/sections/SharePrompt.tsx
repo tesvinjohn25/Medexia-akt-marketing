@@ -3,9 +3,9 @@
 import { useState } from "react";
 
 const SHARE_TEXT =
-  "Hey — found this free AKT revision tool. 90+ hours of audio, mock exams, deep explanations. Free until July. https://medexia-akt.com";
+  "Hey — found AKT Navigator. 21,000+ AKT questions stay free, with 2 hours of audio included and full audio from £59. https://medexia-akt.com";
 const WHATSAPP_URL = `whatsapp://send?text=${encodeURIComponent(SHARE_TEXT)}`;
-const EMAIL_URL = `mailto:?subject=${encodeURIComponent("Free AKT revision tool")}&body=${encodeURIComponent(SHARE_TEXT)}`;
+const EMAIL_URL = `mailto:?subject=${encodeURIComponent("AKT Navigator")}&body=${encodeURIComponent(SHARE_TEXT)}`;
 
 function WhatsAppIcon() {
   return (
@@ -71,7 +71,7 @@ export function SharePrompt() {
           onClick={() => {
             if (navigator.share) {
               navigator.share({
-                title: "Free AKT revision tool",
+                title: "AKT Navigator",
                 text: SHARE_TEXT,
               }).catch(() => {});
             } else {

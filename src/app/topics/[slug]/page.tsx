@@ -147,7 +147,7 @@ export default async function TopicPage({ params }: Props) {
               className="btn-primary inline-block text-[16px]"
               href="https://app.medexia-akt.com"
             >
-              Start revising {topic.name} free &rarr;
+              Start free practice &rarr;
             </a>
           </div>
 
@@ -177,7 +177,7 @@ export default async function TopicPage({ params }: Props) {
                 {
                   href: "/akt-mock-exam",
                   title: "AKT mock exams",
-                  desc: "Unlimited mocks from 20,000+ questions",
+                  desc: "Mocks from 21,000+ free questions",
                 },
                 {
                   href: "/best-akt-question-bank",

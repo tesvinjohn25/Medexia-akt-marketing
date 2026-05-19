@@ -19,7 +19,7 @@ export const aktTopics: AktTopic[] = [
     description:
       "Master the consultation models, communication skills, and shared decision-making frameworks tested in the AKT. Covers Calgary-Cambridge, patient-centred care, and breaking bad news.",
     metaDescription:
-      "Free AKT revision for consulting in general practice. Master Calgary-Cambridge, shared decision-making, and breaking bad news with 20,000+ questions and audio.",
+      "AKT revision for consulting in general practice. Master Calgary-Cambridge, shared decision-making, and breaking bad news with 21,000+ free questions and audio-first revision.",
     content: `The AKT tests your understanding of consultation models and communication frameworks in the context of general practice. You need to know the theory, but more importantly, you need to recognise how these models apply to clinical scenarios in exam questions.
 
 The Calgary-Cambridge model is the most commonly referenced framework. It structures a consultation into five phases: initiating the session, gathering information, physical examination, explanation and planning, and closing. AKT questions often present a clinical scenario and ask which phase of the consultation a particular action belongs to, or what the most appropriate communication technique is at a given point.
@@ -42,7 +42,7 @@ AKT Navigator covers all consultation models with questions, audio revision, and
     description:
       "Understand health inequalities, cultural competence, and the Equality Act as applied to general practice. Covers unconscious bias, reasonable adjustments, and inclusive care.",
     metaDescription:
-      "Free AKT revision for equality, diversity and inclusion. Cover the Equality Act, health inequalities, unconscious bias, and inclusive care with audio and questions.",
+      "AKT revision for equality, diversity and inclusion. Cover the Equality Act, health inequalities, unconscious bias, and inclusive care with free questions and audio-first revision.",
     content: `Equality, diversity and inclusion questions in the AKT focus on the legal framework and its practical application in general practice. The Equality Act 2010 is central and you need to know the nine protected characteristics: age, disability, gender reassignment, marriage and civil partnership, pregnancy and maternity, race, religion or belief, sex, and sexual orientation.
 
 The Act introduces the concept of reasonable adjustments for disabled patients. In practice, this means things like longer appointment slots, accessible premises, easy-read materials, and British Sign Language interpreters. AKT questions often test whether a proposed adjustment is reasonable or whether a practice is meeting its legal obligations.
@@ -63,7 +63,7 @@ NICE guidance on reducing health inequalities includes recommendations on digita
     description:
       "Critical appraisal, research methodology, and evidence-based medicine as tested in the AKT. Covers study design, statistics, NNT, sensitivity, specificity, and clinical guidelines.",
     metaDescription:
-      "Free AKT revision for evidence-based practice and statistics. Master NNT, sensitivity, specificity, study design, and critical appraisal with questions and audio.",
+      "AKT revision for evidence-based practice and statistics. Master NNT, sensitivity, specificity, study design, and critical appraisal with free questions and audio-first revision.",
     content: `Evidence in practice makes up roughly 10% of the AKT and is one of the areas trainees most commonly neglect. The questions are often formula-based and follow predictable patterns, making them some of the easiest marks on the paper if you learn the core concepts.
 
 Study design is fundamental. You need to recognise randomised controlled trials, cohort studies, case-control studies, cross-sectional surveys, and systematic reviews. Each has specific strengths and limitations. RCTs are the gold standard for intervention studies but cannot answer every clinical question. Case-control studies work backwards from outcome to exposure and are useful for rare diseases.
@@ -86,7 +86,7 @@ NICE guideline development uses the GRADE framework to rate evidence quality fro
     description:
       "Quality improvement, patient safety, significant event analysis, and prescribing principles. Covers audit cycles, QOF, medication safety, and MHRA alerts.",
     metaDescription:
-      "Free AKT revision for QI, prescribing, and patient safety. Cover audit cycles, SEA, QOF indicators, MHRA alerts, and medication safety with questions and audio.",
+      "AKT revision for QI, prescribing, and patient safety. Cover audit cycles, SEA, QOF indicators, MHRA alerts, and medication safety with free questions and audio-first revision.",
     content: `This topic spans quality improvement methodology, patient safety systems, and prescribing principles. It is heavily tested in the AKT because safe prescribing and quality improvement are central to everyday general practice.
 
 The audit cycle is a fundamental QI tool. A clinical audit measures current practice against a defined standard, implements changes, and re-audits to see if practice improved. You need to distinguish audit from research: audit measures against known standards while research generates new knowledge. Audit does not need ethical approval; research does.
@@ -109,7 +109,7 @@ Patient safety frameworks include the Swiss cheese model (Reason), which explain
     description:
       "GP leadership, practice management, and NHS structures. Covers CQC, appraisal and revalidation, team working, and medico-legal responsibilities.",
     metaDescription:
-      "Free AKT revision for GP leadership and management. Cover CQC inspections, appraisal, revalidation, NHS structures, and medico-legal topics with questions and audio.",
+      "AKT revision for GP leadership and management. Cover CQC inspections, appraisal, revalidation, NHS structures, and medico-legal topics with free questions and audio-first revision.",
     content: `Leadership and management questions test your knowledge of NHS structures, regulatory bodies, practice management, and professional responsibilities. These are often seen as dry topics, but they account for a meaningful portion of the AKT.
 
 The Care Quality Commission (CQC) inspects and rates GP practices against five key questions: Is the service safe, effective, caring, responsive, and well-led? You should know the possible ratings (outstanding, good, requires improvement, inadequate) and what triggers a CQC inspection. Practices rated as inadequate may be placed in special measures.
@@ -132,7 +132,7 @@ Teamworking and delegation are tested through scenarios about skill mix, role bo
     description:
       "Public health, epidemiology, screening programmes, and sustainability in healthcare. Covers vaccination schedules, health promotion, and planetary health.",
     metaDescription:
-      "Free AKT revision for population and planetary health. Cover vaccination schedules, screening programmes, epidemiology, and NHS sustainability with questions and audio.",
+      "AKT revision for population and planetary health. Cover vaccination schedules, screening programmes, epidemiology, and NHS sustainability with free questions and audio-first revision.",
     content: `Population and planetary health covers public health principles, screening programmes, vaccination schedules, and the environmental impact of healthcare. This topic has expanded in recent years with the addition of planetary health to the RCGP curriculum.
 
 Screening programmes are heavily tested. The UK National Screening Committee oversees programmes including cervical screening (ages 25-64), breast screening (ages 50-70, triennial mammography), bowel screening (ages 56-74, FIT test), abdominal aortic aneurysm screening (men aged 65), and diabetic eye screening (annual for all diabetics). You need to know the Wilson and Jungner criteria for evaluating screening programmes.
@@ -157,7 +157,7 @@ Travel health questions cover pre-travel risk assessment, destination-specific v
     description:
       "Paediatric presentations in primary care including child development, safeguarding, childhood infections, immunisation schedules, and adolescent health.",
     metaDescription:
-      "Free AKT revision for children and young people. Cover child development milestones, safeguarding, childhood infections, and immunisation with questions and audio.",
+      "AKT revision for children and young people. Cover child development milestones, safeguarding, childhood infections, and immunisation with free questions and audio-first revision.",
     content: `Paediatric presentations in primary care are a major AKT topic. You need to recognise common childhood conditions, understand developmental milestones, know the immunisation schedule, and be confident in safeguarding processes.
 
 Child development milestones are tested frequently. Key milestones include smiling at 6 weeks, sitting unsupported at 6 months, first words at 12 months, walking at 12-18 months, and combining two words by 2 years. You need to know when to refer for developmental concerns and which milestones are most predictive of later problems.
@@ -180,7 +180,7 @@ Red flags in paediatrics include non-blanching rash, bulging fontanelle, bile-st
     description:
       "Management of chronic disease in general practice including multimorbidity, cancer recognition, two-week-wait referrals, and palliative transitions.",
     metaDescription:
-      "Free AKT revision for long-term conditions and cancer. Cover multimorbidity management, 2WW referral criteria, and palliative transitions with questions and audio.",
+      "AKT revision for long-term conditions and cancer. Cover multimorbidity management, 2WW referral criteria, and palliative transitions with free questions and audio-first revision.",
     content: `This topic covers the management of patients with chronic diseases and the recognition of cancer in primary care. It is one of the most clinically relevant AKT topics because managing long-term conditions is the core work of general practice.
 
 Multimorbidity affects over a quarter of the UK population and is the norm rather than the exception in general practice. NICE guideline NG56 on multimorbidity recommends an approach that considers treatment burden, polypharmacy, patient priorities, and the interaction between conditions. You should understand that guidelines for individual conditions may not apply straightforwardly to patients with multiple conditions.
@@ -203,7 +203,7 @@ Cancer survivorship is an expanding area. GPs play a key role in managing the lo
     description:
       "Geriatric medicine in primary care including frailty, falls, dementia, polypharmacy, capacity assessment, and care home medicine.",
     metaDescription:
-      "Free AKT revision for older adults. Cover frailty assessment, falls prevention, dementia diagnosis, polypharmacy, and capacity with questions and audio.",
+      "AKT revision for older adults. Cover frailty assessment, falls prevention, dementia diagnosis, polypharmacy, and capacity with free questions and audio-first revision.",
     content: `Older adults medicine is a high-yield AKT topic because the ageing population makes up a large proportion of GP consultations. Questions often involve complex scenarios with multiple interacting conditions, medications, and social factors.
 
 Frailty is a clinical syndrome characterised by reduced physiological reserve. The electronic Frailty Index (eFI) uses routine GP data to identify frailty. The Clinical Frailty Scale (Rockwood) ranges from 1 (very fit) to 9 (terminally ill). NICE recommends identifying frailty in people aged 65 and over and offering comprehensive geriatric assessment to those who are moderately or severely frail.
@@ -226,7 +226,7 @@ Care home medicine involves structured medication reviews, advance care planning
     description:
       "Palliative care, symptom management, advance care planning, and end-of-life decision making in the community. Covers syringe drivers, DNACPR, and bereavement.",
     metaDescription:
-      "Free AKT revision for end-of-life care. Cover symptom management, syringe drivers, DNACPR, advance care planning, and bereavement support with questions and audio.",
+      "AKT revision for end-of-life care. Cover symptom management, syringe drivers, DNACPR, advance care planning, and bereavement support with free questions and audio-first revision.",
     content: `End-of-life care is a core GP competency and a regular source of AKT questions. The focus is on symptom management in the community, advance care planning, and the legal and ethical framework around end-of-life decisions.
 
 Symptom management in the last days of life commonly involves pain, nausea, breathlessness, agitation, and respiratory secretions. First-line medications include morphine for pain and breathlessness, midazolam for agitation and seizures, haloperidol or levomepromazine for nausea, and hyoscine butylbromide for respiratory secretions. These are often delivered via a syringe driver (continuous subcutaneous infusion) when the patient can no longer take oral medications.
@@ -251,7 +251,7 @@ Certification of death, cremation forms, and referral to the coroner are practic
     description:
       "Allergic conditions in primary care including anaphylaxis management, food allergy, drug allergy, immunodeficiency, and immunisation.",
     metaDescription:
-      "Free AKT revision for allergy and immunology. Cover anaphylaxis management, food allergy, drug allergy, and immunodeficiency with questions and 90+ hours of audio.",
+      "AKT revision for allergy and immunology. Cover anaphylaxis management, food allergy, drug allergy, and immunodeficiency with free questions and full audio access.",
     content: `Allergy and immunology questions in the AKT focus on recognition, management, and emergency treatment of allergic conditions. Anaphylaxis management is the highest priority topic and questions about it appear regularly.
 
 Anaphylaxis follows the Resuscitation Council UK guidelines. The first-line treatment is intramuscular adrenaline (1:1000, 0.5ml in adults, 0.3ml in children 6-12, 0.15ml in children under 6) given into the anterolateral thigh. This should be repeated at 5-minute intervals if there is no improvement. After adrenaline, the patient needs airway management, high-flow oxygen, IV fluid resuscitation, and observation. Tryptase levels should be taken at the time of reaction, 1-2 hours after, and at baseline (24 hours or at follow-up). Every patient who experiences anaphylaxis should be prescribed two adrenaline auto-injectors and referred to an allergy clinic.
@@ -272,7 +272,7 @@ Patients with asplenia or hyposplenism require lifelong prophylactic antibiotics
     description:
       "Cardiovascular disease in primary care including hypertension, heart failure, atrial fibrillation, lipid management, and chest pain assessment.",
     metaDescription:
-      "Free AKT revision for cardiovascular health. Cover hypertension, heart failure, AF, lipid management, and chest pain with 20,000+ questions and audio revision.",
+      "AKT revision for cardiovascular health. Cover hypertension, heart failure, AF, lipid management, and chest pain with 21,000+ free questions and audio-first revision.",
     content: `Cardiovascular disease is one of the most heavily tested clinical topics in the AKT. You need to know the current NICE guidelines for hypertension, heart failure, atrial fibrillation, lipid management, and acute coronary syndromes.
 
 Hypertension management follows NICE guideline NG136. Diagnosis requires ambulatory or home blood pressure monitoring to confirm clinic readings. Treatment thresholds: offer treatment at stage 1 (clinic BP 140/90 or higher, ABPM 135/85 or higher) if there is target organ damage, CVD risk over 10%, renal disease, or diabetes. Step 1 treatment: ACE inhibitor or ARB (CCB for Afro-Caribbean patients or those over 55). Step 2: ACE inhibitor/ARB plus CCB. Step 3: add thiazide-like diuretic. Step 4 (resistant hypertension): consider spironolactone if potassium is 4.5 or below.
@@ -293,7 +293,7 @@ Acute chest pain assessment in primary care requires rapid risk stratification. 
     description:
       "Skin conditions commonly seen in general practice including eczema, psoriasis, skin cancer recognition, acne, and fungal infections.",
     metaDescription:
-      "Free AKT revision for dermatology. Cover eczema, psoriasis, skin cancer recognition, acne management, and fungal infections with questions and audio revision.",
+      "AKT revision for dermatology. Cover eczema, psoriasis, skin cancer recognition, acne management, and fungal infections with free questions and audio-first revision.",
     content: `Dermatology is a high-yield AKT topic. Many questions include clinical descriptions or images and ask for diagnosis or management. Pattern recognition is important, but so is knowing the stepped treatment approaches for common conditions.
 
 Eczema management follows a stepwise approach. Emollients are the foundation for all patients, applied liberally and frequently. Mild eczema: add mild topical corticosteroid (hydrocortisone 1%). Moderate eczema: moderate potency steroid (betamethasone valerate 0.025% or clobetasone butyrate). Severe eczema: potent topical corticosteroid (betamethasone valerate 0.1%). Face and flexures require lower potency. Tacrolimus (topical calcineurin inhibitor) is second-line for moderate to severe eczema, particularly useful on the face.
@@ -314,7 +314,7 @@ Fungal infections include dermatophyte infections (tinea corporis, pedis, cruris
     description:
       "Ear, nose and throat presentations including otitis media, hearing loss, tonsillitis, sinusitis, epistaxis, and vertigo.",
     metaDescription:
-      "Free AKT revision for ENT. Cover otitis media, hearing loss, tonsillitis, sinusitis, epistaxis, and vertigo with 20,000+ questions and audio revision.",
+      "AKT revision for ENT. Cover otitis media, hearing loss, tonsillitis, sinusitis, epistaxis, and vertigo with 21,000+ free questions and audio-first revision.",
     content: `ENT presentations are common in general practice and well represented in the AKT. The main areas are ear infections and hearing loss, throat infections, nasal conditions, and vertigo.
 
 Acute otitis media is one of the most common childhood presentations. NICE recommends a delayed prescribing strategy for most cases: reassurance, analgesia, and a prescription to use if symptoms do not improve within 48-72 hours. Immediate antibiotics are recommended for systemically unwell children, children under 2 with bilateral otitis media, and those with otorrhoea. First-line antibiotic is amoxicillin.
@@ -337,7 +337,7 @@ Epistaxis is usually anterior (from Little's area) and managed with firm pressur
     description:
       "Ophthalmology in primary care including red eye, acute vision loss, glaucoma, cataracts, and diabetic retinopathy screening.",
     metaDescription:
-      "Free AKT revision for eyes and vision. Cover red eye differential diagnosis, acute vision loss, glaucoma, cataracts, and diabetic retinopathy with questions and audio.",
+      "AKT revision for eyes and vision. Cover red eye differential diagnosis, acute vision loss, glaucoma, cataracts, and diabetic retinopathy with free questions and audio-first revision.",
     content: `Ophthalmology questions in the AKT focus on differentiating causes of red eye, recognising emergencies requiring same-day referral, and understanding common chronic eye conditions.
 
 Red eye differential diagnosis is a frequent AKT question. Conjunctivitis is the most common cause: bacterial (purulent discharge, sticky eyes), viral (watery discharge, often following URTI), and allergic (itching, bilateral, seasonal). Bacterial conjunctivitis is usually self-limiting; chloramphenicol drops can be used if needed. Most important is distinguishing benign causes from emergencies.
@@ -358,7 +358,7 @@ Cataracts cause gradual painless loss of vision with glare. Referral for surgery
     description:
       "GI conditions including IBS, IBD, coeliac disease, GORD, liver disease, and GI cancer recognition. Covers H. pylori testing and management.",
     metaDescription:
-      "Free AKT revision for gastroenterology. Cover IBS, IBD, coeliac disease, GORD, liver disease, and H. pylori with 20,000+ questions and audio revision.",
+      "AKT revision for gastroenterology. Cover IBS, IBD, coeliac disease, GORD, liver disease, and H. pylori with 21,000+ free questions and audio-first revision.",
     content: `Gastroenterology is a heavily tested AKT topic covering a wide range of conditions from functional disorders to cancer recognition. Knowing when to test, when to treat, and when to refer is key.
 
 Irritable bowel syndrome (IBS) is diagnosed clinically using NICE criteria: abdominal pain or bloating related to defecation, with altered bowel habit, for at least 6 months. Key investigations to exclude organic disease include FBC, ESR/CRP, coeliac serology, and calprotectin (to distinguish IBS from IBD). Management is stepwise: lifestyle and dietary advice (regular meals, adequate fluids, limit caffeine and alcohol), low FODMAP diet (with dietitian support), antispasmodics (mebeverine, hyoscine), laxatives for constipation-predominant IBS, loperamide for diarrhoea-predominant IBS, and low-dose tricyclic antidepressants if first-line measures fail.
@@ -381,7 +381,7 @@ Liver disease presentations include non-alcoholic fatty liver disease (most comm
     description:
       "Genetic conditions, inheritance patterns, genetic testing and counselling in primary care. Covers pharmacogenomics and cancer genetics.",
     metaDescription:
-      "Free AKT revision for genomic medicine. Cover inheritance patterns, genetic testing, cancer genetics, and pharmacogenomics with questions and audio revision.",
+      "AKT revision for genomic medicine. Cover inheritance patterns, genetic testing, cancer genetics, and pharmacogenomics with free questions and audio-first revision.",
     content: `Genomic medicine is a growing area in the AKT curriculum. Questions focus on inheritance patterns, common genetic conditions, when to refer for genetic testing, and the basics of pharmacogenomics.
 
 Inheritance patterns are commonly tested. Autosomal dominant conditions (50% chance of inheritance, affected parent): Huntington's disease, familial hypercholesterolaemia, Marfan syndrome, neurofibromatosis, polycystic kidney disease (adult type). Autosomal recessive conditions (25% chance if both parents are carriers): cystic fibrosis, sickle cell disease, thalassaemia, phenylketonuria, haemochromatosis. X-linked recessive conditions (50% of sons affected if mother is carrier): haemophilia A and B, Duchenne muscular dystrophy, G6PD deficiency, red-green colour blindness.
@@ -402,7 +402,7 @@ Prenatal screening includes the combined test (nuchal translucency, beta-hCG, PA
     description:
       "Gynaecological conditions including menorrhagia, PCOS, endometriosis, menopause, cervical screening, and breast lump assessment.",
     metaDescription:
-      "Free AKT revision for gynaecology and breast. Cover menorrhagia, PCOS, endometriosis, menopause, and cervical screening with questions and audio revision.",
+      "AKT revision for gynaecology and breast. Cover menorrhagia, PCOS, endometriosis, menopause, and cervical screening with free questions and audio-first revision.",
     content: `Gynaecology questions in the AKT cover common conditions managed in primary care, cervical screening, breast assessment, and menopause management. Several of these have had recent guideline updates.
 
 Menorrhagia (heavy menstrual bleeding) is defined as excessive menstrual blood loss that interferes with quality of life. NICE recommends first-line treatment with the levonorgestrel-releasing intrauterine system (Mirena). Second-line options include tranexamic acid, NSAIDs (mefenamic acid), combined oral contraceptive, or cyclical progestogens. Investigate with FBC to check for iron deficiency. Refer if treatment fails, intermenstrual or postcoital bleeding is present, or pelvic mass is found.
@@ -425,7 +425,7 @@ Breast lump assessment: all unexplained breast lumps in women over 30 should be 
     description:
       "Blood disorders in primary care including iron deficiency anaemia, B12 deficiency, anticoagulation management, and haematological malignancies.",
     metaDescription:
-      "Free AKT revision for haematology. Cover iron deficiency anaemia, B12 deficiency, anticoagulation, and blood cancers with 20,000+ questions and audio revision.",
+      "AKT revision for haematology. Cover iron deficiency anaemia, B12 deficiency, anticoagulation, and blood cancers with 21,000+ free questions and audio-first revision.",
     content: `Haematology questions in the AKT typically focus on interpreting blood results, managing anaemia, anticoagulation, and recognising haematological malignancies in primary care.
 
 Iron deficiency anaemia is the most common anaemia worldwide. It presents with microcytic hypochromic anaemia (low MCV, low MCH). Ferritin is the most useful single test, but it is an acute phase reactant, so levels may be falsely normal in infection or inflammation. In men and postmenopausal women, iron deficiency always needs investigation for GI blood loss. NICE recommends both upper and lower GI investigation. In premenopausal women, menorrhagia is the most common cause. Treatment is oral iron (ferrous sulphate 200mg twice daily) for at least 3 months after haemoglobin normalises.
@@ -448,7 +448,7 @@ Haematological malignancies to recognise: unexplained lymphadenopathy, unexplain
     description:
       "Common infections, travel medicine, tropical diseases, and infection control. Covers HIV, hepatitis, travel vaccinations, and antimicrobial stewardship.",
     metaDescription:
-      "Free AKT revision for infectious diseases and travel health. Cover HIV, hepatitis, travel vaccinations, and antimicrobial stewardship with questions and audio.",
+      "AKT revision for infectious diseases and travel health. Cover HIV, hepatitis, travel vaccinations, and antimicrobial stewardship with free questions and audio-first revision.",
     content: `Infectious diseases and travel health cover a broad range of AKT content including common infections managed in primary care, notifiable diseases, HIV, hepatitis, travel medicine, and antimicrobial stewardship.
 
 HIV testing is recommended in areas with high prevalence (more than 2 per 1000) and for all new GP registrations in those areas. Indicator conditions for HIV testing include herpes zoster in under-65s, unexplained lymphadenopathy, oral candidiasis, unexplained weight loss, and any STI. Fourth-generation tests detect both HIV antigen and antibodies and have a window period of approximately 4 weeks. Post-exposure prophylaxis (PEP) should be started within 72 hours of exposure.
@@ -471,7 +471,7 @@ Travel health consultations include risk assessment based on destination, itiner
     description:
       "Healthcare for people with learning disabilities including annual health checks, reasonable adjustments, capacity, and health inequalities.",
     metaDescription:
-      "Free AKT revision for learning disability. Cover annual health checks, reasonable adjustments, capacity assessment, and health inequalities with questions and audio.",
+      "AKT revision for learning disability. Cover annual health checks, reasonable adjustments, capacity assessment, and health inequalities with free questions and audio-first revision.",
     content: `Learning disability healthcare is an important AKT topic that sits at the intersection of clinical medicine, ethics, and health inequalities. People with learning disabilities have significantly worse health outcomes than the general population, with an average life expectancy 15-20 years shorter.
 
 Annual health checks are offered to all adults with learning disabilities on the GP learning disability register. The check covers physical health, mental health, medication review, health promotion, and coordination with other services. It follows a structured template and should result in a health action plan. Uptake varies significantly between practices and is a focus of NHS quality improvement efforts.
@@ -494,7 +494,7 @@ Mental health conditions are also more common, but diagnosis is often delayed be
     description:
       "Pregnancy, postnatal care, contraception, and fertility in primary care. Covers antenatal screening, gestational diabetes, and postpartum mental health.",
     metaDescription:
-      "Free AKT revision for maternity and reproductive health. Cover contraception, antenatal care, gestational diabetes, and postnatal mental health with questions and audio.",
+      "AKT revision for maternity and reproductive health. Cover contraception, antenatal care, gestational diabetes, and postnatal mental health with free questions and audio-first revision.",
     content: `Maternity and reproductive health covers contraception, pregnancy management in primary care, and postnatal care. Contraception questions are among the most commonly tested items in the AKT.
 
 Contraception options and their effectiveness. Long-acting reversible contraceptives (LARCs) are the most effective: copper IUD (non-hormonal, lasts 5-10 years), levonorgestrel IUS (Mirena lasts 5 years, also treats menorrhagia), subdermal implant (Nexplanon, lasts 3 years), and depot injection (Depo-Provera, every 12-13 weeks). The combined oral contraceptive is contraindicated in women with migraine with aura (due to stroke risk), BMI over 35, age over 35 who smoke, and uncontrolled hypertension. The UKMEC criteria (categories 1-4) guide safe prescribing: Category 1 (no restriction), 2 (advantages outweigh risks), 3 (risks outweigh advantages), 4 (unacceptable risk).
@@ -515,7 +515,7 @@ Postnatal mental health: the Edinburgh Postnatal Depression Scale (EPDS) screens
     description:
       "Psychiatric conditions in primary care including depression, anxiety, psychosis, eating disorders, and the Mental Health Act. Covers SSRIs and risk assessment.",
     metaDescription:
-      "Free AKT revision for mental health. Cover depression, anxiety, SSRI prescribing, psychosis, eating disorders, and the Mental Health Act with questions and audio.",
+      "AKT revision for mental health. Cover depression, anxiety, SSRI prescribing, psychosis, eating disorders, and the Mental Health Act with free questions and audio-first revision.",
     content: `Mental health is a high-yield AKT topic. Questions cover diagnosis, management, prescribing, risk assessment, and the legal framework. Depression and anxiety account for the majority of questions, but you also need to know about psychosis, eating disorders, and the Mental Health Act.
 
 Depression is diagnosed using ICD-11 criteria: persistent low mood, loss of interest or enjoyment, and reduced energy, plus at least two additional symptoms including poor concentration, low self-esteem, guilt, pessimism, sleep disturbance, appetite change, and suicidal thoughts. Severity guides treatment: mild depression is managed with guided self-help, exercise, and watchful waiting. Moderate to severe depression warrants an SSRI (sertraline is first-line per NICE) alongside psychological therapy.
@@ -538,7 +538,7 @@ Risk assessment for suicide involves asking directly about suicidal thoughts (th
     description:
       "Endocrine and metabolic conditions including diabetes, thyroid disease, obesity, adrenal disorders, and calcium metabolism.",
     metaDescription:
-      "Free AKT revision for metabolic and endocrine conditions. Cover diabetes management, thyroid disease, obesity, and adrenal disorders with questions and audio.",
+      "AKT revision for metabolic and endocrine conditions. Cover diabetes management, thyroid disease, obesity, and adrenal disorders with free questions and audio-first revision.",
     content: `Metabolic and endocrine conditions are heavily tested in the AKT, with diabetes and thyroid disease being the most common topics. You need to know current NICE guidelines and be able to interpret blood results.
 
 Type 2 diabetes management follows the NICE NG28 pathway. First-line is metformin (standard release initially, modified release if GI side effects). If HbA1c remains above target (usually 48 mmol/mol for most patients), add a second agent. SGLT2 inhibitors (dapagliflozin, empagliflozin) are recommended early, especially if the patient has CVD, heart failure, or CKD, because of their cardiovascular and renal benefits. GLP-1 receptor agonists (semaglutide, liraglutide) are options if BMI is above 35 or other oral agents have failed. Insulin is introduced when oral and injectable agents cannot achieve target HbA1c.
@@ -559,7 +559,7 @@ Calcium metabolism: hypercalcaemia is most commonly caused by primary hyperparat
     description:
       "MSK conditions including back pain, osteoarthritis, rheumatoid arthritis, osteoporosis, and soft tissue injuries. Covers red flags and referral criteria.",
     metaDescription:
-      "Free AKT revision for musculoskeletal health. Cover back pain red flags, osteoarthritis, rheumatoid arthritis, and osteoporosis with questions and audio revision.",
+      "AKT revision for musculoskeletal health. Cover back pain red flags, osteoarthritis, rheumatoid arthritis, and osteoporosis with free questions and audio-first revision.",
     content: `Musculoskeletal conditions are one of the most common reasons for GP consultations and are well represented in the AKT. Questions focus on diagnosis, red flag recognition, and management pathways.
 
 Low back pain is extremely common. NICE guideline NG59 recommends against routine imaging for non-specific low back pain. Red flags requiring urgent investigation include cauda equina syndrome (bilateral leg weakness, saddle anaesthesia, urinary retention or incontinence), suspected spinal fracture (significant trauma, osteoporosis risk, corticosteroid use), suspected malignancy (weight loss, history of cancer, age over 50 with new onset), and suspected infection (fever, IV drug use, immunosuppression). Management of non-specific back pain includes staying active, analgesia, and physiotherapy. Avoid prolonged bed rest.
@@ -580,7 +580,7 @@ Gout presents with acute monoarthritis, typically affecting the first MTP joint.
     description:
       "ADHD, autism spectrum conditions, and neurodiversity in primary care. Covers assessment pathways, medication, and reasonable adjustments.",
     metaDescription:
-      "Free AKT revision for neurodevelopmental conditions. Cover ADHD, autism, assessment pathways, and medication management with questions and audio revision.",
+      "AKT revision for neurodevelopmental conditions. Cover ADHD, autism, assessment pathways, and medication management with free questions and audio-first revision.",
     content: `Neurodevelopmental conditions are an expanding area of the RCGP curriculum and increasingly tested in the AKT. The focus is on recognition in primary care, appropriate referral pathways, and ongoing management.
 
 ADHD presents with inattention, hyperactivity, and impulsivity that are persistent, pervasive (present in multiple settings), and cause functional impairment. In adults, hyperactivity often manifests as inner restlessness rather than physical overactivity. NICE guideline NG87 recommends that GPs can recognise symptoms and refer for specialist assessment, but should not initiate ADHD medication. Referral is to a psychiatrist or specialist ADHD service. Diagnosis requires symptoms present since childhood (before age 12), though formal diagnosis may occur much later.
@@ -603,7 +603,7 @@ Comorbidities are common: anxiety, depression, sleep disorders, and eating disor
     description:
       "Neurological conditions including headache, epilepsy, stroke, multiple sclerosis, Parkinson's disease, and neuropathy.",
     metaDescription:
-      "Free AKT revision for neurology. Cover headache diagnosis, epilepsy management, stroke recognition, MS, and Parkinson's with questions and audio revision.",
+      "AKT revision for neurology. Cover headache diagnosis, epilepsy management, stroke recognition, MS, and Parkinson's with free questions and audio-first revision.",
     content: `Neurology is a broad AKT topic covering headache, epilepsy, stroke, movement disorders, and neuropathy. Pattern recognition and red flag awareness are key.
 
 Headache diagnosis is frequently tested. Tension-type headache is the most common: bilateral, pressing quality, mild to moderate severity. Migraine presents with unilateral pulsating headache, nausea, photophobia and phonophobia, lasting 4-72 hours. Migraine with aura (visual disturbance preceding headache by 5-60 minutes) is a contraindication to combined oral contraceptives due to stroke risk. Cluster headache is severe unilateral periorbital pain with autonomic features (lacrimation, nasal congestion, ptosis), occurring in clusters over weeks. Red flags: thunderclap headache (sudden onset, worst ever, subarachnoid haemorrhage until proven otherwise), headache with fever and neck stiffness (meningitis), headache with papilloedema (raised intracranial pressure), new headache in over-50s with scalp tenderness (giant cell arteritis).
@@ -624,7 +624,7 @@ Multiple sclerosis presents with episodes of neurological dysfunction separated 
     description:
       "Kidney and urological conditions including CKD, UTI, prostate disease, haematuria, and renal stones. Covers eGFR monitoring and referral thresholds.",
     metaDescription:
-      "Free AKT revision for renal and urological conditions. Cover CKD staging, UTI management, prostate disease, and haematuria with questions and audio revision.",
+      "AKT revision for renal and urological conditions. Cover CKD staging, UTI management, prostate disease, and haematuria with free questions and audio-first revision.",
     content: `Renal and urological conditions are frequently tested in the AKT. You need to know CKD staging and management, UTI treatment, prostate assessment, and when to investigate haematuria.
 
 Chronic kidney disease is staged by eGFR and albuminuria. Stage 1: eGFR above 90 with evidence of kidney damage. Stage 2: eGFR 60-89. Stage 3a: 45-59. Stage 3b: 30-44. Stage 4: 15-29. Stage 5: below 15. Albuminuria categories: A1 (ACR below 3), A2 (3-30), A3 (above 30). Management includes blood pressure control (target below 140/90, or 130/80 if ACR above 70), ACE inhibitor or ARB if ACR above 30 or if diabetic with ACR above 3, SGLT2 inhibitor if CKD with ACR above 22.6 (or type 2 diabetes with any CKD), statin for cardiovascular risk reduction, and avoiding nephrotoxic drugs (NSAIDs, aminoglycosides). Refer to nephrology if eGFR below 30, ACR above 70, sustained eGFR decline of more than 25% in 12 months, or uncontrolled hypertension despite 4 agents.
@@ -645,7 +645,7 @@ Renal stones present with acute colicky loin pain radiating to the groin. Non-co
     description:
       "Respiratory conditions including asthma, COPD, pneumonia, lung cancer, and sleep apnoea. Covers inhaler technique, spirometry, and BTS guidelines.",
     metaDescription:
-      "Free AKT revision for respiratory health. Cover asthma, COPD, pneumonia, lung cancer, and sleep apnoea with 20,000+ questions and 90+ hours of audio.",
+      "AKT revision for respiratory health. Cover asthma, COPD, pneumonia, lung cancer, and sleep apnoea with 21,000+ free questions and full audio access.",
     content: `Respiratory conditions are a major AKT topic. Asthma and COPD are the most heavily tested, but you also need to know about pneumonia, lung cancer recognition, and sleep apnoea.
 
 Asthma diagnosis in adults requires demonstration of variable airflow obstruction. NICE recommends spirometry (FEV1/FVC ratio below 0.7 supports obstruction), bronchodilator reversibility (improvement of 12% and 200ml in FEV1), FeNO (above 40 ppb supports eosinophilic inflammation), and peak flow variability (more than 20% variation). Treatment follows a stepwise approach: SABA reliever as needed (step 1), add low-dose ICS (step 2), add LTRA or LABA (step 3), increase ICS to medium dose (step 4), refer to specialist (step 5). NICE and BTS/SIGN guidelines differ slightly: NICE recommends LTRA before LABA at step 3, while BTS/SIGN recommends LABA first. Check which guideline the question references.
@@ -668,7 +668,7 @@ Inhaler technique assessment is essential at every review. Poor technique is the
     description:
       "Sexual health in primary care including STI testing and management, PrEP, sexual dysfunction, and LGBTQ+ healthcare.",
     metaDescription:
-      "Free AKT revision for sexual health. Cover STI diagnosis and management, PrEP, sexual dysfunction, and LGBTQ+ healthcare with questions and audio revision.",
+      "AKT revision for sexual health. Cover STI diagnosis and management, PrEP, sexual dysfunction, and LGBTQ+ healthcare with free questions and audio-first revision.",
     content: `Sexual health questions in the AKT cover STI diagnosis and management, HIV prevention, sexual dysfunction, and inclusive healthcare for LGBTQ+ patients.
 
 Chlamydia is the most common bacterial STI in the UK. It is often asymptomatic. The National Chlamydia Screening Programme offers testing to sexually active under-25s. Diagnosis is by NAAT (nucleic acid amplification test) on a vulvovaginal swab or first-catch urine sample. Treatment: doxycycline 100mg twice daily for 7 days (first-line, changed from azithromycin due to evidence of superior cure rates). Partner notification and treatment are essential.
@@ -691,7 +691,7 @@ LGBTQ+ healthcare involves understanding specific health needs: higher rates of 
     description:
       "Addiction medicine in primary care including smoking cessation, alcohol use disorders, opioid dependence, and harm reduction approaches.",
     metaDescription:
-      "Free AKT revision for smoking, alcohol, and substance misuse. Cover cessation strategies, AUDIT scoring, opioid substitution, and harm reduction with questions and audio.",
+      "AKT revision for smoking, alcohol, and substance misuse. Cover cessation strategies, AUDIT scoring, opioid substitution, and harm reduction with free questions and audio-first revision.",
     content: `Smoking, alcohol, and substance misuse are important AKT topics that test your knowledge of screening tools, brief interventions, pharmacological treatments, and harm reduction approaches.
 
 Smoking cessation is the single most effective intervention a GP can offer. NICE recommends Very Brief Advice (VBA): ask about smoking status, advise on the best way to quit, and act on the patient's response. Pharmacological options include nicotine replacement therapy (NRT, available in patches, gum, lozenges, inhalers), varenicline (most effective single agent, partial nicotine receptor agonist), and bupropion (alternative, contraindicated in epilepsy). Combination NRT (patch plus short-acting form) is as effective as varenicline. E-cigarettes are increasingly used and NICE acknowledges they are substantially less harmful than smoking, though they are not licensed as medicines.
@@ -714,7 +714,7 @@ Cannabis is the most commonly used illicit drug. Regular use is associated with 
     description:
       "Emergency presentations in primary care including sepsis recognition, acute abdomen, anaphylaxis, and medical emergencies. Covers NEWS2 and safety netting.",
     metaDescription:
-      "Free AKT revision for urgent and unscheduled care. Cover sepsis recognition, NEWS2, acute abdomen, anaphylaxis, and safety netting with questions and audio revision.",
+      "AKT revision for urgent and unscheduled care. Cover sepsis recognition, NEWS2, acute abdomen, anaphylaxis, and safety netting with free questions and audio-first revision.",
     content: `Urgent and unscheduled care tests your ability to recognise and manage emergencies in the primary care setting. This is a high-stakes topic because getting it wrong in practice means delayed treatment and worse outcomes.
 
 Sepsis recognition is critical. The National Early Warning Score 2 (NEWS2) helps identify deteriorating patients, but in primary care, use the NICE guideline NG51 criteria. High-risk features include: systolic BP below 90, heart rate above 130, respiratory rate above 25, SpO2 below 91%, not passed urine in 18 hours, mottled or ashen skin, lactate above 2, and non-blanching rash. If sepsis is suspected: give antibiotics within one hour (if you can), call 999, and start IV fluids if available. Do not wait for blood results.

@@ -342,7 +342,7 @@ export default function HowToPassTheAktPage() {
                 >
                   generate unlimited mocks
                 </a>{" "}
-                from over 20,000 questions.
+                from over 21,000 questions.
               </li>
             </ul>
           </div>
@@ -460,19 +460,19 @@ export default function HowToPassTheAktPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Free resources
+              Revision resources
             </h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {[
                 {
                   href: "/akt-mock-exam",
                   title: "Mock exams",
-                  desc: "Unlimited mocks from 20,000+ questions with AI debriefs",
+                  desc: "Mocks from 21,000+ free questions with AI debriefs",
                 },
                 {
                   href: "/akt-audio-revision",
                   title: "Audio revision",
-                  desc: "90+ hours across all 32 topics",
+                  desc: "90+ hours across all 32 topics, from £59",
                 },
                 {
                   href: "/best-akt-question-bank",

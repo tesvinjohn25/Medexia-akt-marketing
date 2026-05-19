@@ -9,7 +9,7 @@ const FEATURES = [
     accent: "rgba(96,165,250,.7)",
   },
   {
-    text: "90+ hours of audio revision across all 32 AKT topics",
+    text: "90+ hours of audio revision across all 32 AKT topics with full access",
     accent: "rgba(236,72,153,.7)",
   },
   {
@@ -17,7 +17,7 @@ const FEATURES = [
     accent: "rgba(167,139,250,.7)",
   },
   {
-    text: "Generate unlimited mock exams (40, 80, or 160 questions)",
+    text: "Generate mock exams (40, 80, or 160 questions)",
     accent: "rgba(52,211,153,.7)",
   },
   {
@@ -33,7 +33,7 @@ const FEATURES = [
     accent: "rgba(155,107,255,.7)",
   },
   {
-    text: "20,000+ questions covering the full RCGP AKT curriculum",
+    text: "21,000+ questions covering the full RCGP AKT curriculum",
     accent: "rgba(232,236,255,.35)",
   },
 ];
@@ -71,7 +71,7 @@ export function WhatYouGet() {
               "--i": 0,
             } as React.CSSProperties}
           >
-            Everything. Free for April &amp; July.
+            Free Practice now. Full audio from £59.
           </h2>
           <p
             className="r-up mt-3 text-[15px] md:text-[17px]"
@@ -80,7 +80,7 @@ export function WhatYouGet() {
               "--i": 1,
             } as React.CSSProperties}
           >
-            No trial. No credit card. No catch.
+            21,000+ questions stay free. Full audio starts from £59.
           </p>
         </div>
 
@@ -115,7 +115,7 @@ export function WhatYouGet() {
           style={{ "--i": FEATURES.length + 2 } as React.CSSProperties}
         >
           <a className="btn-primary inline-block" href="https://app.medexia-akt.com">
-            Start revising free &rarr;
+            Start free &rarr;
           </a>
         </div>
 

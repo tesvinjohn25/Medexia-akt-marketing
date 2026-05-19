@@ -9,11 +9,11 @@ export const metadata: Metadata = {
   },
   title: {
     default:
-      "AKT Navigator by Medexia — Free AKT Revision | 20,000+ Questions, 90+ Hours Audio",
+      "AKT Navigator by Medexia — Free AKT Questions + 90+ Hours Audio",
     template: "%s | AKT Navigator by Medexia",
   },
   description:
-    "Free RCGP AKT revision for GP trainees. 20,000+ questions, 90+ hours of audio, adaptive learning, unlimited mock exams and AI-powered debriefs. Free for the April and July 2026 sittings.",
+    "Practise with 21,000+ AKT questions for free. Full AKT audiobook access starts from £59 early access, then £79 from 8 July 2026.",
   keywords: [
     "AKT",
     "AKT Navigator",
@@ -23,12 +23,12 @@ export const metadata: Metadata = {
     "AKT question bank",
     "GP training",
     "Medexia",
-    "free AKT revision",
+    "free AKT questions",
   ],
   openGraph: {
-    title: "AKT Navigator by Medexia — Free AKT Revision for GP Trainees",
+    title: "AKT Navigator by Medexia — Free AKT Questions + 90+ Hours Audio",
     description:
-      "Free RCGP AKT revision for GP trainees. 20,000+ questions, 90+ hours of audio, adaptive learning, unlimited mock exams and AI-powered debriefs.",
+      "Practise with 21,000+ AKT questions for free. Full AKT audio access starts from £59 early access, then £79 from 8 July 2026.",
     type: "website",
     url: "https://medexia-akt.com",
     siteName: "AKT Navigator by Medexia",
@@ -37,9 +37,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AKT Navigator by Medexia — Free AKT Revision for GP Trainees",
+    title: "AKT Navigator by Medexia — Free AKT Questions + 90+ Hours Audio",
     description:
-      "Free RCGP AKT revision for GP trainees. 20,000+ questions, 90+ hours of audio, adaptive learning, unlimited mock exams and AI-powered debriefs.",
+      "Practise with 21,000+ AKT questions for free. Full AKT audio access starts from £59 early access, then £79 from 8 July 2026.",
     // twitter:image auto-wired from src/app/twitter-image.tsx
   },
   robots: {
@@ -54,16 +54,36 @@ const jsonLd = {
   name: "AKT Navigator",
   alternateName: "AKT Navigator by Medexia",
   description:
-    "Free RCGP AKT revision for GP trainees. 20,000+ questions, 90+ hours of audio, adaptive learning, unlimited mock exams and AI-powered debriefs.",
+    "AKT question practice with 21,000+ free questions and full AKT audiobook access from £59 early access.",
   url: "https://medexia-akt.com",
   applicationCategory: "EducationalApplication",
   operatingSystem: "Web",
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "GBP",
-    description: "Free for the April and July 2026 sittings",
-  },
+  offers: [
+    {
+      "@type": "Offer",
+      name: "Free Practice",
+      price: "0",
+      priceCurrency: "GBP",
+      description:
+        "21,000+ AKT questions, deep structured explanations, mock exams and basic practice, plus 2 hours of audiobook listening.",
+    },
+    {
+      "@type": "Offer",
+      name: "Early Access",
+      price: "59",
+      priceCurrency: "GBP",
+      description:
+        "4 months full AKT audiobook access from 8 July 2026. Available before 8 July 2026.",
+    },
+    {
+      "@type": "Offer",
+      name: "Full Audio Access",
+      price: "79",
+      priceCurrency: "GBP",
+      description:
+        "4 months full AKT audiobook access from 8 July 2026 onwards. Questions remain free.",
+    },
+  ],
   creator: {
     "@type": "Organization",
     name: "Medexia",

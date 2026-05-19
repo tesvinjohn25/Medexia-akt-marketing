@@ -8,62 +8,70 @@ const ACCESS_URL = "https://app.medexia-akt.com/buy";
 const PLANS = [
   {
     title: "Free Practice",
-    accessLabel: "Free tier",
+    eyebrow: "Free baseline",
     price: "£0",
     priceDetail: "",
-    subtitle: "For question practice and starting your revision.",
-    summary: "Question practice stays free.",
+    subtitle: "Everything you need to practise with questions.",
+    lead: "Questions stay free.",
+    includedHeading: "Included free",
     features: [
-      { text: "21,000+ AKT questions", status: "Free" },
-      { text: "Deep structured explanations", status: "Free" },
-      { text: "Mock exams and basic practice", status: "Free" },
-      { text: "2 hours of audiobook listening", status: "Free audio sample" },
-      { text: "Full 90+ hour audiobook library", status: "Paid upgrade", muted: true },
+      "21,000+ AKT questions",
+      "Deep structured explanations",
+      "Mock exams and basic practice",
+      "2 hours audiobook listening",
     ],
+    noteHeading: "Not included",
+    note: "Full 90+ hour audiobook library requires paid audio access.",
     cta: "Start free",
     href: SIGNUP_URL,
     highlighted: false,
     tone: "green",
+    variant: "baseline",
   },
   {
     title: "Early Access",
-    accessLabel: "Paid audio",
+    eyebrow: "Best current audio price",
     price: "£59",
     priceDetail: "for 4 months",
+    comparePrice: "£79 from 8 July",
     subtitle: "4 months full audio access from 8 July.",
-    summary: "Best price for October sitters.",
+    lead: "Adds the full 90+ hour AKT audiobook library.",
+    includedHeading: "Paid audio adds",
     features: [
-      { text: "21,000+ AKT questions", status: "Still free" },
-      { text: "Deep structured explanations", status: "Still free" },
-      { text: "Full 90+ hour AKT audiobook library", status: "Included" },
-      { text: "Access starts from 8 July 2026", status: "Included" },
-      { text: "Future premium audio upgrades included", status: "Included" },
-      { text: "Save £20 before standard pricing begins", status: "Early access" },
+      "Full 90+ hour AKT audiobook library",
+      "Access starts from 8 July 2026",
+      "Future premium audio upgrades included during your access period",
+      "Save £20 before standard pricing begins",
     ],
+    noteHeading: "Still free",
+    note: "Question practice and deep structured explanations remain free.",
     cta: "Lock in early access",
     href: ACCESS_URL,
     highlighted: true,
     tone: "violet",
+    variant: "primary",
   },
   {
     title: "Full Audio Access",
-    accessLabel: "Paid audio",
+    eyebrow: "Standard audio access",
     price: "£79",
     priceDetail: "for 4 months",
-    subtitle: "4 months full audiobook access.",
-    summary: "Standard full audio access from 8 July.",
+    subtitle: "The standard paid audio tier from 8 July.",
+    lead: "Full audiobook access after early pricing ends.",
+    includedHeading: "Paid audio includes",
     features: [
-      { text: "21,000+ AKT questions", status: "Still free" },
-      { text: "Deep structured explanations", status: "Still free" },
-      { text: "Full 90+ hour AKT audiobook library", status: "Included" },
-      { text: "Built for commutes, walks, childcare and low-energy revision", status: "Included" },
-      { text: "4 months access", status: "Included" },
-      { text: "Questions remain free", status: "Always" },
+      "Full 90+ hour AKT audiobook library",
+      "Built for commutes, walks, childcare and low-energy revision",
+      "4 months access",
+      "Future premium audio upgrades included during your access period",
     ],
+    noteHeading: "Still free",
+    note: "Questions remain free. This is not a paid question bank.",
     cta: "Get full audio access",
     href: ACCESS_URL,
     highlighted: false,
     tone: "blue",
+    variant: "standard",
   },
 ] as const;
 
@@ -89,6 +97,37 @@ function accentFor(tone: (typeof PLANS)[number]["tone"]) {
   if (tone === "green") return "rgba(52,211,153,.88)";
   if (tone === "blue") return "rgba(96,165,250,.9)";
   return "rgba(167,139,250,.95)";
+}
+
+function cardChrome(plan: (typeof PLANS)[number]) {
+  if (plan.variant === "primary") {
+    return {
+      background:
+        "linear-gradient(160deg, rgba(28,23,45,.98), rgba(17,19,28,.9) 46%, rgba(12,14,22,.9))",
+      border: "1px solid rgba(167,139,250,.5)",
+      boxShadow:
+        "0 42px 120px rgba(109,106,232,.28), inset 0 1px 0 rgba(255,255,255,.1)",
+      opacity: 1,
+    };
+  }
+
+  if (plan.variant === "baseline") {
+    return {
+      background:
+        "linear-gradient(180deg, rgba(16,25,24,.78), rgba(14,17,23,.64))",
+      border: "1px solid rgba(52,211,153,.18)",
+      boxShadow: "0 22px 72px rgba(0,0,0,.24)",
+      opacity: 0.96,
+    };
+  }
+
+  return {
+    background:
+      "linear-gradient(180deg, rgba(15,18,27,.82), rgba(12,14,20,.62))",
+    border: "1px solid rgba(96,165,250,.16)",
+    boxShadow: "0 22px 72px rgba(0,0,0,.24)",
+    opacity: 0.9,
+  };
 }
 
 export function PricingSection() {
@@ -142,25 +181,21 @@ export function PricingSection() {
           </p>
         </div>
 
-        <div className="mt-9 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.08fr)_minmax(0,1fr)] lg:items-stretch">
+        <div className="mt-9 grid gap-4 lg:grid-cols-[minmax(0,.86fr)_minmax(0,1.18fr)_minmax(0,.96fr)] lg:items-stretch">
           {PLANS.map((plan, i) => {
             const accent = accentFor(plan.tone);
+            const chrome = cardChrome(plan);
             return (
               <article
                 key={plan.title}
                 className={`r-up card-shimmer relative flex min-h-full flex-col overflow-hidden rounded-[20px] p-5 md:p-6 ${
-                  plan.highlighted ? "lg:-mt-3 lg:pb-7" : ""
+                  plan.highlighted ? "lg:-mt-4 lg:pb-7" : "lg:mt-6"
                 }`}
                 style={{
-                  background: plan.highlighted
-                    ? "linear-gradient(160deg, rgba(27,23,43,.96), rgba(17,19,26,.84) 48%, rgba(12,14,22,.88))"
-                    : "linear-gradient(180deg, rgba(17,19,26,.90), rgba(17,19,26,.64))",
-                  border: plan.highlighted
-                    ? "1px solid rgba(167,139,250,.46)"
-                    : "1px solid rgba(255,255,255,.08)",
-                  boxShadow: plan.highlighted
-                    ? "0 36px 110px rgba(109,106,232,.26), inset 0 1px 0 rgba(255,255,255,.08)"
-                    : "0 24px 80px rgba(0,0,0,.30)",
+                  background: chrome.background,
+                  border: chrome.border,
+                  boxShadow: chrome.boxShadow,
+                  opacity: chrome.opacity,
                   "--i": 3 + i,
                 } as React.CSSProperties}
               >
@@ -178,16 +213,12 @@ export function PricingSection() {
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <div
-                      className="mb-3 inline-flex rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]"
+                      className="mb-3 text-[10px] font-bold uppercase tracking-[0.18em]"
                       style={{
                         color: accent,
-                        background: plan.highlighted
-                          ? "rgba(167,139,250,.10)"
-                          : "rgba(255,255,255,.045)",
-                        border: `1px solid ${plan.highlighted ? "rgba(167,139,250,.22)" : "rgba(255,255,255,.08)"}`,
                       }}
                     >
-                      {plan.accessLabel}
+                      {plan.eyebrow}
                     </div>
                     <h3
                       className="text-[18px] md:text-[20px] font-semibold"
@@ -205,10 +236,10 @@ export function PricingSection() {
                       {plan.subtitle}
                     </p>
                     <p
-                      className="mt-2 text-[12px] md:text-[13px] font-semibold leading-[1.5]"
+                      className="mt-4 text-[15px] md:text-[17px] font-semibold leading-[1.45]"
                       style={{ color: accent }}
                     >
-                      {plan.summary}
+                      {plan.lead}
                     </p>
                   </div>
                   <div
@@ -223,7 +254,11 @@ export function PricingSection() {
 
                 <div className="mt-6 flex items-end gap-2">
                   <div
-                    className="tabular-nums text-[46px] md:text-[56px] leading-none font-bold"
+                    className={`tabular-nums leading-none font-bold ${
+                      plan.highlighted
+                        ? "text-[56px] md:text-[68px]"
+                        : "text-[44px] md:text-[54px]"
+                    }`}
                     style={{
                       fontFamily: "var(--font-display)",
                       letterSpacing: "-0.045em",
@@ -241,52 +276,67 @@ export function PricingSection() {
                   )}
                 </div>
 
-                <ul className="mt-6 space-y-3">
-                  {plan.features.map((feature) => {
-                    const isMuted = "muted" in feature && feature.muted;
-                    return (
-                      <li key={feature.text} className="flex gap-3">
+                {"comparePrice" in plan && (
+                  <div
+                    className="mt-2 text-[13px] md:text-[14px] font-semibold"
+                    style={{ color: "rgba(232,236,255,.5)" }}
+                  >
+                    <span
+                      className="line-through"
+                      style={{ color: "rgba(232,236,255,.34)" }}
+                    >
+                      {plan.comparePrice}
+                    </span>{" "}
+                    <span style={{ color: accent }}>Save £20 now</span>
+                  </div>
+                )}
+
+                <div
+                  className="mt-6 border-t pt-5"
+                  style={{ borderColor: "rgba(255,255,255,.08)" }}
+                >
+                  <div
+                    className="text-[11px] font-bold uppercase tracking-[0.18em]"
+                    style={{ color: "rgba(232,236,255,.45)" }}
+                  >
+                    {plan.includedHeading}
+                  </div>
+                  <ul className="mt-4 space-y-3">
+                    {plan.features.map((feature) => (
+                      <li key={feature} className="flex gap-3">
                         <span
-                          className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full"
-                          style={{
-                            background: isMuted
-                              ? "rgba(232,236,255,.22)"
-                              : accent,
-                          }}
+                          className="mt-[8px] h-1.5 w-1.5 shrink-0 rounded-full"
+                          style={{ background: accent }}
                           aria-hidden
                         />
-                        <span className="min-w-0 flex-1">
-                          <span
-                            className="block text-[13px] md:text-[14px] leading-[1.45]"
-                            style={{
-                              color: isMuted
-                                ? "rgba(232,236,255,.42)"
-                                : "rgba(232,236,255,.78)",
-                            }}
-                          >
-                            {feature.text}
-                          </span>
-                          <span
-                            className="mt-1 inline-flex rounded-full px-2 py-[3px] text-[10px] font-bold uppercase tracking-[0.12em]"
-                            style={{
-                              color: isMuted
-                                ? "rgba(232,236,255,.42)"
-                                : accent,
-                              background: isMuted
-                                ? "rgba(255,255,255,.035)"
-                                : "rgba(255,255,255,.045)",
-                              border: isMuted
-                                ? "1px solid rgba(255,255,255,.06)"
-                                : "1px solid rgba(255,255,255,.08)",
-                            }}
-                          >
-                            {feature.status}
-                          </span>
+                        <span
+                          className="text-[13px] md:text-[14px] leading-[1.5]"
+                          style={{ color: "rgba(232,236,255,.78)" }}
+                        >
+                          {feature}
                         </span>
                       </li>
-                    );
-                  })}
-                </ul>
+                    ))}
+                  </ul>
+                </div>
+
+                <div
+                  className="mt-5 border-t pt-4"
+                  style={{ borderColor: "rgba(255,255,255,.07)" }}
+                >
+                  <div
+                    className="text-[11px] font-bold uppercase tracking-[0.18em]"
+                    style={{ color: accent }}
+                  >
+                    {plan.noteHeading}
+                  </div>
+                  <p
+                    className="mt-2 text-[13px] md:text-[14px] leading-[1.55]"
+                    style={{ color: "rgba(232,236,255,.62)" }}
+                  >
+                    {plan.note}
+                  </p>
+                </div>
 
                 <div className="mt-auto pt-7">
                   <a
@@ -327,7 +377,7 @@ export function PricingSection() {
           style={{ "--i": 7 } as React.CSSProperties}
         >
           <div
-            className="rounded-[18px] p-5 md:p-6"
+            className="rounded-[16px] p-5 md:p-6"
             style={{
               background: "rgba(52,211,153,.055)",
               border: "1px solid rgba(52,211,153,.16)",
@@ -343,13 +393,13 @@ export function PricingSection() {
               className="mt-2 text-[14px] md:text-[15px] leading-[1.65]"
               style={{ color: "rgba(232,236,255,.74)" }}
             >
-              21,000+ AKT questions, deep structured explanations, mock exams
-              and basic practice remain free.
+              21,000+ questions, deep structured explanations, mock exams,
+              basic practice and 2 hours audiobook listening.
             </p>
           </div>
 
           <div
-            className="rounded-[18px] p-5 md:p-6"
+            className="rounded-[16px] p-5 md:p-6"
             style={{
               background: "rgba(167,139,250,.06)",
               border: "1px solid rgba(167,139,250,.18)",
@@ -365,8 +415,8 @@ export function PricingSection() {
               className="mt-2 text-[14px] md:text-[15px] leading-[1.65]"
               style={{ color: "rgba(232,236,255,.74)" }}
             >
-              Full access to the 90+ hour AKT audiobook library starts from £59
-              Early Access, then £79 from 8 July 2026.
+              Adds the full 90+ hour AKT audiobook library, 4 months access and
+              future premium audio upgrades during your access period.
             </p>
           </div>
         </div>

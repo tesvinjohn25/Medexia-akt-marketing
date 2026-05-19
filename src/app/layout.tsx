@@ -52,74 +52,19 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "SoftwareApplication",
-      name: "AKT Navigator",
-      alternateName: "AKT Navigator by Medexia",
-      description:
-        "AKT question practice with 21,000+ free questions and full AKT audiobook access from £59 early access.",
+      "@type": "Organization",
+      "@id": "https://medexia-akt.com/#organization",
+      name: "Medexia",
       url: "https://medexia-akt.com",
-      applicationCategory: "EducationalApplication",
-      operatingSystem: "Web",
-      offers: [
-        {
-          "@type": "Offer",
-          name: "Free Practice",
-          price: "0",
-          priceCurrency: "GBP",
-          description:
-            "21,000+ AKT questions, deep structured explanations, mock exams and basic practice, plus 2 hours of audiobook listening.",
-        },
-        {
-          "@type": "Offer",
-          name: "Early Access",
-          price: "59",
-          priceCurrency: "GBP",
-          description:
-            "4 months full AKT audiobook access from 8 July 2026. Available before 8 July 2026.",
-        },
-        {
-          "@type": "Offer",
-          name: "Full Audio Access",
-          price: "79",
-          priceCurrency: "GBP",
-          description:
-            "4 months full AKT audiobook access from 8 July 2026 onwards. Questions remain free.",
-        },
-      ],
-      creator: {
-        "@type": "Organization",
-        name: "Medexia",
-        url: "https://medexia-akt.com",
-      },
     },
     {
-      "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "Are AKT Navigator questions free?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Yes. Free Practice includes 21,000+ AKT questions, deep structured explanations, mock exams and basic practice.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "What is paid in AKT Navigator?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Full access to the 90+ hour AKT audiobook library is the paid audio tier. Early Access is £59 before 8 July 2026, then Full Audio Access is £79 for 4 months.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Is AKT Navigator a paid question bank?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "No. AKT Navigator offers free AKT question practice with an optional paid full-audio upgrade.",
-          },
-        },
-      ],
+      "@type": "WebSite",
+      "@id": "https://medexia-akt.com/#website",
+      name: "AKT Navigator by Medexia",
+      url: "https://medexia-akt.com",
+      publisher: {
+        "@id": "https://medexia-akt.com/#organization",
+      },
     },
   ],
 };

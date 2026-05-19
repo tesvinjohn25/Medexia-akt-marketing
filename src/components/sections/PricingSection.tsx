@@ -1,7 +1,5 @@
 "use client";
 
-import { useScrollReveal } from "@/hooks/useScrollReveal";
-
 const SIGNUP_URL = "https://app.medexia-akt.com";
 const ACCESS_URL = "https://app.medexia-akt.com/buy";
 
@@ -53,12 +51,12 @@ const PLANS = [
   },
   {
     title: "Full Audio Access",
-    eyebrow: "From 8 July onwards",
+    eyebrow: "Locked until 8 July",
     price: "£79",
     priceDetail: "for 4 months",
-    subtitle: "Standard paid audio access after the free period.",
-    lead: "Full audio access begins when purchased from 8 July onwards.",
-    includedHeading: "Paid audio includes",
+    subtitle: "This comes into effect from 8 July 2026.",
+    lead: "Standard full audio access is not available to buy before 8 July.",
+    includedHeading: "From 8 July this includes",
     features: [
       "Full 90+ hour AKT audiobook library",
       "Built for commutes, walks, childcare and low-energy revision",
@@ -67,11 +65,12 @@ const PLANS = [
     ],
     noteHeading: "Still free",
     note: "Questions remain free, with 2 hours of audiobook listening included.",
-    cta: "Get full audio access",
-    href: ACCESS_URL,
+    cta: "Available from 8 July",
+    href: "",
     highlighted: false,
     tone: "blue",
     variant: "standard",
+    locked: true,
   },
 ] as const;
 
@@ -118,6 +117,16 @@ function accentFor(tone: (typeof PLANS)[number]["tone"]) {
 }
 
 function cardChrome(plan: (typeof PLANS)[number]) {
+  if ("locked" in plan && plan.locked) {
+    return {
+      background:
+        "linear-gradient(180deg, rgba(21,23,30,.62), rgba(13,15,20,.46))",
+      border: "1px solid rgba(232,236,255,.09)",
+      boxShadow: "0 18px 60px rgba(0,0,0,.20)",
+      opacity: 0.58,
+    };
+  }
+
   if (plan.variant === "primary") {
     return {
       background:
@@ -149,8 +158,6 @@ function cardChrome(plan: (typeof PLANS)[number]) {
 }
 
 export function PricingSection() {
-  const { ref, visible } = useScrollReveal(0.18);
-
   return (
     <section
       id="pricing"
@@ -168,8 +175,7 @@ export function PricingSection() {
       />
 
       <div
-        ref={ref}
-        className={`container-x relative reveal-group ${visible ? "is-visible" : ""}`}
+        className="container-x relative reveal-group is-visible"
       >
         <div className="mx-auto max-w-[780px] text-center">
           <div
@@ -231,7 +237,8 @@ export function PricingSection() {
 
         <div className="mt-9 grid gap-4 lg:grid-cols-[minmax(0,.86fr)_minmax(0,1.18fr)_minmax(0,.96fr)] lg:items-stretch">
           {PLANS.map((plan, i) => {
-            const accent = accentFor(plan.tone);
+            const locked = "locked" in plan && plan.locked;
+            const accent = locked ? "rgba(170,176,195,.7)" : accentFor(plan.tone);
             const chrome = cardChrome(plan);
             return (
               <article
@@ -256,6 +263,33 @@ export function PricingSection() {
                         "linear-gradient(90deg, transparent, rgba(197,170,255,.85), transparent)",
                     }}
                   />
+                )}
+
+                {locked && (
+                  <div
+                    className="pointer-events-none absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full"
+                    aria-hidden
+                    style={{
+                      background: "rgba(232,236,255,.06)",
+                      border: "1px solid rgba(232,236,255,.12)",
+                      color: "rgba(232,236,255,.7)",
+                    }}
+                  >
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden
+                    >
+                      <rect x="4" y="10" width="16" height="10" rx="2" />
+                      <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+                    </svg>
+                  </div>
                 )}
 
                 <div className="flex items-start justify-between gap-4">
@@ -387,25 +421,53 @@ export function PricingSection() {
                 </div>
 
                 <div className="mt-auto pt-7">
-                  <a
-                    className={
-                      plan.highlighted
-                        ? "btn-primary block text-center text-[14px]"
-                        : "block rounded-[14px] px-4 py-3 text-center text-[14px] font-semibold transition-colors hover:bg-white/[.08]"
-                    }
-                    href={plan.href}
-                    style={
-                      plan.highlighted
-                        ? undefined
-                        : {
-                            color: "var(--fg-high)",
-                            background: "rgba(255,255,255,.045)",
-                            border: "1px solid rgba(255,255,255,.10)",
-                          }
-                    }
-                  >
-                    {plan.cta}
-                  </a>
+                  {locked ? (
+                    <div
+                      aria-disabled="true"
+                      className="flex cursor-not-allowed items-center justify-center gap-2 rounded-[14px] px-4 py-3 text-center text-[14px] font-semibold"
+                      style={{
+                        color: "rgba(232,236,255,.54)",
+                        background: "rgba(255,255,255,.028)",
+                        border: "1px solid rgba(255,255,255,.08)",
+                      }}
+                    >
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden
+                      >
+                        <rect x="4" y="10" width="16" height="10" rx="2" />
+                        <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+                      </svg>
+                      {plan.cta}
+                    </div>
+                  ) : (
+                    <a
+                      className={
+                        plan.highlighted
+                          ? "btn-primary block text-center text-[14px]"
+                          : "block rounded-[14px] px-4 py-3 text-center text-[14px] font-semibold transition-colors hover:bg-white/[.08]"
+                      }
+                      href={plan.href}
+                      style={
+                        plan.highlighted
+                          ? undefined
+                          : {
+                              color: "var(--fg-high)",
+                              background: "rgba(255,255,255,.045)",
+                              border: "1px solid rgba(255,255,255,.10)",
+                            }
+                      }
+                    >
+                      {plan.cta}
+                    </a>
+                  )}
                 </div>
               </article>
             );

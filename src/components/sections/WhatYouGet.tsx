@@ -71,7 +71,7 @@ export function WhatYouGet() {
               "--i": 0,
             } as React.CSSProperties}
           >
-            Free Practice now. Full audio from £59.
+            Free Practice now. Early Access £59.
           </h2>
           <p
             className="r-up mt-3 text-[15px] md:text-[17px]"

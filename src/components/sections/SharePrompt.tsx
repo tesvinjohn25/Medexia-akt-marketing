@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 const SHARE_TEXT =
-  "Hey — found AKT Navigator. The whole AKT in 90 hours of audio, with questions and 2 hours of audio staying free. Full audio starts from £59. https://medexia-akt.com";
+  "Hey — found AKT Navigator. The whole AKT in 90 hours of audio. Full access is free until 8 July; Early Access is £59 before then, then £79 from 8 July. https://medexia-akt.com";
 const WHATSAPP_URL = `whatsapp://send?text=${encodeURIComponent(SHARE_TEXT)}`;
 const EMAIL_URL = `mailto:?subject=${encodeURIComponent("AKT Navigator")}&body=${encodeURIComponent(SHARE_TEXT)}`;
 

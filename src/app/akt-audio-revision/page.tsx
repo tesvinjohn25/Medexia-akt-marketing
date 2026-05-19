@@ -5,7 +5,7 @@ import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { aktTopics } from "@/data/akt-topics";
 
 export const metadata: Metadata = {
-  title: "AKT Audio Revision — 90+ Hours Audio | From £59",
+  title: "AKT Audio Revision — 90+ Hours Audio | Early Access £59",
   description:
     "Over 90 hours of AKT audio revision across all 32 RCGP topics. Early Access starts from £59 before 8 July 2026, then £79 for 4 months. Questions remain free.",
   alternates: {
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AKT Audio Revision — 90+ Hours Audio",
     description:
-      "Over 90 hours of AKT audio revision across all 32 RCGP topics. Questions stay free; full audio starts from £59.",
+      "Over 90 hours of AKT audio revision across all 32 RCGP topics. Early Access is £59 before 8 July 2026, then £79 for 4 months.",
     type: "website",
     url: "https://medexia-akt.com/akt-audio-revision",
   },

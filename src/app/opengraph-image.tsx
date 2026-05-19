@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 export const alt =
-  "AKT Navigator by Medexia — audio-first MRCGP AKT revision covering the full syllabus in 90+ hours. Full access free until 8 July. Full audio from £59.";
+  "AKT Navigator by Medexia — the whole AKT in 90 hours of audio. Full access free until 8 July. Early Access £59 before 8 July, then £79.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -16,7 +16,7 @@ export default function OGImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          padding: "60px 80px",
+          padding: "64px 80px 58px",
           background:
             "linear-gradient(135deg, #0B0D12 0%, #110C20 40%, #0E0A1A 100%)",
           position: "relative",
@@ -79,29 +79,29 @@ export default function OGImage() {
           </span>
         </div>
 
-        {/* Headline — premium pricing clarity */}
+        {/* Headline — audio-first product promise */}
         <div
           style={{
-            fontSize: "66px",
+            fontSize: "72px",
             fontWeight: 800,
             color: "#F5F7FF",
-            lineHeight: 1.04,
+            lineHeight: 1,
             letterSpacing: "-0.04em",
           }}
         >
-          Free until
+          The whole AKT.
         </div>
         <div
           style={{
-            fontSize: "66px",
+            fontSize: "72px",
             fontWeight: 800,
             color: "rgba(232,236,255,.58)",
-            lineHeight: 1.04,
+            lineHeight: 1,
             letterSpacing: "-0.04em",
-            marginBottom: "26px",
+            marginBottom: "24px",
           }}
         >
-          8 July.
+          In 90 hours.
         </div>
 
         {/* Accent divider */}
@@ -111,24 +111,24 @@ export default function OGImage() {
             height: "4px",
             borderRadius: "2px",
             background: "linear-gradient(90deg, #6D6AE8, #9B6BFF)",
-            marginBottom: "20px",
+            marginBottom: "22px",
           }}
         />
 
-        {/* Subline — pricing message */}
+        {/* Subline — pricing timing */}
         <div
           style={{
             display: "flex",
-            fontSize: "32px",
+            fontSize: "31px",
             fontWeight: 700,
             color: "rgba(167,139,250,.9)",
             letterSpacing: "-0.005em",
           }}
         >
-          Then questions + 2h audio stay free
+          Full access free until 8 July
         </div>
 
-        <div style={{ display: "flex", gap: "14px", marginTop: "38px" }}>
+        <div style={{ display: "flex", gap: "14px", marginTop: "36px" }}>
           <div
             style={{
               display: "flex",
@@ -143,7 +143,7 @@ export default function OGImage() {
               letterSpacing: "-0.01em",
             }}
           >
-            Full audio from £59
+            Early Access £59
           </div>
           <div
             style={{
@@ -159,7 +159,7 @@ export default function OGImage() {
               letterSpacing: "-0.01em",
             }}
           >
-            90+ hours of audiobooks
+            £79 from 8 July
           </div>
           <div
             style={{
@@ -175,8 +175,21 @@ export default function OGImage() {
               letterSpacing: "-0.01em",
             }}
           >
-            £79 from 8 July
+            Questions + 2h audio stay free
           </div>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            marginTop: "42px",
+            fontSize: "24px",
+            fontWeight: 600,
+            color: "rgba(232,236,255,.62)",
+            letterSpacing: "-0.01em",
+          }}
+        >
+          Audio-first MRCGP AKT revision by Medexia
         </div>
       </div>
     ),

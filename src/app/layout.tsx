@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     template: "%s | AKT Navigator by Medexia",
   },
   description:
-    "Audio-first MRCGP AKT revision covering the full syllabus in 90+ hours. Everything is free until 8 July 2026; questions and 2 hours of audio stay free after.",
+    "Audio-first MRCGP AKT revision in 90+ hours. Full access is free until 8 July 2026. Early Access is £59 before then; standard full audio is £79 from 8 July.",
   keywords: [
     "AKT",
     "AKT Navigator",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AKT Audio Revision by Medexia — Whole AKT in 90 Hours",
     description:
-      "Audio-first MRCGP AKT revision covering the full syllabus in 90+ hours. Free until 8 July; full audio starts from £59 after.",
+      "Full access is free until 8 July 2026. Early Access is £59 before then; standard full audio is £79 from 8 July.",
     type: "website",
     url: "https://medexia-akt.com",
     siteName: "AKT Navigator by Medexia",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "AKT Audio Revision by Medexia — Whole AKT in 90 Hours",
     description:
-      "Audio-first MRCGP AKT revision covering the full syllabus in 90+ hours. Free until 8 July; full audio starts from £59 after.",
+      "Full access is free until 8 July 2026. Early Access is £59 before then; standard full audio is £79 from 8 July.",
     // twitter:image auto-wired from src/app/twitter-image.tsx
   },
   robots: {

@@ -39,15 +39,14 @@ export async function SocialProof() {
   const hero =
     byQuote(filtered, "Audiobooks have really been helpful") ?? filtered[0];
   const supporting = uniqueTestimonials([
-    byQuote(filtered, "beta tester"),
     byQuote(filtered, "audio is superb"),
+    byQuote(filtered, "stats videos"),
     byQuote(filtered, "commuting"),
     byQuote(filtered, "driving"),
     byQuote(filtered, "Time saving"),
-    byQuote(filtered, "Clear explanations"),
   ])
     .filter((t) => t.id !== hero?.id)
-    .slice(0, 5);
+    .slice(0, 3);
   const visibleIds = new Set([hero?.id, ...supporting.map((t) => t.id)]);
   const more = filtered.filter((t) => !visibleIds.has(t.id));
 

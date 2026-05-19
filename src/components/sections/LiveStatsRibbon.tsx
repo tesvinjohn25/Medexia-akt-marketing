@@ -42,10 +42,11 @@ export function LiveStatsRibbon() {
   const showLive = userCount !== null && userCount >= 20;
 
   // Count-up animations — fire once visible
-  const liveAnim = useCountUp(userCount ?? 0, 1200, visible && showLive);
-  const hoursAnim = useCountUp(90, 1000, visible);
-  const questionsAnim = useCountUp(21000, 1400, visible);
-  const topicsAnim = useCountUp(32, 800, visible);
+  const liveStart = userCount ? Math.max(1, Math.floor(userCount * 0.82)) : 0;
+  const liveAnim = useCountUp(userCount ?? 0, 1200, visible && showLive, liveStart);
+  const hoursAnim = useCountUp(90, 1000, visible, 72);
+  const questionsAnim = useCountUp(21000, 1400, visible, 16800);
+  const topicsAnim = useCountUp(32, 800, visible, 24);
 
   const stats: {
     value: string;
@@ -73,7 +74,7 @@ export function LiveStatsRibbon() {
     {
       value: formatNumber(questionsAnim),
       suffix: "+",
-      label: "questions",
+      label: "syllabus-mapped questions",
       accent: "rgba(52,211,153,.9)",
     },
     {

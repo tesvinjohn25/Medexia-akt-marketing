@@ -39,8 +39,7 @@ const PLANS = [
     includedHeading: "From 8 July this includes",
     features: [
       "Full 90+ hour AKT audiobook library",
-      "Interactive statistics course",
-      "2+ hours of statistics explainer videos",
+      "Interactive statistics course + 2+ hours of stats explainer videos",
       "Dermatology Navigator image pocket guide",
       "Paid access period starts on 8 July 2026",
       "Future premium audio upgrades included during your access period",
@@ -64,8 +63,7 @@ const PLANS = [
     includedHeading: "From 8 July this includes",
     features: [
       "Full 90+ hour AKT audiobook library",
-      "Interactive statistics course",
-      "2+ hours of statistics explainer videos",
+      "Interactive statistics course + 2+ hours of stats explainer videos",
       "Dermatology Navigator image pocket guide",
       "Built for commutes, walks, childcare and low-energy revision",
       "4 months access",

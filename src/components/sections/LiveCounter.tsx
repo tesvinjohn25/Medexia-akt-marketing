@@ -7,7 +7,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 const STATIC_STATS = [
   { value: 90, suffix: "+", label: "hours of audio", accent: "var(--brand-iris)" },
   { value: 32, suffix: "", label: "AKT topics", accent: "var(--brand-violet)" },
-  { value: 21000, suffix: "+", label: "questions", accent: "rgba(52,211,153,.85)" },
+  { value: 21000, suffix: "+", label: "syllabus-mapped questions", accent: "rgba(52,211,153,.85)" },
 ];
 
 function formatNumber(n: number): string {
@@ -51,10 +51,11 @@ export function LiveCounter() {
 
   const showLive = userCount !== null && userCount >= 20;
 
-  const liveAnimated = useCountUp(userCount ?? 0, 1200, visible && showLive);
-  const audioAnimated = useCountUp(90, 1000, visible);
-  const topicsAnimated = useCountUp(32, 800, visible);
-  const questionsAnimated = useCountUp(21000, 1400, visible);
+  const liveStart = userCount ? Math.max(1, Math.floor(userCount * 0.82)) : 0;
+  const liveAnimated = useCountUp(userCount ?? 0, 1200, visible && showLive, liveStart);
+  const audioAnimated = useCountUp(90, 1000, visible, 72);
+  const topicsAnimated = useCountUp(32, 800, visible, 24);
+  const questionsAnimated = useCountUp(21000, 1400, visible, 16800);
 
   const animatedValues = [audioAnimated, topicsAnimated, questionsAnimated];
 

@@ -42,7 +42,7 @@ export function AccessNotice() {
             >
               {standardPricingStarted
                 ? "Free Practice includes 21,000+ questions and 2 hours of audio. Full audio and premium revision tools are £79 for 4 months."
-                : "Use the full product free until 8 July: questions, audio, statistics and Dermatology Navigator. After that, questions and 2 hours of audio stay free."}
+                : "Use the full product free until 8 July: questions, audio, statistics, stats videos and Dermatology Navigator. After that, questions and 2 hours of audio stay free."}
             </p>
           </div>
           <a

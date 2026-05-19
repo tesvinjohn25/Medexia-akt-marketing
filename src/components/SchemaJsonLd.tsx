@@ -17,7 +17,7 @@ export function SchemaJsonLd() {
             "Everything in AKT Navigator is free until 8 July 2026. After that, Free Practice remains £0 with 2 hours of audio, Early Access is £59 from 8 July, and Full Audio Access is £79.",
         },
         description:
-          "Everything in AKT Navigator is free until 8 July 2026, including questions, audio, statistics and Dermatology Navigator. After that, AKT questions remain free with 2 hours of audio, and paid access starts from £59 early access.",
+          "Everything in AKT Navigator is free until 8 July 2026, including questions, audio, statistics, statistics explainer videos and Dermatology Navigator. After that, AKT questions remain free with 2 hours of audio, and paid access starts from £59 early access.",
         url: "https://app.medexia-akt.com",
         author: {
           "@type": "Organization",
@@ -49,7 +49,7 @@ export function SchemaJsonLd() {
             name: "What is included in paid AKT audio access?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Paid access includes the full 90+ hour AKT audiobook library, interactive statistics course, Dermatology Navigator image pocket guide and future premium audio upgrades during the user's access period.",
+              text: "Paid access includes the full 90+ hour AKT audiobook library, interactive statistics course, 2+ hours of statistics explainer videos, Dermatology Navigator image pocket guide and future premium audio upgrades during the user's access period.",
             },
           },
         ],

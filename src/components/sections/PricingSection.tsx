@@ -38,6 +38,7 @@ const PLANS = [
     features: [
       "Full 90+ hour AKT audiobook library",
       "Interactive statistics course",
+      "2+ hours of statistics explainer videos",
       "Dermatology Navigator image pocket guide",
       "Paid access period starts on 8 July 2026",
       "Future premium audio upgrades included during your access period",
@@ -62,6 +63,7 @@ const PLANS = [
     features: [
       "Full 90+ hour AKT audiobook library",
       "Interactive statistics course",
+      "2+ hours of statistics explainer videos",
       "Dermatology Navigator image pocket guide",
       "Built for commutes, walks, childcare and low-energy revision",
       "4 months access",
@@ -92,7 +94,7 @@ const SEO_FAQS = [
   {
     question: "What is paid in AKT Navigator?",
     answer:
-      "From 8 July 2026, full access to the 90+ hour AKT audiobook library, interactive statistics course and Dermatology Navigator image pocket guide are part of the paid access bundle. Early Access is £59 before 8 July, then Full Audio Access is £79 for 4 months.",
+      "From 8 July 2026, full access to the 90+ hour AKT audiobook library, interactive statistics course, 2+ hours of statistics explainer videos and Dermatology Navigator image pocket guide are part of the paid access bundle. Early Access is £59 before 8 July, then Full Audio Access is £79 for 4 months.",
   },
   {
     question: "Is AKT Navigator a paid question bank?",
@@ -105,7 +107,7 @@ const ACCESS_TIMELINE = [
   {
     title: "Now until 8 July 2026",
     accent: "rgba(52,211,153,.9)",
-    text: "Everything is free right now: questions, mocks, explanations, the full audiobook library, statistics course and Dermatology Navigator.",
+    text: "Everything is free right now: questions, mocks, explanations, the full audiobook library, statistics course, statistics explainer videos and Dermatology Navigator.",
   },
   {
     title: "These cards apply from 8 July 2026",

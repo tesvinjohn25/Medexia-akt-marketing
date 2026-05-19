@@ -1,7 +1,8 @@
 "use client";
 
-const SIGNUP_URL = "https://app.medexia-akt.com";
-const ACCESS_URL = "https://app.medexia-akt.com/buy";
+const FREE_JOIN_URL = "https://app.medexia-akt.com/join/free";
+const EARLY_ACCESS_JOIN_URL = "https://app.medexia-akt.com/join/early-access";
+const FULL_ACCESS_JOIN_URL = "https://app.medexia-akt.com/join/full-access";
 
 const PLANS = [
   {
@@ -21,7 +22,7 @@ const PLANS = [
     noteHeading: "Today",
     note: "Until 8 July, you still get the full product free, not just this card.",
     cta: "Start free",
-    href: SIGNUP_URL,
+    href: FREE_JOIN_URL,
     highlighted: false,
     tone: "green",
     variant: "baseline",
@@ -47,18 +48,18 @@ const PLANS = [
     noteHeading: "Today’s access",
     note: "Full access remains free until 8 July. Early Access locks in the lower paid period after that.",
     cta: "Lock in early access",
-    href: ACCESS_URL,
+    href: EARLY_ACCESS_JOIN_URL,
     highlighted: true,
     tone: "violet",
     variant: "primary",
   },
   {
     title: "Full Audio Access",
-    eyebrow: "Locked until 8 July",
+    eyebrow: "From 8 July",
     price: "£79",
     priceDetail: "for 4 months",
     subtitle: "This comes into effect from 8 July 2026.",
-    lead: "Standard full audio access is not available to buy before 8 July.",
+    lead: "Join the standard paid plan for full access from 8 July 2026.",
     includedHeading: "From 8 July this includes",
     features: [
       "Full 90+ hour AKT audiobook library",
@@ -71,12 +72,11 @@ const PLANS = [
     ],
     noteHeading: "Still free",
     note: "Questions remain free, with 2 hours of audiobook listening included.",
-    cta: "Available from 8 July",
-    href: "",
+    cta: "Get full audio access",
+    href: FULL_ACCESS_JOIN_URL,
     highlighted: false,
     tone: "blue",
     variant: "standard",
-    locked: true,
   },
 ] as const;
 
@@ -243,7 +243,7 @@ export function PricingSection() {
 
         <div className="mt-9 grid gap-4 lg:grid-cols-[minmax(0,.86fr)_minmax(0,1.18fr)_minmax(0,.96fr)] lg:items-stretch">
           {PLANS.map((plan, i) => {
-            const locked = "locked" in plan && plan.locked;
+            const locked = "locked" in plan ? Boolean(plan.locked) : false;
             const accent = locked ? "rgba(170,176,195,.7)" : accentFor(plan.tone);
             const chrome = cardChrome(plan);
             return (
@@ -426,35 +426,27 @@ export function PricingSection() {
                   </p>
                 </div>
 
-                {locked && (
-                  <div className="mt-auto pt-7">
-                    <div
-                      aria-disabled="true"
-                      className="flex cursor-not-allowed items-center justify-center gap-2 rounded-[14px] px-4 py-3 text-center text-[14px] font-semibold"
-                      style={{
-                        color: "rgba(232,236,255,.54)",
-                        background: "rgba(255,255,255,.028)",
-                        border: "1px solid rgba(255,255,255,.08)",
-                      }}
-                    >
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        aria-hidden
-                      >
-                        <rect x="4" y="10" width="16" height="10" rx="2" />
-                        <path d="M8 10V7a4 4 0 0 1 8 0v3" />
-                      </svg>
-                      {plan.cta}
-                    </div>
-                  </div>
-                )}
+                <div className="mt-auto pt-7">
+                  <a
+                    className={
+                      plan.highlighted
+                        ? "btn-primary block text-center text-[14px]"
+                        : "block rounded-[14px] px-4 py-3 text-center text-[14px] font-semibold transition-colors hover:bg-white/[.08]"
+                    }
+                    href={plan.href}
+                    style={
+                      plan.highlighted
+                        ? undefined
+                        : {
+                            color: "var(--fg-high)",
+                            background: "rgba(255,255,255,.045)",
+                            border: "1px solid rgba(255,255,255,.10)",
+                          }
+                    }
+                  >
+                    {plan.cta}
+                  </a>
+                </div>
               </article>
             );
           })}

@@ -6,20 +6,20 @@ const ACCESS_URL = "https://app.medexia-akt.com/buy";
 const PLANS = [
   {
     title: "Free Practice",
-    eyebrow: "Free baseline",
+    eyebrow: "From 8 July free plan",
     price: "£0",
     priceDetail: "",
-    subtitle: "Available now and after 8 July.",
-    lead: "After 8 July: free questions plus a generous 2-hour audio sample.",
-    includedHeading: "Always free after 8 July",
+    subtitle: "This is what stays free after full free access ends.",
+    lead: "Not a limit today. Everything is free until 8 July.",
+    includedHeading: "From 8 July this stays free",
     features: [
       "21,000+ AKT questions",
       "Deep structured explanations",
       "Mock exams and basic practice",
       "2 hours of audiobook listening across any audiobook",
     ],
-    noteHeading: "Until 8 July",
-    note: "Full AKT Navigator access remains free during the current access period.",
+    noteHeading: "Today",
+    note: "Until 8 July, you still get the full product free, not just this card.",
     cta: "Start free",
     href: SIGNUP_URL,
     highlighted: false,
@@ -28,15 +28,17 @@ const PLANS = [
   },
   {
     title: "Early Access",
-    eyebrow: "Pay before 8 July",
+    eyebrow: "Reserve before 8 July",
     price: "£59",
     priceDetail: "4 months from 8 July",
     comparePrice: "£79 standard price",
-    subtitle: "Your paid access starts on 8 July 2026.",
-    lead: "Lock in full audio for 8 July to 8 November 2026.",
-    includedHeading: "Early Access includes",
+    subtitle: "This is the paid bundle that starts on 8 July 2026.",
+    lead: "Pay £59 now to lock in full access from 8 July to 8 November 2026.",
+    includedHeading: "From 8 July this includes",
     features: [
       "Full 90+ hour AKT audiobook library",
+      "Interactive statistics course",
+      "Dermatology Navigator image pocket guide",
       "Paid access period starts on 8 July 2026",
       "Future premium audio upgrades included during your access period",
       "Save £20 before standard pricing begins",
@@ -59,6 +61,8 @@ const PLANS = [
     includedHeading: "From 8 July this includes",
     features: [
       "Full 90+ hour AKT audiobook library",
+      "Interactive statistics course",
+      "Dermatology Navigator image pocket guide",
       "Built for commutes, walks, childcare and low-energy revision",
       "4 months access",
       "Future premium audio upgrades included during your access period",
@@ -88,7 +92,7 @@ const SEO_FAQS = [
   {
     question: "What is paid in AKT Navigator?",
     answer:
-      "From 8 July 2026, full access to the 90+ hour AKT audiobook library is the paid audio tier. Early Access is £59 before 8 July, then Full Audio Access is £79 for 4 months.",
+      "From 8 July 2026, full access to the 90+ hour AKT audiobook library, interactive statistics course and Dermatology Navigator image pocket guide are part of the paid access bundle. Early Access is £59 before 8 July, then Full Audio Access is £79 for 4 months.",
   },
   {
     question: "Is AKT Navigator a paid question bank?",
@@ -101,12 +105,12 @@ const ACCESS_TIMELINE = [
   {
     title: "Now until 8 July 2026",
     accent: "rgba(52,211,153,.9)",
-    text: "Full AKT Navigator access remains free during the current access period, including the audiobook library.",
+    text: "Everything is free right now: questions, mocks, explanations, the full audiobook library, statistics course and Dermatology Navigator.",
   },
   {
-    title: "From 8 July 2026",
+    title: "These cards apply from 8 July 2026",
     accent: "rgba(167,139,250,.95)",
-    text: "Questions stay free. Free Practice includes 2 hours of audio. Full 90+ hour audio access becomes paid.",
+    text: "From 8 July, questions stay free with 2 hours of audio. Full audio and premium revision tools become paid.",
   },
 ] as const;
 
@@ -182,7 +186,7 @@ export function PricingSection() {
             className="r-blur text-[11px] md:text-[12px] tracking-[0.22em] uppercase font-semibold"
             style={{ color: "rgba(167,139,250,.85)", "--i": 0 } as React.CSSProperties}
           >
-            Free now. Clear pricing from 8 July.
+            Everything free today. Plans start 8 July.
           </div>
           <h2
             id="pricing-heading"
@@ -193,15 +197,15 @@ export function PricingSection() {
               "--i": 1,
             } as React.CSSProperties}
           >
-            Full access is free until 8 July. Paid audio starts from £59 after that.
+            Use everything free until 8 July. These plans show what happens after.
           </h2>
           <p
             className="r-up mx-auto mt-4 max-w-[650px] text-[15px] md:text-[17px] leading-[1.65]"
             style={{ color: "rgba(232,236,255,.68)", "--i": 2 } as React.CSSProperties}
           >
-            Use AKT Navigator free until 8 July 2026. From 8 July,
+            Until 8 July 2026, every part of AKT Navigator is free. From 8 July,
             questions remain free with 2 hours of audiobook listening included;
-            full 90+ hour audio access becomes paid.
+            full audio and premium revision tools become paid.
           </p>
         </div>
 
@@ -478,8 +482,9 @@ export function PricingSection() {
           className="r-up mx-auto mt-6 max-w-[720px] text-center text-[13px] md:text-[14px] leading-[1.6]"
           style={{ color: "rgba(232,236,255,.58)", "--i": 7 } as React.CSSProperties}
         >
-          Buying Early Access before 8 July locks in the lower price. Your paid
-          4-month audio period starts on 8 July 2026, not today.
+          Nothing is restricted before 8 July. Buying Early Access simply locks
+          in the lower price for the paid access period that starts on 8 July
+          2026, not today.
         </p>
 
         <div

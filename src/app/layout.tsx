@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     template: "%s | AKT Navigator by Medexia",
   },
   description:
-    "Full AKT Navigator access is free until 8 July 2026. After that, practise with 21,000+ AKT questions and 2 hours of audio for free; full AKT audio starts from £59.",
+    "Everything in AKT Navigator is free until 8 July 2026. After that, practise with 21,000+ AKT questions and 2 hours of audio for free; paid access starts from £59.",
   keywords: [
     "AKT",
     "AKT Navigator",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AKT Navigator Pricing — Free Until 8 July + Audio from £59",
     description:
-      "Full access is free until 8 July 2026. After that, 21,000+ AKT questions and 2 hours of audio stay free; full AKT audio starts from £59.",
+      "Everything is free until 8 July 2026. After that, 21,000+ AKT questions and 2 hours of audio stay free; paid access starts from £59.",
     type: "website",
     url: "https://medexia-akt.com",
     siteName: "AKT Navigator by Medexia",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "AKT Navigator Pricing — Free Until 8 July + Audio from £59",
     description:
-      "Full access is free until 8 July 2026. After that, 21,000+ AKT questions and 2 hours of audio stay free; full AKT audio starts from £59.",
+      "Everything is free until 8 July 2026. After that, 21,000+ AKT questions and 2 hours of audio stay free; paid access starts from £59.",
     // twitter:image auto-wired from src/app/twitter-image.tsx
   },
   robots: {

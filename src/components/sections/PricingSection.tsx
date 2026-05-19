@@ -55,11 +55,11 @@ const PLANS = [
   },
   {
     title: "Full Audio Access",
-    eyebrow: "From 8 July",
+    eyebrow: "Locked until 8 July",
     price: "£79",
     priceDetail: "for 4 months",
     subtitle: "This comes into effect from 8 July 2026.",
-    lead: "Join the standard paid plan for full access from 8 July 2026.",
+    lead: "Standard full audio access is not available to buy before 8 July.",
     includedHeading: "From 8 July this includes",
     features: [
       "Full 90+ hour AKT audiobook library",
@@ -72,11 +72,12 @@ const PLANS = [
     ],
     noteHeading: "Still free",
     note: "Questions remain free, with 2 hours of audiobook listening included.",
-    cta: "Get full audio access",
+    cta: "Available from 8 July",
     href: FULL_ACCESS_JOIN_URL,
     highlighted: false,
     tone: "blue",
     variant: "standard",
+    locked: true,
   },
 ] as const;
 
@@ -427,25 +428,53 @@ export function PricingSection() {
                 </div>
 
                 <div className="mt-auto pt-7">
-                  <a
-                    className={
-                      plan.highlighted
-                        ? "btn-primary block text-center text-[14px]"
-                        : "block rounded-[14px] px-4 py-3 text-center text-[14px] font-semibold transition-colors hover:bg-white/[.08]"
-                    }
-                    href={plan.href}
-                    style={
-                      plan.highlighted
-                        ? undefined
-                        : {
-                            color: "var(--fg-high)",
-                            background: "rgba(255,255,255,.045)",
-                            border: "1px solid rgba(255,255,255,.10)",
-                          }
-                    }
-                  >
-                    {plan.cta}
-                  </a>
+                  {locked ? (
+                    <div
+                      aria-disabled="true"
+                      className="flex cursor-not-allowed items-center justify-center gap-2 rounded-[14px] px-4 py-3 text-center text-[14px] font-semibold"
+                      style={{
+                        color: "rgba(232,236,255,.54)",
+                        background: "rgba(255,255,255,.028)",
+                        border: "1px solid rgba(255,255,255,.08)",
+                      }}
+                    >
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden
+                      >
+                        <rect x="4" y="10" width="16" height="10" rx="2" />
+                        <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+                      </svg>
+                      {plan.cta}
+                    </div>
+                  ) : (
+                    <a
+                      className={
+                        plan.highlighted
+                          ? "btn-primary block text-center text-[14px]"
+                          : "block rounded-[14px] px-4 py-3 text-center text-[14px] font-semibold transition-colors hover:bg-white/[.08]"
+                      }
+                      href={plan.href}
+                      style={
+                        plan.highlighted
+                          ? undefined
+                          : {
+                              color: "var(--fg-high)",
+                              background: "rgba(255,255,255,.045)",
+                              border: "1px solid rgba(255,255,255,.10)",
+                            }
+                      }
+                    >
+                      {plan.cta}
+                    </a>
+                  )}
                 </div>
               </article>
             );

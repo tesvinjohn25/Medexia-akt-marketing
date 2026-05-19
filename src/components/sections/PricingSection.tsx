@@ -8,14 +8,17 @@ const ACCESS_URL = "https://app.medexia-akt.com/buy";
 const PLANS = [
   {
     title: "Free Practice",
+    accessLabel: "Free tier",
     price: "£0",
     priceDetail: "",
     subtitle: "For question practice and starting your revision.",
+    summary: "Question practice stays free.",
     features: [
-      "21,000+ AKT questions",
-      "Deep structured explanations",
-      "Mock exams and basic practice",
-      "2 hours of audiobook listening",
+      { text: "21,000+ AKT questions", status: "Free" },
+      { text: "Deep structured explanations", status: "Free" },
+      { text: "Mock exams and basic practice", status: "Free" },
+      { text: "2 hours of audiobook listening", status: "Free audio sample" },
+      { text: "Full 90+ hour audiobook library", status: "Paid upgrade", muted: true },
     ],
     cta: "Start free",
     href: SIGNUP_URL,
@@ -24,14 +27,18 @@ const PLANS = [
   },
   {
     title: "Early Access",
+    accessLabel: "Paid audio",
     price: "£59",
     priceDetail: "for 4 months",
     subtitle: "4 months full audio access from 8 July.",
+    summary: "Best price for October sitters.",
     features: [
-      "Full 90+ hour AKT audiobook library",
-      "Access starts from 8 July 2026",
-      "Save £20 before standard pricing begins",
-      "Future premium audio upgrades included",
+      { text: "21,000+ AKT questions", status: "Still free" },
+      { text: "Deep structured explanations", status: "Still free" },
+      { text: "Full 90+ hour AKT audiobook library", status: "Included" },
+      { text: "Access starts from 8 July 2026", status: "Included" },
+      { text: "Future premium audio upgrades included", status: "Included" },
+      { text: "Save £20 before standard pricing begins", status: "Early access" },
     ],
     cta: "Lock in early access",
     href: ACCESS_URL,
@@ -40,19 +47,41 @@ const PLANS = [
   },
   {
     title: "Full Audio Access",
+    accessLabel: "Paid audio",
     price: "£79",
     priceDetail: "for 4 months",
     subtitle: "4 months full audiobook access.",
+    summary: "Standard full audio access from 8 July.",
     features: [
-      "Full 90+ hour AKT audiobook library",
-      "Built for commutes, walks, childcare and low-energy revision",
-      "4 months access",
-      "Questions remain free",
+      { text: "21,000+ AKT questions", status: "Still free" },
+      { text: "Deep structured explanations", status: "Still free" },
+      { text: "Full 90+ hour AKT audiobook library", status: "Included" },
+      { text: "Built for commutes, walks, childcare and low-energy revision", status: "Included" },
+      { text: "4 months access", status: "Included" },
+      { text: "Questions remain free", status: "Always" },
     ],
     cta: "Get full audio access",
     href: ACCESS_URL,
     highlighted: false,
     tone: "blue",
+  },
+] as const;
+
+const SEO_FAQS = [
+  {
+    question: "Are AKT Navigator questions free?",
+    answer:
+      "Yes. Free Practice includes 21,000+ AKT questions, deep structured explanations, mock exams and basic practice.",
+  },
+  {
+    question: "What is paid in AKT Navigator?",
+    answer:
+      "Full access to the 90+ hour AKT audiobook library is the paid audio tier. Early Access is £59 before 8 July 2026, then Full Audio Access is £79 for 4 months.",
+  },
+  {
+    question: "Is AKT Navigator a paid question bank?",
+    answer:
+      "No. AKT Navigator offers free AKT question practice with an optional paid full-audio upgrade.",
   },
 ] as const;
 
@@ -148,6 +177,18 @@ export function PricingSection() {
 
                 <div className="flex items-start justify-between gap-4">
                   <div>
+                    <div
+                      className="mb-3 inline-flex rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]"
+                      style={{
+                        color: accent,
+                        background: plan.highlighted
+                          ? "rgba(167,139,250,.10)"
+                          : "rgba(255,255,255,.045)",
+                        border: `1px solid ${plan.highlighted ? "rgba(167,139,250,.22)" : "rgba(255,255,255,.08)"}`,
+                      }}
+                    >
+                      {plan.accessLabel}
+                    </div>
                     <h3
                       className="text-[18px] md:text-[20px] font-semibold"
                       style={{
@@ -162,6 +203,12 @@ export function PricingSection() {
                       style={{ color: "rgba(232,236,255,.58)" }}
                     >
                       {plan.subtitle}
+                    </p>
+                    <p
+                      className="mt-2 text-[12px] md:text-[13px] font-semibold leading-[1.5]"
+                      style={{ color: accent }}
+                    >
+                      {plan.summary}
                     </p>
                   </div>
                   <div
@@ -195,21 +242,50 @@ export function PricingSection() {
                 </div>
 
                 <ul className="mt-6 space-y-3">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex gap-3">
-                      <span
-                        className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full"
-                        style={{ background: accent }}
-                        aria-hidden
-                      />
-                      <span
-                        className="text-[13px] md:text-[14px] leading-[1.55]"
-                        style={{ color: "rgba(232,236,255,.76)" }}
-                      >
-                        {feature}
-                      </span>
-                    </li>
-                  ))}
+                  {plan.features.map((feature) => {
+                    const isMuted = "muted" in feature && feature.muted;
+                    return (
+                      <li key={feature.text} className="flex gap-3">
+                        <span
+                          className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full"
+                          style={{
+                            background: isMuted
+                              ? "rgba(232,236,255,.22)"
+                              : accent,
+                          }}
+                          aria-hidden
+                        />
+                        <span className="min-w-0 flex-1">
+                          <span
+                            className="block text-[13px] md:text-[14px] leading-[1.45]"
+                            style={{
+                              color: isMuted
+                                ? "rgba(232,236,255,.42)"
+                                : "rgba(232,236,255,.78)",
+                            }}
+                          >
+                            {feature.text}
+                          </span>
+                          <span
+                            className="mt-1 inline-flex rounded-full px-2 py-[3px] text-[10px] font-bold uppercase tracking-[0.12em]"
+                            style={{
+                              color: isMuted
+                                ? "rgba(232,236,255,.42)"
+                                : accent,
+                              background: isMuted
+                                ? "rgba(255,255,255,.035)"
+                                : "rgba(255,255,255,.045)",
+                              border: isMuted
+                                ? "1px solid rgba(255,255,255,.06)"
+                                : "1px solid rgba(255,255,255,.08)",
+                            }}
+                          >
+                            {feature.status}
+                          </span>
+                        </span>
+                      </li>
+                    );
+                  })}
                 </ul>
 
                 <div className="mt-auto pt-7">
@@ -245,6 +321,95 @@ export function PricingSection() {
           Available before 8 July 2026. Standard price after 8 July: £79.
           Questions remain free.
         </p>
+
+        <div
+          className="r-up mx-auto mt-8 grid max-w-[940px] gap-3 md:grid-cols-2"
+          style={{ "--i": 7 } as React.CSSProperties}
+        >
+          <div
+            className="rounded-[18px] p-5 md:p-6"
+            style={{
+              background: "rgba(52,211,153,.055)",
+              border: "1px solid rgba(52,211,153,.16)",
+            }}
+          >
+            <div
+              className="text-[11px] font-bold uppercase tracking-[0.18em]"
+              style={{ color: "rgba(52,211,153,.88)" }}
+            >
+              Always free
+            </div>
+            <p
+              className="mt-2 text-[14px] md:text-[15px] leading-[1.65]"
+              style={{ color: "rgba(232,236,255,.74)" }}
+            >
+              21,000+ AKT questions, deep structured explanations, mock exams
+              and basic practice remain free.
+            </p>
+          </div>
+
+          <div
+            className="rounded-[18px] p-5 md:p-6"
+            style={{
+              background: "rgba(167,139,250,.06)",
+              border: "1px solid rgba(167,139,250,.18)",
+            }}
+          >
+            <div
+              className="text-[11px] font-bold uppercase tracking-[0.18em]"
+              style={{ color: "rgba(167,139,250,.9)" }}
+            >
+              Paid audio
+            </div>
+            <p
+              className="mt-2 text-[14px] md:text-[15px] leading-[1.65]"
+              style={{ color: "rgba(232,236,255,.74)" }}
+            >
+              Full access to the 90+ hour AKT audiobook library starts from £59
+              Early Access, then £79 from 8 July 2026.
+            </p>
+          </div>
+        </div>
+
+        <div
+          className="r-up mx-auto mt-10 max-w-[860px]"
+          style={{ "--i": 8 } as React.CSSProperties}
+        >
+          <h3
+            className="text-center text-[22px] md:text-[28px] leading-[1.15] font-semibold"
+            style={{
+              fontFamily: "var(--font-display)",
+              letterSpacing: "-0.025em",
+            }}
+          >
+            AKT Navigator pricing FAQ
+          </h3>
+          <div className="mt-5 grid gap-3">
+            {SEO_FAQS.map((item) => (
+              <section
+                key={item.question}
+                className="rounded-[16px] p-4 md:p-5"
+                style={{
+                  background: "rgba(17,19,26,.72)",
+                  border: "1px solid rgba(255,255,255,.08)",
+                }}
+              >
+                <h4
+                  className="text-[15px] md:text-[16px] font-semibold"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {item.question}
+                </h4>
+                <p
+                  className="mt-2 text-[13px] md:text-[14px] leading-[1.65]"
+                  style={{ color: "rgba(232,236,255,.66)" }}
+                >
+                  {item.answer}
+                </p>
+              </section>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

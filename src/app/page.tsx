@@ -21,9 +21,9 @@ export default function Home() {
 
       <FeatureHighlights />
 
-      <PricingSection />
-
       <SocialProof />
+
+      <PricingSection />
 
       <FinalCTA />
 

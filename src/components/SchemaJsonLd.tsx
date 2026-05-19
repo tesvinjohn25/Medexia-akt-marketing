@@ -17,7 +17,7 @@ export function SchemaJsonLd() {
             "Everything in AKT Navigator is free until 8 July 2026. After that, Free Practice remains £0 with 2 hours of audio, Early Access is £59 from 8 July, and Full Audio Access is £79.",
         },
         description:
-          "Everything in AKT Navigator is free until 8 July 2026, including questions, audio, statistics, statistics explainer videos and Dermatology Navigator. After that, AKT questions remain free with 2 hours of audio, and paid access starts from £59 early access.",
+          "Audio-first MRCGP AKT revision covering the full syllabus in 90+ hours. Everything is free until 8 July 2026, including questions, audio, statistics, statistics explainer videos and Dermatology Navigator. After that, questions remain free with 2 hours of audio, and paid access starts from £59 early access.",
         url: "https://app.medexia-akt.com",
         author: {
           "@type": "Organization",
@@ -33,7 +33,7 @@ export function SchemaJsonLd() {
             name: "Are AKT Navigator questions free?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Yes. Free Practice includes 21,000+ AKT questions, deep structured explanations, mock exams, basic practice and 2 hours of audiobook listening.",
+              text: "Yes. Free Practice includes syllabus-mapped AKT questions covering the full MRCGP AKT syllabus, deep structured explanations, mock exams, basic practice and 2 hours of audiobook listening.",
             },
           },
           {

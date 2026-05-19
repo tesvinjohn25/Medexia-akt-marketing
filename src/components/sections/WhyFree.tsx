@@ -42,9 +42,9 @@ export function WhyFree() {
               generous audio sample all in one place.
             </p>
             <p>
-              Free Practice includes 21,000+ questions, deep explanations, mock
-              exams and basic practice, plus 2 hours of audiobook listening. Full
-              audio access starts from £59.
+              Free Practice includes syllabus-mapped questions, deep
+              explanations, mock exams and basic practice, plus 2 hours of
+              audiobook listening. Full audio access starts from £59.
             </p>
           </div>
         </div>

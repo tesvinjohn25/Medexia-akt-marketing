@@ -107,16 +107,17 @@ export function HeroSection() {
               className="mt-4 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
               style={{ color: "rgba(232,236,255,.78)" }}
             >
-              Use every part of AKT Navigator free until 8 July 2026: questions,
-              audio, statistics, stats videos and Dermatology Navigator. After
-              that, questions stay free with 2 hours of audio included.
+              Audio-first revision covering the full MRCGP AKT syllabus. Use
+              everything free until 8 July 2026: audio, questions, statistics,
+              stats videos and Dermatology Navigator.
             </p>
             <p
               className="mt-3 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
               style={{ color: "rgba(232,236,255,.6)" }}
             >
-              Lock in Early Access before 8 July for £59. Your 4-month paid
-              audio period starts on 8 July, not today.
+              After that, questions stay free with 2 hours of audio. Lock in
+              Early Access for £59 before your paid audio period starts on 8
+              July.
             </p>
 
             {/* Countdown */}

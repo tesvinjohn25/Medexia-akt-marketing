@@ -33,7 +33,7 @@ const FEATURES = [
     accent: "rgba(155,107,255,.7)",
   },
   {
-    text: "21,000+ questions covering the full RCGP AKT curriculum",
+    text: "21,000+ syllabus-mapped questions included free",
     accent: "rgba(232,236,255,.35)",
   },
 ];
@@ -80,7 +80,7 @@ export function WhatYouGet() {
               "--i": 1,
             } as React.CSSProperties}
           >
-            21,000+ questions stay free. Full audio starts from £59.
+            The whole AKT in 90 hours. Questions stay free.
           </p>
         </div>
 

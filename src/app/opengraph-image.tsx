@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 export const alt =
-  "AKT Navigator by Medexia — full access free until 8 July. 21,000+ AKT questions and 2 hours audio free after. Full audio from £59.";
+  "AKT Navigator by Medexia — audio-first MRCGP AKT revision covering the full syllabus in 90+ hours. Full access free until 8 July. Full audio from £59.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

@@ -14,7 +14,8 @@ const PLANS = [
     lead: "Not a limit today. Everything is free until 8 July.",
     includedHeading: "From 8 July this stays free",
     features: [
-      "21,000+ AKT questions",
+      "Full MRCGP AKT syllabus coverage",
+      "Syllabus-mapped AKT questions",
       "Deep structured explanations",
       "Mock exams and basic practice",
       "2 hours of audiobook listening across any audiobook",
@@ -85,7 +86,7 @@ const SEO_FAQS = [
   {
     question: "Are AKT Navigator questions free?",
     answer:
-      "Yes. Free Practice includes 21,000+ AKT questions, deep structured explanations, mock exams, basic practice and 2 hours of audiobook listening.",
+      "Yes. Free Practice includes syllabus-mapped AKT questions covering the full MRCGP AKT syllabus, deep structured explanations, mock exams, basic practice and 2 hours of audiobook listening.",
   },
   {
     question: "When does paid audio access start?",

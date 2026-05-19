@@ -9,15 +9,17 @@ export const metadata: Metadata = {
   },
   title: {
     default:
-      "AKT Navigator Pricing — Free Until 8 July + Audio from £59",
+      "AKT Audio Revision by Medexia — Whole AKT in 90 Hours",
     template: "%s | AKT Navigator by Medexia",
   },
   description:
-    "Everything in AKT Navigator is free until 8 July 2026. After that, practise with 21,000+ AKT questions and 2 hours of audio for free; paid access starts from £59.",
+    "Audio-first MRCGP AKT revision covering the full syllabus in 90+ hours. Everything is free until 8 July 2026; questions and 2 hours of audio stay free after.",
   keywords: [
     "AKT",
     "AKT Navigator",
     "MRCGP AKT",
+    "AKT audio revision",
+    "AKT audiobook",
     "AKT revision",
     "MRCGP revision",
     "AKT question bank",
@@ -26,9 +28,9 @@ export const metadata: Metadata = {
     "free AKT questions",
   ],
   openGraph: {
-    title: "AKT Navigator Pricing — Free Until 8 July + Audio from £59",
+    title: "AKT Audio Revision by Medexia — Whole AKT in 90 Hours",
     description:
-      "Everything is free until 8 July 2026. After that, 21,000+ AKT questions and 2 hours of audio stay free; paid access starts from £59.",
+      "Audio-first MRCGP AKT revision covering the full syllabus in 90+ hours. Free until 8 July; full audio starts from £59 after.",
     type: "website",
     url: "https://medexia-akt.com",
     siteName: "AKT Navigator by Medexia",
@@ -37,9 +39,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AKT Navigator Pricing — Free Until 8 July + Audio from £59",
+    title: "AKT Audio Revision by Medexia — Whole AKT in 90 Hours",
     description:
-      "Everything is free until 8 July 2026. After that, 21,000+ AKT questions and 2 hours of audio stay free; paid access starts from £59.",
+      "Audio-first MRCGP AKT revision covering the full syllabus in 90+ hours. Free until 8 July; full audio starts from £59 after.",
     // twitter:image auto-wired from src/app/twitter-image.tsx
   },
   robots: {

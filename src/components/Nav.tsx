@@ -41,10 +41,9 @@ export function Nav() {
         </div>
 
         <div className="flex items-center gap-2">
-          {/* Log in — desktop only */}
           <a
             href="https://app.medexia-akt.com"
-            className="hidden md:inline-flex rounded-full border px-3 py-[8px] text-sm font-semibold transition-colors"
+            className="inline-flex rounded-full border px-3 py-[8px] text-sm font-semibold transition-colors"
             style={{
               borderColor: "rgba(255,255,255,.14)",
               background: "rgba(6,7,12,.28)",
@@ -57,7 +56,7 @@ export function Nav() {
 
           <a
             href="https://app.medexia-akt.com"
-            className="btn-primary text-sm !py-[8px] !px-[14px]"
+            className="btn-primary hidden text-sm !py-[8px] !px-[14px] md:inline-flex"
           >
             Start free
           </a>

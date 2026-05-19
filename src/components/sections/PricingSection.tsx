@@ -36,7 +36,7 @@ const PLANS = [
     comparePrice: "£79 standard price",
     subtitle: "This is the paid bundle that starts on 8 July 2026.",
     lead: "Pay £59 now to lock in full access from 8 July to 8 November 2026.",
-    includedHeading: "From 8 July this includes",
+    includedHeading: "Includes Free Practice, plus",
     features: [
       "Full 90+ hour AKT audiobook library",
       "Interactive statistics course + 2+ hours of stats explainer videos",
@@ -60,7 +60,7 @@ const PLANS = [
     priceDetail: "for 4 months",
     subtitle: "This comes into effect from 8 July 2026.",
     lead: "Standard full audio access is not available to buy before 8 July.",
-    includedHeading: "From 8 July this includes",
+    includedHeading: "Includes Free Practice, plus",
     features: [
       "Full 90+ hour AKT audiobook library",
       "Interactive statistics course + 2+ hours of stats explainer videos",

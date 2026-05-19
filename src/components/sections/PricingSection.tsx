@@ -426,8 +426,8 @@ export function PricingSection() {
                   </p>
                 </div>
 
-                <div className="mt-auto pt-7">
-                  {locked ? (
+                {locked && (
+                  <div className="mt-auto pt-7">
                     <div
                       aria-disabled="true"
                       className="flex cursor-not-allowed items-center justify-center gap-2 rounded-[14px] px-4 py-3 text-center text-[14px] font-semibold"
@@ -453,28 +453,8 @@ export function PricingSection() {
                       </svg>
                       {plan.cta}
                     </div>
-                  ) : (
-                    <a
-                      className={
-                        plan.highlighted
-                          ? "btn-primary block text-center text-[14px]"
-                          : "block rounded-[14px] px-4 py-3 text-center text-[14px] font-semibold transition-colors hover:bg-white/[.08]"
-                      }
-                      href={plan.href}
-                      style={
-                        plan.highlighted
-                          ? undefined
-                          : {
-                              color: "var(--fg-high)",
-                              background: "rgba(255,255,255,.045)",
-                              border: "1px solid rgba(255,255,255,.10)",
-                            }
-                      }
-                    >
-                      {plan.cta}
-                    </a>
-                  )}
-                </div>
+                  </div>
+                )}
               </article>
             );
           })}

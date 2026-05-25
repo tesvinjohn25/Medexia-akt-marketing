@@ -37,11 +37,14 @@ export async function SocialProof() {
     (t) => !annaIds.has(t.id) && t.quote.trim() !== "Audio-first revision",
   );
   const hero =
-    byQuote(filtered, "Audiobooks have really been helpful") ?? filtered[0];
+    byQuote(filtered, "passed comfortably") ??
+    byQuote(filtered, "Audiobooks have really been helpful") ??
+    filtered[0];
   const supporting = uniqueTestimonials([
+    byQuote(filtered, "common exam mistakes"),
+    byQuote(filtered, "commute and at the gym"),
+    byQuote(filtered, "basic concepts"),
     byQuote(filtered, "audio is superb"),
-    byQuote(filtered, "stats videos"),
-    byQuote(filtered, "commuting"),
     byQuote(filtered, "driving"),
     byQuote(filtered, "Time saving"),
   ])

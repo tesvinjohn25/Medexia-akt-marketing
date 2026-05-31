@@ -1,13 +1,12 @@
 "use client";
 
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import type { Testimonial } from "@/lib/testimonials";
+import {
+  formatTestimonialAttribution,
+  type Testimonial,
+} from "@/lib/testimonials";
 
 const SERIF = 'Georgia, "Times New Roman", Times, serif';
-
-function attribution(t: Testimonial) {
-  return [t.name, t.trainingStage, t.deanery].filter(Boolean).join(" · ");
-}
 
 export function TestimonialsView({
   hero,
@@ -81,7 +80,7 @@ export function TestimonialsView({
             className="mt-6 text-[11px] tracking-[0.22em] uppercase font-semibold"
             style={{ color: "rgba(167,139,250,.85)" }}
           >
-            {attribution(hero)}
+            {formatTestimonialAttribution(hero)}
           </figcaption>
         </figure>
 
@@ -106,7 +105,7 @@ export function TestimonialsView({
                   className="mt-4 text-[10px] tracking-[0.20em] uppercase font-semibold"
                   style={{ color: "rgba(167,139,250,.75)" }}
                 >
-                  {attribution(t)}
+                  {formatTestimonialAttribution(t)}
                 </figcaption>
               </figure>
             ))}

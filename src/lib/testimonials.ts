@@ -4,8 +4,8 @@ export const ANNA_AUDIO_QUOTE =
 export type Testimonial = {
   id: string;
   quote: string;
-  trainingStage: string;
-  deanery: string;
+  trainingStage: string | null;
+  deanery: string | null;
   name: string | null;
   createdAt: string;
   featured?: boolean;
@@ -18,7 +18,29 @@ function sanitisePublicQuote(quote: string): string {
     ["interactive", "audio"].join(" "),
     "gi",
   );
-  return quote.replace(restrictedAudioPhrase, "Audio-first revision");
+  return quote
+    .replace(restrictedAudioPhrase, "Audio-first revision")
+    .replace(/\brecommend\s+ot\b/gi, "recommend it");
+}
+
+function cleanPart(value: string | null | undefined) {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : null;
+}
+
+export function formatTestimonialAttribution(t: Testimonial) {
+  let name = cleanPart(t.name);
+  const trainingStage = cleanPart(t.trainingStage);
+  const deanery = cleanPart(t.deanery);
+
+  if (name && deanery) {
+    const deanerySuffix = `, ${deanery}`;
+    if (name.toLowerCase().endsWith(deanerySuffix.toLowerCase())) {
+      name = name.slice(0, -deanerySuffix.length).trim();
+    }
+  }
+
+  return [name, trainingStage, deanery].filter(Boolean).join(" · ");
 }
 
 export async function getPublicTestimonials(): Promise<Testimonial[]> {

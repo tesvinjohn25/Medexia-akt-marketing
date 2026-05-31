@@ -1,15 +1,12 @@
 import {
   ANNA_AUDIO_QUOTE,
+  formatTestimonialAttribution,
   getPublicTestimonials,
   type Testimonial,
 } from "@/lib/testimonials";
 import { LiveStatsRibbon } from "./LiveStatsRibbon";
 
 const SERIF = 'Georgia, "Times New Roman", Times, serif';
-
-function attribution(t: Testimonial) {
-  return [t.name, t.trainingStage, t.deanery].filter(Boolean).join(" · ");
-}
 
 function quoteIncludes(t: Testimonial, text: string) {
   return t.quote.toLowerCase().includes(text.toLowerCase());
@@ -37,15 +34,16 @@ export async function SocialProof() {
     (t) => !annaIds.has(t.id) && t.quote.trim() !== "Audio-first revision",
   );
   const hero =
+    byQuote(filtered, "Medexia was a resource") ??
     byQuote(filtered, "passed comfortably") ??
     byQuote(filtered, "Audiobooks have really been helpful") ??
     filtered[0];
   const supporting = uniqueTestimonials([
-    byQuote(filtered, "common exam mistakes"),
+    byQuote(filtered, "busy mum"),
+    byQuote(filtered, "stats videos"),
     byQuote(filtered, "commute and at the gym"),
-    byQuote(filtered, "basic concepts"),
     byQuote(filtered, "audio is superb"),
-    byQuote(filtered, "driving"),
+    byQuote(filtered, "common exam mistakes"),
     byQuote(filtered, "Time saving"),
   ])
     .filter((t) => t.id !== hero?.id)
@@ -70,15 +68,14 @@ export async function SocialProof() {
               letterSpacing: "-0.02em",
             }}
           >
-            Proof that audio revision fits real life.
+            Proof that audio revision sticks.
           </h2>
           <p
             className="mx-auto mt-3 max-w-[620px] text-[14px] md:text-[16px] leading-[1.65]"
             style={{ color: "rgba(232,236,255,.62)" }}
           >
-            The strongest reviews are not abstract praise. They show trainees
-            using AKT Navigator while commuting, walking, driving and revising
-            in short pockets of time.
+            The strongest reviews show trainees carrying AKT Navigator into
+            commutes, busy family life, mocks and the exam itself.
           </p>
         </div>
 
@@ -93,6 +90,12 @@ export async function SocialProof() {
                 filter: "blur(18px)",
               }}
             />
+            <div
+              className="mb-5 text-[11px] tracking-[0.22em] uppercase font-semibold"
+              style={{ color: "rgba(52,211,153,.78)" }}
+            >
+              Featured April AKT review
+            </div>
             <blockquote
               className="italic text-[21px] md:text-[30px] leading-[1.35]"
               style={{
@@ -113,7 +116,7 @@ export async function SocialProof() {
               className="mt-5 text-[11px] tracking-[0.22em] uppercase font-semibold"
               style={{ color: "rgba(167,139,250,.85)" }}
             >
-              {attribution(hero)}
+              {formatTestimonialAttribution(hero)}
             </figcaption>
           </figure>
         )}
@@ -143,7 +146,7 @@ export async function SocialProof() {
                   className="mt-4 text-[10px] tracking-[0.2em] uppercase font-semibold"
                   style={{ color: "rgba(167,139,250,.75)" }}
                 >
-                  {attribution(t)}
+                  {formatTestimonialAttribution(t)}
                 </figcaption>
               </figure>
             ))}
@@ -184,7 +187,7 @@ export async function SocialProof() {
                     className="mt-3 text-[10px] tracking-[0.18em] uppercase font-semibold"
                     style={{ color: "rgba(167,139,250,.68)" }}
                   >
-                    {attribution(t)}
+                    {formatTestimonialAttribution(t)}
                   </figcaption>
                 </figure>
               ))}

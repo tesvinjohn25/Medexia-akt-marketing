@@ -19,6 +19,21 @@ function byQuote(testimonials: Testimonial[], text: string) {
   return testimonials.find((t) => quoteIncludes(t, text));
 }
 
+/** Derive a short use-case theme from the quote so each card reads as a
+ * scenario ("Busy parent", "On the commute") rather than an anonymous box.
+ * Reviews arrive from a live API, so this is heuristic by necessity. */
+function themeTag(quote: string): string {
+  const q = quote.toLowerCase();
+  if (/\bmum\b|\bdad\b|famil|child|parent/.test(q)) return "Busy parent";
+  if (/commut|way to work|driving|in the car/.test(q)) return "On the commute";
+  if (/gym|walk|run\b|exercise/.test(q)) return "On the move";
+  if (/\bpass|exam day|sat the|scored/.test(q)) return "Passed the AKT";
+  if (/stat|maths|calculation/.test(q)) return "Stats made easy";
+  if (/time.?sav|quick|efficien/.test(q)) return "Time-saving";
+  if (/mistak|pitfall|trap/.test(q)) return "Exam insight";
+  return "Audio-first";
+}
+
 function uniqueTestimonials(testimonials: Array<Testimonial | undefined>) {
   const seen = new Set<string>();
   return testimonials.filter((t): t is Testimonial => {
@@ -178,6 +193,7 @@ export async function SocialProof() {
               id: t.id,
               quote: t.quote,
               attribution: formatTestimonialAttribution(t),
+              tag: themeTag(t.quote),
             }))}
           />
         )}

@@ -9,21 +9,17 @@ const FULL_ACCESS_JOIN_URL = "https://app.medexia-akt.com/join/full-access";
 const PLANS = [
   {
     title: "Free Practice",
-    eyebrow: "From 8 July free plan",
+    eyebrow: "Free — now and after 8 July",
     price: "£0",
     priceDetail: "",
-    subtitle: "This is what stays free after full free access ends.",
-    lead: "Not a limit today. Everything is free until 8 July.",
-    includedHeading: "From 8 July this stays free",
+    includedHeading: "Always free",
     features: [
-      "Full MRCGP AKT syllabus coverage",
-      "Syllabus-mapped AKT questions",
+      "21,000+ syllabus-mapped AKT questions",
       "Deep structured explanations",
       "Mock exams and basic practice",
-      "2 hours of audiobook listening across any audiobook",
+      "2 hours of audiobook listening",
     ],
-    noteHeading: "Today",
-    note: "Until 8 July, you still get the full product free, not just this card.",
+    note: "Until 8 July you get the whole product free — not just this list.",
     cta: "Start free",
     href: FREE_JOIN_URL,
     highlighted: false,
@@ -32,23 +28,19 @@ const PLANS = [
   },
   {
     title: "Early Access",
-    eyebrow: "Reserve before 8 July",
+    eyebrow: "Buy before 8 July",
     price: "£59",
     priceDetail: "4 months from 8 July",
-    comparePrice: "£79 standard price",
-    subtitle: "This is the paid bundle that starts on 8 July 2026.",
-    lead: "Pay £59 now to lock in full access from 8 July to 8 November 2026.",
-    includedHeading: "Includes Free Practice, plus",
+    comparePrice: "£79",
+    includedHeading: "Everything free, plus",
     features: [
-      "Full 90+ hour AKT audiobook library",
-      "Interactive statistics course + 2+ hours of stats explainer videos",
+      "Full 90+ hour audiobook library — all 32 topics",
+      "Interactive statistics course + explainer videos",
       "Dermatology Navigator image pocket guide",
-      "Paid access period starts on 8 July 2026",
-      "Future premium audio upgrades included during your access period",
-      "Save £20 before standard pricing begins",
+      "Access runs 8 July – 8 November 2026",
+      "Future premium audio upgrades included",
     ],
-    noteHeading: "Today’s access",
-    note: "Full access remains free until 8 July. Early Access locks in the lower paid period after that.",
+    note: "Nothing is restricted today — £59 locks in the paid period at £20 off.",
     cta: "Lock in early access",
     href: EARLY_ACCESS_JOIN_URL,
     highlighted: true,
@@ -57,22 +49,17 @@ const PLANS = [
   },
   {
     title: "Full Audio Access",
-    eyebrow: "Locked until 8 July",
+    eyebrow: "From 8 July",
     price: "£79",
     priceDetail: "for 4 months",
-    subtitle: "This comes into effect from 8 July 2026.",
-    lead: "Standard full audio access is not available to buy before 8 July.",
-    includedHeading: "Includes Free Practice, plus",
+    includedHeading: "Everything free, plus",
     features: [
-      "Full 90+ hour AKT audiobook library",
-      "Interactive statistics course + 2+ hours of stats explainer videos",
+      "Full 90+ hour audiobook library — all 32 topics",
+      "Interactive statistics course + explainer videos",
       "Dermatology Navigator image pocket guide",
-      "Built for commutes, walks, childcare and low-energy revision",
-      "4 months access",
-      "Future premium audio upgrades included during your access period",
+      "4 months of access",
     ],
-    noteHeading: "Still free",
-    note: "Questions remain free, with 2 hours of audiobook listening included.",
+    note: "The standard price once Early Access ends. Not on sale before 8 July.",
     cta: "Available from 8 July",
     href: FULL_ACCESS_JOIN_URL,
     highlighted: false,
@@ -102,19 +89,6 @@ const SEO_FAQS = [
     question: "Is AKT Navigator a paid question bank?",
     answer:
       "No. AKT Navigator offers free AKT question practice with an optional paid full-audio upgrade.",
-  },
-] as const;
-
-const ACCESS_TIMELINE = [
-  {
-    title: "Now until 8 July 2026",
-    accent: "rgba(52,211,153,.9)",
-    text: "Everything is free right now: questions, mocks, explanations, the full audiobook library, statistics course, statistics explainer videos and Dermatology Navigator.",
-  },
-  {
-    title: "These cards apply from 8 July 2026",
-    accent: "rgba(167,139,250,.95)",
-    text: "From 8 July, questions stay free with 2 hours of audio. Full audio and premium revision tools become paid.",
   },
 ] as const;
 
@@ -192,7 +166,7 @@ export function PricingSection() {
             className="r-blur text-[11px] md:text-[12px] tracking-[0.22em] uppercase font-semibold"
             style={{ color: "rgba(167,139,250,.85)", "--i": 0 } as React.CSSProperties}
           >
-            Everything free today. Plans start 8 July.
+            Pricing
           </div>
           <h2
             id="pricing-heading"
@@ -203,46 +177,15 @@ export function PricingSection() {
               "--i": 1,
             } as React.CSSProperties}
           >
-            Use everything free until 8 July. These plans show what happens after.
+            Free until 8 July.
           </h2>
           <p
             className="r-up mx-auto mt-4 max-w-[650px] text-[15px] md:text-[17px] leading-[1.65]"
             style={{ color: "rgba(232,236,255,.68)", "--i": 2 } as React.CSSProperties}
           >
-            Until 8 July 2026, every part of AKT Navigator is free. From 8 July,
-            questions remain free with 2 hours of audiobook listening included;
-            full audio and premium revision tools become paid.
+            Then questions stay free — full audio from £59. The cards show
+            exactly what changes on 8 July 2026.
           </p>
-        </div>
-
-        <div
-          className="r-up mx-auto mt-8 grid max-w-[900px] gap-3 md:grid-cols-2"
-          style={{ "--i": 3 } as React.CSSProperties}
-        >
-          {ACCESS_TIMELINE.map((item) => (
-            <div
-              key={item.title}
-              className="rounded-[16px] p-5 md:p-6"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(17,19,26,.76), rgba(17,19,26,.52))",
-                border: `1px solid ${item.accent.replace(".9", ".22").replace(".95", ".22")}`,
-              }}
-            >
-              <div
-                className="text-[11px] font-bold uppercase tracking-[0.18em]"
-                style={{ color: item.accent }}
-              >
-                {item.title}
-              </div>
-              <p
-                className="mt-2 text-[14px] md:text-[15px] leading-[1.65]"
-                style={{ color: "rgba(232,236,255,.74)" }}
-              >
-                {item.text}
-              </p>
-            </div>
-          ))}
         </div>
 
         <div className="mt-9 grid gap-4 lg:grid-cols-[minmax(0,.86fr)_minmax(0,1.18fr)_minmax(0,.96fr)] lg:items-stretch">
@@ -347,18 +290,6 @@ export function PricingSection() {
                     >
                       {plan.title}
                     </h3>
-                    <p
-                      className="mt-2 text-[13px] md:text-[14px] leading-[1.55]"
-                      style={{ color: "rgba(232,236,255,.58)" }}
-                    >
-                      {plan.subtitle}
-                    </p>
-                    <p
-                      className="mt-4 text-[15px] md:text-[17px] font-semibold leading-[1.45]"
-                      style={{ color: accent }}
-                    >
-                      {plan.lead}
-                    </p>
                   </div>
                   <div
                     className="mt-1 h-2.5 w-2.5 rounded-full"
@@ -414,7 +345,7 @@ export function PricingSection() {
                     >
                       {plan.comparePrice}
                     </span>{" "}
-                    <span style={{ color: accent }}>Save £20 now</span>
+                    standard price from 8 July
                   </div>
                 )}
 
@@ -460,14 +391,8 @@ export function PricingSection() {
                   className="mt-5 border-t pt-4"
                   style={{ borderColor: "rgba(255,255,255,.07)" }}
                 >
-                  <div
-                    className="text-[11px] font-bold uppercase tracking-[0.18em]"
-                    style={{ color: accent }}
-                  >
-                    {plan.noteHeading}
-                  </div>
                   <p
-                    className="mt-2 text-[13px] md:text-[14px] leading-[1.55]"
+                    className="text-[13px] md:text-[14px] leading-[1.55]"
                     style={{ color: "rgba(232,236,255,.62)" }}
                   >
                     {plan.note}
@@ -528,74 +453,9 @@ export function PricingSection() {
           })}
         </div>
 
-        <p
-          className="r-up mx-auto mt-6 max-w-[720px] text-center text-[13px] md:text-[14px] leading-[1.6]"
-          style={{ color: "rgba(232,236,255,.58)", "--i": 7 } as React.CSSProperties}
-        >
-          Nothing is restricted before 8 July. Buying Early Access simply locks
-          in the lower price for the paid access period that starts on 8 July
-          2026, not today.
-        </p>
-
-        <div
-          className="r-up mx-auto mt-8 grid max-w-[940px] gap-3 md:grid-cols-2"
-          style={{ "--i": 8 } as React.CSSProperties}
-        >
-          <div
-            className="rounded-[16px] p-5 md:p-6"
-            style={{
-              background: "rgba(52,211,153,.055)",
-              border: "1px solid rgba(52,211,153,.16)",
-            }}
-          >
-            <div
-              className="text-[11px] font-bold uppercase tracking-[0.18em]"
-              style={{ color: "rgba(52,211,153,.88)" }}
-            >
-              2 hours included free
-            </div>
-            <p
-              className="mt-2 text-[14px] md:text-[15px] leading-[1.65]"
-              style={{ color: "rgba(232,236,255,.74)" }}
-            >
-              After 8 July, Free Practice still includes a generous 2-hour
-              audiobook budget across any audiobook, so you can try the audio
-              properly before upgrading.
-            </p>
-          </div>
-
-          <div
-            className="rounded-[16px] p-5 md:p-6"
-            style={{
-              background: "rgba(167,139,250,.06)",
-              border: "1px solid rgba(167,139,250,.18)",
-            }}
-          >
-            <div
-              className="text-[11px] font-bold uppercase tracking-[0.18em]"
-              style={{ color: "rgba(167,139,250,.9)" }}
-            >
-              Why the sample matters
-            </div>
-            <p
-              className="mt-2 text-[14px] md:text-[15px] leading-[1.65] italic"
-              style={{ color: "rgba(232,236,255,.74)" }}
-            >
-              &ldquo;Helpful to listen on my way to work and get quick
-              learning.&rdquo;
-            </p>
-            <div
-              className="mt-3 text-[10px] font-bold uppercase tracking-[0.18em]"
-              style={{ color: "rgba(167,139,250,.68)" }}
-            >
-              ST2 · Peninsula
-            </div>
-          </div>
-        </div>
-
         <div
           className="r-up mx-auto mt-10 max-w-[860px]"
-          style={{ "--i": 9 } as React.CSSProperties}
+          style={{ "--i": 7 } as React.CSSProperties}
         >
           <h3
             className="text-center text-[22px] md:text-[28px] leading-[1.15] font-semibold"

@@ -7,6 +7,10 @@ import { useEffect, useRef, useState } from "react";
  * Only runs once per mount — toggling trigger back to false after firing does
  * not reset it. Use together with useScrollReveal to drive scroll-triggered
  * counter animations.
+ *
+ * The resting state is always `target`: server HTML, crawlers, reduced-motion
+ * users, and anyone whose reveal never fires must see the true number, never
+ * the animation's start value.
  */
 export function useCountUp(
   target: number,
@@ -14,16 +18,21 @@ export function useCountUp(
   trigger: boolean,
   startAt = 0,
 ) {
-  const [count, setCount] = useState(startAt);
+  const [count, setCount] = useState(target);
   const started = useRef(false);
 
   useEffect(() => {
-    if (!started.current) setCount(startAt);
-  }, [startAt]);
+    if (!started.current) setCount(target);
+  }, [target]);
 
   useEffect(() => {
     if (!trigger || started.current) return;
     started.current = true;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setCount(target);
+      return;
+    }
 
     const start = performance.now();
     const step = (now: number) => {

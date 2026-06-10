@@ -342,7 +342,7 @@ export default function HowToPassTheAktPage() {
                 >
                   generate unlimited mocks
                 </a>{" "}
-                from over 21,000 questions.
+                from a bank of thousands of questions.
               </li>
             </ul>
           </div>
@@ -467,7 +467,7 @@ export default function HowToPassTheAktPage() {
                 {
                   href: "/akt-mock-exam",
                   title: "Mock exams",
-                  desc: "Mocks from 21,000+ free questions with AI debriefs",
+                  desc: "Mocks from thousands of free questions with AI debriefs",
                 },
                 {
                   href: "/akt-audio-revision",

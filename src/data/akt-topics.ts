@@ -19,7 +19,7 @@ export const aktTopics: AktTopic[] = [
     description:
       "Master the consultation models, communication skills, and shared decision-making frameworks tested in the AKT. Covers Calgary-Cambridge, patient-centred care, and breaking bad news.",
     metaDescription:
-      "AKT revision for consulting in general practice. Master Calgary-Cambridge, shared decision-making, and breaking bad news with 21,000+ free questions and audio-first revision.",
+      "AKT revision for consulting in general practice. Master Calgary-Cambridge, shared decision-making, and breaking bad news with thousands of free questions and audio-first revision.",
     content: `The AKT tests your understanding of consultation models and communication frameworks in the context of general practice. You need to know the theory, but more importantly, you need to recognise how these models apply to clinical scenarios in exam questions.
 
 The Calgary-Cambridge model is the most commonly referenced framework. It structures a consultation into five phases: initiating the session, gathering information, physical examination, explanation and planning, and closing. AKT questions often present a clinical scenario and ask which phase of the consultation a particular action belongs to, or what the most appropriate communication technique is at a given point.
@@ -272,7 +272,7 @@ Patients with asplenia or hyposplenism require lifelong prophylactic antibiotics
     description:
       "Cardiovascular disease in primary care including hypertension, heart failure, atrial fibrillation, lipid management, and chest pain assessment.",
     metaDescription:
-      "AKT revision for cardiovascular health. Cover hypertension, heart failure, AF, lipid management, and chest pain with 21,000+ free questions and audio-first revision.",
+      "AKT revision for cardiovascular health. Cover hypertension, heart failure, AF, lipid management, and chest pain with thousands of free questions and audio-first revision.",
     content: `Cardiovascular disease is one of the most heavily tested clinical topics in the AKT. You need to know the current NICE guidelines for hypertension, heart failure, atrial fibrillation, lipid management, and acute coronary syndromes.
 
 Hypertension management follows NICE guideline NG136. Diagnosis requires ambulatory or home blood pressure monitoring to confirm clinic readings. Treatment thresholds: offer treatment at stage 1 (clinic BP 140/90 or higher, ABPM 135/85 or higher) if there is target organ damage, CVD risk over 10%, renal disease, or diabetes. Step 1 treatment: ACE inhibitor or ARB (CCB for Afro-Caribbean patients or those over 55). Step 2: ACE inhibitor/ARB plus CCB. Step 3: add thiazide-like diuretic. Step 4 (resistant hypertension): consider spironolactone if potassium is 4.5 or below.
@@ -314,7 +314,7 @@ Fungal infections include dermatophyte infections (tinea corporis, pedis, cruris
     description:
       "Ear, nose and throat presentations including otitis media, hearing loss, tonsillitis, sinusitis, epistaxis, and vertigo.",
     metaDescription:
-      "AKT revision for ENT. Cover otitis media, hearing loss, tonsillitis, sinusitis, epistaxis, and vertigo with 21,000+ free questions and audio-first revision.",
+      "AKT revision for ENT. Cover otitis media, hearing loss, tonsillitis, sinusitis, epistaxis, and vertigo with thousands of free questions and audio-first revision.",
     content: `ENT presentations are common in general practice and well represented in the AKT. The main areas are ear infections and hearing loss, throat infections, nasal conditions, and vertigo.
 
 Acute otitis media is one of the most common childhood presentations. NICE recommends a delayed prescribing strategy for most cases: reassurance, analgesia, and a prescription to use if symptoms do not improve within 48-72 hours. Immediate antibiotics are recommended for systemically unwell children, children under 2 with bilateral otitis media, and those with otorrhoea. First-line antibiotic is amoxicillin.
@@ -358,7 +358,7 @@ Cataracts cause gradual painless loss of vision with glare. Referral for surgery
     description:
       "GI conditions including IBS, IBD, coeliac disease, GORD, liver disease, and GI cancer recognition. Covers H. pylori testing and management.",
     metaDescription:
-      "AKT revision for gastroenterology. Cover IBS, IBD, coeliac disease, GORD, liver disease, and H. pylori with 21,000+ free questions and audio-first revision.",
+      "AKT revision for gastroenterology. Cover IBS, IBD, coeliac disease, GORD, liver disease, and H. pylori with thousands of free questions and audio-first revision.",
     content: `Gastroenterology is a heavily tested AKT topic covering a wide range of conditions from functional disorders to cancer recognition. Knowing when to test, when to treat, and when to refer is key.
 
 Irritable bowel syndrome (IBS) is diagnosed clinically using NICE criteria: abdominal pain or bloating related to defecation, with altered bowel habit, for at least 6 months. Key investigations to exclude organic disease include FBC, ESR/CRP, coeliac serology, and calprotectin (to distinguish IBS from IBD). Management is stepwise: lifestyle and dietary advice (regular meals, adequate fluids, limit caffeine and alcohol), low FODMAP diet (with dietitian support), antispasmodics (mebeverine, hyoscine), laxatives for constipation-predominant IBS, loperamide for diarrhoea-predominant IBS, and low-dose tricyclic antidepressants if first-line measures fail.
@@ -425,7 +425,7 @@ Breast lump assessment: all unexplained breast lumps in women over 30 should be 
     description:
       "Blood disorders in primary care including iron deficiency anaemia, B12 deficiency, anticoagulation management, and haematological malignancies.",
     metaDescription:
-      "AKT revision for haematology. Cover iron deficiency anaemia, B12 deficiency, anticoagulation, and blood cancers with 21,000+ free questions and audio-first revision.",
+      "AKT revision for haematology. Cover iron deficiency anaemia, B12 deficiency, anticoagulation, and blood cancers with thousands of free questions and audio-first revision.",
     content: `Haematology questions in the AKT typically focus on interpreting blood results, managing anaemia, anticoagulation, and recognising haematological malignancies in primary care.
 
 Iron deficiency anaemia is the most common anaemia worldwide. It presents with microcytic hypochromic anaemia (low MCV, low MCH). Ferritin is the most useful single test, but it is an acute phase reactant, so levels may be falsely normal in infection or inflammation. In men and postmenopausal women, iron deficiency always needs investigation for GI blood loss. NICE recommends both upper and lower GI investigation. In premenopausal women, menorrhagia is the most common cause. Treatment is oral iron (ferrous sulphate 200mg twice daily) for at least 3 months after haemoglobin normalises.
@@ -645,7 +645,7 @@ Renal stones present with acute colicky loin pain radiating to the groin. Non-co
     description:
       "Respiratory conditions including asthma, COPD, pneumonia, lung cancer, and sleep apnoea. Covers inhaler technique, spirometry, and BTS guidelines.",
     metaDescription:
-      "AKT revision for respiratory health. Cover asthma, COPD, pneumonia, lung cancer, and sleep apnoea with 21,000+ free questions and full audio access.",
+      "AKT revision for respiratory health. Cover asthma, COPD, pneumonia, lung cancer, and sleep apnoea with thousands of free questions and full audio access.",
     content: `Respiratory conditions are a major AKT topic. Asthma and COPD are the most heavily tested, but you also need to know about pneumonia, lung cancer recognition, and sleep apnoea.
 
 Asthma diagnosis in adults requires demonstration of variable airflow obstruction. NICE recommends spirometry (FEV1/FVC ratio below 0.7 supports obstruction), bronchodilator reversibility (improvement of 12% and 200ml in FEV1), FeNO (above 40 ppb supports eosinophilic inflammation), and peak flow variability (more than 20% variation). Treatment follows a stepwise approach: SABA reliever as needed (step 1), add low-dose ICS (step 2), add LTRA or LABA (step 3), increase ICS to medium dose (step 4), refer to specialist (step 5). NICE and BTS/SIGN guidelines differ slightly: NICE recommends LTRA before LABA at step 3, while BTS/SIGN recommends LABA first. Check which guideline the question references.

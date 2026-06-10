@@ -36,6 +36,18 @@ export function MinimalFooter() {
           ))}
         </nav>
 
+        {/* Independence disclaimer — exam-prep sites should be explicit
+            that they are not the exam body. */}
+        <p
+          className="mx-auto mb-6 max-w-[640px] text-center text-[12px] leading-[1.6]"
+          style={{ color: "rgba(232,236,255,.42)" }}
+        >
+          AKT Navigator is an independent revision resource from Medexia Ltd.
+          It is not affiliated with, or endorsed by, the Royal College of
+          General Practitioners. &ldquo;AKT&rdquo; and &ldquo;MRCGP&rdquo;
+          refer to examinations administered by the RCGP.
+        </p>
+
         {/* Brand + legal row */}
         <div
           className="flex flex-col items-center gap-4 border-t pt-6 md:flex-row md:justify-between"

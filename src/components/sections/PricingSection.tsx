@@ -14,7 +14,7 @@ const PLANS = [
     priceDetail: "",
     includedHeading: "Always free",
     features: [
-      "21,000+ syllabus-mapped AKT questions",
+      "Thousands of syllabus-mapped AKT questions",
       "Deep structured explanations",
       "Mock exams and basic practice",
       "2 hours of audiobook listening",

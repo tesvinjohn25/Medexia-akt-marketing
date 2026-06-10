@@ -72,9 +72,8 @@ export function LiveStatsRibbon() {
       accent: "rgba(236,72,153,.9)",
     },
     {
-      value: "21,000",
-      suffix: "+",
-      label: "syllabus-mapped questions",
+      value: "1,000s",
+      label: "of syllabus-mapped questions",
       accent: "rgba(52,211,153,.9)",
     },
     {

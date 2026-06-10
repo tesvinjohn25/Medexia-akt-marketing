@@ -561,6 +561,58 @@ body > * { position: relative; z-index: 1; }
 .tilt-card:hover .tilt-glare {
   opacity: 1;
 }
+/* Touch devices get press feedback instead of tilt — the card gives
+   slightly under the finger and springs back on release. */
+.tilt-card.is-pressed {
+  transform: perspective(900px) scale(.984);
+  transition: transform .22s var(--ease-glide);
+}
+
+/* ── App showcase rail — native swipe gallery ─────────────────
+   CSS scroll-snap does the heavy lifting: momentum + snap feel
+   identical to a native carousel on iOS and Android. The inline
+   padding centres the first/last card against the page container. */
+.shotrail {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 10px 0 18px;
+  padding-inline: max(20px, calc((100% - 1120px) / 2 + 20px));
+}
+.shotrail::-webkit-scrollbar {
+  display: none;
+}
+.shot-card {
+  flex: 0 0 auto;
+  width: clamp(220px, 66vw, 300px);
+  scroll-snap-align: center;
+  border-radius: 26px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.10);
+  background: #0B0D12;
+  box-shadow: 0 24px 60px rgba(0,0,0,.4);
+}
+
+/* Scroll-linked focus: the card under the user's thumb is full size
+   and bright; neighbours recede. Compositor-only, no JS. */
+@supports (animation-timeline: view(inline)) {
+  @media (prefers-reduced-motion: no-preference) {
+    .shot-card {
+      animation: shotFocus linear both;
+      animation-timeline: view(inline);
+    }
+    @keyframes shotFocus {
+      0%   { transform: scale(.93); opacity: .55; }
+      35%  { transform: scale(1);   opacity: 1; }
+      65%  { transform: scale(1);   opacity: 1; }
+      100% { transform: scale(.93); opacity: .55; }
+    }
+  }
+}
 
 /* ── Scroll-linked parallax — progressive enhancement ─────────
    Browsers with scroll-driven animations get a gentle drift tied

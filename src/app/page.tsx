@@ -1,6 +1,8 @@
 import { Nav } from "@/components/Nav";
 import { AccessNotice } from "@/components/sections/AccessNotice";
+import { AppShowcase } from "@/components/sections/AppShowcase";
 import { FeatureHighlights } from "@/components/sections/FeatureHighlights";
+import { StickyMobileCTA } from "@/components/sections/StickyMobileCTA";
 import { PricingSection } from "@/components/sections/PricingSection";
 import { SocialProof } from "@/components/sections/SocialProof";
 import { FinalCTA } from "@/components/sections/FinalCTA";
@@ -20,6 +22,8 @@ export default function Home() {
 
       <FeatureHighlights />
 
+      <AppShowcase />
+
       <SocialProof />
 
       <PricingSection />
@@ -27,6 +31,8 @@ export default function Home() {
       <FinalCTA />
 
       <MinimalFooter />
+
+      <StickyMobileCTA />
     </main>
   );
 }

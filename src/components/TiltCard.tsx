@@ -8,8 +8,8 @@ import { useEffect, useRef } from "react";
  * The card rotates a few degrees toward the cursor while hovered and
  * springs back to flat on leave (settle curve lives in .tilt-card CSS).
  * Writes only CSS custom properties inside requestAnimationFrame, so the
- * work stays on the compositor. Inert on touch devices and under
- * prefers-reduced-motion.
+ * work stays on the compositor. Touch devices get press-down feedback
+ * instead of tilt; inert under prefers-reduced-motion.
  */
 export function TiltCard({
   children,
@@ -29,8 +29,23 @@ export function TiltCard({
     const el = ref.current;
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches)
-      return;
+
+    // Touch devices: no hover, so the card responds to the press
+    // itself — gives slightly under the finger, springs back on lift.
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      const press = () => el.classList.add("is-pressed");
+      const release = () => el.classList.remove("is-pressed");
+      el.addEventListener("pointerdown", press);
+      el.addEventListener("pointerup", release);
+      el.addEventListener("pointercancel", release);
+      el.addEventListener("pointerleave", release);
+      return () => {
+        el.removeEventListener("pointerdown", press);
+        el.removeEventListener("pointerup", release);
+        el.removeEventListener("pointercancel", release);
+        el.removeEventListener("pointerleave", release);
+      };
+    }
 
     const onMove = (e: PointerEvent) => {
       cancelAnimationFrame(frame.current);

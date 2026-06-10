@@ -41,12 +41,12 @@ export function LiveStatsRibbon() {
 
   const showLive = userCount !== null && userCount >= 20;
 
-  // Count-up animations — fire once visible
+  // Only count-up the live user figure — it's genuinely dynamic so the
+  // animation makes sense. The static stats (hours, questions, topics) are
+  // fixed marketing claims: animating them through false values (72, 16800,
+  // 24) would undermine trust, so they're displayed directly.
   const liveStart = userCount ? Math.max(1, Math.floor(userCount * 0.82)) : 0;
   const liveAnim = useCountUp(userCount ?? 0, 1200, visible && showLive, liveStart);
-  const hoursAnim = useCountUp(90, 1000, visible, 72);
-  const questionsAnim = useCountUp(21000, 1400, visible, 16800);
-  const topicsAnim = useCountUp(32, 800, visible, 24);
 
   const stats: {
     value: string;
@@ -66,19 +66,19 @@ export function LiveStatsRibbon() {
         ]
       : []),
     {
-      value: formatNumber(hoursAnim),
+      value: "90",
       suffix: "+",
       label: "hours of audio",
       accent: "rgba(236,72,153,.9)",
     },
     {
-      value: formatNumber(questionsAnim),
+      value: "21,000",
       suffix: "+",
       label: "syllabus-mapped questions",
       accent: "rgba(52,211,153,.9)",
     },
     {
-      value: formatNumber(topicsAnim),
+      value: "32",
       label: "AKT topics",
       accent: "rgba(96,165,250,.9)",
     },

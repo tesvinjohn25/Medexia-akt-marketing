@@ -1,7 +1,15 @@
+"use client";
+
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { ExamCountdown } from "./ExamCountdown";
 import { HeroVideo } from "./HeroVideo";
 
 export function HeroSection() {
+  // The keynote cascade is visibility-triggered, not load-triggered:
+  // on mobile the headline sits below the video (below the fold), so a
+  // load-time animation would finish before anyone saw it.
+  const { ref, visible } = useScrollReveal(0.1);
+
   return (
     <section className="relative overflow-hidden">
       {/* Black backdrop that lets the video's own cosmic-dark pixels blend
@@ -50,11 +58,16 @@ export function HeroSection() {
           </div>
 
           {/* Text — BELOW video on mobile, left on desktop */}
-          <div className="order-2 md:order-1 md:flex-1 max-w-[580px]">
+          <div
+            ref={ref}
+            className={`order-2 md:order-1 md:flex-1 max-w-[580px] reveal-group ${
+              visible ? "is-visible" : ""
+            }`}
+          >
             {/* Badges */}
             <div
-              className="hero-enter flex items-center gap-2 flex-wrap"
-              style={{ "--he": 1 } as React.CSSProperties}
+              className="r-up flex items-center gap-2 flex-wrap"
+              style={{ "--i": 0 } as React.CSSProperties}
             >
               <div
                 className="inline-flex items-center rounded-md px-2 py-[3px]"
@@ -92,7 +105,6 @@ export function HeroSection() {
               </span>
             </div>
 
-            {/* Headline */}
             {/* Keynote cascade: line one lands word by word, then the
                 audio line arrives whole with the light-sweep. */}
             <h1
@@ -106,10 +118,10 @@ export function HeroSection() {
               {["The", "whole", "AKT."].map((word, i) => (
                 <span
                   key={word}
-                  className="hero-enter inline-block"
+                  className="r-blur inline-block"
                   style={{
                     color: "rgba(232,236,255,.62)",
-                    "--he": 1.6 + i * 0.4,
+                    "--i": 1 + i * 1.3,
                   } as React.CSSProperties}
                 >
                   {word}
@@ -118,8 +130,8 @@ export function HeroSection() {
               ))}
               <br />
               <span
-                className="hero-enter inline-block"
-                style={{ "--he": 3 } as React.CSSProperties}
+                className="r-blur inline-block"
+                style={{ "--i": 5.2 } as React.CSSProperties}
               >
                 <span className="text-shine">In 90 hours of audio.</span>
               </span>
@@ -127,16 +139,16 @@ export function HeroSection() {
 
             {/* Two-paragraph subhead — audio + algorithm */}
             <p
-              className="hero-enter mt-4 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
-              style={{ color: "rgba(232,236,255,.78)", "--he": 3.8 } as React.CSSProperties}
+              className="r-up mt-4 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
+              style={{ color: "rgba(232,236,255,.78)", "--i": 6.5 } as React.CSSProperties}
             >
               Audio-first revision covering the full MRCGP AKT syllabus. Use
               everything free until 8 July 2026: audio, questions, statistics,
               stats videos and Dermatology Navigator.
             </p>
             <p
-              className="hero-enter mt-3 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
-              style={{ color: "rgba(232,236,255,.6)", "--he": 4.2 } as React.CSSProperties}
+              className="r-up mt-3 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
+              style={{ color: "rgba(232,236,255,.6)", "--i": 7 } as React.CSSProperties}
             >
               After that, questions stay free with 2 hours of audio. Lock in
               Early Access for £59 before your paid audio period starts on 8
@@ -145,16 +157,16 @@ export function HeroSection() {
 
             {/* Countdown */}
             <div
-              className="hero-enter mt-5 max-w-[340px]"
-              style={{ "--he": 4.8 } as React.CSSProperties}
+              className="r-up mt-5 max-w-[340px]"
+              style={{ "--i": 7.8 } as React.CSSProperties}
             >
               <ExamCountdown variant="hero" />
             </div>
 
             {/* CTA */}
             <div
-              className="hero-enter mt-6"
-              style={{ "--he": 5.4 } as React.CSSProperties}
+              className="r-scale mt-6"
+              style={{ "--i": 8.4 } as React.CSSProperties}
             >
               <a
                 data-hero-cta

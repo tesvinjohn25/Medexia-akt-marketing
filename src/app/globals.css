@@ -572,7 +572,7 @@ body > * { position: relative; z-index: 1; }
    The track is taller than the viewport; the inner scene pins while
    scroll progress (--p, set by AudioJourney via rAF) fills the wave. */
 .aj-track {
-  height: 240vh;
+  height: 200vh;
 }
 .aj-sticky {
   position: sticky;
@@ -588,8 +588,8 @@ body > * { position: relative; z-index: 1; }
   height: 92px;
 }
 @media (min-width: 768px) {
-  .aj-track { height: 260vh; }
-  .aj-wave  { height: 132px; }
+  .aj-track { height: 220vh; }
+  .aj-wave  { height: 116px; }
 }
 .aj-bars {
   position: absolute;
@@ -639,6 +639,36 @@ body > * { position: relative; z-index: 1; }
   box-shadow: 0 0 20px rgba(197,170,255,1);
 }
 
+/* Now-playing window: a 3-row porthole onto the full 32-topic list.
+   The list itself is translated from scroll (JS, single transform);
+   rows brighten and scale as they pass the centre band. */
+.aj-window {
+  position: relative;
+  height: 144px;
+  overflow: hidden;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 70%, transparent 100%);
+}
+.aj-list {
+  will-change: transform;
+}
+.aj-row {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 650;
+  font-size: 16px;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color .35s ease, transform .35s var(--ease-glide);
+}
+@media (min-width: 768px) {
+  .aj-row { font-size: 19px; }
+}
+
 /* ── App showcase rail — native swipe gallery ─────────────────
    CSS scroll-snap does the heavy lifting: momentum + snap feel
    identical to a native carousel on iOS and Android. The inline
@@ -669,22 +699,10 @@ body > * { position: relative; z-index: 1; }
   box-shadow: 0 24px 60px rgba(0,0,0,.4);
 }
 
-/* Scroll-linked coverflow: the card under the user's thumb is flat,
-   full size and bright; neighbours recede and angle toward centre.
-   Compositor-only, no JS. */
-@supports (animation-timeline: view(inline)) {
-  @media (prefers-reduced-motion: no-preference) {
-    .shot-card {
-      animation: shotFocus linear both;
-      animation-timeline: view(inline);
-    }
-    @keyframes shotFocus {
-      0%   { transform: scale(.92) rotateY(-8deg); opacity: .5; }
-      38%  { transform: scale(1)   rotateY(0deg);  opacity: 1; }
-      62%  { transform: scale(1)   rotateY(0deg);  opacity: 1; }
-      100% { transform: scale(.92) rotateY(8deg);  opacity: .5; }
-    }
-  }
+/* Coverflow transforms are written per-frame by AppShowcase (JS works
+   on every browser, unlike scroll-driven CSS animations on mobile). */
+.shot-card {
+  will-change: transform, opacity;
 }
 
 /* ── Scroll-linked parallax — progressive enhancement ─────────

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
@@ -50,28 +50,56 @@ export function AppShowcase() {
   const { ref, visible } = useScrollReveal();
   const railRef = useRef<HTMLDivElement>(null);
   const frame = useRef(0);
+  const reduceMotion = useRef(false);
   const [active, setActive] = useState(0);
+
+  /* Coverflow + active dot, computed from real scroll position so it
+     works on every browser (CSS scroll-driven animations don't, on
+     most phones). Runs inside rAF; writes only transform/opacity. */
+  const update = () => {
+    const rail = railRef.current;
+    if (!rail) return;
+    const mid = rail.scrollLeft + rail.clientWidth / 2;
+    let best = 0;
+    let bestDist = Infinity;
+    Array.from(rail.children).forEach((child, i) => {
+      const el = child as HTMLElement;
+      const center = el.offsetLeft + el.offsetWidth / 2;
+      const dist = center - mid;
+      if (Math.abs(dist) < bestDist) {
+        bestDist = Math.abs(dist);
+        best = i;
+      }
+      if (!reduceMotion.current) {
+        // d: signed distance to centre in card-widths (~ -2..2)
+        const d = dist / el.offsetWidth;
+        const a = Math.min(Math.abs(d), 1.6);
+        const scale = 1 - a * 0.055;
+        const rot = Math.max(-10, Math.min(10, -d * 11));
+        el.style.transform = `scale(${scale.toFixed(3)}) rotateY(${rot.toFixed(1)}deg)`;
+        el.style.opacity = String(1 - a * 0.3);
+      }
+    });
+    setActive(best);
+  };
 
   const onScroll = () => {
     cancelAnimationFrame(frame.current);
-    frame.current = requestAnimationFrame(() => {
-      const rail = railRef.current;
-      if (!rail) return;
-      const mid = rail.scrollLeft + rail.clientWidth / 2;
-      let best = 0;
-      let bestDist = Infinity;
-      Array.from(rail.children).forEach((child, i) => {
-        const el = child as HTMLElement;
-        const center = el.offsetLeft + el.offsetWidth / 2;
-        const dist = Math.abs(center - mid);
-        if (dist < bestDist) {
-          bestDist = dist;
-          best = i;
-        }
-      });
-      setActive(best);
-    });
+    frame.current = requestAnimationFrame(update);
   };
+
+  useEffect(() => {
+    reduceMotion.current = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    update();
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame.current);
+      window.removeEventListener("resize", onScroll);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const scrollToIndex = (i: number) => {
     const rail = railRef.current;

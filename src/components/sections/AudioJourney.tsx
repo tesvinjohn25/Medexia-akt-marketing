@@ -1,35 +1,28 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { aktTopics } from "@/data/akt-topics";
+import { AudioEqualizer } from "@/components/AudioEqualizer";
 
 /**
- * "Scroll to listen" — the audio USP made physical.
+ * "Scroll to listen" — the audio library, made tangible.
  *
- * The section pins for ~1.5 viewport heights while scroll position plays
- * the library: a waveform fills behind a glowing playhead, an hour
- * counter runs 0 → 90, and topic chapters light up as the playhead
- * passes them. Scroll progress is written as a single CSS custom
- * property (--p) inside requestAnimationFrame; the waveform fill is a
- * clip-path so the per-frame work never touches layout. No images, no
- * audio download — the whole scene is brand tokens.
+ * The section pins briefly while scroll position plays the library:
+ * a waveform fills behind a glowing playhead, an hour counter runs
+ * 0 → 90, and a Now Playing window streams all 32 RCGP topic titles
+ * past the user (sourced from data/akt-topics so it always matches
+ * the product). Scroll progress is written as a CSS custom property
+ * (--p) plus one transform inside requestAnimationFrame; the waveform
+ * fill is a clip-path so per-frame work never touches layout.
  *
- * prefers-reduced-motion gets a static, partly-played waveform with no
+ * prefers-reduced-motion gets a static, partly-played scene with no
  * pinned scrolling.
  */
 
-const CHAPTERS = [
-  "Cardiology",
-  "Respiratory",
-  "Statistics",
-  "Dermatology",
-  "Neurology",
-  "Prescribing",
-  "Paediatrics",
-  "Ethics",
-] as const;
-
+const TOPICS = aktTopics.map((t) => t.name);
 const BARS = 72;
 const TOTAL_HOURS = 90;
+const ROW_H = 48;
 
 /* Deterministic heights so the server and client render the same wave. */
 function barHeights(): number[] {
@@ -51,21 +44,33 @@ const HEIGHTS = barHeights();
 export function AudioJourney() {
   const trackRef = useRef<HTMLDivElement>(null);
   const hoursRef = useRef<HTMLSpanElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
   const frame = useRef(0);
-  const [activeChapter, setActiveChapter] = useState(-1);
+  const [activeTopic, setActiveTopic] = useState(0);
   const [staticMode, setStaticMode] = useState(false);
 
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
 
+    const apply = (p: number) => {
+      track.style.setProperty("--p", p.toFixed(4));
+      if (hoursRef.current) {
+        hoursRef.current.textContent = String(Math.round(p * TOTAL_HOURS));
+      }
+      // Stream the playlist: continuous position keeps motion silky,
+      // the active row is whichever sits in the centre band.
+      const c = p * (TOPICS.length - 1);
+      if (listRef.current) {
+        listRef.current.style.transform = `translateY(${ROW_H - c * ROW_H}px)`;
+      }
+      const idx = Math.min(TOPICS.length - 1, Math.max(0, Math.round(c)));
+      setActiveTopic((prev) => (prev === idx ? prev : idx));
+    };
+
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setStaticMode(true);
-      setActiveChapter(4);
-      track.style.setProperty("--p", "0.62");
-      if (hoursRef.current) {
-        hoursRef.current.textContent = String(Math.round(0.62 * TOTAL_HOURS));
-      }
+      apply(0.4);
       return;
     }
 
@@ -74,16 +79,11 @@ export function AudioJourney() {
       frame.current = requestAnimationFrame(() => {
         const total = track.offsetHeight - window.innerHeight;
         if (total <= 0) return;
-        const p = Math.min(1, Math.max(0, -track.getBoundingClientRect().top / total));
-        track.style.setProperty("--p", p.toFixed(4));
-        if (hoursRef.current) {
-          hoursRef.current.textContent = String(Math.round(p * TOTAL_HOURS));
-        }
-        const idx = p <= 0.005 ? -1 : Math.min(
-          CHAPTERS.length - 1,
-          Math.floor(p * CHAPTERS.length)
+        const p = Math.min(
+          1,
+          Math.max(0, -track.getBoundingClientRect().top / total)
         );
-        setActiveChapter((prev) => (prev === idx ? prev : idx));
+        apply(p);
       });
     };
 
@@ -101,7 +101,7 @@ export function AudioJourney() {
     <section
       ref={trackRef}
       className={staticMode ? "" : "aj-track"}
-      aria-label="90 hours of AKT audio, visualised as a scrolling waveform"
+      aria-label="The full audio library: all 32 RCGP topic areas, 90+ hours, visualised as a scrolling waveform"
     >
       <div className="aj-sticky">
         <div className="container-x w-full">
@@ -119,20 +119,13 @@ export function AudioJourney() {
                 letterSpacing: "-0.04em",
               }}
             >
-              Scroll to listen.
+              Scroll through the library.
             </h2>
-            <p
-              className="mx-auto mt-3 max-w-[480px] text-[14px] md:text-[16px] leading-[1.6]"
-              style={{ color: "rgba(232,236,255,.62)" }}
-            >
-              This bar is the whole RCGP curriculum, narrated. Your commute,
-              your school run, your gym session — all of it counts.
-            </p>
 
             {/* Hour counter — driven directly from scroll, no re-render */}
-            <div className="mt-7 md:mt-9 flex items-baseline justify-center gap-2">
+            <div className="mt-5 md:mt-7 flex items-baseline justify-center gap-2">
               <span
-                className="tabular-nums font-bold leading-none text-[64px] md:text-[96px]"
+                className="tabular-nums font-bold leading-none text-[56px] md:text-[84px]"
                 style={{
                   fontFamily: "var(--font-display)",
                   letterSpacing: "-0.05em",
@@ -154,7 +147,7 @@ export function AudioJourney() {
             </div>
 
             {/* Waveform — base bars + violet played layer clipped by --p */}
-            <div className="aj-wave mt-6 md:mt-8" aria-hidden>
+            <div className="aj-wave mt-5 md:mt-7" aria-hidden>
               <div className="aj-bars">
                 {HEIGHTS.map((h, i) => (
                   <span key={i} className="aj-bar" style={{ height: `${h * 100}%` }} />
@@ -168,65 +161,43 @@ export function AudioJourney() {
               <div className="aj-head" />
             </div>
 
-            {/* Chapter chips light up as the playhead passes them */}
-            <div className="mt-7 flex flex-wrap justify-center gap-2">
-              {CHAPTERS.map((name, i) => {
-                const state =
-                  i === activeChapter
-                    ? "active"
-                    : i < activeChapter
-                      ? "done"
-                      : "upcoming";
-                return (
-                  <span
-                    key={name}
-                    className="rounded-full px-3 py-[6px] text-[11px] md:text-[12px] font-semibold"
-                    style={{
-                      transition:
-                        "all .45s var(--ease-spring)",
-                      transform: state === "active" ? "scale(1.08)" : "scale(1)",
-                      background:
-                        state === "active"
-                          ? "linear-gradient(135deg, rgba(109,106,232,.9), rgba(155,107,255,.9))"
-                          : state === "done"
-                            ? "rgba(155,107,255,.12)"
-                            : "rgba(255,255,255,.04)",
-                      border:
-                        state === "active"
-                          ? "1px solid rgba(197,170,255,.7)"
-                          : state === "done"
-                            ? "1px solid rgba(155,107,255,.3)"
-                            : "1px solid rgba(255,255,255,.08)",
-                      color:
-                        state === "active"
-                          ? "#fff"
-                          : state === "done"
-                            ? "rgba(197,170,255,.85)"
-                            : "rgba(232,236,255,.4)",
-                      boxShadow:
-                        state === "active"
-                          ? "0 8px 28px rgba(155,107,255,.45)"
-                          : "none",
-                    }}
-                  >
-                    {name}
-                  </span>
-                );
-              })}
+            {/* Now playing — all 32 topics stream past as you scroll */}
+            <div className="mt-6 md:mt-8">
+              <div
+                className="flex items-center justify-center gap-2 text-[10px] md:text-[11px] tracking-[0.2em] uppercase font-bold"
+                style={{ color: "rgba(167,139,250,.8)" }}
+              >
+                <AudioEqualizer bars={4} />
+                Now playing &middot; {activeTopic + 1} / {TOPICS.length}
+              </div>
+              <div className="aj-window mt-2" aria-hidden>
+                <div ref={listRef} className="aj-list">
+                  {TOPICS.map((name, i) => (
+                    <div
+                      key={name}
+                      className="aj-row"
+                      style={{
+                        color:
+                          i === activeTopic
+                            ? "var(--fg-high)"
+                            : "rgba(232,236,255,.28)",
+                        transform:
+                          i === activeTopic ? "scale(1.04)" : "scale(.96)",
+                      }}
+                    >
+                      {name}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
-            {/* Scroll hint — fades out as soon as playback starts */}
-            {!staticMode && (
-              <div
-                className="mt-7 text-[12px] font-semibold tracking-[0.14em] uppercase"
-                style={{
-                  color: "rgba(232,236,255,.45)",
-                  opacity: "calc(1 - var(--p, 0) * 7)",
-                }}
-              >
-                Keep scrolling to play &darr;
-              </div>
-            )}
+            <p
+              className="mt-4 text-[12px] md:text-[13px] font-semibold"
+              style={{ color: "rgba(232,236,255,.5)" }}
+            >
+              All 32 RCGP topic areas, fully narrated.
+            </p>
           </div>
         </div>
       </div>

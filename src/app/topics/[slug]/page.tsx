@@ -177,7 +177,7 @@ export default async function TopicPage({ params }: Props) {
                 {
                   href: "/akt-mock-exam",
                   title: "AKT mock exams",
-                  desc: "Mocks from 21,000+ free questions",
+                  desc: "Mocks from thousands of free questions",
                 },
                 {
                   href: "/best-akt-question-bank",

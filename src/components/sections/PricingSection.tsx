@@ -1,5 +1,7 @@
 "use client";
 
+import { useScrollReveal } from "@/hooks/useScrollReveal";
+
 const FREE_JOIN_URL = "https://app.medexia-akt.com/join/free";
 const EARLY_ACCESS_JOIN_URL = "https://app.medexia-akt.com/join/early-access";
 const FULL_ACCESS_JOIN_URL = "https://app.medexia-akt.com/join/full-access";
@@ -129,7 +131,7 @@ function cardChrome(plan: (typeof PLANS)[number]) {
         "linear-gradient(180deg, rgba(21,23,30,.62), rgba(13,15,20,.46))",
       border: "1px solid rgba(232,236,255,.09)",
       boxShadow: "0 18px 60px rgba(0,0,0,.20)",
-      opacity: 0.58,
+      opacity: 0.68,
     };
   }
 
@@ -137,9 +139,9 @@ function cardChrome(plan: (typeof PLANS)[number]) {
     return {
       background:
         "linear-gradient(160deg, rgba(28,23,45,.98), rgba(17,19,28,.9) 46%, rgba(12,14,22,.9))",
-      border: "1px solid rgba(167,139,250,.5)",
+      border: "1px solid rgba(167,139,250,.6)",
       boxShadow:
-        "0 42px 120px rgba(109,106,232,.28), inset 0 1px 0 rgba(255,255,255,.1)",
+        "0 42px 120px rgba(109,106,232,.38), 0 0 44px rgba(155,107,255,.18), inset 0 1px 0 rgba(255,255,255,.1)",
       opacity: 1,
     };
   }
@@ -164,6 +166,7 @@ function cardChrome(plan: (typeof PLANS)[number]) {
 }
 
 export function PricingSection() {
+  const { ref, visible } = useScrollReveal(0.05);
   return (
     <section
       id="pricing"
@@ -181,7 +184,8 @@ export function PricingSection() {
       />
 
       <div
-        className="container-x relative reveal-group is-visible"
+        ref={ref}
+        className={`container-x relative reveal-group ${visible ? "is-visible" : ""}`}
       >
         <div className="mx-auto max-w-[780px] text-center">
           <div
@@ -250,7 +254,9 @@ export function PricingSection() {
               <article
                 key={plan.title}
                 className={`r-up card-shimmer relative flex min-h-full flex-col overflow-hidden rounded-[20px] p-5 md:p-6 ${
-                  plan.highlighted ? "lg:-mt-4 lg:pb-7" : "lg:mt-6"
+                  plan.highlighted
+                    ? "max-lg:order-first lg:-mt-4 lg:pb-7"
+                    : "lg:mt-6"
                 }`}
                 style={{
                   background: chrome.background,
@@ -260,15 +266,39 @@ export function PricingSection() {
                   "--i": 4 + i,
                 } as React.CSSProperties}
               >
+                {/* Colour-coded accent strip: green = free, violet = early
+                    access, blue = standard. Reads the tier at a glance. */}
+                <div
+                  className="pointer-events-none absolute inset-x-0 top-0 h-[3px]"
+                  aria-hidden
+                  style={{
+                    background: `linear-gradient(90deg, transparent 4%, ${accent}, transparent 96%)`,
+                    opacity: locked ? 0.4 : 0.9,
+                  }}
+                />
+
                 {plan.highlighted && (
-                  <div
-                    className="pointer-events-none absolute inset-x-0 top-0 h-px"
-                    aria-hidden
-                    style={{
-                      background:
-                        "linear-gradient(90deg, transparent, rgba(197,170,255,.85), transparent)",
-                    }}
-                  />
+                  <div className="mb-4 flex justify-center">
+                    <span
+                      className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-[6px] text-[10px] font-bold uppercase tracking-[0.16em] text-white"
+                      style={{
+                        background:
+                          "linear-gradient(135deg, var(--brand-iris), var(--brand-violet))",
+                        boxShadow: "0 8px 26px rgba(155,107,255,.45)",
+                      }}
+                    >
+                      <svg
+                        width="11"
+                        height="11"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        aria-hidden
+                      >
+                        <path d="M12 2l2.9 6.26 6.6.7-4.9 4.5 1.35 6.54L12 16.9 6.05 20l1.35-6.54-4.9-4.5 6.6-.7z" />
+                      </svg>
+                      Most popular &middot; Save &pound;20
+                    </span>
+                  </div>
                 )}
 
                 {locked && (
@@ -350,6 +380,15 @@ export function PricingSection() {
                     style={{
                       fontFamily: "var(--font-display)",
                       letterSpacing: "-0.045em",
+                      ...(plan.highlighted
+                        ? {
+                            backgroundImage:
+                              "linear-gradient(135deg, var(--brand-violet-light), var(--brand-violet) 60%, var(--brand-iris))",
+                            WebkitBackgroundClip: "text",
+                            backgroundClip: "text",
+                            color: "transparent",
+                          }
+                        : null),
                     }}
                   >
                     {plan.price}
@@ -391,12 +430,21 @@ export function PricingSection() {
                   </div>
                   <ul className="mt-4 space-y-3">
                     {plan.features.map((feature) => (
-                      <li key={feature} className="flex gap-3">
-                        <span
-                          className="mt-[8px] h-1.5 w-1.5 shrink-0 rounded-full"
-                          style={{ background: accent }}
+                      <li key={feature} className="flex gap-2.5">
+                        <svg
+                          className="mt-[3px] shrink-0"
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke={accent}
+                          strokeWidth="2.6"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                           aria-hidden
-                        />
+                        >
+                          <path d="M20 6L9 17l-5-5" />
+                        </svg>
                         <span
                           className="text-[13px] md:text-[14px] leading-[1.5]"
                           style={{ color: "rgba(232,236,255,.78)" }}

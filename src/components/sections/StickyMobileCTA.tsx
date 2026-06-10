@@ -37,12 +37,15 @@ export function StickyMobileCTA() {
 
   return (
     <div
-      className="fixed inset-x-0 bottom-0 z-50 md:hidden transition-transform duration-300"
+      className="fixed inset-x-0 bottom-0 z-50 md:hidden"
       style={{
         transform: visible && !pricingVisible ? "translateY(0)" : "translateY(100%)",
-        background: "var(--bg-surface)",
-        backdropFilter: "blur(14px)",
+        transition: "transform .5s var(--ease-fluid)",
+        background: "rgba(17,19,26,.88)",
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
         borderTop: "1px solid var(--border)",
+        boxShadow: "0 -14px 40px rgba(0,0,0,.35)",
         paddingBottom: "env(safe-area-inset-bottom, 0px)",
       }}
     >

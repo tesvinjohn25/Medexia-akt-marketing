@@ -93,26 +93,42 @@ export function HeroSection() {
             </div>
 
             {/* Headline */}
+            {/* Keynote cascade: line one lands word by word, then the
+                audio line arrives whole with the light-sweep. */}
             <h1
-              className="hero-enter mt-4 text-[34px] md:text-[48px] lg:text-[56px] leading-[1.02]"
+              className="mt-4 text-[34px] md:text-[48px] lg:text-[56px] leading-[1.02]"
               style={{
                 fontFamily: "var(--font-display)",
                 letterSpacing: "-0.04em",
                 textShadow: "0 22px 70px rgba(0,0,0,.7)",
-                "--he": 2,
-              } as React.CSSProperties}
+              }}
             >
-              <span style={{ color: "rgba(232,236,255,.62)" }}>
-                The whole AKT.
-              </span>
+              {["The", "whole", "AKT."].map((word, i) => (
+                <span
+                  key={word}
+                  className="hero-enter inline-block"
+                  style={{
+                    color: "rgba(232,236,255,.62)",
+                    "--he": 1.6 + i * 0.4,
+                  } as React.CSSProperties}
+                >
+                  {word}
+                  {i < 2 ? " " : ""}
+                </span>
+              ))}
               <br />
-              <span className="text-shine">In 90 hours of audio.</span>
+              <span
+                className="hero-enter inline-block"
+                style={{ "--he": 3 } as React.CSSProperties}
+              >
+                <span className="text-shine">In 90 hours of audio.</span>
+              </span>
             </h1>
 
             {/* Two-paragraph subhead — audio + algorithm */}
             <p
               className="hero-enter mt-4 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
-              style={{ color: "rgba(232,236,255,.78)", "--he": 3 } as React.CSSProperties}
+              style={{ color: "rgba(232,236,255,.78)", "--he": 3.8 } as React.CSSProperties}
             >
               Audio-first revision covering the full MRCGP AKT syllabus. Use
               everything free until 8 July 2026: audio, questions, statistics,
@@ -120,7 +136,7 @@ export function HeroSection() {
             </p>
             <p
               className="hero-enter mt-3 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
-              style={{ color: "rgba(232,236,255,.6)", "--he": 4 } as React.CSSProperties}
+              style={{ color: "rgba(232,236,255,.6)", "--he": 4.2 } as React.CSSProperties}
             >
               After that, questions stay free with 2 hours of audio. Lock in
               Early Access for £59 before your paid audio period starts on 8
@@ -130,7 +146,7 @@ export function HeroSection() {
             {/* Countdown */}
             <div
               className="hero-enter mt-5 max-w-[340px]"
-              style={{ "--he": 5 } as React.CSSProperties}
+              style={{ "--he": 4.8 } as React.CSSProperties}
             >
               <ExamCountdown variant="hero" />
             </div>
@@ -138,7 +154,7 @@ export function HeroSection() {
             {/* CTA */}
             <div
               className="hero-enter mt-6"
-              style={{ "--he": 6 } as React.CSSProperties}
+              style={{ "--he": 5.4 } as React.CSSProperties}
             >
               <a
                 data-hero-cta

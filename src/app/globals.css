@@ -568,6 +568,77 @@ body > * { position: relative; z-index: 1; }
   transition: transform .22s var(--ease-glide);
 }
 
+/* ── Audio journey — scroll-to-listen waveform ────────────────
+   The track is taller than the viewport; the inner scene pins while
+   scroll progress (--p, set by AudioJourney via rAF) fills the wave. */
+.aj-track {
+  height: 240vh;
+}
+.aj-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.aj-wave {
+  position: relative;
+  height: 92px;
+}
+@media (min-width: 768px) {
+  .aj-track { height: 260vh; }
+  .aj-wave  { height: 132px; }
+}
+.aj-bars {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+@media (min-width: 768px) {
+  .aj-bars { gap: 3px; }
+}
+.aj-bar {
+  flex: 1 1 0;
+  min-width: 1px;
+  border-radius: 2px;
+  background: rgba(255,255,255,.10);
+}
+/* Played portion: identical bars in brand violet, revealed by clipping
+   against scroll progress. Clip-path animates without layout work. */
+.aj-bars--played {
+  clip-path: inset(0 calc((1 - var(--p, 0)) * 100%) 0 0);
+  filter: drop-shadow(0 0 14px rgba(155,107,255,.4));
+}
+.aj-bars--played .aj-bar {
+  background: linear-gradient(180deg, var(--brand-violet-light), var(--brand-iris));
+}
+.aj-head {
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  left: calc(var(--p, 0) * 100%);
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(197,170,255,.35));
+  box-shadow: 0 0 18px rgba(197,170,255,.85);
+}
+.aj-head::after {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 20px rgba(197,170,255,1);
+}
+
 /* ── App showcase rail — native swipe gallery ─────────────────
    CSS scroll-snap does the heavy lifting: momentum + snap feel
    identical to a native carousel on iOS and Android. The inline
@@ -580,6 +651,7 @@ body > * { position: relative; z-index: 1; }
   overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  perspective: 1100px;
   padding: 10px 0 18px;
   padding-inline: max(20px, calc((100% - 1120px) / 2 + 20px));
 }
@@ -597,8 +669,9 @@ body > * { position: relative; z-index: 1; }
   box-shadow: 0 24px 60px rgba(0,0,0,.4);
 }
 
-/* Scroll-linked focus: the card under the user's thumb is full size
-   and bright; neighbours recede. Compositor-only, no JS. */
+/* Scroll-linked coverflow: the card under the user's thumb is flat,
+   full size and bright; neighbours recede and angle toward centre.
+   Compositor-only, no JS. */
 @supports (animation-timeline: view(inline)) {
   @media (prefers-reduced-motion: no-preference) {
     .shot-card {
@@ -606,10 +679,10 @@ body > * { position: relative; z-index: 1; }
       animation-timeline: view(inline);
     }
     @keyframes shotFocus {
-      0%   { transform: scale(.93); opacity: .55; }
-      35%  { transform: scale(1);   opacity: 1; }
-      65%  { transform: scale(1);   opacity: 1; }
-      100% { transform: scale(.93); opacity: .55; }
+      0%   { transform: scale(.92) rotateY(-8deg); opacity: .5; }
+      38%  { transform: scale(1)   rotateY(0deg);  opacity: 1; }
+      62%  { transform: scale(1)   rotateY(0deg);  opacity: 1; }
+      100% { transform: scale(.92) rotateY(8deg);  opacity: .5; }
     }
   }
 }

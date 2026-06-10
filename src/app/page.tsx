@@ -1,6 +1,7 @@
 import { Nav } from "@/components/Nav";
 import { AccessNotice } from "@/components/sections/AccessNotice";
 import { AppShowcase } from "@/components/sections/AppShowcase";
+import { AudioJourney } from "@/components/sections/AudioJourney";
 import { FeatureHighlights } from "@/components/sections/FeatureHighlights";
 import { StickyMobileCTA } from "@/components/sections/StickyMobileCTA";
 import { PricingSection } from "@/components/sections/PricingSection";
@@ -21,6 +22,8 @@ export default function Home() {
       <AccessNotice />
 
       <FeatureHighlights />
+
+      <AudioJourney />
 
       <AppShowcase />
 

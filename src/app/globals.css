@@ -764,8 +764,24 @@ body > * { position: relative; z-index: 1; }
   }
 }
 
+/* ── Live demo overlay (mobile immersive mode) ───────────────────── */
+.demo-overlay {
+  animation: demoOverlayIn 0.45s var(--ease-fluid) both;
+}
+@keyframes demoOverlayIn {
+  from {
+    opacity: 0;
+    transform: translateY(4%) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Reduced motion: respect user preference */
 @media (prefers-reduced-motion: reduce) {
+  .demo-overlay { animation: none; }
   body::after { animation: none; }
   .hero-nebula::before,
   .hero-nebula::after { animation: none; }

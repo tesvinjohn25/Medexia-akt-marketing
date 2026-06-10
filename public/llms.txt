@@ -18,9 +18,25 @@ Key facts:
   starts at £59 (Early Access, bought before 8 July) or £79 (standard).
 - The audio library covers all 32 RCGP AKT curriculum topics in 90+ hours.
 
+## Free demo (no signup)
+
+- [Demo overview + worked example question](https://medexia-akt.com/demo):
+  what the demo contains, plus a full sample AKT question with its
+  structured explanation (understanding the question, key points, why
+  the other options are wrong) rendered in plain text
+- [Audio demo](https://app.medexia-akt.com/demo/audiobook): a real
+  narrated sample from the 90+ hour library
+- [Question demo](https://app.medexia-akt.com/demo/questions): five real
+  AKT-style single-best-answer questions with structured explanations
+  and results
+
+Question standards: single-best-answer format matching the real exam,
+aligned to NICE, CKS and the BNF, regularly reviewed and updated.
+
 ## Pages
 
-- [Home](https://medexia-akt.com/): product overview, reviews, pricing
+- [Home](https://medexia-akt.com/): product overview, live demo, reviews, pricing
+- [Demo](https://medexia-akt.com/demo): try the app free — audio sample + 5 real questions
 - [How to pass the AKT](https://medexia-akt.com/how-to-pass-the-akt): study guide — format, pass rate, strategy, topic breakdown
 - [AKT exam dates](https://medexia-akt.com/akt-exam-dates): 2026 sittings, booking windows, eligibility
 - [AKT mock exams](https://medexia-akt.com/akt-mock-exam): free timed mocks with AI debriefs

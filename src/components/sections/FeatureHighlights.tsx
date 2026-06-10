@@ -164,13 +164,30 @@ export function FeatureHighlights() {
                 className="mt-3 text-[14px] md:text-[15px] leading-[1.65]"
                 style={{ color: "rgba(232,236,255,.68)" }}
               >
-                40, 80 or 160 questions &mdash; pick your time. The debrief
-                catches what you can&rsquo;t see yourself: timing drops, fatigue
-                patterns, and the topics you only think you know.
+                40, 80 or 160 questions &mdash; pick your time. Every answer
+                carries an examiner-style explanation aligned to NICE, CKS and
+                the BNF. The debrief catches what you can&rsquo;t see yourself:
+                timing drops, fatigue patterns, and the topics you only think
+                you know.
               </p>
             </TiltCard>
           </div>
         </div>
+
+        <p
+          className="r-up mt-7 text-center text-[13px] md:text-[14px] font-semibold"
+          style={{ color: "rgba(232,236,255,.55)", "--i": 4 } as React.CSSProperties}
+        >
+          Don&rsquo;t take our word for it &mdash;{" "}
+          <a
+            href="#try-the-app"
+            className="transition-colors hover:text-white"
+            style={{ color: "rgba(197,170,255,.9)" }}
+          >
+            try it yourself below
+          </a>
+          .
+        </p>
       </div>
     </section>
   );

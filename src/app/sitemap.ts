@@ -11,6 +11,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const contentPages = [
     {
+      url: "https://medexia-akt.com/demo",
+      lastModified: new Date("2026-06-10"),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+    {
       url: "https://medexia-akt.com/how-to-pass-the-akt",
       lastModified: new Date("2026-06-10"),
       changeFrequency: "monthly" as const,

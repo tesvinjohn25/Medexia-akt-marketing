@@ -27,6 +27,7 @@ interface QuestionBank {
   questions: string;
   audio: string;
   adaptiveLearning: string;
+  explanations: string;
   mockExams: string;
   aiDebrief: string;
   price: string;
@@ -39,6 +40,7 @@ const questionBanks: QuestionBank[] = [
     questions: "Thousands",
     audio: "90+ hours",
     adaptiveLearning: "Yes",
+    explanations: "Structured · NICE/CKS/BNF-aligned",
     mockExams: "Included",
     aiDebrief: "Yes",
     price: "Free questions; audio from £59",
@@ -49,6 +51,7 @@ const questionBanks: QuestionBank[] = [
     questions: "~3,500",
     audio: "No",
     adaptiveLearning: "Basic",
+    explanations: "Yes",
     mockExams: "Limited",
     aiDebrief: "No",
     price: "~£35 / 4 months",
@@ -58,6 +61,7 @@ const questionBanks: QuestionBank[] = [
     questions: "~2,500",
     audio: "No",
     adaptiveLearning: "No",
+    explanations: "Thorough",
     mockExams: "Yes",
     aiDebrief: "No",
     price: "£95–£180",
@@ -67,6 +71,7 @@ const questionBanks: QuestionBank[] = [
     questions: "~1,200",
     audio: "No",
     adaptiveLearning: "Basic",
+    explanations: "Yes",
     mockExams: "Yes",
     aiDebrief: "No",
     price: "~£50 / 6 months",
@@ -76,6 +81,7 @@ const questionBanks: QuestionBank[] = [
     questions: "~3,000",
     audio: "No",
     adaptiveLearning: "No",
+    explanations: "Yes",
     mockExams: "Limited",
     aiDebrief: "No",
     price: "Free",
@@ -155,6 +161,7 @@ export default function BestAktQuestionBankPage() {
                   {[
                     "Provider",
                     "Questions",
+                    "Explanations",
                     "Audio",
                     "Adaptive",
                     "Mocks",
@@ -193,6 +200,7 @@ export default function BestAktQuestionBankPage() {
                       {bank.name}
                     </td>
                     <td className="p-3">{bank.questions}</td>
+                    <td className="p-3">{bank.explanations}</td>
                     <td className="p-3">{bank.audio}</td>
                     <td className="p-3">{bank.adaptiveLearning}</td>
                     <td className="p-3">{bank.mockExams}</td>
@@ -325,7 +333,20 @@ export default function BestAktQuestionBankPage() {
               >
                 AKT Navigator&apos;s question bank is deep enough to carry your
                 whole revision — you will not run out of fresh questions before
-                exam day. It includes 90+ hours of audio revision across all 32
+                exam day. Questions follow the AKT&apos;s single-best-answer
+                format — clinical vignette stems with plausible distractors —
+                and every answer is broken down into a structured explanation:
+                understanding the question, key points for your AKT, and why
+                the other options are wrong, aligned to NICE, CKS and the BNF
+                and regularly reviewed and updated. You can{" "}
+                <a
+                  href="/demo"
+                  className="font-medium transition-colors"
+                  style={{ color: "var(--brand-violet-light)" }}
+                >
+                  judge the quality yourself in the free demo
+                </a>
+                . It also includes 90+ hours of audio revision across all 32
                 topics, adaptive learning that builds sessions around your weak
                 areas, unlimited mock exams with AI-powered debriefs, and AI
                 support for deeper topic review.
@@ -360,9 +381,10 @@ export default function BestAktQuestionBankPage() {
               className="mt-4 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
-              It depends on how you learn best. If you want the biggest question
-              bank with audio and AI features, AKT Navigator gives you free
-              questions with optional full audio access from £59. If you prefer a
+              It depends on how you learn best. If you want structured,
+              guideline-aligned explanations with audio and AI features, AKT
+              Navigator gives you free questions with optional full audio
+              access from £59. If you prefer a
               battle-tested question bank that your friends used, PassMedicine is
               the safe bet. If money is no object and you want thorough written
               explanations, Pastest is reliable.

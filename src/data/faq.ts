@@ -21,6 +21,10 @@ export const FAQS: Faq[] = [
     a: "The most effective approach is targeted practice, not just doing thousands of random questions. AKT Navigator's algorithm starts by testing you across every major AKT topic and subtopic to understand where you stand. From there it shifts to targeting your weaknesses, focusing on what matters most for the exam. As you improve it keeps drilling the areas you're struggling with while gradually introducing new ground. Every session is built around you. No two trainees get the same questions. You just hit start and the algorithm handles the rest.",
   },
   {
+    q: "How are AKT Navigator questions written?",
+    a: "Every question follows the AKT's single-best-answer format: a clinical vignette stem set in UK primary care with plausible distractors, just like the real exam. Content and explanations are aligned to NICE, CKS and the BNF, and questions are regularly reviewed and updated as guidance changes. Each answer comes with a structured, examiner-style explanation in three parts: understanding the question, the key points to take away for your AKT, and why the other options are wrong — so every question teaches you something whether you got it right or not. You can judge the quality yourself in the free demo at medexia-akt.com/demo, which includes a full worked example and five real questions to sit. As with any revision resource, always check NICE, CKS and the BNF for clinical decisions.",
+  },
+  {
     q: "What topics does the AKT cover?",
     a: "The RCGP AKT spans 32 topics across three areas. Clinical topics make up 80% of the exam and include things like cardiovascular, dermatology, mental health, respiratory, and musculoskeletal. Evidence in practice covers critical appraisal and statistics (10%), and organisation and management covers ethics, prescribing, and professional topics (10%). AKT Navigator covers every single one of these 32 topics with questions, over 90 hours of audio, and detailed explanations for each.",
   },

@@ -10,6 +10,8 @@ export type ReviewItem = {
   id: string;
   quote: string;
   attribution: string;
+  /** Short use-case theme, e.g. "Busy parent", "On the commute". */
+  tag?: string;
 };
 
 /**
@@ -91,18 +93,32 @@ export function ReviewRail({ items }: { items: ReviewItem[] }) {
               "--i": i + 0.5,
             } as React.CSSProperties}
           >
-            <div className="flex items-center justify-between">
-              <span
-                aria-hidden
-                className="flex h-8 w-8 items-center justify-center rounded-full text-[13px] font-bold text-white"
-                style={{
-                  background:
-                    "linear-gradient(135deg, var(--brand-iris), var(--brand-violet))",
-                  boxShadow:
-                    "0 0 0 2px rgba(155,107,255,.30), 0 6px 18px rgba(109,106,232,.35)",
-                }}
-              >
-                {t.attribution.trim().charAt(0).toUpperCase() || "A"}
+            <div className="flex items-center justify-between gap-3">
+              <span className="flex min-w-0 items-center gap-2.5">
+                <span
+                  aria-hidden
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[13px] font-bold text-white"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, var(--brand-iris), var(--brand-violet))",
+                    boxShadow:
+                      "0 0 0 2px rgba(155,107,255,.30), 0 6px 18px rgba(109,106,232,.35)",
+                  }}
+                >
+                  {t.attribution.trim().charAt(0).toUpperCase() || "A"}
+                </span>
+                {t.tag && (
+                  <span
+                    className="truncate rounded-full px-2.5 py-[4px] text-[9px] font-bold uppercase tracking-[0.14em]"
+                    style={{
+                      color: "rgba(197,170,255,.95)",
+                      background: "rgba(155,107,255,.12)",
+                      border: "1px solid rgba(155,107,255,.28)",
+                    }}
+                  >
+                    {t.tag}
+                  </span>
+                )}
               </span>
               <Stars size={11} />
             </div>

@@ -35,11 +35,6 @@ const SHOTS = [
     alt: "Examiner-level explanation — why the right answer is right, why the wrong options are wrong, and a check-your-understanding prompt",
   },
   {
-    src: "/appshots/06-ready-1206x2622.png",
-    label: "Readiness",
-    alt: "Exam readiness — your predicted score, updated daily, with 90+ hours of audio, 20,000+ questions and 32 topics",
-  },
-  {
     src: "/appshots/01-hero-1206x2622.png",
     label: "Overview",
     alt: "AKT Navigator home — the AKT tool that fits your life, with your session ready to start",
@@ -148,7 +143,7 @@ export function AppShowcase() {
                 style={{ color: "rgba(232,236,255,.62)", "--i": 2 } as React.CSSProperties}
               >
                 Swipe through the app as it is today — audio, the algorithm,
-                mocks and your readiness score.
+                mocks and examiner-level explanations.
               </p>
             </div>
 

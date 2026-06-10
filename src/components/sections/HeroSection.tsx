@@ -142,17 +142,15 @@ export function HeroSection() {
               className="r-up mt-4 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
               style={{ color: "rgba(232,236,255,.78)", "--i": 6.5 } as React.CSSProperties}
             >
-              Audio-first revision covering the full MRCGP AKT syllabus. Use
-              everything free until 8 July 2026: audio, questions, statistics,
-              stats videos and Dermatology Navigator.
+              Audio-first revision covering the full MRCGP AKT syllabus —
+              audio, questions, statistics and Dermatology Navigator.
             </p>
             <p
               className="r-up mt-3 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
               style={{ color: "rgba(232,236,255,.6)", "--i": 7 } as React.CSSProperties}
             >
-              After that, questions stay free with 2 hours of audio. Lock in
-              Early Access for £59 before your paid audio period starts on 8
-              July.
+              Free until 8 July. Then questions stay free &mdash; full audio
+              from &pound;59.
             </p>
 
             {/* Countdown */}

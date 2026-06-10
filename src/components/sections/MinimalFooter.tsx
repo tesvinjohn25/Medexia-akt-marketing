@@ -3,6 +3,7 @@
 import Image from "next/image";
 
 const RESOURCE_LINKS = [
+  { href: "/demo", label: "Demo" },
   { href: "/topics", label: "Topics" },
   { href: "/how-to-pass-the-akt", label: "How to pass" },
   { href: "/akt-audio-revision", label: "Audio revision" },

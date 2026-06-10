@@ -196,7 +196,14 @@ export function AudioJourney() {
               className="mt-4 text-[12px] md:text-[13px] font-semibold"
               style={{ color: "rgba(232,236,255,.5)" }}
             >
-              All 32 RCGP topic areas, fully narrated.
+              All 32 RCGP topic areas, fully narrated.{" "}
+              <a
+                href="https://app.medexia-akt.com/demo/audiobook/player"
+                className="transition-colors hover:text-white"
+                style={{ color: "rgba(236,72,153,.85)" }}
+              >
+                Listen to the demo &rarr;
+              </a>
             </p>
           </div>
         </div>

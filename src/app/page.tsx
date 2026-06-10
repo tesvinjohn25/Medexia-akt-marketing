@@ -3,6 +3,7 @@ import { AccessNotice } from "@/components/sections/AccessNotice";
 import { AppShowcase } from "@/components/sections/AppShowcase";
 import { AudioJourney } from "@/components/sections/AudioJourney";
 import { FeatureHighlights } from "@/components/sections/FeatureHighlights";
+import { LiveDemo } from "@/components/sections/LiveDemo";
 import { StickyMobileCTA } from "@/components/sections/StickyMobileCTA";
 import { PricingSection } from "@/components/sections/PricingSection";
 import { SocialProof } from "@/components/sections/SocialProof";
@@ -26,6 +27,8 @@ export default function Home() {
       <AudioJourney />
 
       <AppShowcase />
+
+      <LiveDemo />
 
       <SocialProof />
 

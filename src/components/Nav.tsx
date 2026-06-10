@@ -13,7 +13,7 @@ export function Nav() {
 
   return (
     <nav
-      className="fixed inset-x-0 top-0 z-50 transition-all duration-300"
+      className="fixed inset-x-0 top-0 z-50"
       style={{
         paddingTop: "calc(env(safe-area-inset-top, 0px) + 8px)",
         paddingBottom: 8,
@@ -21,9 +21,13 @@ export function Nav() {
           ? "rgba(11,13,18,.85)"
           : "transparent",
         backdropFilter: scrolled ? "blur(14px)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(14px)" : "none",
         borderBottom: scrolled
           ? "1px solid rgba(255,255,255,.06)"
           : "1px solid transparent",
+        boxShadow: scrolled ? "0 14px 40px rgba(0,0,0,.35)" : "none",
+        transition:
+          "background .5s var(--ease-fluid), box-shadow .5s var(--ease-fluid), border-color .5s ease, backdrop-filter .5s ease",
       }}
     >
       <div className="container-x flex items-center justify-between">

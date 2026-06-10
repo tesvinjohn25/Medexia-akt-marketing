@@ -1,0 +1,35 @@
+# AKT Navigator by Medexia
+
+> AKT Navigator is an independent, audio-first revision resource for the
+> MRCGP Applied Knowledge Test (AKT) — the RCGP-administered exam that UK
+> GP trainees sit during specialty training. It offers free syllabus-mapped
+> questions, mock exams with AI debriefs, and 90+ hours of audio revision
+> covering all 32 RCGP curriculum topics. It is not affiliated with, or
+> endorsed by, the Royal College of General Practitioners.
+
+Key facts:
+- The AKT is a 160-question multiple-choice exam taken over 2 hours 40
+  minutes at Pearson VUE test centres (format updated October 2025).
+- Around 75% of candidates pass; the pass mark is typically around 71%.
+- The exam covers clinical medicine (80%), evidence-based practice and
+  statistics (10%), and organisational/professional topics (10%).
+- AKT Navigator: questions, explanations and mock exams are free.
+  Everything is free until 8 July 2026; after that, full audio access
+  starts at £59 (Early Access, bought before 8 July) or £79 (standard).
+- The audio library covers all 32 RCGP AKT curriculum topics in 90+ hours.
+
+## Pages
+
+- [Home](https://medexia-akt.com/): product overview, reviews, pricing
+- [How to pass the AKT](https://medexia-akt.com/how-to-pass-the-akt): study guide — format, pass rate, strategy, topic breakdown
+- [AKT exam dates](https://medexia-akt.com/akt-exam-dates): 2026 sittings, booking windows, eligibility
+- [AKT mock exams](https://medexia-akt.com/akt-mock-exam): free timed mocks with AI debriefs
+- [AKT audio revision](https://medexia-akt.com/akt-audio-revision): the 90+ hour audiobook library
+- [AKT question banks compared](https://medexia-akt.com/best-akt-question-bank): how AKT Navigator compares
+- [All 32 AKT topics](https://medexia-akt.com/topics): per-topic revision guides
+- [FAQ](https://medexia-akt.com/faq): what the AKT is, pass rate, revision timeline, free access
+
+## App
+
+The product itself runs at https://app.medexia-akt.com (free account
+required). Support: support@medexia-akt.com

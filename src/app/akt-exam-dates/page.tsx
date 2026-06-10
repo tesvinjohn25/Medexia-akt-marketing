@@ -6,16 +6,16 @@ import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { EXAM_SITTINGS, EXAM_FORMAT } from "@/data/exam-dates";
 
 export const metadata: Metadata = {
-  title: "AKT Exam Dates 2026 — April & July Sittings, Booking Windows",
+  title: "AKT Exam Dates 2026 — Next Sitting 7 July, Booking & Format",
   description:
-    "RCGP AKT exam dates for 2026: April 27 and July 7. Check booking windows, exam format (160 questions, 2h40m), eligibility, and start free AKT question practice with AKT Navigator.",
+    "RCGP AKT exam dates for 2026: the next sitting is 7 July (the April sitting was 27 April). Booking windows, exam format (160 questions, 2h40m), eligibility, and free AKT question practice.",
   alternates: {
     canonical: "https://medexia-akt.com/akt-exam-dates",
   },
   openGraph: {
-    title: "AKT Exam Dates 2026 — April & July Sittings",
+    title: "AKT Exam Dates 2026 — Next Sitting 7 July",
     description:
-      "RCGP AKT exam dates for 2026: April 27 and July 7. Booking windows, exam format, eligibility, and free AKT question practice.",
+      "The next RCGP AKT sitting is 7 July 2026. Booking windows, exam format, eligibility, and free AKT question practice.",
     type: "website",
     url: "https://medexia-akt.com/akt-exam-dates",
   },

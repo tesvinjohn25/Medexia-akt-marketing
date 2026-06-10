@@ -4,7 +4,7 @@ import { aktTopics } from "@/data/akt-topics";
 export default function sitemap(): MetadataRoute.Sitemap {
   const topicPages = aktTopics.map((topic) => ({
     url: `https://medexia-akt.com/topics/${topic.slug}`,
-    lastModified: new Date("2026-03-24"),
+    lastModified: new Date("2026-06-10"),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
@@ -12,43 +12,43 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const contentPages = [
     {
       url: "https://medexia-akt.com/how-to-pass-the-akt",
-      lastModified: new Date("2026-03-25"),
+      lastModified: new Date("2026-06-10"),
       changeFrequency: "monthly" as const,
       priority: 0.9,
     },
     {
       url: "https://medexia-akt.com/best-akt-question-bank",
-      lastModified: new Date("2026-03-25"),
+      lastModified: new Date("2026-06-10"),
       changeFrequency: "monthly" as const,
       priority: 0.9,
     },
     {
       url: "https://medexia-akt.com/akt-exam-dates",
-      lastModified: new Date("2026-03-25"),
+      lastModified: new Date("2026-06-10"),
       changeFrequency: "monthly" as const,
       priority: 0.8,
     },
     {
       url: "https://medexia-akt.com/akt-audio-revision",
-      lastModified: new Date("2026-03-25"),
+      lastModified: new Date("2026-06-10"),
       changeFrequency: "monthly" as const,
       priority: 0.8,
     },
     {
       url: "https://medexia-akt.com/akt-mock-exam",
-      lastModified: new Date("2026-03-25"),
+      lastModified: new Date("2026-06-10"),
       changeFrequency: "monthly" as const,
       priority: 0.8,
     },
     {
       url: "https://medexia-akt.com/topics",
-      lastModified: new Date("2026-04-20"),
+      lastModified: new Date("2026-06-10"),
       changeFrequency: "monthly" as const,
       priority: 0.8,
     },
     {
       url: "https://medexia-akt.com/faq",
-      lastModified: new Date("2026-04-20"),
+      lastModified: new Date("2026-06-10"),
       changeFrequency: "monthly" as const,
       priority: 0.8,
     },
@@ -57,7 +57,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: "https://medexia-akt.com/",
-      lastModified: new Date("2026-03-25"),
+      lastModified: new Date("2026-06-10"),
       changeFrequency: "weekly",
       priority: 1,
     },

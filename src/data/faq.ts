@@ -5,6 +5,14 @@ export type Faq = {
 
 export const FAQS: Faq[] = [
   {
+    q: "What is the MRCGP AKT?",
+    a: "The Applied Knowledge Test (AKT) is one of the three components of the MRCGP, the qualifying examination for general practice in the UK, administered by the Royal College of General Practitioners (RCGP). It is a computer-based exam of 160 multiple-choice questions taken over 2 hours 40 minutes at Pearson VUE test centres. Questions cover clinical medicine (80%), evidence-based practice and statistics (10%), and organisational and professional topics (10%). GP trainees usually sit the AKT in ST2 or ST3. AKT Navigator is an independent revision resource built specifically for this exam, with free syllabus-mapped questions and 90+ hours of audio covering all 32 curriculum topics.",
+  },
+  {
+    q: "When can I sit the AKT?",
+    a: "The RCGP runs AKT sittings at fixed points in the year, booked through the RCGP and sat at Pearson VUE test centres. The next 2026 sitting is on 7 July; the April 2026 sitting took place on 27 April. You are eligible to sit the AKT from ST2 onwards, and most trainees take it during ST2 or ST3. Booking windows open in advance and places at popular test centres fill quickly, so book early once your sitting is confirmed.",
+  },
+  {
     q: "How long do I need to revise for the AKT?",
     a: "Most trainees start 3 to 6 months before the exam and study a few evenings a week. But if you're short on time, AKT Navigator is built around that. A typical session is 15 to 20 minutes where you work through 10 questions picked specifically for your weak areas. You can pause and come back anytime. And if you don't even have 15 minutes, put the audiobooks on. Over 90 hours of exam focused content you can listen to on your commute, at the gym, or between patients. It's designed to fit around a busy trainee's life, not replace it.",
   },

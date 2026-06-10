@@ -113,7 +113,7 @@ export async function SocialProof() {
                 className="r-up flex justify-center"
                 style={{ "--i": 0 } as React.CSSProperties}
               >
-                <Stars size={17} glow />
+                <Stars size={17} glow twinkle />
               </div>
               <div
                 className="r-up mt-4 mb-5 text-[11px] tracking-[0.22em] uppercase font-semibold"

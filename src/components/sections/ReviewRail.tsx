@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { Stars } from "@/components/Stars";
 
@@ -20,6 +21,52 @@ export type ReviewItem = {
  */
 export function ReviewRail({ items }: { items: ReviewItem[] }) {
   const { ref, visible } = useScrollReveal();
+  const railRef = useRef<HTMLDivElement>(null);
+
+  // Auto-advance the mobile rail every few seconds while it's on
+  // screen — until the user touches it, then it's theirs for good.
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!window.matchMedia("(max-width: 767px)").matches) return;
+
+    let inView = false;
+    let idx = 0;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        inView = entry.isIntersecting;
+      },
+      { threshold: 0.5 }
+    );
+    io.observe(rail);
+
+    const timer = window.setInterval(() => {
+      if (!inView || document.hidden) return;
+      idx = (idx + 1) % rail.children.length;
+      const el = rail.children[idx] as HTMLElement;
+      rail.scrollTo({
+        left: el.offsetLeft - (rail.clientWidth - el.offsetWidth) / 2,
+        behavior: "smooth",
+      });
+    }, 3400);
+
+    const stop = () => {
+      window.clearInterval(timer);
+      rail.removeEventListener("pointerdown", stop);
+      rail.removeEventListener("touchstart", stop);
+      rail.removeEventListener("wheel", stop);
+    };
+    rail.addEventListener("pointerdown", stop, { passive: true });
+    rail.addEventListener("touchstart", stop, { passive: true });
+    rail.addEventListener("wheel", stop, { passive: true });
+
+    return () => {
+      stop();
+      io.disconnect();
+    };
+  }, []);
 
   return (
     <div
@@ -27,6 +74,7 @@ export function ReviewRail({ items }: { items: ReviewItem[] }) {
       className={`reveal-group ${visible ? "is-visible" : ""}`}
     >
       <div
+        ref={railRef}
         className="review-rail mx-auto max-w-[1120px] md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-3"
         role="region"
         aria-label="Trainee reviews"

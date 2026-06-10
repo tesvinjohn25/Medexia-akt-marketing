@@ -40,7 +40,7 @@ export default function HowToPassTheAktPage() {
           url: "https://medexia-akt.com",
         },
         datePublished: "2026-03-25",
-        dateModified: "2026-03-25",
+        dateModified: "2026-06-10",
       },
       {
         "@type": "FAQPage",

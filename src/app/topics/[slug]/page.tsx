@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { aktTopics } from "@/data/akt-topics";
 import { Nav } from "@/components/Nav";
+import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 
@@ -69,6 +70,16 @@ export default async function TopicPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "https://medexia-akt.com/" },
+          { name: "AKT Topics", url: "https://medexia-akt.com/topics" },
+          {
+            name: topic.name,
+            url: `https://medexia-akt.com/topics/${topic.slug}`,
+          },
+        ]}
       />
       <Nav />
 

@@ -833,57 +833,253 @@ body > * { position: relative; z-index: 1; }
   }
 }
 
-/* ── Award-landing FX layer (Three.js hero + GSAP) ─────────────────── */
+/* ── Award concept: the page is the audiobook ──────────────────────── */
 
-/* Hero: GSAP owns the entrance; CSS hides targets pre-timeline so
-   there is no flash of unanimated content. Reduced motion shows
-   everything immediately even if JS never runs. */
-.gx-hero [data-gx],
-.gx-hero [data-gx-word] {
+/* Hero type — masked lines, characters rise out of them */
+.aw-hero-line {
+  display: block;
+  overflow: hidden;
+  padding: 0.05em 0;
+}
+.aw-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+.aw-ch {
+  display: inline-block;
+  transform-origin: 0% 100%;
+  will-change: transform;
+}
+.aw-solid {
+  color: var(--fg-high);
+}
+.aw-stroke-v {
+  color: transparent;
+  -webkit-text-stroke: 1.6px rgba(197, 170, 255, 0.62);
+}
+.aw-stroke-p {
+  color: transparent;
+  -webkit-text-stroke: 1.6px rgba(236, 72, 153, 0.55);
+}
+@media (max-width: 767px) {
+  .aw-stroke-v,
+  .aw-stroke-p {
+    -webkit-text-stroke-width: 1.1px;
+  }
+}
+
+/* Circular play button with a pulsing halo */
+.aw-play {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--brand-grad);
+  box-shadow: 0 18px 60px rgba(109, 106, 232, 0.45);
+  transition: transform 0.45s var(--ease-spring);
+}
+.aw-play:hover {
+  transform: scale(1.07);
+}
+@media (max-width: 767px) {
+  .aw-play {
+    width: 64px;
+    height: 64px;
+  }
+}
+.aw-play::before {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 1px solid rgba(155, 107, 255, 0.55);
+  animation: awPulse 2.4s var(--ease-glide) infinite;
+}
+@keyframes awPulse {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.9;
+  }
+  70% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+/* Scroll cue */
+.aw-cue {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+@media (max-width: 767px) {
+  .aw-cue {
+    display: none;
+  }
+}
+.aw-cue-line {
+  position: relative;
+  width: 1px;
+  height: 44px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.12);
+}
+.aw-cue-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, #fff);
+  animation: awCue 1.8s var(--ease-glide) infinite;
+}
+@keyframes awCue {
+  to {
+    top: 100%;
+  }
+}
+
+/* Chapter rules */
+.aw-mark {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.aw-mark-no {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--brand-violet-light);
+}
+.aw-mark-rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(155, 107, 255, 0.5), rgba(255, 255, 255, 0.06));
+}
+.aw-mark-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+/* Pinned chapter stage */
+.aw-pin {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 72px;
+  padding-bottom: 84px;
+}
+
+/* Question options (chapter 02) */
+.aw-opt {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 11px 40px 11px 13px;
+  background: rgba(255, 255, 255, 0.02);
+}
+.aw-opt-id {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(232, 236, 255, 0.7);
+}
+.aw-opt-strike {
+  position: absolute;
+  left: 44px;
+  right: 14px;
+  top: 50%;
+  height: 1px;
+  background: rgba(232, 236, 255, 0.55);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.aw-opt-check {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  margin-top: -10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgb(52, 211, 153);
+  transform: scale(0);
   opacity: 0;
 }
 
-/* Topic marquee */
-.tm {
-  overflow: hidden;
+/* The player bar — scroll is playback */
+.aw-player {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 95;
+  transform: translateY(110%);
+  transition: transform 0.6s var(--ease-fluid);
+  background: rgba(9, 10, 16, 0.86);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
-.tm-row {
-  overflow: hidden;
+.aw-player.is-in {
+  transform: translateY(0);
 }
-.tm-track {
-  display: flex;
-  width: max-content;
-  will-change: transform;
-}
-.tm-seg {
-  display: flex;
-  align-items: baseline;
-  white-space: nowrap;
-}
-.tm-item {
-  font-family: var(--font-display);
-  font-size: clamp(26px, 5.4vw, 56px);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-  color: rgba(232, 236, 255, 0.92);
-}
-.tm-item--outline {
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(197, 170, 255, 0.5);
-}
-.tm-dot {
-  color: rgba(236, 72, 153, 0.8);
-  -webkit-text-stroke: 0;
-  margin: 0 0.55em;
+.aw-player-progress {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--brand-iris), var(--brand-violet) 55%, rgba(236, 72, 153, 0.95));
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .gx-hero [data-gx],
-  .gx-hero [data-gx-word] {
-    opacity: 1;
+  .aw-play::before {
+    animation: none;
+    opacity: 0;
   }
-  .tm-track {
+  .aw-cue-line::after {
+    animation: none;
+  }
+  .aw-ch {
     will-change: auto;
+  }
+  .aw-player {
+    transition: none;
   }
 }

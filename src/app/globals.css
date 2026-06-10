@@ -669,6 +669,33 @@ body > * { position: relative; z-index: 1; }
   .aj-row { font-size: 19px; }
 }
 
+/* ── Review rail — swipeable review cards on mobile ───────────
+   Below md the supporting reviews are a snap carousel (same gesture
+   language as the app gallery); the next card peeks at the edge so
+   swipeability is obvious. md+ lays out as a grid via utilities. */
+@media (max-width: 767px) {
+  .review-rail {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin-inline: -20px;
+    padding: 4px 20px 10px;
+  }
+  .review-rail::-webkit-scrollbar {
+    display: none;
+  }
+  .review-card {
+    flex: 0 0 auto;
+    width: 80vw;
+    max-width: 340px;
+    scroll-snap-align: center;
+  }
+}
+
 /* ── App showcase rail — native swipe gallery ─────────────────
    CSS scroll-snap does the heavy lifting: momentum + snap feel
    identical to a native carousel on iOS and Android. The inline

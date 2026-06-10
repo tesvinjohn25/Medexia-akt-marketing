@@ -4,7 +4,10 @@ import {
   getPublicTestimonials,
   type Testimonial,
 } from "@/lib/testimonials";
+import { RevealGroup } from "@/components/RevealGroup";
+import { Stars } from "@/components/Stars";
 import { LiveStatsRibbon } from "./LiveStatsRibbon";
+import { ReviewRail } from "./ReviewRail";
 
 const SERIF = 'Georgia, "Times New Roman", Times, serif';
 
@@ -54,103 +57,129 @@ export async function SocialProof() {
   return (
     <section className="section-padding">
       <div className="container-x">
-        <div className="text-center mb-9 md:mb-12">
+        <RevealGroup className="text-center mb-9 md:mb-12">
           <div
-            className="text-[11px] md:text-[12px] tracking-[0.22em] uppercase font-semibold"
-            style={{ color: "rgba(167,139,250,.85)" }}
+            className="r-up text-[11px] md:text-[12px] tracking-[0.22em] uppercase font-semibold"
+            style={{ color: "rgba(167,139,250,.85)", "--i": 0 } as React.CSSProperties}
           >
             Why trainees use it
           </div>
           <h2
-            className="mt-3 text-[24px] md:text-[32px] font-semibold leading-[1.1]"
+            className="r-up mt-3 text-[24px] md:text-[32px] font-semibold leading-[1.1]"
             style={{
               fontFamily: "var(--font-display)",
               letterSpacing: "-0.02em",
-            }}
+              "--i": 1,
+            } as React.CSSProperties}
           >
             Proof that audio revision sticks.
           </h2>
           <p
-            className="mx-auto mt-3 max-w-[620px] text-[14px] md:text-[16px] leading-[1.65]"
-            style={{ color: "rgba(232,236,255,.62)" }}
+            className="r-up mx-auto mt-3 max-w-[620px] text-[14px] md:text-[16px] leading-[1.65]"
+            style={{ color: "rgba(232,236,255,.62)", "--i": 2 } as React.CSSProperties}
           >
             The strongest reviews show trainees carrying AKT Navigator into
             commutes, busy family life, mocks and the exam itself.
           </p>
-        </div>
+        </RevealGroup>
 
         {hero && (
-          <figure className="mx-auto max-w-[820px] text-center relative mb-10 md:mb-14">
-            <div
-              className="pointer-events-none absolute inset-x-0 -top-10 -z-10 h-[260px]"
-              aria-hidden
-              style={{
-                background:
-                  "radial-gradient(closest-side, rgba(155,107,255,.14), transparent 70%)",
-                filter: "blur(18px)",
-              }}
-            />
-            <div
-              className="mb-5 text-[11px] tracking-[0.22em] uppercase font-semibold"
-              style={{ color: "rgba(52,211,153,.78)" }}
-            >
-              Featured April AKT review
-            </div>
-            <blockquote
-              className="italic text-[21px] md:text-[30px] leading-[1.35]"
-              style={{
-                fontFamily: SERIF,
-                color: "var(--fg-high)",
-                letterSpacing: "-0.005em",
-              }}
-            >
-              <span aria-hidden style={{ color: "rgba(155,107,255,.6)" }}>
+          <RevealGroup>
+            <figure className="relative mx-auto mb-10 max-w-[820px] text-center md:mb-14">
+              <div
+                className="pointer-events-none absolute inset-x-0 -top-10 -z-10 h-[280px]"
+                aria-hidden
+                style={{
+                  background:
+                    "radial-gradient(closest-side, rgba(155,107,255,.20), transparent 70%)",
+                  filter: "blur(20px)",
+                }}
+              />
+              {/* Ghosted quotation mark anchors the quote visually */}
+              <div
+                className="pointer-events-none absolute -top-12 left-1/2 -z-10 select-none leading-none"
+                aria-hidden
+                style={{
+                  transform: "translateX(-50%)",
+                  fontFamily: SERIF,
+                  fontSize: "min(46vw, 220px)",
+                  color: "rgba(155,107,255,.12)",
+                }}
+              >
                 &ldquo;
-              </span>
-              {hero.quote}
-              <span aria-hidden style={{ color: "rgba(155,107,255,.6)" }}>
-                &rdquo;
-              </span>
-            </blockquote>
-            <figcaption
-              className="mt-5 text-[11px] tracking-[0.22em] uppercase font-semibold"
-              style={{ color: "rgba(167,139,250,.85)" }}
-            >
-              {formatTestimonialAttribution(hero)}
-            </figcaption>
-          </figure>
+              </div>
+
+              <div
+                className="r-up flex justify-center"
+                style={{ "--i": 0 } as React.CSSProperties}
+              >
+                <Stars size={17} glow />
+              </div>
+              <div
+                className="r-up mt-4 mb-5 text-[11px] tracking-[0.22em] uppercase font-semibold"
+                style={{ color: "rgba(52,211,153,.78)", "--i": 1 } as React.CSSProperties}
+              >
+                Featured April AKT review
+              </div>
+              <blockquote
+                className="r-blur italic text-[21px] md:text-[30px] leading-[1.35]"
+                style={{
+                  fontFamily: SERIF,
+                  color: "var(--fg-high)",
+                  letterSpacing: "-0.005em",
+                  "--i": 2,
+                } as React.CSSProperties}
+              >
+                <span aria-hidden style={{ color: "rgba(155,107,255,.6)" }}>
+                  &ldquo;
+                </span>
+                {hero.quote}
+                <span aria-hidden style={{ color: "rgba(155,107,255,.6)" }}>
+                  &rdquo;
+                </span>
+              </blockquote>
+              <figcaption
+                className="r-up mt-6 flex justify-center"
+                style={{ "--i": 3 } as React.CSSProperties}
+              >
+                <span
+                  className="inline-flex items-center gap-2.5 rounded-full py-[7px] pl-[7px] pr-4"
+                  style={{
+                    background: "rgba(255,255,255,.045)",
+                    border: "1px solid rgba(155,107,255,.25)",
+                  }}
+                >
+                  <span
+                    aria-hidden
+                    className="flex h-7 w-7 items-center justify-center rounded-full text-[12px] font-bold text-white"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, var(--brand-iris), var(--brand-violet))",
+                      boxShadow: "0 0 0 2px rgba(155,107,255,.3)",
+                    }}
+                  >
+                    {formatTestimonialAttribution(hero).trim().charAt(0).toUpperCase()}
+                  </span>
+                  <span
+                    className="text-[11px] tracking-[0.18em] uppercase font-semibold"
+                    style={{ color: "rgba(197,170,255,.9)" }}
+                  >
+                    {formatTestimonialAttribution(hero)}
+                  </span>
+                </span>
+              </figcaption>
+            </figure>
+          </RevealGroup>
         )}
 
         {supporting.length > 0 && (
-          <div className="mx-auto max-w-[1120px] grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-            {supporting.map((t) => (
-              <figure
-                key={t.id}
-                className="rounded-[16px] p-5"
-                style={{
-                  background:
-                    "linear-gradient(180deg, rgba(17,19,26,.76), rgba(17,19,26,.54))",
-                  border: "1px solid rgba(255,255,255,.08)",
-                }}
-              >
-                <blockquote
-                  className="italic text-[14px] md:text-[15px] leading-[1.6]"
-                  style={{
-                    fontFamily: SERIF,
-                    color: "rgba(232,236,255,.85)",
-                  }}
-                >
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-                <figcaption
-                  className="mt-4 text-[10px] tracking-[0.2em] uppercase font-semibold"
-                  style={{ color: "rgba(167,139,250,.75)" }}
-                >
-                  {formatTestimonialAttribution(t)}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
+          <ReviewRail
+            items={supporting.map((t) => ({
+              id: t.id,
+              quote: t.quote,
+              attribution: formatTestimonialAttribution(t),
+            }))}
+          />
         )}
 
         {more.length > 0 && (

@@ -442,6 +442,11 @@ export default function BestAktQuestionBankPage() {
                   title: "AKT feedback reports",
                   desc: "Latest weak areas from official reports",
                 },
+                {
+                  href: "/akt-statistics",
+                  title: "AKT statistics",
+                  desc: "Evidence-based practice and key formulas",
+                },
               ].map((link) => (
                 <a
                   key={link.href}

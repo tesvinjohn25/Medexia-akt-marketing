@@ -350,7 +350,7 @@ export default function AktAudioRevisionPage() {
                 },
                 {
                   title: "Statistics support for evidence-based practice",
-                  text: "Paid access includes the statistics course and over 2 hours of statistics explainer videos.",
+                  text: "Paid access includes the statistics course, over 2 hours of statistics explainer videos, and evidence-based practice revision.",
                 },
                 {
                   title: "Dermatology Navigator",

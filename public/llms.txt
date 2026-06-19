@@ -21,6 +21,10 @@ Key facts:
   mark.
 - The exam covers clinical medicine (80%), evidence-based practice and
   statistics (10%), and organisational/professional topics (10%).
+- AKT statistics revision should cover sensitivity, specificity, PPV,
+  NPV, absolute and relative risk, NNT, NNH, confidence intervals,
+  forest plots, prescribing charts, practice data and common study
+  design terminology.
 - Recent RCGP AKT feedback reports repeatedly highlight neurology,
   prescribing and medication monitoring, evidence/statistics chart
   interpretation, confidentiality/data protection, and children or
@@ -53,6 +57,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [AKT exam dates](https://medexia-akt.com/akt-exam-dates): July and October 2026 sittings, booking windows, results dates, eligibility
 - [AKT pass rate](https://medexia-akt.com/akt-pass-rate): official recent pass rates, pass marks and candidate numbers from RCGP feedback reports
 - [AKT feedback reports](https://medexia-akt.com/akt-feedback-reports): latest RCGP feedback report weak areas and recurring revision themes
+- [AKT statistics](https://medexia-akt.com/akt-statistics): evidence-based practice, data interpretation and key statistics formulas
 - [AKT mock exams](https://medexia-akt.com/akt-mock-exam): free timed mocks with AI debriefs
 - [AKT audio revision](https://medexia-akt.com/akt-audio-revision): the 90+ hour audiobook library
 - [AKT question banks compared](https://medexia-akt.com/best-akt-question-bank): how AKT Navigator compares

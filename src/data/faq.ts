@@ -13,6 +13,10 @@ export const FAQS: Faq[] = [
     a: "The RCGP runs AKT sittings at fixed points in the year, booked through the RCGP and sat at Pearson VUE test centres. The next 2026 sitting is on 7 July; the April 2026 sitting took place on 27 April. You are eligible to sit the AKT from ST2 onwards, and most trainees take it during ST2 or ST3. Booking windows open in advance and places at popular test centres fill quickly, so book early once your sitting is confirmed.",
   },
   {
+    q: "What do I need on AKT exam day?",
+    a: "Check your Pearson VUE confirmation, arrive on time and bring the two forms of ID required by RCGP. The names on your ID must match your RCGP application. Personal belongings are not allowed in the test room and must be left in a locker. If you need reasonable adjustments, request them through the RCGP process before the deadline with supporting evidence.",
+  },
+  {
     q: "How much does the AKT exam cost?",
     a: "The RCGP currently lists the Applied Knowledge Test examination fee as £481. From April 2026, staged payments apply through the RCGP booking process. The AKT is for ST2 and ST3 GP trainees, and attempt limits are four or six depending on when you entered GP specialty training. Always check the official RCGP fee and application pages before booking.",
   },

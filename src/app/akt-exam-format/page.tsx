@@ -344,7 +344,15 @@ export default function AktExamFormatPage() {
               >
                 AKT exam dates
               </a>{" "}
-              before choosing a sitting, and use the{" "}
+              before choosing a sitting, use the{" "}
+              <a
+                href="/akt-exam-day"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT exam-day guide
+              </a>{" "}
+              for Pearson VUE logistics, and use the{" "}
               <a
                 href="/akt-syllabus"
                 className="font-medium transition-colors"

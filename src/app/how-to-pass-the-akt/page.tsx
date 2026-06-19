@@ -506,6 +506,11 @@ export default function HowToPassTheAktPage() {
                   desc: "160 questions, timing, sections and marking",
                 },
                 {
+                  href: "/akt-exam-day",
+                  title: "AKT exam day",
+                  desc: "Pearson VUE, ID, timing and adjustments",
+                },
+                {
                   href: "/akt-revision-plan",
                   title: "AKT revision plan",
                   desc: "12-week, 8-week and 4-week timetables",

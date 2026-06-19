@@ -443,6 +443,11 @@ export default function BestAktQuestionBankPage() {
                   desc: "160 questions, sections and pass-mark rules",
                 },
                 {
+                  href: "/akt-exam-day",
+                  title: "AKT exam day",
+                  desc: "Pearson VUE, ID, timing and adjustments",
+                },
+                {
                   href: "/akt-exam-fee",
                   title: "AKT exam fee",
                   desc: "Fee, booking, eligibility and attempts",

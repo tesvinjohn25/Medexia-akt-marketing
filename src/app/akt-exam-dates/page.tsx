@@ -230,7 +230,16 @@ export default function AktExamDatesPage() {
               you book directly through MyRCGP without a separate reservation
               step. The RCGP publishes the reasonable adjustment deadlines,
               final booking deadlines, Pearson booking windows, test dates and
-              result dates on its MRCGP key dates page.
+              result dates on its MRCGP key dates page. For ID, arrival timing
+              and test-centre rules, use the{" "}
+              <a
+                href="/akt-exam-day"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT exam-day guide
+              </a>
+              .
             </p>
           </div>
 

@@ -21,6 +21,10 @@ Key facts:
   mark.
 - The exam covers clinical medicine (80%), evidence-based practice and
   statistics (10%), and organisational/professional topics (10%).
+- Recent RCGP AKT feedback reports repeatedly highlight neurology,
+  prescribing and medication monitoring, evidence/statistics chart
+  interpretation, confidentiality/data protection, and children or
+  safeguarding as useful weak-area revision signals.
 - AKT Navigator: questions, explanations and mock exams are free.
   Everything is free until 8 July 2026; after that, full audio access
   starts at £59 (Early Access, bought before 8 July) or £79 (standard).
@@ -48,6 +52,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [How to pass the AKT](https://medexia-akt.com/how-to-pass-the-akt): study guide — format, pass rate, strategy, topic breakdown
 - [AKT exam dates](https://medexia-akt.com/akt-exam-dates): July and October 2026 sittings, booking windows, results dates, eligibility
 - [AKT pass rate](https://medexia-akt.com/akt-pass-rate): official recent pass rates, pass marks and candidate numbers from RCGP feedback reports
+- [AKT feedback reports](https://medexia-akt.com/akt-feedback-reports): latest RCGP feedback report weak areas and recurring revision themes
 - [AKT mock exams](https://medexia-akt.com/akt-mock-exam): free timed mocks with AI debriefs
 - [AKT audio revision](https://medexia-akt.com/akt-audio-revision): the 90+ hour audiobook library
 - [AKT question banks compared](https://medexia-akt.com/best-akt-question-bank): how AKT Navigator compares

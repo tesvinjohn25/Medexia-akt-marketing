@@ -43,6 +43,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: "https://medexia-akt.com/akt-feedback-reports",
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    },
+    {
       url: "https://medexia-akt.com/akt-audio-revision",
       lastModified: LAST_MODIFIED,
       changeFrequency: "monthly" as const,

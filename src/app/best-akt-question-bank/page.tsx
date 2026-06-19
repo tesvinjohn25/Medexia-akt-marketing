@@ -437,6 +437,11 @@ export default function BestAktQuestionBankPage() {
                   title: "AKT pass rate",
                   desc: "Recent official pass rates and pass marks",
                 },
+                {
+                  href: "/akt-feedback-reports",
+                  title: "AKT feedback reports",
+                  desc: "Latest weak areas from official reports",
+                },
               ].map((link) => (
                 <a
                   key={link.href}

@@ -169,7 +169,15 @@ export default function HowToPassTheAktPage() {
               >
                 current exam dates
               </a>{" "}
-              for booking windows and sitting dates.
+              for booking windows and sitting dates, then build your{" "}
+              <a
+                href="/akt-revision-plan"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT revision plan
+              </a>{" "}
+              around that sitting.
             </p>
           </div>
 
@@ -483,6 +491,11 @@ export default function HowToPassTheAktPage() {
                   href: "/akt-exam-dates",
                   title: "Exam dates 2026",
                   desc: "July and October sittings with booking windows",
+                },
+                {
+                  href: "/akt-revision-plan",
+                  title: "AKT revision plan",
+                  desc: "12-week, 8-week and 4-week timetables",
                 },
                 {
                   href: "/akt-exam-fee",

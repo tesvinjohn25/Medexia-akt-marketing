@@ -418,6 +418,11 @@ export default function BestAktQuestionBankPage() {
                   desc: "Complete study guide with exam strategy",
                 },
                 {
+                  href: "/akt-revision-plan",
+                  title: "AKT revision plan",
+                  desc: "12-week, 8-week and 4-week timetables",
+                },
+                {
                   href: "/akt-mock-exam",
                   title: "AKT mock exams",
                   desc: "Mocks from thousands of free questions",

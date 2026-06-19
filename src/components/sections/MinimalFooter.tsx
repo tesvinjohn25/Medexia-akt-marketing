@@ -4,6 +4,7 @@ const RESOURCE_LINKS = [
   { href: "/demo", label: "Demo" },
   { href: "/topics", label: "Topics" },
   { href: "/how-to-pass-the-akt", label: "How to pass" },
+  { href: "/akt-revision-plan", label: "Revision plan" },
   { href: "/akt-audio-revision", label: "Audio revision" },
   { href: "/akt-mock-exam", label: "Mock exams" },
   { href: "/best-akt-question-bank", label: "Question banks" },

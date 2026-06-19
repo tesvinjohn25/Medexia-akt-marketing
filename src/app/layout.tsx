@@ -21,6 +21,8 @@ export const metadata: Metadata = {
     "AKT exam",
     "Applied Knowledge Test",
     "AKT revision",
+    "AKT revision plan",
+    "AKT revision timetable",
     "AKT audio revision",
     "AKT audiobook",
     "AKT question bank",

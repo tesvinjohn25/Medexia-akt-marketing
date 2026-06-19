@@ -18,7 +18,7 @@ export const FAQS: Faq[] = [
   },
   {
     q: "How long do I need to revise for the AKT?",
-    a: "Most trainees start 3 to 6 months before the exam and study a few evenings a week. But if you're short on time, AKT Navigator is built around that. A typical session is 15 to 20 minutes where you work through 10 questions picked specifically for your weak areas. You can pause and come back anytime. And if you don't even have 15 minutes, put the audiobooks on. Over 90 hours of exam focused content you can listen to on your commute, at the gym, or between patients. It's designed to fit around a busy trainee's life, not replace it.",
+    a: "Most trainees start 3 to 6 months before the exam, with around 12 weeks as a practical focused plan. Eight weeks can work if you take a baseline mock early, practise questions consistently and review weak areas. If you're short on time, AKT Navigator is built around that. A typical session is 15 to 20 minutes where you work through 10 questions picked specifically for your weak areas. And if you don't even have 15 minutes, put the audiobooks on. Over 90 hours of exam focused content you can listen to on your commute, at the gym, or between patients.",
   },
   {
     q: "What's the best way to revise for the AKT?",

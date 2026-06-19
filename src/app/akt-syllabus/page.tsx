@@ -362,6 +362,14 @@ export default function AktSyllabusPage() {
               >
                 AKT prescribing and medication safety guide
               </a>{" "}
+              and{" "}
+              <a
+                href="/akt-confidentiality-safeguarding-data-protection"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT confidentiality and safeguarding guide
+              </a>{" "}
               alongside the statistics formulas page.
             </p>
           </section>

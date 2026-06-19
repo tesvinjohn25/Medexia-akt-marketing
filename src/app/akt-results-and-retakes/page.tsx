@@ -273,7 +273,15 @@ export default function AktResultsAndRetakesPage() {
                 prescribing and medication monitoring,
               </a>
               {" "}
-              neurology, confidentiality, safeguarding and children.
+              neurology,{" "}
+              <a
+                href="/akt-confidentiality-safeguarding-data-protection"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                confidentiality, safeguarding and children
+              </a>
+              .
             </p>
             <p
               className="mt-3 text-[16px] leading-[1.7]"

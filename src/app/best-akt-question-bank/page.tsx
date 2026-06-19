@@ -482,6 +482,11 @@ export default function BestAktQuestionBankPage() {
                   title: "AKT prescribing",
                   desc: "Medication monitoring, errors and safety themes",
                 },
+                {
+                  href: "/akt-confidentiality-safeguarding-data-protection",
+                  title: "AKT confidentiality",
+                  desc: "Safeguarding, records and data protection",
+                },
               ].map((link) => (
                 <a
                   key={link.href}

@@ -551,6 +551,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Medication monitoring, errors and safety themes",
                 },
                 {
+                  href: "/akt-confidentiality-safeguarding-data-protection",
+                  title: "AKT confidentiality",
+                  desc: "Safeguarding, records and data protection",
+                },
+                {
                   href: "/akt-syllabus",
                   title: "AKT syllabus",
                   desc: "80/10/10 weighting and all 32 RCGP topics",

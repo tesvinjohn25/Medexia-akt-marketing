@@ -28,7 +28,7 @@ const timetablePlans = [
       "Weeks 1-2: sit a baseline mock and map weak AKT topics.",
       "Weeks 3-6: cover the syllabus systematically with daily question practice.",
       "Weeks 7-9: add regular timed mocks and review every wrong answer.",
-      "Weeks 10-11: focus on statistics, prescribing, neurology, safeguarding and repeated weak areas.",
+      "Weeks 10-11: focus on statistics, prescribing, neurology, safeguarding, confidentiality and repeated weak areas.",
       "Week 12: taper, review summaries, protect sleep and check exam logistics.",
     ],
   },

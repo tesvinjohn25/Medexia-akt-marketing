@@ -85,14 +85,16 @@ const recurringThemes = [
       "Practice chart interpretation and common study design terminology recur across recent reports.",
   },
   {
-    title: "Leadership and confidentiality",
+    title: "AKT confidentiality and data protection",
     detail:
       "Data protection, recorded consultations, access to records and confidentiality guidance are recurring professional topics.",
+    href: "/akt-confidentiality-safeguarding-data-protection",
   },
   {
-    title: "Children and safeguarding",
+    title: "AKT safeguarding and children",
     detail:
       "Acute illness, safeguarding, confidentiality, paediatric cancer and other child-health presentations recur in recent feedback.",
+    href: "/akt-confidentiality-safeguarding-data-protection",
   },
 ];
 

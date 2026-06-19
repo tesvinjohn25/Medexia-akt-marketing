@@ -14,12 +14,16 @@ export async function generateStaticParams() {
   return aktTopics.map((t) => ({ slug: t.slug }));
 }
 
+const topicTitleOverrides: Record<string, string> = {
+  "continuity-quality-safety-prescribing": "Prescribing, QI and Safety — AKT",
+};
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const topic = aktTopics.find((t) => t.slug === slug);
   if (!topic) return {};
 
-  const title = `${topic.name} — AKT Revision`;
+  const title = topicTitleOverrides[topic.slug] ?? `${topic.name} — AKT`;
   const description = topic.metaDescription || topic.description;
 
   return {

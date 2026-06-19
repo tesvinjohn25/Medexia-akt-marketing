@@ -1,40 +1,116 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
+import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { aktTopics } from "@/data/akt-topics";
 
 export const metadata: Metadata = {
-  title: "AKT Audio Revision — 90+ Hours Audio | Early Access £59",
+  title: "MRCGP AKT Audio Revision — 90+ Hours",
   description:
-    "Over 90 hours of AKT audio revision across all 32 RCGP topics. Early Access starts from £59 before 8 July 2026, then £79 for 4 months. Questions remain free.",
+    "90+ hours of MRCGP AKT audio revision across all 32 RCGP topics. Listen on commutes, walks and clinics. Free until 8 July; audio from £59.",
   alternates: {
     canonical: "https://medexia-akt.com/akt-audio-revision",
   },
   openGraph: {
-    title: "AKT Audio Revision — 90+ Hours Audio",
+    title: "MRCGP AKT Audio Revision — 90+ Hours",
     description:
-      "Over 90 hours of AKT audio revision across all 32 RCGP topics. Early Access is £59 before 8 July 2026, then £79 for 4 months.",
+      "Audio-first MRCGP AKT revision covering all 32 RCGP topics in 90+ hours. Free until 8 July; full audio from £59.",
     type: "website",
     url: "https://medexia-akt.com/akt-audio-revision",
   },
 };
 
+const sourceLinks = [
+  {
+    href: "https://www.rcgp.org.uk/mrcgp-exams/applied-knowledge-test/akt-introduction",
+    label: "RCGP: Introducing the AKT",
+  },
+  {
+    href: "https://www.rcgp.org.uk/mrcgp-exams/applied-knowledge-test/akt-preparing",
+    label: "RCGP: Preparing for the AKT",
+  },
+  {
+    href: "https://www.rcgp.org.uk/mrcgp-exams/gp-curriculum/clinical-topic-guides",
+    label: "RCGP: 32 curriculum topic guides",
+  },
+  {
+    href: "https://cks.nice.org.uk/",
+    label: "NICE CKS",
+  },
+  {
+    href: "https://bnf.nice.org.uk/",
+    label: "BNF",
+  },
+];
+
+const audioFaqs = [
+  {
+    question: "Is there MRCGP AKT audio revision?",
+    answer:
+      "Yes. AKT Navigator provides 90+ hours of MRCGP AKT audio revision covering all 32 RCGP curriculum topics, built for commutes, walks, childcare and low-energy revision days.",
+  },
+  {
+    question: "What does the AKT audio library cover?",
+    answer:
+      "The audio library covers clinical medicine, evidence-based practice and statistics, and organisation and management topics across the RCGP curriculum topic guides.",
+  },
+  {
+    question: "How much does full AKT audio access cost?",
+    answer:
+      "Full access is free until 8 July 2026. Early Access is £59 before 8 July for 4 months of access starting 8 July; standard Full Audio Access is £79 for 4 months from 8 July onwards. Questions remain free.",
+  },
+];
+
 export default function AktAudioRevisionPage() {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Course",
-    name: "AKT Audio Revision by AKT Navigator",
-    description:
-      "Over 90 hours of audio revision covering all 32 RCGP AKT curriculum topics. Early Access starts from £59 before 8 July 2026, then £79 for 4 months.",
-    provider: {
-      "@type": "Organization",
-      name: "Medexia",
-      url: "https://medexia-akt.com",
-    },
-    isAccessibleForFree: false,
-    courseMode: "audio",
-    numberOfCredits: "90+ hours",
+    "@graph": [
+      {
+        "@type": "Course",
+        name: "MRCGP AKT Audio Revision by AKT Navigator",
+        description:
+          "A 90+ hour audio-first MRCGP AKT revision library covering all 32 RCGP curriculum topics for GP trainees.",
+        provider: {
+          "@type": "Organization",
+          name: "Medexia",
+          url: "https://medexia-akt.com",
+        },
+        audience: {
+          "@type": "EducationalAudience",
+          educationalRole: "GP trainee",
+        },
+        courseMode: "audio",
+        numberOfCredits: "90+ hours",
+        teaches: [
+          "MRCGP Applied Knowledge Test revision",
+          "RCGP AKT curriculum",
+          "Evidence-based practice and statistics",
+          "Clinical medicine for general practice",
+          "Organisation and management for general practice",
+        ],
+        offers: {
+          "@type": "AggregateOffer",
+          lowPrice: "59",
+          highPrice: "79",
+          priceCurrency: "GBP",
+          offerCount: 2,
+          description:
+            "Full AKT Navigator access is free until 8 July 2026. Early Access is £59 before then for access starting 8 July; standard full audio access is £79 for 4 months.",
+        },
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: audioFaqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      },
+    ],
   };
 
   const clinical = aktTopics.filter((t) => t.category === "Clinical");
@@ -46,6 +122,15 @@ export default function AktAudioRevisionPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "https://medexia-akt.com/" },
+          {
+            name: "MRCGP AKT Audio Revision",
+            url: "https://medexia-akt.com/akt-audio-revision",
+          },
+        ]}
       />
       <Nav />
 
@@ -61,23 +146,24 @@ export default function AktAudioRevisionPage() {
               letterSpacing: "-0.03em",
             }}
           >
-            AKT Audio Revision
+            MRCGP AKT audio revision in 90+ hours
           </h1>
 
           <p
             className="mt-4 text-[16px] md:text-[18px] leading-[1.7]"
             style={{ color: "var(--fg-mid)" }}
           >
-            Over 90 hours of audio covering every topic in the RCGP AKT
-            curriculum. Built for GP trainees who are short on time and need
-            revision that fits around clinical work.
+            AKT Navigator is an audio-first revision library for GP trainees
+            preparing for the RCGP MRCGP Applied Knowledge Test. It covers all
+            32 RCGP curriculum topics in over 90 hours, so you can revise while
+            commuting, walking, doing childcare or recovering after clinic.
           </p>
 
           {/* Key stats */}
           <div className="mt-8 grid gap-4 grid-cols-3">
             {[
               { stat: "90+", label: "Hours of audio" },
-              { stat: "32", label: "AKT topics" },
+              { stat: "32", label: "RCGP topics" },
               { stat: "£59", label: "Early access" },
             ].map((item) => (
               <div
@@ -122,18 +208,20 @@ export default function AktAudioRevisionPage() {
               className="mt-4 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
-              Most GP trainees revise during stolen moments: the drive to work,
-              waiting for a clinic to start, walking the dog. Screen-based
-              revision does not fit into those gaps. Audio does.
+              The AKT is broad: the RCGP describes it as a computer-based exam
+              with clinical knowledge, evidence-based practice and primary care
+              organisation questions. That breadth is hard to cover only through
+              screen time. Audio lets you keep moving through the syllabus
+              during the parts of the day where reading is unrealistic.
             </p>
             <p
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
               AKT Navigator gives you over 90 hours of audio across all 32
-              curriculum topics. That is more than twelve times what Arora Medical
-              Education offers (7 hours). Full library access starts from £59
-              Early Access before 8 July 2026, then £79 for 4 months.
+              RCGP curriculum topics. Full access is free until 8 July 2026.
+              After that, questions stay free and full audio access starts from
+              £59 Early Access before standard £79 pricing begins.
             </p>
           </div>
 
@@ -243,7 +331,7 @@ export default function AktAudioRevisionPage() {
             ))}
           </div>
 
-          {/* Comparison */}
+          {/* Audio access */}
           <div className="mt-12">
             <h2
               className="text-[24px] md:text-[28px] leading-[1.15]"
@@ -252,67 +340,127 @@ export default function AktAudioRevisionPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              How it compares
+              What full audio access adds
             </h2>
-            <div
-              className="mt-4 overflow-x-auto rounded-xl"
+            <div className="mt-4 grid gap-3">
+              {[
+                {
+                  title: "A full 90+ hour AKT audiobook library",
+                  text: "Listen through complete topic coverage rather than short one-off summaries.",
+                },
+                {
+                  title: "Statistics support for evidence-based practice",
+                  text: "Paid access includes the statistics course and over 2 hours of statistics explainer videos.",
+                },
+                {
+                  title: "Dermatology Navigator",
+                  text: "Image-led dermatology revision is included in paid access, alongside the audio library.",
+                },
+                {
+                  title: "Future premium audio upgrades",
+                  text: "Any premium audio upgrades released during your access period are included.",
+                },
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  className="rounded-xl p-4"
+                  style={{
+                    background: "var(--bg-surface)",
+                    border: "1px solid var(--border)",
+                  }}
+                >
+                  <h3
+                    className="text-[15px] font-semibold"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {item.title}
+                  </h3>
+                  <p
+                    className="mt-1 text-[14px] leading-[1.6]"
+                    style={{ color: "var(--fg-mid)" }}
+                  >
+                    {item.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Source links */}
+          <div className="mt-12">
+            <h2
+              className="text-[20px] md:text-[24px] leading-[1.15]"
               style={{
-                background: "var(--bg-surface)",
-                border: "1px solid var(--border)",
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.02em",
               }}
             >
-              <table className="w-full text-[14px]">
-                <thead>
-                  <tr
-                    style={{
-                      borderBottom: "1px solid var(--border)",
-                    }}
+              Sources used for syllabus alignment
+            </h2>
+            <p
+              className="mt-3 text-[14px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              AKT Navigator is independent of the RCGP, but the audio curriculum
+              is mapped against the public RCGP AKT and GP curriculum guidance,
+              with clinical checking against NICE CKS and the BNF where
+              relevant.
+            </p>
+            <div className="mt-4 grid gap-2">
+              {sourceLinks.map((source) => (
+                <a
+                  key={source.href}
+                  href={source.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-xl px-4 py-3 text-[13px] font-medium transition-colors hover:bg-white/[.05]"
+                  style={{
+                    background: "var(--bg-elevated)",
+                    border: "1px solid var(--border)",
+                    color: "var(--fg-high)",
+                  }}
+                >
+                  {source.label} &rarr;
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Answer-first FAQ */}
+          <div className="mt-12">
+            <h2
+              className="text-[20px] md:text-[24px] leading-[1.15]"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              MRCGP AKT audio revision FAQ
+            </h2>
+            <div className="mt-4 grid gap-3">
+              {audioFaqs.map((faq) => (
+                <section
+                  key={faq.question}
+                  className="rounded-xl p-4"
+                  style={{
+                    background: "var(--bg-surface)",
+                    border: "1px solid var(--border)",
+                  }}
+                >
+                  <h3
+                    className="text-[15px] font-semibold"
+                    style={{ fontFamily: "var(--font-display)" }}
                   >
-                    <th
-                      className="text-left p-3 font-semibold"
-                      style={{ color: "var(--fg-high)" }}
-                    >
-                      Provider
-                    </th>
-                    <th
-                      className="text-left p-3 font-semibold"
-                      style={{ color: "var(--fg-high)" }}
-                    >
-                      Audio hours
-                    </th>
-                    <th
-                      className="text-left p-3 font-semibold"
-                      style={{ color: "var(--fg-high)" }}
-                    >
-                      Price
-                    </th>
-                  </tr>
-                </thead>
-                <tbody style={{ color: "var(--fg-mid)" }}>
-                  <tr
-                    style={{
-                      borderBottom: "1px solid var(--border)",
-                      background: "rgba(109,106,232,.04)",
-                    }}
+                    {faq.question}
+                  </h3>
+                  <p
+                    className="mt-2 text-[14px] leading-[1.65]"
+                    style={{ color: "var(--fg-mid)" }}
                   >
-                    <td className="p-3 font-semibold" style={{ color: "var(--brand-iris)" }}>
-                      AKT Navigator
-                    </td>
-                    <td className="p-3">90+ hours</td>
-                    <td className="p-3">From £59</td>
-                  </tr>
-                  <tr style={{ borderBottom: "1px solid var(--border)" }}>
-                    <td className="p-3">Arora Medical Education</td>
-                    <td className="p-3">~7 hours</td>
-                    <td className="p-3">Paid</td>
-                  </tr>
-                  <tr>
-                    <td className="p-3">GP on the Move</td>
-                    <td className="p-3">Varies</td>
-                    <td className="p-3">Paid</td>
-                  </tr>
-                </tbody>
-              </table>
+                    {faq.answer}
+                  </p>
+                </section>
+              ))}
             </div>
           </div>
 

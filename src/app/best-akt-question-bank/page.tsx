@@ -4,8 +4,7 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 
 export const metadata: Metadata = {
-  title:
-    "Best AKT Question Bank 2026 — Free & Paid Options Compared",
+  title: "Best AKT Question Bank 2026",
   description:
     "Honest comparison of AKT question banks for GP trainees: PassMedicine, Pastest, BMJ OnExamination, i-Medics, and AKT Navigator. Features, prices, question counts, and what actually helps you pass.",
   alternates: {

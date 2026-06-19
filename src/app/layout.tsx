@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: {
     default:
       "MRCGP AKT Revision — The Whole AKT in 90 Hours of Audio",
-    template: "%s | AKT Navigator by Medexia",
+    template: "%s | Medexia",
   },
   description:
     "Audio-first revision for the RCGP MRCGP AKT exam: free syllabus-mapped questions, mocks with AI debriefs, and 90+ hours of audio across all 32 topics. Free until 8 July 2026, then full audio from £59.",

@@ -6,7 +6,7 @@ import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { EXAM_SITTINGS, EXAM_FORMAT } from "@/data/exam-dates";
 
 export const metadata: Metadata = {
-  title: "AKT Exam Dates 2026 — Next Sitting 7 July, Booking & Format",
+  title: "AKT Exam Dates 2026 — July Sitting",
   description:
     "RCGP AKT exam dates for 2026: the next sitting is 7 July (the April sitting was 27 April). Booking windows, exam format (160 questions, 2h40m), eligibility, and free AKT question practice.",
   alternates: {

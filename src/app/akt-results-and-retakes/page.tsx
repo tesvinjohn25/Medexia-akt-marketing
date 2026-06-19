@@ -293,6 +293,20 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If your weak areas include paediatrics, use the{" "}
+              <a
+                href="/akt-children-young-people"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT children and young people guide
+              </a>{" "}
+              to target acute illness, cancer red flags and safeguarding.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               Use full timed mocks to check whether the problem is knowledge,
               pacing or stamina. Use audio revision for low-energy time, but
               keep the hard work centred on questions, explanations and mistake

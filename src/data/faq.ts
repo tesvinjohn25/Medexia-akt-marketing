@@ -57,6 +57,10 @@ export const FAQS: Faq[] = [
     a: "Prioritise gait disturbance, headache red flags, first seizures, epilepsy medication principles, stroke and TIA recognition, Parkinson's disease, tremor, multiple sclerosis, neuropathy and urgent referral thresholds. Recent RCGP feedback says neurology has been a frequent feedback area, including each of the last four AKTs.",
   },
   {
+    q: "What children and young people topics should I revise for the AKT?",
+    a: "Prioritise acute illness in children, paediatric cancer red flags, safeguarding, developmental milestones, immunisation, common childhood infections, adolescent health, confidentiality and Fraser guidance. Recent AKT feedback has highlighted paediatric cancer, acute illness, safeguarding and confidentiality.",
+  },
+  {
     q: "What is the AKT pass rate?",
     a: "The pass rate changes each sitting. In official RCGP feedback reports, 80.22% of all candidates passed in April 2026, 76.52% passed in January 2026, and 70.63% passed in October 2025. The pass marks were 107, 108 and 109 out of 160 respectively. UKG first-time pass rates were higher, at 88.68%, 88.39% and 88.84%. The areas where people struggle most include data interpretation, prescribing, organisation topics and time pressure. AKT Navigator targets these weak spots with syllabus-mapped practice, timed mocks, debriefs and 90+ hours of audio revision.",
   },

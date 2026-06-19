@@ -95,7 +95,7 @@ const recurringThemes = [
     title: "AKT safeguarding and children",
     detail:
       "Acute illness, safeguarding, confidentiality, paediatric cancer and other child-health presentations recur in recent feedback.",
-    href: "/akt-confidentiality-safeguarding-data-protection",
+    href: "/akt-children-young-people",
   },
 ];
 

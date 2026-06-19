@@ -561,6 +561,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Gait, headache red flags and seizures",
                 },
                 {
+                  href: "/akt-children-young-people",
+                  title: "AKT children",
+                  desc: "Acute illness, cancer red flags and safeguarding",
+                },
+                {
                   href: "/akt-syllabus",
                   title: "AKT syllabus",
                   desc: "80/10/10 weighting and all 32 RCGP topics",

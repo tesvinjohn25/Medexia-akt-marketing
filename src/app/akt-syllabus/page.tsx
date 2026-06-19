@@ -376,7 +376,14 @@ export default function AktSyllabusPage() {
                 className="font-medium transition-colors"
                 style={{ color: "var(--brand-violet-light)" }}
               >
-                AKT neurology guide
+                AKT neurology guide,
+              </a>{" "}
+              <a
+                href="/akt-children-young-people"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT children guide
               </a>{" "}
               and statistics formulas page.
             </p>

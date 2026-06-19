@@ -492,6 +492,11 @@ export default function BestAktQuestionBankPage() {
                   title: "AKT neurology",
                   desc: "Gait, headache red flags and seizures",
                 },
+                {
+                  href: "/akt-children-young-people",
+                  title: "AKT children",
+                  desc: "Acute illness, cancer red flags and safeguarding",
+                },
               ].map((link) => (
                 <a
                   key={link.href}

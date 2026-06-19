@@ -47,6 +47,9 @@ Key facts:
 - Core AKT statistics formulas include sensitivity, specificity, PPV,
   NPV, absolute risk, relative risk, absolute risk reduction, absolute
   risk increase, NNT and NNH.
+- AKT prescribing revision should cover medication monitoring,
+  prescribing errors, side effects and interactions, repeat prescribing
+  systems, higher-risk groups and BNF or NICE CKS checking.
 - Recent RCGP AKT feedback reports repeatedly highlight neurology,
   prescribing and medication monitoring, evidence/statistics chart
   interpretation, confidentiality/data protection, and children or
@@ -90,6 +93,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [AKT feedback reports](https://medexia-akt.com/akt-feedback-reports): latest RCGP feedback report weak areas and recurring revision themes
 - [AKT statistics](https://medexia-akt.com/akt-statistics): evidence-based practice, data interpretation and key statistics formulas
 - [AKT statistics formulas](https://medexia-akt.com/akt-statistics-formulas): NNT, NNH, sensitivity, specificity, PPV, NPV and risk formulas
+- [AKT prescribing and medication safety](https://medexia-akt.com/akt-prescribing-and-medication-safety): medication monitoring, prescribing errors, side effects and BNF/NICE CKS checking
 - [AKT syllabus](https://medexia-akt.com/akt-syllabus): section weighting and all 32 RCGP curriculum topic guides
 - [AKT mock exams](https://medexia-akt.com/akt-mock-exam): free timed mocks with AI debriefs
 - [AKT audio revision](https://medexia-akt.com/akt-audio-revision): the 90+ hour audiobook library

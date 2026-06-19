@@ -74,9 +74,10 @@ const recurringThemes = [
       "Recognition of symptoms, diagnosis, gait disturbance and important neurological presentations appear repeatedly in recent RCGP feedback.",
   },
   {
-    title: "Prescribing and medication safety",
+    title: "AKT prescribing and medication safety",
     detail:
       "Recent reports repeatedly mention side effects, drug monitoring, common medication monitoring and prescribing errors.",
+    href: "/akt-prescribing-and-medication-safety",
   },
   {
     title: "Evidence and statistics",
@@ -301,7 +302,17 @@ export default function AktFeedbackReportsPage() {
                     className="text-[15px] font-semibold"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
-                    {theme.title}
+                    {"href" in theme ? (
+                      <a
+                        href={theme.href}
+                        className="transition-colors"
+                        style={{ color: "var(--brand-violet-light)" }}
+                      >
+                        {theme.title}
+                      </a>
+                    ) : (
+                      theme.title
+                    )}
                   </h3>
                   <p
                     className="mt-2 text-[14px] leading-[1.6]"

@@ -320,7 +320,7 @@ export default function AktSyllabusPage() {
                 },
                 {
                   title: "Do not skip the 20%",
-                  text: "Evidence-based practice, statistics, organisation and management account for around 32 questions in the current 160-question format. Use the AKT statistics formulas page for NNT, NNH and diagnostic-test formulas.",
+                  text: "Evidence-based practice, statistics, organisation and management account for around 32 questions in the current 160-question format. Use the AKT statistics formulas page for NNT, NNH and the AKT prescribing page for medication-safety themes.",
                 },
                 {
                   title: "Pair questions with audio",
@@ -350,6 +350,20 @@ export default function AktSyllabusPage() {
                 </article>
               ))}
             </div>
+            <p
+              className="mt-4 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              For the professional 10%, use the{" "}
+              <a
+                href="/akt-prescribing-and-medication-safety"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT prescribing and medication safety guide
+              </a>{" "}
+              alongside the statistics formulas page.
+            </p>
           </section>
 
           <section className="mt-10">

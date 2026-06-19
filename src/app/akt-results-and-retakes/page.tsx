@@ -264,7 +264,15 @@ export default function AktResultsAndRetakesPage() {
               A retake plan should be narrower and more honest than a first
               sitting plan. Start with the weakest domains from your result,
               then add the latest RCGP feedback-report themes: statistics and
-              data interpretation, prescribing and medication monitoring,
+              data interpretation,{" "}
+              <a
+                href="/akt-prescribing-and-medication-safety"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                prescribing and medication monitoring,
+              </a>
+              {" "}
               neurology, confidentiality, safeguarding and children.
             </p>
             <p

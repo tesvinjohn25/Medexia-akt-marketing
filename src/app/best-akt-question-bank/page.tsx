@@ -477,6 +477,11 @@ export default function BestAktQuestionBankPage() {
                   title: "AKT statistics formulas",
                   desc: "NNT, NNH, sensitivity, specificity, PPV and NPV",
                 },
+                {
+                  href: "/akt-prescribing-and-medication-safety",
+                  title: "AKT prescribing",
+                  desc: "Medication monitoring, errors and safety themes",
+                },
               ].map((link) => (
                 <a
                   key={link.href}

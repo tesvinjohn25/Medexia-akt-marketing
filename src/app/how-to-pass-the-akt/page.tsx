@@ -546,6 +546,11 @@ export default function HowToPassTheAktPage() {
                   desc: "NNT, NNH, sensitivity, specificity, PPV and NPV",
                 },
                 {
+                  href: "/akt-prescribing-and-medication-safety",
+                  title: "AKT prescribing",
+                  desc: "Medication monitoring, errors and safety themes",
+                },
+                {
                   href: "/akt-syllabus",
                   title: "AKT syllabus",
                   desc: "80/10/10 weighting and all 32 RCGP topics",

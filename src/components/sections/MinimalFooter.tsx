@@ -11,6 +11,7 @@ const RESOURCE_LINKS = [
   { href: "/akt-exam-dates", label: "Exam dates" },
   { href: "/akt-exam-format", label: "Exam format" },
   { href: "/akt-pass-rate", label: "Pass rate" },
+  { href: "/akt-results-and-retakes", label: "Results" },
   { href: "/akt-feedback-reports", label: "Feedback reports" },
   { href: "/akt-statistics", label: "Statistics" },
   { href: "/akt-exam-fee", label: "Fees" },

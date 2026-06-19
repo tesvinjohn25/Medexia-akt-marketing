@@ -28,6 +28,10 @@ Key facts:
   107/160 pass mark, 76.52% passed in January 2026 with a 108/160
   pass mark, and 70.63% passed in October 2025 with a 109/160 pass
   mark.
+- AKT results are released on sitting-specific RCGP result dates. If a
+  trainee is unsuccessful, the score report, pass mark, official
+  feedback reports, timed mocks and weak-area review should shape the
+  retake plan.
 - The exam covers clinical medicine (80%), evidence-based practice and
   statistics (10%), and organisational/professional topics (10%).
 - AKT statistics revision should cover sensitivity, specificity, PPV,
@@ -72,6 +76,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [AKT exam format](https://medexia-akt.com/akt-exam-format): 160-question format, section weighting, eligibility, marking and pass-mark rules
 - [AKT exam fee](https://medexia-akt.com/akt-exam-fee): current RCGP AKT fee, booking, eligibility and attempt limits
 - [AKT pass rate](https://medexia-akt.com/akt-pass-rate): official recent pass rates, pass marks and candidate numbers from RCGP feedback reports
+- [AKT results and retakes](https://medexia-akt.com/akt-results-and-retakes): result reports, unsuccessful attempts, retake planning, appeals and attempt limits
 - [AKT feedback reports](https://medexia-akt.com/akt-feedback-reports): latest RCGP feedback report weak areas and recurring revision themes
 - [AKT statistics](https://medexia-akt.com/akt-statistics): evidence-based practice, data interpretation and key statistics formulas
 - [AKT mock exams](https://medexia-akt.com/akt-mock-exam): free timed mocks with AI debriefs

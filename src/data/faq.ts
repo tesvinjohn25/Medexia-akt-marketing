@@ -41,6 +41,10 @@ export const FAQS: Faq[] = [
     a: "The pass rate changes each sitting. In official RCGP feedback reports, 80.22% of all candidates passed in April 2026, 76.52% passed in January 2026, and 70.63% passed in October 2025. The pass marks were 107, 108 and 109 out of 160 respectively. UKG first-time pass rates were higher, at 88.68%, 88.39% and 88.84%. The areas where people struggle most include data interpretation, prescribing, organisation topics and time pressure. AKT Navigator targets these weak spots with syllabus-mapped practice, timed mocks, debriefs and 90+ hours of audio revision.",
   },
   {
+    q: "What should I do if I fail the AKT?",
+    a: "Start with the official score report and compare your score with the pass mark for that sitting. Work out whether the main issue was knowledge, statistics, pacing, fatigue or specific weak domains. Then build a retake plan around those gaps using timed mocks, targeted question practice and the latest RCGP feedback report themes. Check the RCGP rules on attempt limits, booking and appeals before making decisions.",
+  },
+  {
     q: "Is there a free AKT question bank?",
     a: "Yes. AKT Navigator keeps syllabus-mapped AKT questions free, with deep structured explanations, mock exams and basic practice. Free Practice also includes 2 hours of audiobook listening across any audiobook. Full access to the 90+ hour audiobook library is separate: Early Access is £59 before 8 July 2026 for 4 months of access starting 8 July, then standard Full Audio Access is £79 for 4 months.",
   },

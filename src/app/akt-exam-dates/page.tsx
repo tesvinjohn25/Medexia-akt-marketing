@@ -255,7 +255,15 @@ export default function AktExamDatesPage() {
               four attempts if you were in training before August 2023, or six
               attempts if you started on or after August 2023. Your training
               programme director can advise on the best timing for your
-              situation.
+              situation. If you need another sitting, use the{" "}
+              <a
+                href="/akt-results-and-retakes"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT results and retakes guide
+              </a>{" "}
+              to plan the next attempt.
             </p>
           </div>
 

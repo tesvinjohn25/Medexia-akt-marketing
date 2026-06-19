@@ -1,0 +1,407 @@
+import type { Metadata } from "next";
+import { Nav } from "@/components/Nav";
+import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
+import { FinalCTA } from "@/components/sections/FinalCTA";
+import { MinimalFooter } from "@/components/sections/MinimalFooter";
+
+export const metadata: Metadata = {
+  title: "MRCGP AKT Results, Feedback and Retakes",
+  description:
+    "MRCGP AKT results and retakes: when results are released, how to read your score report, what to do if you fail, appeals and attempt limits.",
+  alternates: {
+    canonical: "https://medexia-akt.com/akt-results-and-retakes",
+  },
+  openGraph: {
+    title: "MRCGP AKT Results, Feedback and Retakes",
+    description:
+      "A practical guide to AKT results, score reports, retakes, appeals and how to plan your next sitting after an unsuccessful attempt.",
+    type: "article",
+    url: "https://medexia-akt.com/akt-results-and-retakes",
+  },
+};
+
+const steps = [
+  {
+    title: "Read the result, then the report",
+    text: "Do not stop at pass or fail. Look at the score, the pass mark for that sitting and the domain feedback, then compare it with your revision history.",
+  },
+  {
+    title: "Separate knowledge gaps from exam-process issues",
+    text: "A near miss may be pacing, fatigue or confidence under time pressure. A larger gap usually needs deeper topic review before another attempt.",
+  },
+  {
+    title: "Rebuild around weak areas",
+    text: "Use the RCGP feedback report themes, your own score report and timed mocks to decide what gets the most revision time next.",
+  },
+  {
+    title: "Check eligibility and attempts",
+    text: "Attempt limits depend on when you entered GP training. If you are close to the limit, check the official RCGP rules and speak to your training team early.",
+  },
+];
+
+const faqs = [
+  {
+    question: "When are MRCGP AKT results released?",
+    answer:
+      "RCGP publishes result dates for each AKT sitting on its key dates pages. For example, the October 2026 UK AKT sitting has a published result date of 25 November 2026 at 17:00.",
+  },
+  {
+    question: "What should I do if I fail the AKT?",
+    answer:
+      "First read the official score report and compare your score with the pass mark. Then identify whether the problem was knowledge, statistics, pacing, fatigue or specific weak domains. Build a retake plan around those gaps rather than simply repeating the same revision.",
+  },
+  {
+    question: "Can I appeal an AKT result?",
+    answer:
+      "The RCGP has an appeals process, but appeals are not a general re-marking route. Check the official RCGP appeals policy and deadlines before deciding what to do.",
+  },
+  {
+    question: "How many times can you retake the AKT?",
+    answer:
+      "Attempt limits depend on when you entered GP specialty training. The RCGP states that trainees already in training on 1 August 2023 have four attempts, while trainees entering GP specialty training for the first time on or after 2 August 2023 have six attempts.",
+  },
+];
+
+export default function AktResultsAndRetakesPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        headline: "MRCGP AKT Results, Feedback and Retakes",
+        description:
+          "Practical guidance for GP trainees on AKT results, score reports, retakes, appeals and attempt limits.",
+        author: {
+          "@type": "Organization",
+          name: "Medexia",
+          url: "https://medexia-akt.com",
+        },
+        datePublished: "2026-06-20",
+        dateModified: "2026-06-20",
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      },
+    ],
+  };
+
+  return (
+    <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "https://medexia-akt.com/" },
+          {
+            name: "MRCGP AKT Results and Retakes",
+            url: "https://medexia-akt.com/akt-results-and-retakes",
+          },
+        ]}
+      />
+      <Nav />
+
+      <section
+        className="section-padding"
+        style={{ paddingTop: "calc(80px + 48px)" }}
+      >
+        <div className="container-x max-w-[820px]">
+          <h1
+            className="text-[32px] md:text-[44px] leading-[1.1]"
+            style={{
+              fontFamily: "var(--font-display)",
+              letterSpacing: "-0.03em",
+            }}
+          >
+            MRCGP AKT results, feedback and retakes
+          </h1>
+
+          <p
+            className="mt-4 text-[16px] md:text-[18px] leading-[1.7]"
+            style={{ color: "var(--fg-mid)" }}
+          >
+            AKT results are not just a pass or fail outcome. The useful part is
+            understanding the score report, the pass mark for that sitting and
+            what your next revision block should target if you need another
+            attempt.
+          </p>
+
+          <div
+            className="mt-6 rounded-xl p-4"
+            style={{
+              background: "rgba(52,211,153,.06)",
+              border: "1px solid rgba(52,211,153,.18)",
+            }}
+          >
+            <h2
+              className="text-[18px] font-semibold"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Quick answer
+            </h2>
+            <p
+              className="mt-2 text-[14px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              AKT result dates are published by the RCGP for each sitting. If
+              you are unsuccessful, use the score report, pass mark and official
+              feedback report to rebuild your plan around weak areas, timed
+              mocks and pacing. Check attempt limits and appeal deadlines on
+              official RCGP pages before booking another sitting.
+            </p>
+          </div>
+
+          <section className="mt-10">
+            <h2
+              className="text-[24px] md:text-[28px] leading-[1.15]"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              How to read an AKT result
+            </h2>
+            <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              {[
+                {
+                  label: "Your score",
+                  text: "Shows how far above or below the sitting pass mark you were.",
+                },
+                {
+                  label: "Pass mark",
+                  text: "Changes by sitting because papers differ in measured difficulty.",
+                },
+                {
+                  label: "Feedback",
+                  text: "Points toward the domains and behaviours that need the next revision block.",
+                },
+              ].map((item) => (
+                <article
+                  key={item.label}
+                  className="rounded-xl p-4"
+                  style={{
+                    background: "var(--bg-surface)",
+                    border: "1px solid var(--border)",
+                  }}
+                >
+                  <h3
+                    className="text-[15px] font-semibold"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {item.label}
+                  </h3>
+                  <p
+                    className="mt-2 text-[14px] leading-[1.6]"
+                    style={{ color: "var(--fg-mid)" }}
+                  >
+                    {item.text}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="mt-10">
+            <h2
+              className="text-[24px] md:text-[28px] leading-[1.15]"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              If you need to retake the AKT
+            </h2>
+            <div className="mt-4 grid gap-3">
+              {steps.map((step) => (
+                <article
+                  key={step.title}
+                  className="rounded-xl p-4"
+                  style={{
+                    background: "var(--bg-elevated)",
+                    border: "1px solid var(--border)",
+                  }}
+                >
+                  <h3
+                    className="text-[16px] font-semibold"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {step.title}
+                  </h3>
+                  <p
+                    className="mt-2 text-[14px] leading-[1.6]"
+                    style={{ color: "var(--fg-mid)" }}
+                  >
+                    {step.text}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="mt-10">
+            <h2
+              className="text-[24px] md:text-[28px] leading-[1.15]"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Build the next attempt differently
+            </h2>
+            <p
+              className="mt-4 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              A retake plan should be narrower and more honest than a first
+              sitting plan. Start with the weakest domains from your result,
+              then add the latest RCGP feedback-report themes: statistics and
+              data interpretation, prescribing and medication monitoring,
+              neurology, confidentiality, safeguarding and children.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              Use full timed mocks to check whether the problem is knowledge,
+              pacing or stamina. Use audio revision for low-energy time, but
+              keep the hard work centred on questions, explanations and mistake
+              review.
+            </p>
+          </section>
+
+          <section className="mt-10">
+            <h2
+              className="text-[20px] md:text-[24px] leading-[1.15]"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              AKT results and retakes FAQ
+            </h2>
+            <div className="mt-4 grid gap-3">
+              {faqs.map((faq) => (
+                <article
+                  key={faq.question}
+                  className="rounded-xl p-4"
+                  style={{
+                    background: "var(--bg-surface)",
+                    border: "1px solid var(--border)",
+                  }}
+                >
+                  <h3
+                    className="text-[15px] font-semibold"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {faq.question}
+                  </h3>
+                  <p
+                    className="mt-2 text-[14px] leading-[1.65]"
+                    style={{ color: "var(--fg-mid)" }}
+                  >
+                    {faq.answer}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section
+            className="mt-10 rounded-xl p-4"
+            style={{
+              background: "var(--bg-surface)",
+              border: "1px solid var(--border)",
+            }}
+          >
+            <h2
+              className="text-[18px] font-semibold"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Official sources
+            </h2>
+            <div
+              className="mt-3 grid gap-2 text-[14px]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              <a
+                href="https://www.rcgp.org.uk/mrcgp-exams/applied-knowledge-test/akt-marking-results"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                RCGP AKT marking and results
+              </a>
+              <a
+                href="https://www.rcgp.org.uk/mrcgp-exams/exam-applications/appeals"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                RCGP appeals policy
+              </a>
+              <a
+                href="https://www.rcgp.org.uk/mrcgp-exams/all-mrcgp-regulations"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                RCGP exam regulations
+              </a>
+              <a
+                href="https://www.rcgp.org.uk/mrcgp-exams/applied-knowledge-test/further-help-support"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                RCGP AKT feedback reports
+              </a>
+              <a
+                href="https://www.rcgp.org.uk/mrcgp-exams/mrcgp-exam-applications"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                RCGP exam applications
+              </a>
+            </div>
+          </section>
+
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <a className="btn-primary text-center text-[16px]" href="/akt-revision-plan">
+              Build a retake plan &rarr;
+            </a>
+            <a className="btn-secondary text-center text-[16px]" href="/akt-mock-exam">
+              Practise timed mocks
+            </a>
+          </div>
+
+          <p
+            className="mt-6 text-[12px]"
+            style={{ color: "var(--fg-muted)" }}
+          >
+            This is revision guidance, not official RCGP advice. Check the RCGP
+            for result, appeal, booking and eligibility rules. Last reviewed
+            June 2026.
+          </p>
+        </div>
+      </section>
+
+      <FinalCTA />
+      <MinimalFooter />
+    </main>
+  );
+}

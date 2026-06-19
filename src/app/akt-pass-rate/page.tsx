@@ -346,7 +346,16 @@ export default function AktPassRatePage() {
                 AKT exam format guide
               </a>{" "}
               explains why the pass mark varies and how the current 160-question
-              paper is weighted.
+              paper is weighted. If you are reviewing an unsuccessful sitting,
+              use the{" "}
+              <a
+                href="/akt-results-and-retakes"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT results and retakes guide
+              </a>{" "}
+              to turn the score report into a next-attempt plan.
             </p>
           </div>
 

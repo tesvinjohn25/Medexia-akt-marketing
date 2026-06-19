@@ -453,6 +453,11 @@ export default function BestAktQuestionBankPage() {
                   desc: "Recent official pass rates and pass marks",
                 },
                 {
+                  href: "/akt-results-and-retakes",
+                  title: "AKT results and retakes",
+                  desc: "Score reports, appeals and next-attempt planning",
+                },
+                {
                   href: "/akt-feedback-reports",
                   title: "AKT feedback reports",
                   desc: "Latest weak areas from official reports",

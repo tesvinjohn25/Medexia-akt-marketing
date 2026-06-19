@@ -267,7 +267,17 @@ export default function AktAudioRevisionPage() {
                     className="text-[15px] font-semibold"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
-                    {item.title}
+                    {(item as { href?: string }).href ? (
+                      <a
+                        href={(item as unknown as { href: string }).href}
+                        className="transition-colors"
+                        style={{ color: "var(--brand-violet-light)" }}
+                      >
+                        {item.title}
+                      </a>
+                    ) : (
+                      item.title
+                    )}
                   </h3>
                   <p
                     className="mt-1 text-[14px] leading-[1.6]"
@@ -354,7 +364,8 @@ export default function AktAudioRevisionPage() {
                 },
                 {
                   title: "Dermatology Navigator",
-                  text: "Image-led dermatology revision is included in paid access, alongside the audio library.",
+                  text: "Image-led dermatology revision is included in paid access, alongside the audio library. Use the AKT dermatology guide for rashes, skin cancer recognition and red flags.",
+                  href: "/akt-dermatology",
                 },
                 {
                   title: "Future premium audio upgrades",

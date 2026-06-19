@@ -497,6 +497,11 @@ export default function BestAktQuestionBankPage() {
                   title: "AKT children",
                   desc: "Acute illness, cancer red flags and safeguarding",
                 },
+                {
+                  href: "/akt-dermatology",
+                  title: "AKT dermatology",
+                  desc: "Rashes, skin cancer and image-led revision",
+                },
               ].map((link) => (
                 <a
                   key={link.href}

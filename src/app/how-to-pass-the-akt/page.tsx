@@ -566,6 +566,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Acute illness, cancer red flags and safeguarding",
                 },
                 {
+                  href: "/akt-dermatology",
+                  title: "AKT dermatology",
+                  desc: "Rashes, skin cancer and image-led revision",
+                },
+                {
                   href: "/akt-syllabus",
                   title: "AKT syllabus",
                   desc: "80/10/10 weighting and all 32 RCGP topics",

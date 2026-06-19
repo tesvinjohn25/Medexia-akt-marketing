@@ -385,6 +385,14 @@ export default function AktSyllabusPage() {
               >
                 AKT children guide
               </a>{" "}
+              ,{" "}
+              <a
+                href="/akt-dermatology"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT dermatology guide
+              </a>{" "}
               and statistics formulas page.
             </p>
           </section>

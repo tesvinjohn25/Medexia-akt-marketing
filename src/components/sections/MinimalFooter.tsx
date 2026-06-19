@@ -8,6 +8,7 @@ const RESOURCE_LINKS = [
   { href: "/akt-mock-exam", label: "Mock exams" },
   { href: "/best-akt-question-bank", label: "Question banks" },
   { href: "/akt-exam-dates", label: "Exam dates" },
+  { href: "/akt-pass-rate", label: "Pass rate" },
   { href: "/faq", label: "FAQ" },
 ];
 

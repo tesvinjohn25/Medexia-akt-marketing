@@ -430,7 +430,12 @@ export default function BestAktQuestionBankPage() {
                 {
                   href: "/akt-exam-dates",
                   title: "AKT exam dates 2026",
-                  desc: "April and July sittings with countdown",
+                  desc: "July and October sittings with countdown",
+                },
+                {
+                  href: "/akt-pass-rate",
+                  title: "AKT pass rate",
+                  desc: "Recent official pass rates and pass marks",
                 },
               ].map((link) => (
                 <a

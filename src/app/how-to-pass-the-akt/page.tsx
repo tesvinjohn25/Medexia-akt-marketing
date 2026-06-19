@@ -40,7 +40,7 @@ export default function HowToPassTheAktPage() {
           url: "https://medexia-akt.com",
         },
         datePublished: "2026-03-25",
-        dateModified: "2026-06-10",
+        dateModified: "2026-06-19",
       },
       {
         "@type": "FAQPage",
@@ -58,7 +58,7 @@ export default function HowToPassTheAktPage() {
             name: "What is the AKT pass rate?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Around 75% of all candidates pass, and about 4 in 5 first-time sitters pass. The pass mark varies each sitting but has recently been around 71%.",
+              text: "The pass rate changes each sitting. Official RCGP feedback reports show 76.52% of all candidates passed in January 2026 and 70.63% passed in October 2025. The pass marks were 108 out of 160 and 109 out of 160 respectively.",
             },
           },
           {
@@ -482,7 +482,12 @@ export default function HowToPassTheAktPage() {
                 {
                   href: "/akt-exam-dates",
                   title: "Exam dates 2026",
-                  desc: "April and July sittings with booking windows",
+                  desc: "July and October sittings with booking windows",
+                },
+                {
+                  href: "/akt-pass-rate",
+                  title: "AKT pass rate",
+                  desc: "Recent official pass rates and pass marks",
                 },
               ].map((link) => (
                 <a

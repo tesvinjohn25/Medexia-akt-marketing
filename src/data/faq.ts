@@ -34,7 +34,7 @@ export const FAQS: Faq[] = [
   },
   {
     q: "What is the AKT pass rate?",
-    a: "Around 75% of candidates pass the AKT, and about 4 in 5 first time sitters pass. The pass mark varies each sitting but has recently been around 71% (142 out of 200 on the old format). That means roughly 1 in 4 trainees fail. The areas where people struggle most are drug side effects, prescribing in older adults, data interpretation, and time pressure. Many candidates report rushing through at least a third of the exam. AKT Navigator specifically targets these common weak spots and the mock debrief tracks your pacing so you can fix timing issues before exam day.",
+    a: "The pass rate changes each sitting. In official RCGP feedback reports, 76.52% of all candidates passed in January 2026 and 70.63% passed in October 2025. The pass marks were 108 out of 160 and 109 out of 160 respectively. UKG first-time pass rates were higher, at 88.39% and 88.84%. The areas where people struggle most include data interpretation, prescribing, organisation topics and time pressure. AKT Navigator targets these weak spots with syllabus-mapped practice, timed mocks, debriefs and 90+ hours of audio revision.",
   },
   {
     q: "Is there a free AKT question bank?",

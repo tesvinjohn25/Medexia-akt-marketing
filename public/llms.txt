@@ -34,6 +34,8 @@ Key facts:
   retake plan.
 - The exam covers clinical medicine (80%), evidence-based practice and
   statistics (10%), and organisational/professional topics (10%).
+- The AKT syllabus maps to the RCGP GP curriculum and 32 topic guides,
+  grouped into Professional, Life Stages and Clinical areas.
 - AKT statistics revision should cover sensitivity, specificity, PPV,
   NPV, absolute and relative risk, NNT, NNH, confidence intervals,
   forest plots, prescribing charts, practice data and common study
@@ -79,6 +81,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [AKT results and retakes](https://medexia-akt.com/akt-results-and-retakes): result reports, unsuccessful attempts, retake planning, appeals and attempt limits
 - [AKT feedback reports](https://medexia-akt.com/akt-feedback-reports): latest RCGP feedback report weak areas and recurring revision themes
 - [AKT statistics](https://medexia-akt.com/akt-statistics): evidence-based practice, data interpretation and key statistics formulas
+- [AKT syllabus](https://medexia-akt.com/akt-syllabus): section weighting and all 32 RCGP curriculum topic guides
 - [AKT mock exams](https://medexia-akt.com/akt-mock-exam): free timed mocks with AI debriefs
 - [AKT audio revision](https://medexia-akt.com/akt-audio-revision): the 90+ hour audiobook library
 - [AKT question banks compared](https://medexia-akt.com/best-akt-question-bank): how AKT Navigator compares

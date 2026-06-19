@@ -30,7 +30,7 @@ export const FAQS: Faq[] = [
   },
   {
     q: "What topics does the AKT cover?",
-    a: "The RCGP AKT spans 32 topics across three areas. Clinical topics make up 80% of the exam and include things like cardiovascular, dermatology, mental health, respiratory, and musculoskeletal. Evidence in practice covers critical appraisal and statistics (10%), and organisation and management covers ethics, prescribing, and professional topics (10%). AKT Navigator covers every single one of these 32 topics with questions, over 90 hours of audio, and detailed explanations for each.",
+    a: "The RCGP AKT syllabus spans 32 topic guides across three areas: Professional, Life Stages and Clinical. Clinical topics make up 80% of the exam and include things like cardiovascular, dermatology, mental health, respiratory, and musculoskeletal. Evidence in practice covers critical appraisal and statistics (10%), and organisation and management covers ethics, prescribing, and professional topics (10%). AKT Navigator covers every single one of these 32 topics with questions, over 90 hours of audio, and detailed explanations for each.",
   },
   {
     q: "How many questions are on the AKT?",

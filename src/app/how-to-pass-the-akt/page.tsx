@@ -535,6 +535,11 @@ export default function HowToPassTheAktPage() {
                   title: "AKT statistics",
                   desc: "Evidence-based practice and key formulas",
                 },
+                {
+                  href: "/akt-syllabus",
+                  title: "AKT syllabus",
+                  desc: "80/10/10 weighting and all 32 RCGP topics",
+                },
               ].map((link) => (
                 <a
                   key={link.href}

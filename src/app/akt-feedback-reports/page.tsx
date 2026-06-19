@@ -362,6 +362,20 @@ export default function AktFeedbackReportsPage() {
                 </article>
               ))}
             </div>
+            <p
+              className="mt-4 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              For full coverage, keep the{" "}
+              <a
+                href="/akt-syllabus"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT syllabus
+              </a>{" "}
+              open alongside feedback-report themes.
+            </p>
           </section>
 
           <section className="mt-10">

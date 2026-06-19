@@ -67,7 +67,16 @@ export default function TopicsIndexPage() {
             Clinical medicine makes up around 80% of the exam. Evidence in
             practice and organisation/management each make up 10%. Every topic
             below has free question practice, deep structured explanations, and
-            audio-first revision in AKT Navigator.
+            audio-first revision in AKT Navigator. For the section weighting
+            and curriculum structure, read the{" "}
+            <a
+              href="/akt-syllabus"
+              className="font-medium transition-colors"
+              style={{ color: "var(--brand-violet-light)" }}
+            >
+              AKT syllabus guide
+            </a>
+            .
           </p>
         </div>
       </section>

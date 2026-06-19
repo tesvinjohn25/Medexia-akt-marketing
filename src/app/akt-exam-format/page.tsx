@@ -344,7 +344,15 @@ export default function AktExamFormatPage() {
               >
                 AKT exam dates
               </a>{" "}
-              before choosing a sitting.
+              before choosing a sitting, and use the{" "}
+              <a
+                href="/akt-syllabus"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT syllabus guide
+              </a>{" "}
+              to map what the exam can test.
             </p>
           </section>
 

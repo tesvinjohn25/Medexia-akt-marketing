@@ -1,10 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { APRIL_SITTING, JULY_SITTING } from "@/data/exam-dates";
-
-const APRIL_DATE = APRIL_SITTING.date;
-const JULY_DATE = JULY_SITTING.date;
+import { EXAM_SITTINGS, type ExamSitting } from "@/data/exam-dates";
 
 function getDaysUntil(target: Date): number {
   const now = new Date();
@@ -16,33 +13,42 @@ function isAfter(target: Date): boolean {
   return new Date() > target;
 }
 
+function getVisibleSittings(): ExamSitting[] {
+  const future = EXAM_SITTINGS.filter((sitting) => !isAfter(sitting.date));
+  return future.slice(0, 2);
+}
+
 export function ExamCountdown({
   variant = "hero",
 }: {
   variant?: "hero" | "compact";
 }) {
   const [mounted, setMounted] = useState(false);
-  const [aprilDays, setAprilDays] = useState(0);
-  const [julyDays, setJulyDays] = useState(0);
+  const [daysByLabel, setDaysByLabel] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    setAprilDays(getDaysUntil(APRIL_DATE));
-    setJulyDays(getDaysUntil(JULY_DATE));
+    const updateDays = () => {
+      setDaysByLabel(
+        Object.fromEntries(
+          getVisibleSittings().map((sitting) => [
+            sitting.label,
+            getDaysUntil(sitting.date),
+          ]),
+        ),
+      );
+    };
+
+    updateDays();
     setMounted(true);
 
-    const interval = setInterval(() => {
-      setAprilDays(getDaysUntil(APRIL_DATE));
-      setJulyDays(getDaysUntil(JULY_DATE));
-    }, 60_000);
+    const interval = setInterval(updateDays, 60_000);
 
     return () => clearInterval(interval);
   }, []);
 
-  const aprilPast = isAfter(APRIL_DATE);
-  const julyPast = isAfter(JULY_DATE);
+  const visibleSittings = getVisibleSittings();
 
-  // Post-July: hide completely
-  if (mounted && julyPast) return null;
+  if (mounted && visibleSittings.length === 0) return null;
 
   const isCompact = variant === "compact";
 
@@ -51,34 +57,28 @@ export function ExamCountdown({
       className={`flex gap-3 ${isCompact ? "justify-center" : ""}`}
       aria-live="polite"
     >
-      {/* April card */}
-      <div
-        className={`flex-1 rounded-xl border text-center ${isCompact ? "max-w-[160px] p-3" : "p-4"}`}
-        style={{
-          background: "var(--bg-surface)",
-          borderColor: "var(--border)",
-        }}
-      >
-        <div
-          className="text-[10px] tracking-[0.14em] uppercase font-semibold mb-1"
-          style={{ color: "var(--fg-muted)" }}
-        >
-          April sitting
-        </div>
-        {mounted && aprilPast ? (
+      {visibleSittings.map((sitting, index) => {
+        const isNext = index === 0;
+        return (
           <div
-            className="text-[13px] font-medium"
-            style={{ color: "var(--fg-muted)" }}
+            key={sitting.label}
+            className={`flex-1 rounded-xl text-center ${isNext ? "border-2" : "border"} ${isCompact ? "max-w-[160px] p-3" : "p-4"}`}
+            style={{
+              background: "var(--bg-surface)",
+              borderColor: isNext ? "var(--brand-iris)" : "var(--border)",
+            }}
           >
-            Sitting complete
-          </div>
-        ) : (
-          <>
+            <div
+              className="text-[10px] tracking-[0.14em] uppercase font-semibold mb-1"
+              style={{ color: isNext ? "var(--brand-iris)" : "var(--fg-muted)" }}
+            >
+              {sitting.label.replace(" 2026", "")} sitting
+            </div>
             <div
               className="text-[11px] font-medium mb-0.5"
               style={{ color: "var(--fg-mid)" }}
             >
-              Apr 27
+              {sitting.shortLabel}
             </div>
             <div
               className="text-[22px] font-bold tabular-nums"
@@ -87,54 +87,17 @@ export function ExamCountdown({
                 color: "var(--fg-high)",
               }}
             >
-              {mounted ? aprilDays : "--"}
+              {mounted ? daysByLabel[sitting.label] : "--"}
             </div>
             <div
               className="text-[11px] font-medium"
-              style={{ color: "var(--fg-muted)" }}
+              style={{ color: isNext ? "var(--brand-iris)" : "var(--fg-muted)" }}
             >
               days
             </div>
-          </>
-        )}
-      </div>
-
-      {/* July card — visually bolder */}
-      <div
-        className={`flex-1 rounded-xl border-2 text-center ${isCompact ? "max-w-[160px] p-3" : "p-4"}`}
-        style={{
-          background: "var(--bg-surface)",
-          borderColor: "var(--brand-iris)",
-        }}
-      >
-        <div
-          className="text-[10px] tracking-[0.14em] uppercase font-semibold mb-1"
-          style={{ color: "var(--brand-iris)" }}
-        >
-          July sitting
-        </div>
-        <div
-          className="text-[11px] font-medium mb-0.5"
-          style={{ color: "var(--fg-mid)" }}
-        >
-          Jul 7
-        </div>
-        <div
-          className="text-[22px] font-bold tabular-nums"
-          style={{
-            fontFamily: "var(--font-display)",
-            color: "var(--fg-high)",
-          }}
-        >
-          {mounted ? julyDays : "--"}
-        </div>
-        <div
-          className="text-[11px] font-medium"
-          style={{ color: "var(--brand-iris)" }}
-        >
-          days
-        </div>
-      </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

@@ -8,7 +8,7 @@ import { MinimalFooter } from "@/components/sections/MinimalFooter";
 export const metadata: Metadata = {
   title: "AKT FAQ — Common Questions About the MRCGP AKT",
   description:
-    "Every question GP trainees ask about the MRCGP AKT — revision timeline, exam format (160 questions in 2h40m), pass rate, common mistakes, and how to revise while working full time.",
+    "MRCGP AKT FAQ for GP trainees: revision timeline, 160-question exam format, pass rate, common mistakes and working-full-time revision.",
   alternates: {
     canonical: "https://medexia-akt.com/faq",
   },

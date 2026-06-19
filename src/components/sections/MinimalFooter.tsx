@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-
 const RESOURCE_LINKS = [
   { href: "/demo", label: "Demo" },
   { href: "/topics", label: "Topics" },
@@ -11,6 +9,25 @@ const RESOURCE_LINKS = [
   { href: "/best-akt-question-bank", label: "Question banks" },
   { href: "/akt-exam-dates", label: "Exam dates" },
   { href: "/faq", label: "FAQ" },
+];
+
+const SOURCE_LINKS = [
+  {
+    href: "https://www.rcgp.org.uk/mrcgp-exams/applied-knowledge-test",
+    label: "RCGP AKT",
+  },
+  {
+    href: "https://www.rcgp.org.uk/mrcgp-exams/gp-curriculum/clinical-topic-guides",
+    label: "RCGP curriculum",
+  },
+  {
+    href: "https://cks.nice.org.uk/",
+    label: "NICE CKS",
+  },
+  {
+    href: "https://bnf.nice.org.uk/",
+    label: "BNF",
+  },
 ];
 
 export function MinimalFooter() {
@@ -49,6 +66,25 @@ export function MinimalFooter() {
           refer to examinations administered by the RCGP.
         </p>
 
+        <nav
+          aria-label="Reference sources"
+          className="mx-auto mb-6 flex max-w-[640px] flex-wrap justify-center gap-x-4 gap-y-2 text-[12px]"
+          style={{ color: "rgba(232,236,255,.42)" }}
+        >
+          <span>Sources:</span>
+          {SOURCE_LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-white/70"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
         {/* Brand + legal row */}
         <div
           className="flex flex-col items-center gap-4 border-t pt-6 md:flex-row md:justify-between"
@@ -60,7 +96,13 @@ export function MinimalFooter() {
               className="h-8 w-8 overflow-hidden rounded-xl border"
               style={{ borderColor: "rgba(255,255,255,.08)" }}
             >
-              <Image src="/app-icon.png" alt="AKT Navigator" width={32} height={32} className="rounded-lg" />
+              <img
+                src="/app-icon.png"
+                alt="AKT Navigator"
+                width={32}
+                height={32}
+                className="rounded-lg"
+              />
             </div>
             <span
               className="text-[14px] font-semibold"

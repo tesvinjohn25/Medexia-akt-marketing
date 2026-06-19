@@ -18,13 +18,23 @@ const topicTitleOverrides: Record<string, string> = {
   "continuity-quality-safety-prescribing": "Prescribing, QI and Safety — AKT",
 };
 
+function compactMetaDescription(description: string) {
+  if (description.length <= 160) return description;
+
+  const trimmed = description.slice(0, 157);
+  const lastSpace = trimmed.lastIndexOf(" ");
+  return `${trimmed.slice(0, lastSpace > 120 ? lastSpace : 157)}...`;
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const topic = aktTopics.find((t) => t.slug === slug);
   if (!topic) return {};
 
   const title = topicTitleOverrides[topic.slug] ?? `${topic.name} — AKT`;
-  const description = topic.metaDescription || topic.description;
+  const description = compactMetaDescription(
+    topic.metaDescription || topic.description,
+  );
 
   return {
     title,

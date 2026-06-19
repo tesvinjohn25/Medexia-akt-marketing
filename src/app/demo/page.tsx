@@ -12,7 +12,7 @@ const DEMO_QUESTIONS = "https://app.medexia-akt.com/demo/questions";
 export const metadata: Metadata = {
   title: "Try AKT Navigator Free — Audio Sample + 5 Real AKT Questions",
   description:
-    "Try AKT Navigator without an account: listen to a real sample from the 90+ hour MRCGP AKT audio library and sit five real AKT-style questions with full structured explanations. Free, no signup.",
+    "Try AKT Navigator free: hear a real MRCGP AKT audio sample and answer five AKT-style questions with structured explanations. No signup.",
   alternates: {
     canonical: "https://medexia-akt.com/demo",
   },

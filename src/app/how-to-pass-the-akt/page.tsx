@@ -8,7 +8,7 @@ import { EXAM_FORMAT } from "@/data/exam-dates";
 export const metadata: Metadata = {
   title: "How to Pass the AKT — Study Guide for GP Trainees (2026)",
   description:
-    "Complete AKT study guide: exam format (160 Qs, 2h40m), pass rate (~75%), study strategies, common mistakes, topic breakdown, and free revision resources. Written for GP trainees by a GP trainee.",
+    "How to pass the MRCGP AKT: exam format, pass rate, study strategy, common mistakes, topic breakdown and free revision resources.",
   alternates: {
     canonical: "https://medexia-akt.com/how-to-pass-the-akt",
   },

@@ -6,7 +6,7 @@ import { MinimalFooter } from "@/components/sections/MinimalFooter";
 export const metadata: Metadata = {
   title: "Best AKT Question Bank 2026",
   description:
-    "Honest comparison of AKT question banks for GP trainees: PassMedicine, Pastest, BMJ OnExamination, i-Medics, and AKT Navigator. Features, prices, question counts, and what actually helps you pass.",
+    "Compare AKT question banks for GP trainees: PassMedicine, Pastest, BMJ OnExamination, i-Medics and AKT Navigator features, prices and audio.",
   alternates: {
     canonical: "https://medexia-akt.com/best-akt-question-bank",
   },

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     template: "%s | Medexia",
   },
   description:
-    "Audio-first revision for the RCGP MRCGP AKT exam: free syllabus-mapped questions, mocks with AI debriefs, and 90+ hours of audio across all 32 topics. Free until 8 July 2026, then full audio from £59.",
+    "MRCGP AKT audio revision with free syllabus-mapped questions, mocks and 90+ hours of audio. Free until 8 July; full audio from £59.",
   keywords: [
     "AKT",
     "MRCGP AKT",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "MRCGP AKT Revision — The Whole AKT in 90 Hours of Audio",
     description:
-      "Free syllabus-mapped AKT questions, mocks with AI debriefs, and 90+ hours of audio across all 32 topics. Free until 8 July 2026, then full audio from £59.",
+      "Free syllabus-mapped AKT questions, mocks and 90+ hours of audio across all 32 topics. Free until 8 July; full audio from £59.",
     type: "website",
     url: "https://medexia-akt.com",
     siteName: "AKT Navigator by Medexia",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "MRCGP AKT Revision — The Whole AKT in 90 Hours of Audio",
     description:
-      "Free syllabus-mapped AKT questions, mocks with AI debriefs, and 90+ hours of audio across all 32 topics. Free until 8 July 2026, then full audio from £59.",
+      "Free syllabus-mapped AKT questions, mocks and 90+ hours of audio across all 32 topics. Free until 8 July; full audio from £59.",
     // twitter:image auto-wired from src/app/twitter-image.tsx
   },
   robots: {

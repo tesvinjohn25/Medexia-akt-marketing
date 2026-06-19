@@ -6,7 +6,7 @@ import { MinimalFooter } from "@/components/sections/MinimalFooter";
 export const metadata: Metadata = {
   title: "AKT Mock Exam — Free Timed Mocks with AI Debriefs",
   description:
-    "Generate free AKT mock exams from a question bank covering every syllabus topic. Choose 40, 80, or 160 questions. Timed to match real exam conditions with AI-powered debriefs that spot patterns you cannot see yourself.",
+    "Generate free AKT mock exams from syllabus-mapped questions. Choose 40, 80 or 160 questions with timed practice and AI debriefs.",
   alternates: {
     canonical: "https://medexia-akt.com/akt-mock-exam",
   },

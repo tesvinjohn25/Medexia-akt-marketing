@@ -8,7 +8,7 @@ import { EXAM_SITTINGS, EXAM_FORMAT } from "@/data/exam-dates";
 export const metadata: Metadata = {
   title: "AKT Exam Dates 2026 — July Sitting",
   description:
-    "RCGP AKT exam dates for 2026: the next sitting is 7 July (the April sitting was 27 April). Booking windows, exam format (160 questions, 2h40m), eligibility, and free AKT question practice.",
+    "RCGP AKT exam dates 2026: next sitting 7 July, booking via MyRCGP, 160-question format, eligibility and free AKT practice.",
   alternates: {
     canonical: "https://medexia-akt.com/akt-exam-dates",
   },

@@ -13,6 +13,10 @@ export const FAQS: Faq[] = [
     a: "The RCGP runs AKT sittings at fixed points in the year, booked through the RCGP and sat at Pearson VUE test centres. The next 2026 sitting is on 7 July; the April 2026 sitting took place on 27 April. You are eligible to sit the AKT from ST2 onwards, and most trainees take it during ST2 or ST3. Booking windows open in advance and places at popular test centres fill quickly, so book early once your sitting is confirmed.",
   },
   {
+    q: "How much does the AKT exam cost?",
+    a: "The RCGP currently lists the Applied Knowledge Test examination fee as £481. From April 2026, staged payments apply through the RCGP booking process. The AKT is for ST2 and ST3 GP trainees, and attempt limits are four or six depending on when you entered GP specialty training. Always check the official RCGP fee and application pages before booking.",
+  },
+  {
     q: "How long do I need to revise for the AKT?",
     a: "Most trainees start 3 to 6 months before the exam and study a few evenings a week. But if you're short on time, AKT Navigator is built around that. A typical session is 15 to 20 minutes where you work through 10 questions picked specifically for your weak areas. You can pause and come back anytime. And if you don't even have 15 minutes, put the audiobooks on. Over 90 hours of exam focused content you can listen to on your commute, at the gym, or between patients. It's designed to fit around a busy trainee's life, not replace it.",
   },

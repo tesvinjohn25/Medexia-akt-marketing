@@ -433,6 +433,11 @@ export default function BestAktQuestionBankPage() {
                   desc: "July and October sittings with countdown",
                 },
                 {
+                  href: "/akt-exam-fee",
+                  title: "AKT exam fee",
+                  desc: "Fee, booking, eligibility and attempts",
+                },
+                {
                   href: "/akt-pass-rate",
                   title: "AKT pass rate",
                   desc: "Recent official pass rates and pass marks",

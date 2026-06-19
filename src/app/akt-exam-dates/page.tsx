@@ -287,6 +287,14 @@ export default function AktExamDatesPage() {
               </a>{" "}
               or{" "}
               <a
+                href="/akt-exam-fee"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                check AKT fees and eligibility
+              </a>{" "}
+              or{" "}
+              <a
                 href="https://app.medexia-akt.com"
                 className="font-medium transition-colors"
                 style={{ color: "var(--brand-violet-light)" }}

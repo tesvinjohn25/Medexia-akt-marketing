@@ -29,6 +29,8 @@ export const metadata: Metadata = {
     "AKT pass rate",
     "AKT feedback reports",
     "AKT statistics",
+    "AKT exam fee",
+    "AKT eligibility",
     "AKT evidence based practice",
     "MRCGP revision",
     "GP training",

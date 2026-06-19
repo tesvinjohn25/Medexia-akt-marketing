@@ -14,6 +14,11 @@ Key facts:
   October final booking deadline: 1 September 2026. October Pearson
   centre booking window: 7-16 September 2026. October results: 25
   November 2026 at 17:00.
+- The current RCGP AKT examination fee is £481. AKT eligibility is
+  limited to ST2 and ST3 GP trainees. Attempt limits are four for
+  trainees already in training on 1 August 2023, or six for trainees
+  entering GP specialty training for the first time on or after 2
+  August 2023.
 - The AKT pass rate and pass mark vary by sitting. Official RCGP
   reports show 80.22% of all candidates passed in April 2026 with a
   107/160 pass mark, 76.52% passed in January 2026 with a 108/160
@@ -55,6 +60,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [Demo](https://medexia-akt.com/demo): try the app free — audio sample + 5 real questions
 - [How to pass the AKT](https://medexia-akt.com/how-to-pass-the-akt): study guide — format, pass rate, strategy, topic breakdown
 - [AKT exam dates](https://medexia-akt.com/akt-exam-dates): July and October 2026 sittings, booking windows, results dates, eligibility
+- [AKT exam fee](https://medexia-akt.com/akt-exam-fee): current RCGP AKT fee, booking, eligibility and attempt limits
 - [AKT pass rate](https://medexia-akt.com/akt-pass-rate): official recent pass rates, pass marks and candidate numbers from RCGP feedback reports
 - [AKT feedback reports](https://medexia-akt.com/akt-feedback-reports): latest RCGP feedback report weak areas and recurring revision themes
 - [AKT statistics](https://medexia-akt.com/akt-statistics): evidence-based practice, data interpretation and key statistics formulas

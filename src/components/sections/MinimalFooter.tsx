@@ -11,6 +11,7 @@ const RESOURCE_LINKS = [
   { href: "/akt-pass-rate", label: "Pass rate" },
   { href: "/akt-feedback-reports", label: "Feedback reports" },
   { href: "/akt-statistics", label: "Statistics" },
+  { href: "/akt-exam-fee", label: "Fees" },
   { href: "/faq", label: "FAQ" },
 ];
 

@@ -58,6 +58,6 @@ export const EXAM_FORMAT = {
   durationLabel: "2 hours 40 minutes",
   negativeMarking: false,
   eligibility: ["ST2", "ST3"],
-  passRate: "70.63-76.52%",
-  passMark: "108-109 / 160",
+  passRate: "70.63-80.22%",
+  passMark: "107-109 / 160",
 } as const;

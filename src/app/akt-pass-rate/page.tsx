@@ -7,7 +7,7 @@ import { MinimalFooter } from "@/components/sections/MinimalFooter";
 export const metadata: Metadata = {
   title: "MRCGP AKT Pass Rate and Pass Mark",
   description:
-    "MRCGP AKT pass rate and pass mark: January 2026 pass rate 76.52%, October 2025 pass rate 70.63%, with pass marks from official RCGP reports.",
+    "MRCGP AKT pass rate and pass mark: April 2026 pass rate 80.22%, January 2026 pass rate 76.52%, with pass marks from official RCGP reports.",
   alternates: {
     canonical: "https://medexia-akt.com/akt-pass-rate",
   },
@@ -21,6 +21,16 @@ export const metadata: Metadata = {
 };
 
 const reports = [
+  {
+    sitting: "April 2026",
+    exam: "AKT 59",
+    candidates: "1,440",
+    passMark: "107 / 160",
+    overallPassRate: "80.22%",
+    firstTimePassRate: "88.68%",
+    source:
+      "https://www.rcgp.org.uk/getmedia/efd08d10-8c08-4a6a-a0d5-9a528256f4c8/April-2026-AKT-feedback-report.pdf",
+  },
   {
     sitting: "January 2026",
     exam: "AKT 58",
@@ -47,12 +57,12 @@ const faqs = [
   {
     question: "What is the MRCGP AKT pass rate?",
     answer:
-      "The pass rate changes each sitting. In the January 2026 RCGP AKT feedback report, 76.52% of all candidates passed and 88.39% of UKG first-time takers passed. In October 2025, 70.63% of all candidates passed and 88.84% of UKG first-time takers passed.",
+      "The pass rate changes each sitting. In the April 2026 RCGP AKT feedback report, 80.22% of all candidates passed and 88.68% of UKG first-time takers passed. In January 2026, 76.52% of all candidates passed and 88.39% of UKG first-time takers passed.",
   },
   {
     question: "What score do you need to pass the AKT?",
     answer:
-      "There is no fixed score that guarantees a pass. The pass mark is set for each sitting. The January 2026 pass mark was 108 out of 160. The October 2025 pass mark was 109 out of 160.",
+      "There is no fixed score that guarantees a pass. The pass mark is set for each sitting. The April 2026 pass mark was 107 out of 160. The January 2026 pass mark was 108 out of 160.",
   },
   {
     question: "Is 75% enough to pass the AKT?",
@@ -129,8 +139,8 @@ export default function AktPassRatePage() {
             style={{ color: "var(--fg-mid)" }}
           >
             The AKT pass rate changes every sitting. The latest official RCGP
-            feedback reports show an overall pass rate of 76.52% in January
-            2026 and 70.63% in October 2025.
+            feedback reports show an overall pass rate of 80.22% in April
+            2026 and 76.52% in January 2026.
           </p>
 
           <div
@@ -150,11 +160,11 @@ export default function AktPassRatePage() {
               className="mt-2 text-[14px] leading-[1.65]"
               style={{ color: "var(--fg-mid)" }}
             >
-              In January 2026, <strong>76.52%</strong> of all AKT candidates
-              passed and the pass mark was <strong>108 out of 160</strong>. In
-              October 2025, <strong>70.63%</strong> passed and the pass mark was{" "}
-              <strong>109 out of 160</strong>. UKG first-time takers had higher
-              pass rates in both reports, at 88.39% and 88.84%.
+              In April 2026, <strong>80.22%</strong> of all AKT candidates
+              passed and the pass mark was <strong>107 out of 160</strong>. In
+              January 2026, <strong>76.52%</strong> passed and the pass mark was{" "}
+              <strong>108 out of 160</strong>. UKG first-time takers had higher
+              pass rates in both reports, at 88.68% and 88.39%.
             </p>
           </div>
 

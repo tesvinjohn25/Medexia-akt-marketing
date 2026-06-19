@@ -58,7 +58,7 @@ export default function HowToPassTheAktPage() {
             name: "What is the AKT pass rate?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "The pass rate changes each sitting. Official RCGP feedback reports show 76.52% of all candidates passed in January 2026 and 70.63% passed in October 2025. The pass marks were 108 out of 160 and 109 out of 160 respectively.",
+              text: "The pass rate changes each sitting. Official RCGP feedback reports show 80.22% of all candidates passed in April 2026, 76.52% passed in January 2026, and 70.63% passed in October 2025. The pass marks were 107, 108 and 109 out of 160 respectively.",
             },
           },
           {

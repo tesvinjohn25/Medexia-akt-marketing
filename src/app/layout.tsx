@@ -28,6 +28,7 @@ export const metadata: Metadata = {
     "AKT question bank",
     "AKT mock exam",
     "AKT exam dates",
+    "AKT exam format",
     "AKT pass rate",
     "AKT feedback reports",
     "AKT statistics",

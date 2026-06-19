@@ -34,7 +34,7 @@ export const FAQS: Faq[] = [
   },
   {
     q: "How many questions are on the AKT?",
-    a: "Since October 2025 the AKT has 160 questions in 2 hours and 40 minutes. That works out to one minute per question with no negative marking. AKT Navigator lets you generate mock exams at 40, 80, or 160 questions so you can practise under real exam conditions or do shorter sessions when time is tight. The debrief afterwards goes way beyond your score. It picks up on hidden patterns like where you're losing time, whether you're getting fatigued towards the end of the exam, and topics you got confidently wrong which are the most dangerous kind. It tells you exactly what to work on next. And it's all linked to an AI tool you can chat with about your performance and get specific advice on how to close your gaps.",
+    a: "Since October 2025 the AKT has 160 single-best-answer questions in 2 hours and 40 minutes. That works out to one minute per question with no negative marking. The exam is 80% clinical knowledge, 10% evidence-based practice and 10% primary care organisation and management. AKT Navigator lets you generate mock exams at 40, 80, or 160 questions so you can practise under real exam conditions or do shorter sessions when time is tight. The debrief afterwards shows where you're losing time, whether accuracy drops towards the end, and topics you got confidently wrong.",
   },
   {
     q: "What is the AKT pass rate?",

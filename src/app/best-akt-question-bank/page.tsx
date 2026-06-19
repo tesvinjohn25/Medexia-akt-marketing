@@ -438,6 +438,11 @@ export default function BestAktQuestionBankPage() {
                   desc: "July and October sittings with countdown",
                 },
                 {
+                  href: "/akt-exam-format",
+                  title: "AKT exam format",
+                  desc: "160 questions, sections and pass-mark rules",
+                },
+                {
                   href: "/akt-exam-fee",
                   title: "AKT exam fee",
                   desc: "Fee, booking, eligibility and attempts",

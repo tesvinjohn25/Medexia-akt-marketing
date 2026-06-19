@@ -10,6 +10,10 @@
 Key facts:
 - The AKT is a 160-question multiple-choice exam taken over 2 hours 40
   minutes at Pearson VUE test centres (format updated October 2025).
+- The current AKT format is 160 single-best-answer questions in 2 hours
+  40 minutes: 80% clinical knowledge, 10% evidence-based practice and
+  10% primary care organisation and management. There is no negative
+  marking, and the pass mark varies by sitting.
 - Remaining UK AKT sittings in 2026: 7 July 2026 and 26 October 2026.
   October final booking deadline: 1 September 2026. October Pearson
   centre booking window: 7-16 September 2026. October results: 25
@@ -65,6 +69,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [How to pass the AKT](https://medexia-akt.com/how-to-pass-the-akt): study guide — format, pass rate, strategy, topic breakdown
 - [AKT revision plan](https://medexia-akt.com/akt-revision-plan): 12-week, 8-week and 4-week AKT timetable for GP trainees
 - [AKT exam dates](https://medexia-akt.com/akt-exam-dates): July and October 2026 sittings, booking windows, results dates, eligibility
+- [AKT exam format](https://medexia-akt.com/akt-exam-format): 160-question format, section weighting, eligibility, marking and pass-mark rules
 - [AKT exam fee](https://medexia-akt.com/akt-exam-fee): current RCGP AKT fee, booking, eligibility and attempt limits
 - [AKT pass rate](https://medexia-akt.com/akt-pass-rate): official recent pass rates, pass marks and candidate numbers from RCGP feedback reports
 - [AKT feedback reports](https://medexia-akt.com/akt-feedback-reports): latest RCGP feedback report weak areas and recurring revision themes

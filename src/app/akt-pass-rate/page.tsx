@@ -337,7 +337,16 @@ export default function AktPassRatePage() {
               For revision planning, treat the recent pass marks as a minimum
               line rather than a target. A timed mock score around 75% or above
               gives more breathing room, but you still need to check pacing,
-              fatigue and weak topics before relying on the number.
+              fatigue and weak topics before relying on the number. The{" "}
+              <a
+                href="/akt-exam-format"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT exam format guide
+              </a>{" "}
+              explains why the pass mark varies and how the current 160-question
+              paper is weighted.
             </p>
           </div>
 

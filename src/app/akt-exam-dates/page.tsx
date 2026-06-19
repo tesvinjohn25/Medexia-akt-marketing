@@ -211,13 +211,22 @@ export default function AktExamDatesPage() {
               Since October 2025, the AKT has {EXAM_FORMAT.questions} questions
               in {EXAM_FORMAT.durationLabel}. That works out to one minute per
               question. There is no negative marking, so you should answer every
-              question even if you are unsure.
+              question even if you are unsure. For the section weighting and
+              marking rules, see the{" "}
+              <a
+                href="/akt-exam-format"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT exam format guide
+              </a>
+              .
             </p>
             <p
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
-            The exam is sat at a Pearson VUE test centre. Since December 2025,
+              The exam is sat at a Pearson VUE test centre. Since December 2025,
               you book directly through MyRCGP without a separate reservation
               step. The RCGP publishes the reasonable adjustment deadlines,
               final booking deadlines, Pearson booking windows, test dates and

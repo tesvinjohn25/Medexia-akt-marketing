@@ -161,7 +161,15 @@ export default function HowToPassTheAktPage() {
               Since October 2025, the AKT has {EXAM_FORMAT.questions} questions
               in {EXAM_FORMAT.durationLabel}. That is one minute per question
               with no negative marking. The exam is computer-based and sat at a
-              Pearson VUE test centre. Check the{" "}
+              Pearson VUE test centre. See the{" "}
+              <a
+                href="/akt-exam-format"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                current AKT exam format
+              </a>{" "}
+              for section weighting and marking, then check the{" "}
               <a
                 href="/akt-exam-dates"
                 className="font-medium transition-colors"
@@ -491,6 +499,11 @@ export default function HowToPassTheAktPage() {
                   href: "/akt-exam-dates",
                   title: "Exam dates 2026",
                   desc: "July and October sittings with booking windows",
+                },
+                {
+                  href: "/akt-exam-format",
+                  title: "AKT exam format",
+                  desc: "160 questions, timing, sections and marking",
                 },
                 {
                   href: "/akt-revision-plan",

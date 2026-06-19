@@ -556,6 +556,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Safeguarding, records and data protection",
                 },
                 {
+                  href: "/akt-neurology",
+                  title: "AKT neurology",
+                  desc: "Gait, headache red flags and seizures",
+                },
+                {
                   href: "/akt-syllabus",
                   title: "AKT syllabus",
                   desc: "80/10/10 weighting and all 32 RCGP topics",

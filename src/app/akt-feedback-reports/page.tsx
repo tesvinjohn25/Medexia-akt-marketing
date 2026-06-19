@@ -69,9 +69,10 @@ const reports = [
 
 const recurringThemes = [
   {
-    title: "Neurology",
+    title: "AKT neurology",
     detail:
       "Recognition of symptoms, diagnosis, gait disturbance and important neurological presentations appear repeatedly in recent RCGP feedback.",
+    href: "/akt-neurology",
   },
   {
     title: "AKT prescribing and medication safety",

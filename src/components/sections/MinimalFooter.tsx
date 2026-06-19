@@ -18,6 +18,7 @@ const RESOURCE_LINKS = [
   { href: "/akt-statistics-formulas", label: "Formulas" },
   { href: "/akt-prescribing-and-medication-safety", label: "Prescribing" },
   { href: "/akt-confidentiality-safeguarding-data-protection", label: "Confidentiality" },
+  { href: "/akt-neurology", label: "Neurology" },
   { href: "/akt-syllabus", label: "Syllabus" },
   { href: "/akt-exam-fee", label: "Fees" },
   { href: "/faq", label: "FAQ" },

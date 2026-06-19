@@ -370,7 +370,15 @@ export default function AktSyllabusPage() {
               >
                 AKT confidentiality and safeguarding guide
               </a>{" "}
-              alongside the statistics formulas page.
+              alongside the{" "}
+              <a
+                href="/akt-neurology"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT neurology guide
+              </a>{" "}
+              and statistics formulas page.
             </p>
           </section>
 

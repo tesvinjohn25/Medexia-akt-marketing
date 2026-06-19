@@ -97,6 +97,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: "https://medexia-akt.com/akt-neurology",
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    },
+    {
       url: "https://medexia-akt.com/akt-syllabus",
       lastModified: LAST_MODIFIED,
       changeFrequency: "monthly" as const,

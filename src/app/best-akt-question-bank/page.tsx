@@ -487,6 +487,11 @@ export default function BestAktQuestionBankPage() {
                   title: "AKT confidentiality",
                   desc: "Safeguarding, records and data protection",
                 },
+                {
+                  href: "/akt-neurology",
+                  title: "AKT neurology",
+                  desc: "Gait, headache red flags and seizures",
+                },
               ].map((link) => (
                 <a
                   key={link.href}

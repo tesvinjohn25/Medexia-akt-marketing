@@ -222,6 +222,20 @@ export default function AktSyllabusPage() {
                 </article>
               ))}
             </div>
+            <p
+              className="mt-4 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              For the evidence-based practice section, keep the{" "}
+              <a
+                href="/akt-statistics-formulas"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT statistics formulas
+              </a>{" "}
+              close while practising NNT, NNH and diagnostic-test questions.
+            </p>
           </section>
 
           <section className="mt-10">
@@ -306,7 +320,7 @@ export default function AktSyllabusPage() {
                 },
                 {
                   title: "Do not skip the 20%",
-                  text: "Evidence-based practice, statistics, organisation and management account for around 32 questions in the current 160-question format.",
+                  text: "Evidence-based practice, statistics, organisation and management account for around 32 questions in the current 160-question format. Use the AKT statistics formulas page for NNT, NNH and diagnostic-test formulas.",
                 },
                 {
                   title: "Pair questions with audio",

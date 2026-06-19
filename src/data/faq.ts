@@ -41,6 +41,10 @@ export const FAQS: Faq[] = [
     a: "Since October 2025 the AKT has 160 single-best-answer questions in 2 hours and 40 minutes. That works out to one minute per question with no negative marking. The exam is 80% clinical knowledge, 10% evidence-based practice and 10% primary care organisation and management. AKT Navigator lets you generate mock exams at 40, 80, or 160 questions so you can practise under real exam conditions or do shorter sessions when time is tight. The debrief afterwards shows where you're losing time, whether accuracy drops towards the end, and topics you got confidently wrong.",
   },
   {
+    q: "What AKT statistics formulas should I know?",
+    a: "Know sensitivity, specificity, PPV, NPV, absolute risk, relative risk, absolute risk reduction, absolute risk increase, NNT and NNH. The AKT also tests interpretation, so practise explaining results, reading confidence intervals, and using charts or prescribing dashboards rather than only memorising formulas.",
+  },
+  {
     q: "What is the AKT pass rate?",
     a: "The pass rate changes each sitting. In official RCGP feedback reports, 80.22% of all candidates passed in April 2026, 76.52% passed in January 2026, and 70.63% passed in October 2025. The pass marks were 107, 108 and 109 out of 160 respectively. UKG first-time pass rates were higher, at 88.68%, 88.39% and 88.84%. The areas where people struggle most include data interpretation, prescribing, organisation topics and time pressure. AKT Navigator targets these weak spots with syllabus-mapped practice, timed mocks, debriefs and 90+ hours of audio revision.",
   },

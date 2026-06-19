@@ -541,6 +541,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Evidence-based practice and key formulas",
                 },
                 {
+                  href: "/akt-statistics-formulas",
+                  title: "AKT statistics formulas",
+                  desc: "NNT, NNH, sensitivity, specificity, PPV and NPV",
+                },
+                {
                   href: "/akt-syllabus",
                   title: "AKT syllabus",
                   desc: "80/10/10 weighting and all 32 RCGP topics",

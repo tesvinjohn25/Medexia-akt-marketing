@@ -472,6 +472,11 @@ export default function BestAktQuestionBankPage() {
                   title: "AKT statistics",
                   desc: "Evidence-based practice and key formulas",
                 },
+                {
+                  href: "/akt-statistics-formulas",
+                  title: "AKT statistics formulas",
+                  desc: "NNT, NNH, sensitivity, specificity, PPV and NPV",
+                },
               ].map((link) => (
                 <a
                   key={link.href}

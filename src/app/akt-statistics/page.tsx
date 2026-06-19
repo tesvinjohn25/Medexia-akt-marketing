@@ -273,6 +273,20 @@ export default function AktStatisticsPage() {
             >
               How to revise statistics without wasting time
             </h2>
+            <p
+              className="mt-4 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              If you want the compact version, use the{" "}
+              <a
+                href="/akt-statistics-formulas"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT statistics formulas guide
+              </a>{" "}
+              for NNT, NNH, sensitivity, specificity, PPV and NPV.
+            </p>
             <div className="mt-4 grid gap-3">
               {[
                 {

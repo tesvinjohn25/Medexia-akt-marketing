@@ -612,6 +612,21 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If smoking, alcohol or substance misuse was weak, use the{" "}
+              <a
+                href="/akt-smoking-alcohol-substance-misuse"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT smoking, alcohol and substance misuse guide
+              </a>{" "}
+              to revise smoking cessation, AUDIT, alcohol withdrawal risk,
+              opioid substitution, harm reduction and safeguarding.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               If your mistakes were around risk, prescribing or legal
               frameworks, use the{" "}
               <a

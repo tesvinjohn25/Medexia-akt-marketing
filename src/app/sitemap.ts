@@ -193,6 +193,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: "https://medexia-akt.com/akt-smoking-alcohol-substance-misuse",
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    },
+    {
       url: "https://medexia-akt.com/akt-mental-health",
       lastModified: LAST_MODIFIED,
       changeFrequency: "monthly" as const,

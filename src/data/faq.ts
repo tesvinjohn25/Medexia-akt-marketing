@@ -117,6 +117,10 @@ export const FAQS: Faq[] = [
     a: "Prioritise sepsis recognition, acute deterioration, NEWS2 as an adjunct, anaphylaxis, acute asthma, chest pain, acute abdomen, same-day or out-of-hours triage, emergency escalation and explicit safety-netting.",
   },
   {
+    q: "What smoking, alcohol and substance misuse topics should I revise for the AKT?",
+    a: "Prioritise smoking cessation, AUDIT scoring, alcohol withdrawal risk, detox thresholds, relapse prevention, opioid substitution, naloxone, blood-borne virus testing, harm reduction and safeguarding.",
+  },
+  {
     q: "What mental health topics should I revise for the AKT?",
     a: "Prioritise depression severity, anxiety and panic, suicide risk, self-harm, SSRI prescribing, psychosis, antipsychotic monitoring, eating disorders, safeguarding, the Mental Health Act and the Mental Capacity Act.",
   },

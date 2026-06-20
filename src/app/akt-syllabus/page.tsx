@@ -518,6 +518,29 @@ export default function AktSyllabusPage() {
               className="mt-3 text-[15px] leading-[1.65]"
               style={{ color: "var(--fg-mid)" }}
             >
+              For smoking, alcohol and substance misuse, use the{" "}
+              <a
+                href="/akt-smoking-alcohol-substance-misuse"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT smoking, alcohol and substance misuse guide
+              </a>{" "}
+              with the{" "}
+              <a
+                href="/topics/smoking-alcohol-substance-misuse"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                substance misuse topic page
+              </a>{" "}
+              to revise smoking cessation, AUDIT, alcohol withdrawal, opioid
+              dependence, harm reduction and safeguarding.
+            </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               For respiratory presentations, use the{" "}
               <a
                 href="/akt-respiratory"

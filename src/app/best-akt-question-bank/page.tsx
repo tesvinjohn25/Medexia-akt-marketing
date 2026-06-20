@@ -568,6 +568,11 @@ export default function BestAktQuestionBankPage() {
                   desc: "Sepsis, NEWS2 and emergency escalation",
                 },
                 {
+                  href: "/akt-smoking-alcohol-substance-misuse",
+                  title: "AKT substance misuse",
+                  desc: "Smoking, alcohol and opioid dependence",
+                },
+                {
                   href: "/akt-mental-health",
                   title: "AKT mental health",
                   desc: "Depression, suicide risk and SSRI prescribing",

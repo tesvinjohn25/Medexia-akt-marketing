@@ -433,6 +433,14 @@ export default function AktSyllabusPage() {
               >
                 AKT musculoskeletal guide
               </a>{" "}
+              ,{" "}
+              <a
+                href="/akt-gastroenterology"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT gastroenterology guide
+              </a>{" "}
               and statistics formulas page.
             </p>
             <p
@@ -546,6 +554,29 @@ export default function AktSyllabusPage() {
               </a>{" "}
               to revise back pain red flags, arthritis, osteoporosis, gout and
               urgent referral.
+            </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              For gastroenterology presentations, use the{" "}
+              <a
+                href="/akt-gastroenterology"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT gastroenterology guide
+              </a>{" "}
+              with the{" "}
+              <a
+                href="/topics/gastroenterology"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                gastroenterology topic page
+              </a>{" "}
+              to revise IBS, IBD, coeliac disease, dyspepsia, liver disease and
+              GI cancer red flags.
             </p>
             <p
               className="mt-3 text-[15px] leading-[1.65]"

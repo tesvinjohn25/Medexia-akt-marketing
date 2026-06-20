@@ -26,6 +26,7 @@ const RESOURCE_LINKS = [
   { href: "/akt-diabetes-endocrinology", label: "Diabetes" },
   { href: "/akt-renal-urology", label: "Renal" },
   { href: "/akt-musculoskeletal", label: "MSK" },
+  { href: "/akt-gastroenterology", label: "Gastro" },
   { href: "/akt-minor-illness-urgent-care", label: "Minor illness" },
   { href: "/akt-mental-health", label: "Mental health" },
   { href: "/akt-womens-health", label: "Women's health" },

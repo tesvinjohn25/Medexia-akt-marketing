@@ -87,6 +87,10 @@ Key facts:
   flags, cauda equina, osteoarthritis, rheumatoid arthritis referral,
   osteoporosis risk assessment, gout, septic arthritis, fracture
   suspicion, analgesic safety and when imaging is not needed.
+- AKT gastroenterology revision should cover IBS criteria, faecal
+  calprotectin, IBD flares, coeliac serology, dyspepsia, H. pylori
+  testing, GORD alarm symptoms, abnormal LFTs, NAFLD fibrosis
+  assessment, rectal bleeding and GI cancer red flags.
 - AKT minor illness and urgent care revision should cover sepsis
   recognition, NEWS2 as an adjunct to clinical judgement, delayed or
   back-up antibiotics, acute otitis media, tonsillitis, sinusitis, UTI
@@ -152,6 +156,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [AKT diabetes and endocrinology](https://medexia-akt.com/akt-diabetes-endocrinology): diabetes medicines, HbA1c, thyroid tests, sick-day rules, obesity, adrenal disease and calcium disorders
 - [AKT renal and urology](https://medexia-akt.com/akt-renal-urology): CKD, eGFR, ACR, AKI, UTI, haematuria, LUTS, PSA, renal stones and urgent referral red flags
 - [AKT musculoskeletal](https://medexia-akt.com/akt-musculoskeletal): back pain red flags, osteoarthritis, rheumatoid arthritis, osteoporosis, gout, fractures and urgent referral
+- [AKT gastroenterology](https://medexia-akt.com/akt-gastroenterology): IBS, IBD, coeliac disease, dyspepsia, H. pylori, liver disease and GI cancer red flags
 - [AKT minor illness and urgent care](https://medexia-akt.com/akt-minor-illness-urgent-care): sepsis recognition, NEWS2, delayed antibiotics, common infections and safety-netting
 - [AKT mental health](https://medexia-akt.com/akt-mental-health): depression, anxiety, suicide risk, self-harm, SSRI prescribing, psychosis and legal frameworks
 - [AKT women's health](https://medexia-akt.com/akt-womens-health): contraception, HRT, menopause, abnormal bleeding, breast lumps and cancer red flags

@@ -528,6 +528,11 @@ export default function BestAktQuestionBankPage() {
                   desc: "Back pain, arthritis and osteoporosis",
                 },
                 {
+                  href: "/akt-gastroenterology",
+                  title: "AKT gastroenterology",
+                  desc: "IBS, IBD, coeliac and red flags",
+                },
+                {
                   href: "/akt-minor-illness-urgent-care",
                   title: "AKT minor illness",
                   desc: "Sepsis, delayed antibiotics and safety-netting",

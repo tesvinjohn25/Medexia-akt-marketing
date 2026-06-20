@@ -338,6 +338,22 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If leadership, teamwork or practice-system questions were weak,
+              use the{" "}
+              <a
+                href="/akt-leadership-management"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT leadership and management guide
+              </a>{" "}
+              to revise raising concerns, delegation, complaints, resource use,
+              audit, QI and safe repeat-prescribing or test-result workflows.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               If evidence interpretation was weak, use the{" "}
               <a
                 href="/akt-evidence-in-practice"

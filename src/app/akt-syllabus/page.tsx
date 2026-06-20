@@ -372,6 +372,14 @@ export default function AktSyllabusPage() {
               </a>
               {", "}
               <a
+                href="/akt-leadership-management"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT leadership and management guide
+              </a>
+              {", "}
+              <a
                 href="/akt-evidence-in-practice"
                 className="font-medium transition-colors"
                 style={{ color: "var(--brand-violet-light)" }}

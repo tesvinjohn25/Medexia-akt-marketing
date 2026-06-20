@@ -53,6 +53,10 @@ export const FAQS: Faq[] = [
     a: "Prioritise reasonable adjustments, accessible information, professional interpreter use, disability and neurodiversity access, health inequalities, cultural context, screening uptake, inclusive consulting and practical systems that remove barriers to safe GP care.",
   },
   {
+    q: "What leadership and management topics should I revise for the AKT?",
+    a: "Prioritise teamwork, delegation, supervision, raising patient-safety concerns, complaints, duty of candour, resource use, audit, PDSA, significant-event learning and safe practice systems such as repeat prescribing, recalls and test-result follow-up.",
+  },
+  {
     q: "What evidence in practice topics should I revise for the AKT?",
     a: "Prioritise study design, bias, confounding, diagnostic-test interpretation, confidence intervals, absolute and relative risk, NNT, NNH, shared decision making and applying guidelines to individual GP patients.",
   },

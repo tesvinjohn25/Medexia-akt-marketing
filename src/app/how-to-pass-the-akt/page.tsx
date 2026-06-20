@@ -546,6 +546,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Reasonable adjustments and access barriers",
                 },
                 {
+                  href: "/akt-leadership-management",
+                  title: "AKT leadership",
+                  desc: "Teams, concerns, complaints and systems",
+                },
+                {
                   href: "/akt-statistics",
                   title: "AKT statistics",
                   desc: "Evidence-based practice and key formulas",

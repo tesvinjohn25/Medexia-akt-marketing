@@ -853,6 +853,30 @@ export default function AktSyllabusPage() {
               className="mt-3 text-[15px] leading-[1.65]"
               style={{ color: "var(--fg-mid)" }}
             >
+              For learning-disability scenarios, use the{" "}
+              <a
+                href="/akt-learning-disability"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT learning disability guide
+              </a>{" "}
+              with the{" "}
+              <a
+                href="/topics/learning-disability"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                learning disability topic page
+              </a>{" "}
+              to revise annual health checks, reasonable adjustments,
+              diagnostic overshadowing, capacity, safeguarding and behaviour
+              that challenges.
+            </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               For mental-health scenarios, use the{" "}
               <a
                 href="/akt-mental-health"

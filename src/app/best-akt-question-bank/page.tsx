@@ -597,6 +597,11 @@ export default function BestAktQuestionBankPage() {
                   title: "AKT end of life",
                   desc: "Palliative care, DNACPR and capacity",
                 },
+                {
+                  href: "/akt-learning-disability",
+                  title: "AKT learning disability",
+                  desc: "Health checks and diagnostic overshadowing",
+                },
               ].map((link) => (
                 <a
                   key={link.href}

@@ -666,6 +666,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Palliative care, DNACPR and capacity",
                 },
                 {
+                  href: "/akt-learning-disability",
+                  title: "AKT learning disability",
+                  desc: "Health checks and diagnostic overshadowing",
+                },
+                {
                   href: "/akt-syllabus",
                   title: "AKT syllabus",
                   desc: "80/10/10 weighting and all 32 RCGP topics",

@@ -641,6 +641,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Contraception, HRT and bleeding red flags",
                 },
                 {
+                  href: "/akt-maternity-reproductive-health",
+                  title: "AKT maternity",
+                  desc: "Pregnancy, postnatal care and red flags",
+                },
+                {
                   href: "/akt-syllabus",
                   title: "AKT syllabus",
                   desc: "80/10/10 weighting and all 32 RCGP topics",

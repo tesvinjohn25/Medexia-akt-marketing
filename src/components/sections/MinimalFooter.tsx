@@ -35,6 +35,7 @@ const RESOURCE_LINKS = [
   { href: "/akt-minor-illness-urgent-care", label: "Minor illness" },
   { href: "/akt-mental-health", label: "Mental health" },
   { href: "/akt-womens-health", label: "Women's health" },
+  { href: "/akt-maternity-reproductive-health", label: "Maternity" },
   { href: "/akt-syllabus", label: "Syllabus" },
   { href: "/akt-exam-fee", label: "Fees" },
   { href: "/faq", label: "FAQ" },

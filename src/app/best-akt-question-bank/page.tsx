@@ -572,6 +572,11 @@ export default function BestAktQuestionBankPage() {
                   title: "AKT women's health",
                   desc: "Contraception, HRT and bleeding red flags",
                 },
+                {
+                  href: "/akt-maternity-reproductive-health",
+                  title: "AKT maternity",
+                  desc: "Pregnancy, postnatal care and red flags",
+                },
               ].map((link) => (
                 <a
                   key={link.href}

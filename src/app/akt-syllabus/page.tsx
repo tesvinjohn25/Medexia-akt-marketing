@@ -737,6 +737,30 @@ export default function AktSyllabusPage() {
               className="mt-3 text-[15px] leading-[1.65]"
               style={{ color: "var(--fg-mid)" }}
             >
+              For maternity and reproductive health presentations, use the{" "}
+              <a
+                href="/akt-maternity-reproductive-health"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT maternity and reproductive health guide
+              </a>{" "}
+              with the{" "}
+              <a
+                href="/topics/maternity-reproductive-health"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                maternity and reproductive health topic page
+              </a>{" "}
+              to revise antenatal care, early pregnancy bleeding,
+              pre-eclampsia, gestational diabetes, postnatal care and
+              contraception after pregnancy.
+            </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               For mental-health scenarios, use the{" "}
               <a
                 href="/akt-mental-health"

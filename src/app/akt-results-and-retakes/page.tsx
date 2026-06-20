@@ -474,6 +474,22 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If maternity or reproductive health questions were weak, use the{" "}
+              <a
+                href="/akt-maternity-reproductive-health"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT maternity and reproductive health guide
+              </a>{" "}
+              to revise antenatal care, early pregnancy bleeding,
+              pre-eclampsia, gestational diabetes, postnatal care and
+              contraception after pregnancy.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               If timing and triage were the issue, use the{" "}
               <a
                 href="/akt-minor-illness-urgent-care"

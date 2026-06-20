@@ -449,6 +449,14 @@ export default function AktSyllabusPage() {
               >
                 AKT ENT guide
               </a>{" "}
+              ,{" "}
+              <a
+                href="/akt-eyes-vision"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT eyes and vision guide
+              </a>{" "}
               and statistics formulas page.
             </p>
             <p
@@ -608,6 +616,29 @@ export default function AktSyllabusPage() {
               </a>{" "}
               to revise otitis media, sore throat, sinusitis, hearing loss,
               vertigo and head and neck cancer red flags.
+            </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              For eyes and vision presentations, use the{" "}
+              <a
+                href="/akt-eyes-vision"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT eyes and vision guide
+              </a>{" "}
+              with the{" "}
+              <a
+                href="/topics/eyes-vision"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                eyes and vision topic page
+              </a>{" "}
+              to revise red eye, visual loss, flashes and floaters, diplopia,
+              glaucoma, cataracts, AMD and diabetic eye disease.
             </p>
             <p
               className="mt-3 text-[15px] leading-[1.65]"

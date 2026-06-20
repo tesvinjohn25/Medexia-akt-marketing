@@ -412,6 +412,21 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If eyes and vision questions were weak, use the{" "}
+              <a
+                href="/akt-eyes-vision"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT eyes and vision guide
+              </a>{" "}
+              to revise red eye, sudden visual loss, flashes and floaters,
+              diplopia, glaucoma, cataracts, AMD and diabetic eye disease.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               If timing and triage were the issue, use the{" "}
               <a
                 href="/akt-minor-illness-urgent-care"

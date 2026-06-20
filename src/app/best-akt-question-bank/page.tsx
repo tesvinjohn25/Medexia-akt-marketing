@@ -538,6 +538,11 @@ export default function BestAktQuestionBankPage() {
                   desc: "Otitis, hearing loss and vertigo",
                 },
                 {
+                  href: "/akt-eyes-vision",
+                  title: "AKT eyes",
+                  desc: "Red eye, visual loss and glaucoma",
+                },
+                {
                   href: "/akt-minor-illness-urgent-care",
                   title: "AKT minor illness",
                   desc: "Sepsis, delayed antibiotics and safety-netting",

@@ -8,14 +8,14 @@ import { aktTopics } from "@/data/akt-topics";
 export const metadata: Metadata = {
   title: "MRCGP AKT Audio Revision — 90+ Hours",
   description:
-    "90+ hours of MRCGP AKT audio revision across all 32 RCGP topics. Listen on commutes, walks and clinics. Free until 8 July; audio from £59.",
+    "90+ hours of MRCGP AKT audio revision across all 32 RCGP topics. Free until 8 July 2026; £59 Early Access before then, £79 afterwards.",
   alternates: {
     canonical: "https://medexia-akt.com/akt-audio-revision",
   },
   openGraph: {
     title: "MRCGP AKT Audio Revision — 90+ Hours",
     description:
-      "Audio-first MRCGP AKT revision covering all 32 RCGP topics in 90+ hours. Free until 8 July; full audio from £59.",
+      "Audio-first MRCGP AKT revision covering all 32 RCGP topics in 90+ hours. Free until 8 July; £59 Early Access before then, £79 afterwards.",
     type: "website",
     url: "https://medexia-akt.com/akt-audio-revision",
   },
@@ -158,6 +158,30 @@ export default function AktAudioRevisionPage() {
             32 RCGP curriculum topics in over 90 hours, so you can revise while
             commuting, walking, doing childcare or recovering after clinic.
           </p>
+
+          <div
+            className="mt-6 rounded-xl p-4"
+            style={{
+              background: "rgba(52,211,153,.06)",
+              border: "1px solid rgba(52,211,153,.18)",
+            }}
+          >
+            <h2
+              className="text-[18px] font-semibold"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Quick answer
+            </h2>
+            <p
+              className="mt-2 text-[14px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              AKT Navigator gives GP trainees a 90+ hour audio-first MRCGP AKT
+              revision library mapped to all 32 RCGP curriculum topics. Full
+              access is free until 8 July 2026; after that, questions remain
+              free and full audio access is paid.
+            </p>
+          </div>
 
           {/* Key stats */}
           <div className="mt-8 grid gap-4 grid-cols-3">
@@ -406,7 +430,7 @@ export default function AktAudioRevisionPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Sources used for syllabus alignment
+              Official sources
             </h2>
             <p
               className="mt-3 text-[14px] leading-[1.7]"
@@ -479,7 +503,7 @@ export default function AktAudioRevisionPage() {
           <div className="mt-10">
             <a
               className="btn-primary inline-block text-[16px]"
-              href="https://app.medexia-akt.com"
+              href="https://app.medexia-akt.com/join/free"
             >
               Start free &rarr;
             </a>
@@ -491,7 +515,7 @@ export default function AktAudioRevisionPage() {
             style={{ color: "var(--fg-muted)" }}
           >
             Audio content aligned to NICE CKS and the RCGP curriculum. Last
-            reviewed March 2026.
+            reviewed June 2026.
           </p>
         </div>
       </section>

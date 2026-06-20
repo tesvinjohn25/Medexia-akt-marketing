@@ -536,6 +536,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Latest weak areas from official reports",
                 },
                 {
+                  href: "/akt-consulting-in-general-practice",
+                  title: "AKT consulting",
+                  desc: "Consent, safety-netting and shared decisions",
+                },
+                {
                   href: "/akt-statistics",
                   title: "AKT statistics",
                   desc: "Evidence-based practice and key formulas",

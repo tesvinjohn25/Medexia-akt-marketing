@@ -45,6 +45,10 @@ export const FAQS: Faq[] = [
     a: "Know sensitivity, specificity, PPV, NPV, absolute risk, relative risk, absolute risk reduction, absolute risk increase, NNT and NNH. The AKT also tests interpretation, so practise explaining results, reading confidence intervals, and using charts or prescribing dashboards rather than only memorising formulas.",
   },
   {
+    q: "What consulting topics should I revise for the AKT?",
+    a: "Prioritise shared decision making, consent, decision-specific capacity, risk communication, safety-netting, managing uncertainty, remote-consultation limits and communication barriers that affect safe GP care.",
+  },
+  {
     q: "What evidence in practice topics should I revise for the AKT?",
     a: "Prioritise study design, bias, confounding, diagnostic-test interpretation, confidence intervals, absolute and relative risk, NNT, NNH, shared decision making and applying guidelines to individual GP patients.",
   },

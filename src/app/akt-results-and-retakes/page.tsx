@@ -307,6 +307,21 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If consulting or communication-law questions were weak, use the{" "}
+              <a
+                href="/akt-consulting-in-general-practice"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT consulting in general practice guide
+              </a>{" "}
+              to revise shared decisions, consent, capacity, safety-netting,
+              remote consulting and uncertainty.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               If evidence interpretation was weak, use the{" "}
               <a
                 href="/akt-evidence-in-practice"

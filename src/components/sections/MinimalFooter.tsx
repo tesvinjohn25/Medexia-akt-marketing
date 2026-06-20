@@ -14,6 +14,7 @@ const RESOURCE_LINKS = [
   { href: "/akt-pass-rate", label: "Pass rate" },
   { href: "/akt-results-and-retakes", label: "Results" },
   { href: "/akt-feedback-reports", label: "Feedback reports" },
+  { href: "/akt-consulting-in-general-practice", label: "Consulting" },
   { href: "/akt-statistics", label: "Statistics" },
   { href: "/akt-evidence-in-practice", label: "Evidence" },
   { href: "/akt-statistics-formulas", label: "Formulas" },

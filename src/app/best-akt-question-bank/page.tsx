@@ -507,6 +507,11 @@ export default function BestAktQuestionBankPage() {
                   title: "AKT minor illness",
                   desc: "Sepsis, delayed antibiotics and safety-netting",
                 },
+                {
+                  href: "/akt-mental-health",
+                  title: "AKT mental health",
+                  desc: "Depression, suicide risk and SSRI prescribing",
+                },
               ].map((link) => (
                 <a
                   key={link.href}

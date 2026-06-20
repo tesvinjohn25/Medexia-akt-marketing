@@ -70,6 +70,10 @@ Key facts:
   recognition, NEWS2 as an adjunct to clinical judgement, delayed or
   back-up antibiotics, acute otitis media, tonsillitis, sinusitis, UTI
   red flags, safety-netting and antimicrobial stewardship.
+- AKT mental health revision should cover depression severity, anxiety
+  and panic, suicide risk, self-harm, SSRI prescribing, psychosis,
+  antipsychotic monitoring, eating disorders, safeguarding, the Mental
+  Health Act and the Mental Capacity Act.
 - Recent RCGP AKT feedback reports repeatedly highlight neurology,
   prescribing and medication monitoring, evidence/statistics chart
   interpretation, confidentiality/data protection, and children or
@@ -119,6 +123,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [AKT children and young people](https://medexia-akt.com/akt-children-young-people): acute child illness, paediatric cancer red flags, safeguarding, immunisation and adolescent health
 - [AKT dermatology](https://medexia-akt.com/akt-dermatology): rashes, eczema, psoriasis, acne, fungal infection, skin lesions and skin cancer recognition
 - [AKT minor illness and urgent care](https://medexia-akt.com/akt-minor-illness-urgent-care): sepsis recognition, NEWS2, delayed antibiotics, common infections and safety-netting
+- [AKT mental health](https://medexia-akt.com/akt-mental-health): depression, anxiety, suicide risk, self-harm, SSRI prescribing, psychosis and legal frameworks
 - [AKT syllabus](https://medexia-akt.com/akt-syllabus): section weighting and all 32 RCGP curriculum topic guides
 - [AKT mock exams](https://medexia-akt.com/akt-mock-exam): free timed mocks with AI debriefs
 - [AKT audio revision](https://medexia-akt.com/akt-audio-revision): the 90+ hour audiobook library

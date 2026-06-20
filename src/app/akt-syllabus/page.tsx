@@ -416,6 +416,27 @@ export default function AktSyllabusPage() {
                 urgent and unscheduled care topic page.
               </a>
             </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              For mental-health scenarios, use the{" "}
+              <a
+                href="/akt-mental-health"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT mental health guide
+              </a>{" "}
+              alongside the{" "}
+              <a
+                href="/topics/mental-health"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                mental health topic page.
+              </a>
+            </p>
           </section>
 
           <section className="mt-10">

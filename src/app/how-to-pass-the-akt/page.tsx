@@ -576,6 +576,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Sepsis, delayed antibiotics and safety-netting",
                 },
                 {
+                  href: "/akt-mental-health",
+                  title: "AKT mental health",
+                  desc: "Depression, suicide risk and SSRI prescribing",
+                },
+                {
                   href: "/akt-syllabus",
                   title: "AKT syllabus",
                   desc: "80/10/10 weighting and all 32 RCGP topics",

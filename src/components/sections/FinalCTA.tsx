@@ -53,7 +53,10 @@ export function FinalCTA() {
           className="r-scale mt-8"
           style={{ "--i": 3 } as React.CSSProperties}
         >
-          <a className="btn-primary inline-block" href="https://app.medexia-akt.com">
+          <a
+            className="btn-primary inline-block"
+            href="https://app.medexia-akt.com/join/free"
+          >
             Start free &rarr;
           </a>
         </div>

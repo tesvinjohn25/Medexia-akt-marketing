@@ -59,7 +59,7 @@ export function Nav() {
           </a>
 
           <a
-            href="https://app.medexia-akt.com"
+            href="https://app.medexia-akt.com/join/free"
             className="btn-primary hidden text-sm !py-[8px] !px-[14px] md:inline-flex"
           >
             Start free

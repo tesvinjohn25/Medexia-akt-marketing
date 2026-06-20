@@ -169,7 +169,7 @@ export function HeroSection() {
               <a
                 data-hero-cta
                 className="btn-primary inline-block text-[16px]"
-                href="https://app.medexia-akt.com"
+                href="https://app.medexia-akt.com/join/free"
               >
                 Start free &rarr;
               </a>

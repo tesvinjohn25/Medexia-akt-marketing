@@ -1,37 +1,95 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
+import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 
 export const metadata: Metadata = {
-  title: "AKT Mock Exam — Free Timed Mocks with AI Debriefs",
+  title: "AKT Mock Exam — Free Timed MRCGP AKT Practice",
   description:
-    "Generate free AKT mock exams from syllabus-mapped questions. Choose 40, 80 or 160 questions with timed practice and AI debriefs.",
+    "Generate free MRCGP AKT mock exams from syllabus-mapped questions. Choose 40, 80 or 160 questions for timed practice across the full AKT curriculum.",
   alternates: {
     canonical: "https://medexia-akt.com/akt-mock-exam",
   },
   openGraph: {
-    title: "AKT Mock Exam — Free Practice Mocks",
+    title: "AKT Mock Exam — Free Timed MRCGP AKT Practice",
     description:
-      "Generate free AKT mock exams covering every syllabus topic. Timed conditions, AI debriefs, and performance analysis.",
+      "Generate free AKT mock exams covering every syllabus topic. Timed 40, 80 or 160-question practice mapped to the RCGP AKT curriculum.",
     type: "website",
     url: "https://medexia-akt.com/akt-mock-exam",
   },
 };
 
+const sourceLinks = [
+  {
+    href: "https://www.rcgp.org.uk/mrcgp-exams/applied-knowledge-test/akt-introduction",
+    label: "RCGP: Introducing the AKT",
+  },
+  {
+    href: "https://www.rcgp.org.uk/mrcgp-exams/applied-knowledge-test/akt-preparing",
+    label: "RCGP: Preparing for the AKT",
+  },
+  {
+    href: "https://www.rcgp.org.uk/getmedia/d22734f1-a57c-4486-a0bd-e319b1172a89/2025-AKT-standard-setting-maintenance-faqs.pdf",
+    label: "RCGP AKT standard setting FAQs",
+  },
+  {
+    href: "https://www.pearsonvue.com/us/en/rcgp.html",
+    label: "Pearson VUE RCGP test centre information",
+  },
+];
+
+const mockFaqs = [
+  {
+    question: "Can I generate free AKT mock exams?",
+    answer:
+      "Yes. AKT Navigator lets you generate free AKT mock exams from syllabus-mapped questions, with 40, 80 or 160-question practice options.",
+  },
+  {
+    question: "How long is a full AKT mock exam?",
+    answer:
+      "From October 2025, the RCGP AKT format is 160 single-best-answer questions in 2 hours 40 minutes, so a full AKT Navigator mock uses 160 questions and a 160-minute timing target.",
+  },
+  {
+    question: "Are AKT mock exams enough on their own?",
+    answer:
+      "No. Mock exams are best used with topic review. Sit mocks to find weak areas, then revise the relevant topic guide, explanations and audio before retesting.",
+  },
+  {
+    question: "Is there negative marking in the AKT?",
+    answer:
+      "No. RCGP standard-setting guidance says there is no negative marking in the AKT, so timed mocks should train you to answer every question rather than leaving blanks.",
+  },
+];
+
 export default function AktMockExamPage() {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Course",
-    name: "AKT Mock Exams by AKT Navigator",
-    description:
-      "Free mock AKT exams from a question bank covering every syllabus topic. Timed to match real RCGP AKT conditions.",
-    provider: {
-      "@type": "Organization",
-      name: "Medexia",
-      url: "https://medexia-akt.com",
-    },
-    isAccessibleForFree: true,
+    "@graph": [
+      {
+        "@type": "Course",
+        name: "AKT Mock Exams by AKT Navigator",
+        description:
+          "Free mock AKT exams from syllabus-mapped questions covering every RCGP AKT curriculum topic, with 40, 80 and 160-question timed practice.",
+        provider: {
+          "@type": "Organization",
+          name: "Medexia",
+          url: "https://medexia-akt.com",
+        },
+        isAccessibleForFree: true,
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: mockFaqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      },
+    ],
   };
 
   return (
@@ -39,6 +97,15 @@ export default function AktMockExamPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "https://medexia-akt.com/" },
+          {
+            name: "AKT Mock Exam",
+            url: "https://medexia-akt.com/akt-mock-exam",
+          },
+        ]}
       />
       <Nav />
 
@@ -54,7 +121,7 @@ export default function AktMockExamPage() {
               letterSpacing: "-0.03em",
             }}
           >
-            AKT Mock Exams
+            AKT mock exams
           </h1>
 
           <p
@@ -63,27 +130,50 @@ export default function AktMockExamPage() {
           >
             Generate mock exams from a free question bank covering every
             syllabus topic. Choose your length, sit it under timed conditions,
-            and get an AI-powered debrief that spots patterns you cannot see
-            yourself.
+            and use the debrief to identify weak topics before the real exam.
           </p>
+
+          <div
+            className="mt-6 rounded-xl p-4"
+            style={{
+              background: "rgba(52,211,153,.06)",
+              border: "1px solid rgba(52,211,153,.18)",
+            }}
+          >
+            <h2
+              className="text-[18px] font-semibold"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Quick answer
+            </h2>
+            <p
+              className="mt-2 text-[14px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              A full MRCGP AKT mock should mirror the current RCGP format: 160
+              single-best-answer questions in 2 hours 40 minutes. AKT Navigator
+              also supports shorter 40 and 80-question mocks for focused
+              practice, with questions staying free.
+            </p>
+          </div>
 
           {/* Key stats */}
           <div className="mt-8 grid gap-4 grid-cols-3">
             {[
-              { stat: "21k+", label: "Questions" },
-              { stat: "Mocks", label: "Basic practice" },
-              { stat: "Free", label: "For April & July" },
+              { stat: "160", label: "Full mock" },
+              { stat: "2h 40m", label: "Timed format" },
+              { stat: "Free", label: "Questions stay free" },
             ].map((item) => (
               <div
                 key={item.label}
-                className="rounded-xl p-4 text-center"
+                className="rounded-xl px-3 py-4 text-center md:p-4"
                 style={{
                   background: "var(--bg-surface)",
                   border: "1px solid var(--border)",
                 }}
               >
                 <div
-                  className="text-[24px] font-bold"
+                  className="whitespace-nowrap text-[22px] font-bold md:text-[24px]"
                   style={{
                     fontFamily: "var(--font-display)",
                     color: "var(--brand-iris)",
@@ -168,7 +258,7 @@ export default function AktMockExamPage() {
             </div>
           </div>
 
-          {/* AI debrief */}
+          {/* Debrief */}
           <div className="mt-12">
             <h2
               className="text-[24px] md:text-[28px] leading-[1.15]"
@@ -177,14 +267,15 @@ export default function AktMockExamPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              AI-powered debrief
+              Debrief after each mock
             </h2>
             <p
               className="mt-4 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
-              After each mock, AKT Navigator analyses your performance and picks
-              up things you would miss reviewing your own answers:
+              After each mock, AKT Navigator analyses your performance and
+              highlights patterns that are easy to miss when you review your
+              own answers:
             </p>
             <div className="mt-4 grid gap-3">
               {[
@@ -230,7 +321,7 @@ export default function AktMockExamPage() {
             </div>
           </div>
 
-          {/* Chat with AI */}
+          {/* Review */}
           <div className="mt-12">
             <h2
               className="text-[24px] md:text-[28px] leading-[1.15]"
@@ -239,21 +330,20 @@ export default function AktMockExamPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Dig deeper with the AI supervisor
+              Turn a mock into a revision plan
             </h2>
             <p
               className="mt-4 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
-              After your debrief, you can chat with AKT Navigator about any part
-              of your performance. Ask it to explain a topic you found difficult,
-              walk through a question you got wrong, or help you build a study
-              plan based on your gaps. It is like having a senior GP available
-              whenever you need them.
+              After your debrief, use the weak-topic breakdown to decide what
+              to revise next. Pair the mock with topic explanations and audio
+              revision so you are not only measuring performance, but improving
+              the areas that cost marks.
             </p>
           </div>
 
-          {/* Why unlimited matters */}
+          {/* Why repeat mocks matter */}
           <div className="mt-10">
             <h2
               className="text-[24px] md:text-[28px] leading-[1.15]"
@@ -262,25 +352,105 @@ export default function AktMockExamPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Why unlimited mocks matter
+              Why repeat mocks matter
             </h2>
             <p
               className="mt-4 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
-              Most question banks give you a fixed set of questions that you
-              cycle through. AKT Navigator&apos;s bank is deep enough to
-              generate genuinely fresh mocks every time. You will not run out
-              of new questions before the exam, and every mock tests a
-              different combination of topics and difficulty levels.
+              One mock tells you how you performed on one day. Repeating mocks
+              shows whether timing, fatigue and topic gaps are improving. Use a
+              full 160-question mock for exam stamina, and shorter mocks when
+              you want a focused check without losing a whole evening.
             </p>
           </div>
+
+          <section
+            className="mt-12 rounded-xl p-4"
+            style={{
+              background: "var(--bg-surface)",
+              border: "1px solid var(--border)",
+            }}
+          >
+            <h2
+              className="text-[20px] md:text-[24px] leading-[1.15]"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Official sources
+            </h2>
+            <p
+              className="mt-3 text-[14px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              AKT Navigator is independent of the RCGP. Mock timing and
+              revision guidance are aligned to public RCGP AKT information,
+              RCGP preparation resources and Pearson VUE test-centre guidance.
+            </p>
+            <div className="mt-4 grid gap-2">
+              {sourceLinks.map((source) => (
+                <a
+                  key={source.href}
+                  href={source.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-xl px-4 py-3 text-[13px] font-medium transition-colors hover:bg-white/[.05]"
+                  style={{
+                    background: "var(--bg-elevated)",
+                    border: "1px solid var(--border)",
+                    color: "var(--fg-high)",
+                  }}
+                >
+                  {source.label} &rarr;
+                </a>
+              ))}
+            </div>
+          </section>
+
+          <section className="mt-12">
+            <h2
+              className="text-[20px] md:text-[24px] leading-[1.15]"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              AKT mock exam FAQ
+            </h2>
+            <div className="mt-4 grid gap-3">
+              {mockFaqs.map((faq) => (
+                <article
+                  key={faq.question}
+                  className="rounded-xl p-4"
+                  style={{
+                    background: "var(--bg-surface)",
+                    border: "1px solid var(--border)",
+                  }}
+                >
+                  <h3
+                    className="text-[15px] font-semibold"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {faq.question}
+                  </h3>
+                  <p
+                    className="mt-2 text-[14px] leading-[1.65]"
+                    style={{ color: "var(--fg-mid)" }}
+                  >
+                    {faq.answer}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </section>
 
           {/* CTA */}
           <div className="mt-10">
             <a
               className="btn-primary inline-block text-[16px]"
-              href="https://app.medexia-akt.com"
+              href="https://app.medexia-akt.com/join/free"
             >
               Generate your first mock free &rarr;
             </a>
@@ -292,7 +462,7 @@ export default function AktMockExamPage() {
             style={{ color: "var(--fg-muted)" }}
           >
             Questions aligned to NICE CKS and the RCGP curriculum. Last reviewed
-            March 2026.
+            June 2026.
           </p>
         </div>
       </section>

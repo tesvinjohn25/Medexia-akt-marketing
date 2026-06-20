@@ -356,9 +356,9 @@ export default function HowToPassTheAktPage() {
                   className="font-medium transition-colors"
                   style={{ color: "var(--brand-violet-light)" }}
                 >
-                  generate unlimited mocks
+                  generate repeatable timed mocks
                 </a>{" "}
-                from a bank of thousands of questions.
+                from syllabus-mapped questions.
               </li>
             </ul>
           </div>

@@ -417,6 +417,14 @@ export default function AktSyllabusPage() {
               >
                 AKT diabetes and endocrinology guide
               </a>{" "}
+              ,{" "}
+              <a
+                href="/akt-renal-urology"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT renal and urology guide
+              </a>{" "}
               and statistics formulas page.
             </p>
             <p
@@ -485,6 +493,28 @@ export default function AktSyllabusPage() {
               </a>{" "}
               to revise diabetes medicines, thyroid tests, sick-day rules and
               adrenal red flags.
+            </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              For renal and urology topics, use the{" "}
+              <a
+                href="/akt-renal-urology"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT renal and urology guide
+              </a>{" "}
+              with the{" "}
+              <a
+                href="/topics/renal-urology"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                renal and urology topic page
+              </a>{" "}
+              to revise CKD, AKI, UTI, haematuria, PSA, LUTS and renal stones.
             </p>
             <p
               className="mt-3 text-[15px] leading-[1.65]"

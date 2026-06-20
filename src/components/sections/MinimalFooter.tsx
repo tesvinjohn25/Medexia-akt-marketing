@@ -24,6 +24,7 @@ const RESOURCE_LINKS = [
   { href: "/akt-cardiovascular", label: "Cardiovascular" },
   { href: "/akt-respiratory", label: "Respiratory" },
   { href: "/akt-diabetes-endocrinology", label: "Diabetes" },
+  { href: "/akt-renal-urology", label: "Renal" },
   { href: "/akt-minor-illness-urgent-care", label: "Minor illness" },
   { href: "/akt-mental-health", label: "Mental health" },
   { href: "/akt-womens-health", label: "Women's health" },

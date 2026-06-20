@@ -352,6 +352,21 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If renal or urology questions were weak, use the{" "}
+              <a
+                href="/akt-renal-urology"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT renal and urology guide
+              </a>{" "}
+              to revise CKD, AKI, medication safety, UTI, haematuria, PSA and
+              renal stones.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               If timing and triage were the issue, use the{" "}
               <a
                 href="/akt-minor-illness-urgent-care"

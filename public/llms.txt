@@ -79,6 +79,10 @@ Key facts:
   medicines, HbA1c targets, SGLT2 inhibitor cautions, GLP-1 receptor
   agonists, insulin safety, hypoglycaemia, DKA, urine ACR, eGFR,
   thyroid function tests, sick-day rules, obesity and adrenal red flags.
+- AKT renal and urology revision should cover CKD staging with eGFR and
+  ACR, AKI recognition, medication safety, UTI and pyelonephritis,
+  haematuria, LUTS, PSA counselling, renal stones, acute urinary
+  retention and urological cancer red flags.
 - AKT minor illness and urgent care revision should cover sepsis
   recognition, NEWS2 as an adjunct to clinical judgement, delayed or
   back-up antibiotics, acute otitis media, tonsillitis, sinusitis, UTI
@@ -142,6 +146,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [AKT cardiovascular](https://medexia-akt.com/akt-cardiovascular): hypertension, atrial fibrillation, heart failure, chest pain, lipids, QRISK3 and red flags
 - [AKT respiratory](https://medexia-akt.com/akt-respiratory): asthma, COPD, inhaler technique, spirometry, pneumonia, lung cancer red flags and sleep apnoea
 - [AKT diabetes and endocrinology](https://medexia-akt.com/akt-diabetes-endocrinology): diabetes medicines, HbA1c, thyroid tests, sick-day rules, obesity, adrenal disease and calcium disorders
+- [AKT renal and urology](https://medexia-akt.com/akt-renal-urology): CKD, eGFR, ACR, AKI, UTI, haematuria, LUTS, PSA, renal stones and urgent referral red flags
 - [AKT minor illness and urgent care](https://medexia-akt.com/akt-minor-illness-urgent-care): sepsis recognition, NEWS2, delayed antibiotics, common infections and safety-netting
 - [AKT mental health](https://medexia-akt.com/akt-mental-health): depression, anxiety, suicide risk, self-harm, SSRI prescribing, psychosis and legal frameworks
 - [AKT women's health](https://medexia-akt.com/akt-womens-health): contraception, HRT, menopause, abnormal bleeding, breast lumps and cancer red flags

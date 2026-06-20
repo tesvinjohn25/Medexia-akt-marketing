@@ -77,6 +77,10 @@ export const FAQS: Faq[] = [
     a: "Prioritise type 2 diabetes medicines, HbA1c targets, SGLT2 inhibitor cautions, GLP-1 receptor agonists, insulin safety, hypoglycaemia, DKA, urine ACR, eGFR, thyroid function tests, sick-day rules, obesity and adrenal red flags.",
   },
   {
+    q: "What renal and urology topics should I revise for the AKT?",
+    a: "Prioritise CKD staging with eGFR and ACR, AKI recognition, medication safety, UTI and pyelonephritis, haematuria, LUTS, PSA counselling, renal stones, acute urinary retention and urological cancer red flags.",
+  },
+  {
     q: "What minor illness and urgent care topics should I revise for the AKT?",
     a: "Prioritise sepsis recognition, acute deterioration, NEWS2 as an adjunct to clinical judgement, same-day triage, delayed antibiotics, acute otitis media, tonsillitis, sinusitis, respiratory infections, UTI red flags, safety-netting and antimicrobial stewardship.",
   },

@@ -586,6 +586,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Diabetes, thyroid tests and sick-day rules",
                 },
                 {
+                  href: "/akt-renal-urology",
+                  title: "AKT renal",
+                  desc: "CKD, UTI, haematuria and stones",
+                },
+                {
                   href: "/akt-minor-illness-urgent-care",
                   title: "AKT minor illness",
                   desc: "Sepsis, delayed antibiotics and safety-netting",

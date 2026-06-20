@@ -556,6 +556,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Medication monitoring, errors and safety themes",
                 },
                 {
+                  href: "/akt-continuity-quality-safety",
+                  title: "AKT quality safety",
+                  desc: "QI, audit and patient-safety systems",
+                },
+                {
                   href: "/akt-confidentiality-safeguarding-data-protection",
                   title: "AKT confidentiality",
                   desc: "Safeguarding, records and data protection",

@@ -437,6 +437,35 @@ export default function AktSyllabusPage() {
                 mental health topic page.
               </a>
             </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              For women&apos;s health, use the{" "}
+              <a
+                href="/akt-womens-health"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT women&apos;s health guide
+              </a>{" "}
+              with the{" "}
+              <a
+                href="/topics/gynaecology-breast"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                gynaecology and breast topic page
+              </a>{" "}
+              and{" "}
+              <a
+                href="/topics/maternity-reproductive-health"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                maternity and reproductive health topic page.
+              </a>
+            </p>
           </section>
 
           <section className="mt-10">

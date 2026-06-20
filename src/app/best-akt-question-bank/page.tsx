@@ -512,6 +512,11 @@ export default function BestAktQuestionBankPage() {
                   title: "AKT mental health",
                   desc: "Depression, suicide risk and SSRI prescribing",
                 },
+                {
+                  href: "/akt-womens-health",
+                  title: "AKT women's health",
+                  desc: "Contraception, HRT and bleeding red flags",
+                },
               ].map((link) => (
                 <a
                   key={link.href}

@@ -74,6 +74,10 @@ Key facts:
   and panic, suicide risk, self-harm, SSRI prescribing, psychosis,
   antipsychotic monitoring, eating disorders, safeguarding, the Mental
   Health Act and the Mental Capacity Act.
+- AKT women's health revision should cover contraception and UKMEC,
+  emergency contraception, menopause and HRT, abnormal uterine bleeding,
+  postmenopausal bleeding, breast lumps, cervical screening, PCOS,
+  endometriosis and ovarian or endometrial cancer red flags.
 - Recent RCGP AKT feedback reports repeatedly highlight neurology,
   prescribing and medication monitoring, evidence/statistics chart
   interpretation, confidentiality/data protection, and children or
@@ -124,6 +128,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [AKT dermatology](https://medexia-akt.com/akt-dermatology): rashes, eczema, psoriasis, acne, fungal infection, skin lesions and skin cancer recognition
 - [AKT minor illness and urgent care](https://medexia-akt.com/akt-minor-illness-urgent-care): sepsis recognition, NEWS2, delayed antibiotics, common infections and safety-netting
 - [AKT mental health](https://medexia-akt.com/akt-mental-health): depression, anxiety, suicide risk, self-harm, SSRI prescribing, psychosis and legal frameworks
+- [AKT women's health](https://medexia-akt.com/akt-womens-health): contraception, HRT, menopause, abnormal bleeding, breast lumps and cancer red flags
 - [AKT syllabus](https://medexia-akt.com/akt-syllabus): section weighting and all 32 RCGP curriculum topic guides
 - [AKT mock exams](https://medexia-akt.com/akt-mock-exam): free timed mocks with AI debriefs
 - [AKT audio revision](https://medexia-akt.com/akt-audio-revision): the 90+ hour audiobook library

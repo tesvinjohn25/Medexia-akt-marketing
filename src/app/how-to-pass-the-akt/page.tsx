@@ -581,6 +581,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Depression, suicide risk and SSRI prescribing",
                 },
                 {
+                  href: "/akt-womens-health",
+                  title: "AKT women's health",
+                  desc: "Contraception, HRT and bleeding red flags",
+                },
+                {
                   href: "/akt-syllabus",
                   title: "AKT syllabus",
                   desc: "80/10/10 weighting and all 32 RCGP topics",

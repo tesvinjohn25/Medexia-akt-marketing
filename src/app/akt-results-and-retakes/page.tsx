@@ -338,6 +338,21 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If women&apos;s health was weak, use the{" "}
+              <a
+                href="/akt-womens-health"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT women&apos;s health guide
+              </a>{" "}
+              to revise contraception, HRT, abnormal bleeding, breast symptoms
+              and cancer red flags.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               Use full timed mocks to check whether the problem is knowledge,
               pacing or stamina. Use audio revision for low-energy time, but
               keep the hard work centred on questions, explanations and mistake

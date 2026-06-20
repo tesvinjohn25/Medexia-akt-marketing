@@ -367,6 +367,21 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If musculoskeletal questions were weak, use the{" "}
+              <a
+                href="/akt-musculoskeletal"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT musculoskeletal guide
+              </a>{" "}
+              to revise back pain red flags, arthritis, osteoporosis, gout and
+              urgent referral.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               If timing and triage were the issue, use the{" "}
               <a
                 href="/akt-minor-illness-urgent-care"

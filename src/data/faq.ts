@@ -81,6 +81,10 @@ export const FAQS: Faq[] = [
     a: "Prioritise CKD staging with eGFR and ACR, AKI recognition, medication safety, UTI and pyelonephritis, haematuria, LUTS, PSA counselling, renal stones, acute urinary retention and urological cancer red flags.",
   },
   {
+    q: "What musculoskeletal topics should I revise for the AKT?",
+    a: "Prioritise low back pain and sciatica, cauda equina and fracture red flags, osteoarthritis, rheumatoid arthritis referral, osteoporosis risk assessment, gout, septic arthritis, analgesic safety and when imaging is not needed.",
+  },
+  {
     q: "What minor illness and urgent care topics should I revise for the AKT?",
     a: "Prioritise sepsis recognition, acute deterioration, NEWS2 as an adjunct to clinical judgement, same-day triage, delayed antibiotics, acute otitis media, tonsillitis, sinusitis, respiratory infections, UTI red flags, safety-netting and antimicrobial stewardship.",
   },

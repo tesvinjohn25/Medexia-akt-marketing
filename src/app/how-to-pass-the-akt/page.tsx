@@ -591,6 +591,11 @@ export default function HowToPassTheAktPage() {
                   desc: "CKD, UTI, haematuria and stones",
                 },
                 {
+                  href: "/akt-musculoskeletal",
+                  title: "AKT musculoskeletal",
+                  desc: "Back pain, arthritis and osteoporosis",
+                },
+                {
                   href: "/akt-minor-illness-urgent-care",
                   title: "AKT minor illness",
                   desc: "Sepsis, delayed antibiotics and safety-netting",

@@ -425,6 +425,14 @@ export default function AktSyllabusPage() {
               >
                 AKT renal and urology guide
               </a>{" "}
+              ,{" "}
+              <a
+                href="/akt-musculoskeletal"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT musculoskeletal guide
+              </a>{" "}
               and statistics formulas page.
             </p>
             <p
@@ -515,6 +523,29 @@ export default function AktSyllabusPage() {
                 renal and urology topic page
               </a>{" "}
               to revise CKD, AKI, UTI, haematuria, PSA, LUTS and renal stones.
+            </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              For musculoskeletal presentations, use the{" "}
+              <a
+                href="/akt-musculoskeletal"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT musculoskeletal guide
+              </a>{" "}
+              with the{" "}
+              <a
+                href="/topics/musculoskeletal"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                musculoskeletal topic page
+              </a>{" "}
+              to revise back pain red flags, arthritis, osteoporosis, gout and
+              urgent referral.
             </p>
             <p
               className="mt-3 text-[15px] leading-[1.65]"

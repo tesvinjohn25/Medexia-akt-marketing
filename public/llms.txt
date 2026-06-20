@@ -91,6 +91,10 @@ Key facts:
   calprotectin, IBD flares, coeliac serology, dyspepsia, H. pylori
   testing, GORD alarm symptoms, abnormal LFTs, NAFLD fibrosis
   assessment, rectal bleeding and GI cancer red flags.
+- AKT ENT revision should cover acute otitis media, otitis externa,
+  sore throat, sinusitis, antimicrobial stewardship, sudden hearing
+  loss, tinnitus, vertigo, epistaxis, hoarseness, oral ulceration,
+  neck lumps and head and neck cancer red flags.
 - AKT minor illness and urgent care revision should cover sepsis
   recognition, NEWS2 as an adjunct to clinical judgement, delayed or
   back-up antibiotics, acute otitis media, tonsillitis, sinusitis, UTI
@@ -157,6 +161,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [AKT renal and urology](https://medexia-akt.com/akt-renal-urology): CKD, eGFR, ACR, AKI, UTI, haematuria, LUTS, PSA, renal stones and urgent referral red flags
 - [AKT musculoskeletal](https://medexia-akt.com/akt-musculoskeletal): back pain red flags, osteoarthritis, rheumatoid arthritis, osteoporosis, gout, fractures and urgent referral
 - [AKT gastroenterology](https://medexia-akt.com/akt-gastroenterology): IBS, IBD, coeliac disease, dyspepsia, H. pylori, liver disease and GI cancer red flags
+- [AKT ENT, speech and hearing](https://medexia-akt.com/akt-ent-speech-hearing): otitis media, sore throat, sinusitis, hearing loss, vertigo, epistaxis and head and neck cancer red flags
 - [AKT minor illness and urgent care](https://medexia-akt.com/akt-minor-illness-urgent-care): sepsis recognition, NEWS2, delayed antibiotics, common infections and safety-netting
 - [AKT mental health](https://medexia-akt.com/akt-mental-health): depression, anxiety, suicide risk, self-harm, SSRI prescribing, psychosis and legal frameworks
 - [AKT women's health](https://medexia-akt.com/akt-womens-health): contraception, HRT, menopause, abnormal bleeding, breast lumps and cancer red flags

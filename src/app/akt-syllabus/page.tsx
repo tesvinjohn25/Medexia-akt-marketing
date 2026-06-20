@@ -441,6 +441,14 @@ export default function AktSyllabusPage() {
               >
                 AKT gastroenterology guide
               </a>{" "}
+              ,{" "}
+              <a
+                href="/akt-ent-speech-hearing"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT ENT guide
+              </a>{" "}
               and statistics formulas page.
             </p>
             <p
@@ -577,6 +585,29 @@ export default function AktSyllabusPage() {
               </a>{" "}
               to revise IBS, IBD, coeliac disease, dyspepsia, liver disease and
               GI cancer red flags.
+            </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              For ENT, speech and hearing presentations, use the{" "}
+              <a
+                href="/akt-ent-speech-hearing"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT ENT guide
+              </a>{" "}
+              with the{" "}
+              <a
+                href="/topics/ent-speech-hearing"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                ENT, speech and hearing topic page
+              </a>{" "}
+              to revise otitis media, sore throat, sinusitis, hearing loss,
+              vertigo and head and neck cancer red flags.
             </p>
             <p
               className="mt-3 text-[15px] leading-[1.65]"

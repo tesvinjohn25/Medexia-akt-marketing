@@ -601,6 +601,11 @@ export default function HowToPassTheAktPage() {
                   desc: "IBS, IBD, coeliac and red flags",
                 },
                 {
+                  href: "/akt-ent-speech-hearing",
+                  title: "AKT ENT",
+                  desc: "Otitis, hearing loss and vertigo",
+                },
+                {
                   href: "/akt-minor-illness-urgent-care",
                   title: "AKT minor illness",
                   desc: "Sepsis, delayed antibiotics and safety-netting",

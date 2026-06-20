@@ -53,6 +53,10 @@ Key facts:
   use, audit, PDSA, significant-event learning and safe practice
   systems such as repeat prescribing, recalls and test-result
   follow-up.
+- AKT genomic medicine revision should cover family-history taking,
+  inheritance patterns, familial cancer clues, rare disease red flags,
+  genetic testing consent, NHS referral routes, pharmacogenomics and
+  safe handling of direct-to-consumer DNA results.
 - AKT statistics revision should cover sensitivity, specificity, PPV,
   NPV, absolute and relative risk, NNT, NNH, confidence intervals,
   forest plots, prescribing charts, practice data and common study
@@ -230,6 +234,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [AKT consulting in general practice](https://medexia-akt.com/akt-consulting-in-general-practice): shared decisions, consent, capacity, risk communication, safety-netting and remote consulting
 - [AKT equality, diversity and inclusion](https://medexia-akt.com/akt-equality-diversity-inclusion): reasonable adjustments, accessible information, interpreters, access barriers and inclusive GP care
 - [AKT leadership and management](https://medexia-akt.com/akt-leadership-management): teamwork, delegation, raising concerns, complaints, resources, QI and safe practice systems
+- [AKT genomic medicine](https://medexia-akt.com/akt-genomic-medicine): family history, inheritance patterns, familial cancer, rare disease, testing, consent and NHS referral routes
 - [AKT statistics](https://medexia-akt.com/akt-statistics): evidence-based practice, data interpretation and key statistics formulas
 - [AKT evidence in practice](https://medexia-akt.com/akt-evidence-in-practice): critical appraisal, study design, diagnostic tests, risk communication and applying guidance in GP
 - [AKT statistics formulas](https://medexia-akt.com/akt-statistics-formulas): NNT, NNH, sensitivity, specificity, PPV, NPV and risk formulas

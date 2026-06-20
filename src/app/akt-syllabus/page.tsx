@@ -380,6 +380,14 @@ export default function AktSyllabusPage() {
               </a>
               {", "}
               <a
+                href="/akt-genomic-medicine"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT genomic medicine guide
+              </a>
+              {", "}
+              <a
                 href="/akt-evidence-in-practice"
                 className="font-medium transition-colors"
                 style={{ color: "var(--brand-violet-light)" }}

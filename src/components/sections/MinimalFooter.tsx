@@ -17,6 +17,7 @@ const RESOURCE_LINKS = [
   { href: "/akt-consulting-in-general-practice", label: "Consulting" },
   { href: "/akt-equality-diversity-inclusion", label: "Inclusion" },
   { href: "/akt-leadership-management", label: "Leadership" },
+  { href: "/akt-genomic-medicine", label: "Genomics" },
   { href: "/akt-statistics", label: "Statistics" },
   { href: "/akt-evidence-in-practice", label: "Evidence" },
   { href: "/akt-statistics-formulas", label: "Formulas" },

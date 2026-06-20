@@ -354,6 +354,22 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If genetics, family-history or inherited-risk questions were
+              weak, use the{" "}
+              <a
+                href="/akt-genomic-medicine"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT genomic medicine guide
+              </a>{" "}
+              to revise inheritance patterns, familial cancer clues, rare
+              disease signals, consent, testing and NHS referral routes.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               If evidence interpretation was weak, use the{" "}
               <a
                 href="/akt-evidence-in-practice"

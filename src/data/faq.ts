@@ -57,6 +57,10 @@ export const FAQS: Faq[] = [
     a: "Prioritise teamwork, delegation, supervision, raising patient-safety concerns, complaints, duty of candour, resource use, audit, PDSA, significant-event learning and safe practice systems such as repeat prescribing, recalls and test-result follow-up.",
   },
   {
+    q: "What genomic medicine topics should I revise for the AKT?",
+    a: "Prioritise family-history taking, first- and second-degree relatives, inheritance patterns, familial cancer clues, rare disease red flags, genetic testing consent, NHS referral routes and safe handling of direct-to-consumer DNA results.",
+  },
+  {
     q: "What evidence in practice topics should I revise for the AKT?",
     a: "Prioritise study design, bias, confounding, diagnostic-test interpretation, confidence intervals, absolute and relative risk, NNT, NNH, shared decision making and applying guidelines to individual GP patients.",
   },

@@ -483,6 +483,11 @@ export default function BestAktQuestionBankPage() {
                   desc: "Teams, concerns, complaints and systems",
                 },
                 {
+                  href: "/akt-genomic-medicine",
+                  title: "AKT genomics",
+                  desc: "Family history, testing and cancer risk",
+                },
+                {
                   href: "/akt-statistics",
                   title: "AKT statistics",
                   desc: "Evidence-based practice and key formulas",

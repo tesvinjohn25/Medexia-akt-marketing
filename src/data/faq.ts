@@ -49,6 +49,10 @@ export const FAQS: Faq[] = [
     a: "Prioritise shared decision making, consent, decision-specific capacity, risk communication, safety-netting, managing uncertainty, remote-consultation limits and communication barriers that affect safe GP care.",
   },
   {
+    q: "What equality, diversity and inclusion topics should I revise for the AKT?",
+    a: "Prioritise reasonable adjustments, accessible information, professional interpreter use, disability and neurodiversity access, health inequalities, cultural context, screening uptake, inclusive consulting and practical systems that remove barriers to safe GP care.",
+  },
+  {
     q: "What evidence in practice topics should I revise for the AKT?",
     a: "Prioritise study design, bias, confounding, diagnostic-test interpretation, confidence intervals, absolute and relative risk, NNT, NNH, shared decision making and applying guidelines to individual GP patients.",
   },

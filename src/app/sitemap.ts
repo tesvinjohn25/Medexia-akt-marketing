@@ -85,6 +85,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: "https://medexia-akt.com/akt-equality-diversity-inclusion",
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    },
+    {
       url: "https://medexia-akt.com/akt-evidence-in-practice",
       lastModified: LAST_MODIFIED,
       changeFrequency: "monthly" as const,

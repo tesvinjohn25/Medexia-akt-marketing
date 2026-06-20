@@ -322,6 +322,22 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If equality, access or communication-support questions were weak,
+              use the{" "}
+              <a
+                href="/akt-equality-diversity-inclusion"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT equality, diversity and inclusion guide
+              </a>{" "}
+              to revise reasonable adjustments, interpreters, accessible
+              information, health inequalities and inclusive care.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               If evidence interpretation was weak, use the{" "}
               <a
                 href="/akt-evidence-in-practice"

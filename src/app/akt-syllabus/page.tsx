@@ -364,6 +364,14 @@ export default function AktSyllabusPage() {
               </a>
               {", "}
               <a
+                href="/akt-equality-diversity-inclusion"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT equality, diversity and inclusion guide
+              </a>
+              {", "}
+              <a
                 href="/akt-evidence-in-practice"
                 className="font-medium transition-colors"
                 style={{ color: "var(--brand-violet-light)" }}

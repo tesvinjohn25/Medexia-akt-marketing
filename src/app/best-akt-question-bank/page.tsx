@@ -473,6 +473,11 @@ export default function BestAktQuestionBankPage() {
                   desc: "Consent, safety-netting and shared decisions",
                 },
                 {
+                  href: "/akt-equality-diversity-inclusion",
+                  title: "AKT inclusion",
+                  desc: "Reasonable adjustments and access barriers",
+                },
+                {
                   href: "/akt-statistics",
                   title: "AKT statistics",
                   desc: "Evidence-based practice and key formulas",

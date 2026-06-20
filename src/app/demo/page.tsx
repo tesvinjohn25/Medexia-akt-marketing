@@ -248,7 +248,7 @@ export default function DemoPage() {
       </section>
 
       {/* Worked example — the quality showcase, fully server-rendered so
-          search engines and AI tools can read exactly how questions and
+          search and answer engines can read exactly how questions and
           explanations are built. */}
       <section className="section-padding" style={{ paddingTop: 0 }}>
         <div className="container-x max-w-[720px]">

@@ -202,7 +202,7 @@ export const FAQS: Faq[] = [
   },
   {
     q: "How do I know if I'm ready for the AKT?",
-    a: "The best way is to take a full length mock under timed conditions. AKT Navigator's 160 question mocks simulate the real exam and the debrief finds things you can't see yourself. It picks out where you're losing time, whether your accuracy drops towards the end from fatigue, and flags topics where you're confidently getting answers wrong. That last one matters because confident mistakes mean gaps in your understanding, not just gaps in recall. The debrief tells you exactly what to focus on and you can chat with the AI tool to dig deeper into any area of your performance.",
+    a: "The best way is to take a full length mock under timed conditions. AKT Navigator's 160 question mocks simulate the real exam and the debrief finds things you can't see yourself. It picks out where you're losing time, whether your accuracy drops towards the end from fatigue, and flags topics where you're confidently getting answers wrong. That last one matters because confident mistakes mean gaps in your understanding, not just gaps in recall. The debrief tells you exactly what to focus on next.",
   },
   {
     q: "Can I revise for the AKT while working full time?",

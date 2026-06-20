@@ -457,6 +457,14 @@ export default function AktSyllabusPage() {
               >
                 AKT eyes and vision guide
               </a>{" "}
+              ,{" "}
+              <a
+                href="/akt-haematology"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT haematology guide
+              </a>{" "}
               and statistics formulas page.
             </p>
             <p
@@ -639,6 +647,29 @@ export default function AktSyllabusPage() {
               </a>{" "}
               to revise red eye, visual loss, flashes and floaters, diplopia,
               glaucoma, cataracts, AMD and diabetic eye disease.
+            </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              For haematology presentations, use the{" "}
+              <a
+                href="/akt-haematology"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT haematology guide
+              </a>{" "}
+              with the{" "}
+              <a
+                href="/topics/haematology"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                haematology topic page
+              </a>{" "}
+              to revise anaemia, iron deficiency, B12 and folate, VTE,
+              anticoagulation, abnormal FBCs and cancer red flags.
             </p>
             <p
               className="mt-3 text-[15px] leading-[1.65]"

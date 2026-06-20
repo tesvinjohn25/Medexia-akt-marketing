@@ -97,6 +97,10 @@ export const FAQS: Faq[] = [
     a: "Prioritise red eye red flags, reduced visual acuity, photophobia, contact lens keratitis, acute glaucoma, retinal detachment, sudden visual loss, diplopia, cataracts, glaucoma, AMD and diabetic retinopathy screening.",
   },
   {
+    q: "What haematology topics should I revise for the AKT?",
+    a: "Prioritise anaemia patterns, ferritin interpretation, iron replacement, B12 and folate deficiency, VTE probability and D-dimer use, DOAC safety, thrombocytopenia, neutropenia, abnormal FBCs and haematological cancer red flags.",
+  },
+  {
     q: "What minor illness and urgent care topics should I revise for the AKT?",
     a: "Prioritise sepsis recognition, acute deterioration, NEWS2 as an adjunct to clinical judgement, same-day triage, delayed antibiotics, acute otitis media, tonsillitis, sinusitis, respiratory infections, UTI red flags, safety-netting and antimicrobial stewardship.",
   },

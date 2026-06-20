@@ -611,6 +611,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Red eye, visual loss and glaucoma",
                 },
                 {
+                  href: "/akt-haematology",
+                  title: "AKT haematology",
+                  desc: "Anaemia, VTE and anticoagulation",
+                },
+                {
                   href: "/akt-minor-illness-urgent-care",
                   title: "AKT minor illness",
                   desc: "Sepsis, delayed antibiotics and safety-netting",

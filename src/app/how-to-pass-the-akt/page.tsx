@@ -460,7 +460,7 @@ export default function HowToPassTheAktPage() {
                 className="font-medium transition-colors"
                 style={{ color: "var(--brand-violet-light)" }}
               >
-                AI-powered mock debriefs
+                mock debriefs
               </a>{" "}
               catch patterns you cannot see yourself, like confidently-wrong
               topics and time management issues.

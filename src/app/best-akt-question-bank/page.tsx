@@ -1,34 +1,34 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
+import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 
 export const metadata: Metadata = {
-  title: "Best AKT Question Bank 2026",
+  title: "Best AKT Question Bank 2026 — Free Questions + Audio",
   description:
-    "Compare AKT question banks for GP trainees: PassMedicine, Pastest, BMJ OnExamination, i-Medics and AKT Navigator features, prices and audio.",
+    "Compare AKT question banks for GP trainees: PassMedicine, Pastest, BMJ OnExamination, i-Medics, GP SelfTest and AKT Navigator's free questions plus 90+ hours of audio.",
   alternates: {
     canonical: "https://medexia-akt.com/best-akt-question-bank",
   },
   openGraph: {
-    title: "Best AKT Question Bank 2026 — Honest Comparison",
+    title: "Best AKT Question Bank 2026 — Free Questions + Audio",
     description:
-      "PassMedicine vs Pastest vs BMJ OnExamination vs AKT Navigator. An honest feature-by-feature comparison for GP trainees.",
+      "PassMedicine vs Pastest vs BMJ OnExamination vs AKT Navigator. Compare question banks, audio revision, mocks and pricing for GP trainees.",
     type: "article",
     url: "https://medexia-akt.com/best-akt-question-bank",
   },
 };
 
-const LAST_CHECKED = "March 2026";
+const LAST_CHECKED = "June 2026";
 
 interface QuestionBank {
   name: string;
   questions: string;
   audio: string;
-  adaptiveLearning: string;
+  reviewTools: string;
   explanations: string;
   mockExams: string;
-  aiDebrief: string;
   price: string;
   highlight?: boolean;
 }
@@ -36,71 +36,137 @@ interface QuestionBank {
 const questionBanks: QuestionBank[] = [
   {
     name: "AKT Navigator",
-    questions: "Thousands",
+    questions: "Free",
     audio: "90+ hours",
-    adaptiveLearning: "Yes",
+    reviewTools: "Adaptive review",
     explanations: "Structured · NICE/CKS/BNF-aligned",
     mockExams: "Included",
-    aiDebrief: "Yes",
-    price: "Free questions; audio from £59",
+    price: "Free questions; £59 Early Access",
     highlight: true,
   },
   {
     name: "PassMedicine",
-    questions: "~3,500",
+    questions: "~4,500",
     audio: "No",
-    adaptiveLearning: "Basic",
+    reviewTools: "Basic tracking",
     explanations: "Yes",
     mockExams: "Limited",
-    aiDebrief: "No",
-    price: "~£35 / 4 months",
+    price: "£35 / 4 months",
   },
   {
     name: "Pastest",
-    questions: "~2,500",
+    questions: "3,300+",
     audio: "No",
-    adaptiveLearning: "No",
+    reviewTools: "Performance data",
     explanations: "Thorough",
     mockExams: "Yes",
-    aiDebrief: "No",
     price: "£95–£180",
   },
   {
     name: "BMJ OnExamination",
-    questions: "~1,200",
+    questions: "2,455",
     audio: "No",
-    adaptiveLearning: "Basic",
+    reviewTools: "Basic tracking",
     explanations: "Yes",
     mockExams: "Yes",
-    aiDebrief: "No",
-    price: "~£50 / 6 months",
+    price: "From £44.99",
   },
   {
     name: "i-Medics",
     questions: "~3,000",
     audio: "No",
-    adaptiveLearning: "No",
+    reviewTools: "Basic",
     explanations: "Yes",
     mockExams: "Limited",
-    aiDebrief: "No",
     price: "Free",
+  },
+  {
+    name: "RCGP GP SelfTest",
+    questions: "Official cases",
+    audio: "No",
+    reviewTools: "Topic tests",
+    explanations: "Yes",
+    mockExams: "Practice tests",
+    price: "Free for RCGP members",
+  },
+];
+
+const sourceLinks = [
+  {
+    href: "https://www.passmedicine.com/akt/index.php",
+    label: "PassMedicine: AKT question bank",
+  },
+  {
+    href: "https://www.pastest.com/products/mrcgp-akt",
+    label: "Pastest: MRCGP AKT",
+  },
+  {
+    href: "https://www.onexamination.com/",
+    label: "BMJ OnExamination: MRCGP AKT",
+  },
+  {
+    href: "https://i-medics.co.uk/AKTcombined",
+    label: "i-Medics: MRCGP AKT",
+  },
+  {
+    href: "https://www.rcgp.org.uk/learning-resources/gp-selftest",
+    label: "RCGP: GP SelfTest",
+  },
+];
+
+const comparisonFaqs = [
+  {
+    question: "What is the best AKT question bank?",
+    answer:
+      "There is no single best AKT question bank for every GP trainee. PassMedicine is a familiar low-cost option, Pastest and BMJ OnExamination offer established paid banks, GP SelfTest is the official RCGP practice resource for members, and AKT Navigator is strongest if you want free question practice plus a 90+ hour audio-first revision system.",
+  },
+  {
+    question: "Is AKT Navigator a paid question bank?",
+    answer:
+      "No. AKT Navigator keeps question practice free. The paid part is full access to the 90+ hour AKT audiobook library and included premium audio-related resources.",
+  },
+  {
+    question: "Should I choose AKT Navigator or PassMedicine?",
+    answer:
+      "Choose PassMedicine if you mainly want a familiar screen-based question bank. Choose AKT Navigator if you want free question practice alongside audio revision for commutes, walks, childcare and low-energy revision time.",
+  },
+  {
+    question: "Do I still need audio revision if I already have a question bank?",
+    answer:
+      "Audio revision is useful when your limiting factor is time or energy rather than access to questions. It lets you keep covering the AKT syllabus during moments where reading or doing questions is unrealistic.",
   },
 ];
 
 export default function BestAktQuestionBankPage() {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Article",
-    headline: "Best AKT Question Bank 2026 — Free & Paid Options Compared",
-    description:
-      "Honest comparison of AKT question banks for GP trainees preparing for the MRCGP AKT.",
-    author: {
-      "@type": "Organization",
-      name: "Medexia",
-      url: "https://medexia-akt.com",
-    },
-    datePublished: "2026-03-25",
-    dateModified: "2026-03-25",
+    "@graph": [
+      {
+        "@type": "Article",
+        headline:
+          "Best AKT Question Bank 2026 — Free & Paid Options Compared",
+        description:
+          "Comparison of AKT question banks and audio-first revision options for GP trainees preparing for the MRCGP AKT.",
+        author: {
+          "@type": "Organization",
+          name: "Medexia",
+          url: "https://medexia-akt.com",
+        },
+        datePublished: "2026-03-25",
+        dateModified: "2026-06-20",
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: comparisonFaqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      },
+    ],
   };
 
   return (
@@ -108,6 +174,15 @@ export default function BestAktQuestionBankPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "https://medexia-akt.com/" },
+          {
+            name: "Best AKT Question Bank",
+            url: "https://medexia-akt.com/best-akt-question-bank",
+          },
+        ]}
       />
       <Nav />
 
@@ -123,32 +198,57 @@ export default function BestAktQuestionBankPage() {
               letterSpacing: "-0.03em",
             }}
           >
-            Best AKT Question Bank 2026
+            Best AKT question bank 2026
           </h1>
 
           <p
             className="mt-4 text-[16px] md:text-[18px] leading-[1.7]"
             style={{ color: "var(--fg-mid)" }}
           >
-            Every GP trainee preparing for the AKT faces the same question:
-            which question bank should I use? There are several options out
-            there, each with different strengths. Here is an honest
-            feature-by-feature breakdown to help you decide.
+            Most AKT resources are built around screen-based question practice.
+            That matters, but it is not the whole revision problem. GP trainees
+            also need a way to cover the syllabus during commutes, walks,
+            childcare and low-energy days.
           </p>
 
           <p
             className="mt-3 text-[16px] leading-[1.7]"
             style={{ color: "var(--fg-mid)" }}
           >
-            We built AKT Navigator, so take this comparison with that context in
-            mind. But everything listed below is factual and sourced from each
-            provider&apos;s public website. We have noted where we got each
-            figure so you can verify it yourself.
+            We built AKT Navigator, so read this comparison with that context.
+            The point is still straightforward: if you only want another paid
+            question bank, there are established options. If you want free
+            questions plus an audio-first AKT revision system, AKT Navigator is
+            the different choice.
           </p>
+
+          <div
+            className="mt-6 rounded-xl p-4"
+            style={{
+              background: "rgba(52,211,153,.06)",
+              border: "1px solid rgba(52,211,153,.18)",
+            }}
+          >
+            <h2
+              className="text-[18px] font-semibold"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Quick answer
+            </h2>
+            <p
+              className="mt-2 text-[14px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              The best AKT question bank depends on how you revise. Use a
+              conventional bank if you mainly want screen-based questions. Use
+              AKT Navigator if you want free AKT question practice plus 90+
+              hours of audio revision across the full MRCGP AKT syllabus.
+            </p>
+          </div>
 
           {/* Comparison table */}
           <div
-            className="mt-8 overflow-x-auto rounded-xl"
+            className="mt-8 hidden overflow-x-auto rounded-xl md:block"
             style={{
               background: "var(--bg-surface)",
               border: "1px solid var(--border)",
@@ -162,9 +262,8 @@ export default function BestAktQuestionBankPage() {
                     "Questions",
                     "Explanations",
                     "Audio",
-                    "Adaptive",
+                    "Review",
                     "Mocks",
-                    "AI Debrief",
                     "Price",
                   ].map((h) => (
                     <th
@@ -201,9 +300,8 @@ export default function BestAktQuestionBankPage() {
                     <td className="p-3">{bank.questions}</td>
                     <td className="p-3">{bank.explanations}</td>
                     <td className="p-3">{bank.audio}</td>
-                    <td className="p-3">{bank.adaptiveLearning}</td>
+                    <td className="p-3">{bank.reviewTools}</td>
                     <td className="p-3">{bank.mockExams}</td>
-                    <td className="p-3">{bank.aiDebrief}</td>
                     <td className="p-3 whitespace-nowrap">{bank.price}</td>
                   </tr>
                 ))}
@@ -211,13 +309,75 @@ export default function BestAktQuestionBankPage() {
             </table>
           </div>
 
+          <div className="mt-8 grid gap-3 md:hidden">
+            {questionBanks.map((bank) => (
+              <article
+                key={bank.name}
+                className="rounded-xl p-4"
+                style={{
+                  background: bank.highlight
+                    ? "rgba(109,106,232,.08)"
+                    : "var(--bg-surface)",
+                  border: bank.highlight
+                    ? "1px solid rgba(109,106,232,.28)"
+                    : "1px solid var(--border)",
+                }}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <h3
+                    className="text-[16px] font-semibold"
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      color: bank.highlight
+                        ? "var(--brand-iris)"
+                        : "var(--fg-high)",
+                    }}
+                  >
+                    {bank.name}
+                  </h3>
+                  <span
+                    className="shrink-0 text-right text-[13px] font-semibold"
+                    style={{ color: "var(--fg-high)" }}
+                  >
+                    {bank.price}
+                  </span>
+                </div>
+                <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 text-[13px]">
+                  {[
+                    ["Questions", bank.questions],
+                    ["Audio", bank.audio],
+                    ["Explanations", bank.explanations],
+                    ["Review", bank.reviewTools],
+                    ["Mocks", bank.mockExams],
+                  ].map(([label, value]) => (
+                    <div key={label}>
+                      <dt
+                        className="text-[10px] font-semibold uppercase tracking-[0.14em]"
+                        style={{ color: "var(--fg-muted)" }}
+                      >
+                        {label}
+                      </dt>
+                      <dd
+                        className="mt-1 leading-[1.35]"
+                        style={{ color: "var(--fg-mid)" }}
+                      >
+                        {value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </article>
+            ))}
+          </div>
+
           <p
             className="mt-3 text-[12px]"
             style={{ color: "var(--fg-muted)" }}
           >
             AKT Navigator questions remain free. Full audio Early Access is £59
-            before 8 July 2026, then £79 for 4 months. Prices sourced from
-            provider websites, last checked {LAST_CHECKED}.
+            before 8 July 2026 for access starting 8 July, then £79 for 4
+            months. Prices and feature counts are sourced from provider
+            websites, last checked {LAST_CHECKED}.
           </p>
 
           {/* Detailed breakdown */}
@@ -245,12 +405,10 @@ export default function BestAktQuestionBankPage() {
                 style={{ color: "var(--fg-mid)" }}
               >
                 PassMedicine is the question bank that most trainees have heard
-                of. It covers around 3,500 questions for about £35 over four
-                months. The questions are well written and many trainees swear by
-                it. The main limitation is that there is no audio and no AI
-                analysis of your performance. If you are someone who learns best
-                by reading and doing questions on a screen, PassMedicine is a
-                solid choice.
+                of. It lists around 4,500 AKT questions for £35 over four
+                months. The main limitation is that it is still a screen-based
+                question bank: useful for active recall, but less useful when
+                you want to revise away from a desk.
               </p>
             </div>
 
@@ -266,12 +424,12 @@ export default function BestAktQuestionBankPage() {
                 className="mt-2 text-[16px] leading-[1.7]"
                 style={{ color: "var(--fg-mid)" }}
               >
-                Pastest has been around for a long time and has a good reputation
-                across medical exams, not just the AKT. Their AKT bank has
-                around 2,500 questions and costs between £95 and £180 depending
-                on the subscription length. The explanations are generally
-                thorough. The downside is the price, especially for trainees
-                already paying for courses and textbooks.
+                Pastest has been around for a long time and has a good
+                reputation across medical exams, not just the AKT. Their MRCGP
+                AKT product lists 3,300+ questions and costs between £95 and
+                £180 depending on subscription length. It is a stronger fit if
+                you want an established paid question bank and are comfortable
+                with a higher price.
               </p>
             </div>
 
@@ -287,11 +445,10 @@ export default function BestAktQuestionBankPage() {
                 className="mt-2 text-[16px] leading-[1.7]"
                 style={{ color: "var(--fg-mid)" }}
               >
-                BMJ OnExamination offers around 1,200 AKT questions for about
-                £50 over six months. It has basic performance tracking and the
-                questions are written by GPs. The question count is smaller than
-                other options, which means you may see repeats if you go through
-                the bank more than once.
+                BMJ OnExamination lists 2,455 MRCGP AKT questions and starts
+                from £44.99. It is another established screen-based bank with
+                written explanations and mock-style practice. Like the other
+                traditional banks, it does not solve the audio revision problem.
               </p>
             </div>
 
@@ -307,11 +464,30 @@ export default function BestAktQuestionBankPage() {
                 className="mt-2 text-[16px] leading-[1.7]"
                 style={{ color: "var(--fg-mid)" }}
               >
-                i-Medics offers around 3,000 free AKT questions. If you are on a
-                tight budget, it is a reasonable option. The questions vary in
-                quality and there is no adaptive learning, audio, or performance
-                analysis. It works best as a supplement alongside another
-                resource rather than your primary revision tool.
+                i-Medics offers around 3,000 free AKT questions. If you are on
+                a tight budget, it is a reasonable supplement. It is best seen
+                as extra question exposure rather than a complete audio-first
+                revision system.
+              </p>
+            </div>
+
+            {/* RCGP GP SelfTest */}
+            <div className="mt-8">
+              <h3
+                className="text-[20px] font-semibold"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                RCGP GP SelfTest
+              </h3>
+              <p
+                className="mt-2 text-[16px] leading-[1.7]"
+                style={{ color: "var(--fg-mid)" }}
+              >
+                GP SelfTest is the official RCGP practice resource and is free
+                for RCGP members. It is useful because it is directly connected
+                to the College&apos;s learning ecosystem. The trade-off is that
+                it is not designed as a 90-hour audio curriculum for covering
+                the whole AKT while you are away from a screen.
               </p>
             </div>
 
@@ -330,14 +506,11 @@ export default function BestAktQuestionBankPage() {
                 className="mt-2 text-[16px] leading-[1.7]"
                 style={{ color: "var(--fg-mid)" }}
               >
-                AKT Navigator&apos;s question bank is deep enough to carry your
-                whole revision — you will not run out of fresh questions before
-                exam day. Questions follow the AKT&apos;s single-best-answer
-                format — clinical vignette stems with plausible distractors —
-                and every answer is broken down into a structured explanation:
-                understanding the question, key points for your AKT, and why
-                the other options are wrong, aligned to NICE, CKS and the BNF
-                and regularly reviewed and updated. You can{" "}
+                AKT Navigator is not positioned as another paid question bank.
+                The questions stay free, and every answer is broken down into a
+                deep structured explanation: understanding the question, key
+                points for your AKT, and why the other options are wrong. You
+                can{" "}
                 <a
                   href="/demo"
                   className="font-medium transition-colors"
@@ -345,10 +518,10 @@ export default function BestAktQuestionBankPage() {
                 >
                   judge the quality yourself in the free demo
                 </a>
-                . It also includes 90+ hours of audio revision across all 32
-                topics, adaptive learning that builds sessions around your weak
-                areas, unlimited mock exams with AI-powered debriefs, and AI
-                support for deeper topic review.
+                . The main paid value is the 90+ hour AKT audiobook library
+                across all 32 RCGP topics, plus the statistics course, over 2
+                hours of statistics explainer videos, Dermatology Navigator and
+                future premium audio upgrades during your access period.
               </p>
               <p
                 className="mt-3 text-[16px] leading-[1.7]"
@@ -359,8 +532,9 @@ export default function BestAktQuestionBankPage() {
                 starting 8 July, then standard Full Audio Access is £79 for 4
                 months. AKT Navigator was built by a GP trainee who wanted
                 something better than what was available, so it is designed
-                around how trainees actually study: short sessions, on-the-go
-                audio, and smart question selection that adapts to your gaps.
+                around how trainees actually study: short sessions,
+                on-the-go audio, and revision time that would otherwise be
+                lost.
               </p>
             </div>
           </div>
@@ -380,13 +554,12 @@ export default function BestAktQuestionBankPage() {
               className="mt-4 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
-              It depends on how you learn best. If you want structured,
-              guideline-aligned explanations with audio and AI features, AKT
-              Navigator gives you free questions with optional full audio
-              access from £59. If you prefer a
-              battle-tested question bank that your friends used, PassMedicine is
-              the safe bet. If money is no object and you want thorough written
-              explanations, Pastest is reliable.
+              It depends on what problem you are trying to solve. If you only
+              want a conventional question bank, PassMedicine, Pastest, BMJ
+              OnExamination, i-Medics and GP SelfTest are all reasonable
+              options. If you want free question practice plus a full audio
+              syllabus you can use away from a screen, AKT Navigator is the
+              clearer fit.
             </p>
             <p
               className="mt-3 text-[16px] leading-[1.7]"
@@ -425,12 +598,12 @@ export default function BestAktQuestionBankPage() {
                 {
                   href: "/akt-mock-exam",
                   title: "AKT mock exams",
-                  desc: "Mocks from thousands of free questions",
+                  desc: "Timed mocks from free AKT questions",
                 },
                 {
                   href: "/akt-audio-revision",
                   title: "AKT audio revision",
-                  desc: "90+ hours, listen anywhere",
+                  desc: "90+ hours across the AKT syllabus",
                 },
                 {
                   href: "/akt-exam-dates",
@@ -684,11 +857,92 @@ export default function BestAktQuestionBankPage() {
             </div>
           </div>
 
+          {/* Source links */}
+          <section
+            className="mt-12 rounded-xl p-4"
+            style={{
+              background: "var(--bg-surface)",
+              border: "1px solid var(--border)",
+            }}
+          >
+            <h2
+              className="text-[20px] md:text-[24px] leading-[1.15]"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Provider sources
+            </h2>
+            <p
+              className="mt-3 text-[14px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              Comparison data is taken from public provider pages. Pricing and
+              question counts can change, so check the provider before buying.
+            </p>
+            <div className="mt-4 grid gap-2">
+              {sourceLinks.map((source) => (
+                <a
+                  key={source.href}
+                  href={source.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-xl px-4 py-3 text-[13px] font-medium transition-colors hover:bg-white/[.05]"
+                  style={{
+                    background: "var(--bg-elevated)",
+                    border: "1px solid var(--border)",
+                    color: "var(--fg-high)",
+                  }}
+                >
+                  {source.label} &rarr;
+                </a>
+              ))}
+            </div>
+          </section>
+
+          <section className="mt-12">
+            <h2
+              className="text-[20px] md:text-[24px] leading-[1.15]"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              AKT question bank FAQ
+            </h2>
+            <div className="mt-4 grid gap-3">
+              {comparisonFaqs.map((faq) => (
+                <article
+                  key={faq.question}
+                  className="rounded-xl p-4"
+                  style={{
+                    background: "var(--bg-surface)",
+                    border: "1px solid var(--border)",
+                  }}
+                >
+                  <h3
+                    className="text-[15px] font-semibold"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {faq.question}
+                  </h3>
+                  <p
+                    className="mt-2 text-[14px] leading-[1.65]"
+                    style={{ color: "var(--fg-mid)" }}
+                  >
+                    {faq.answer}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </section>
+
           {/* CTA */}
           <div className="mt-10">
             <a
               className="btn-primary inline-block text-[16px]"
-              href="https://app.medexia-akt.com"
+              href="https://app.medexia-akt.com/join/free"
             >
               Try free questions &rarr;
             </a>

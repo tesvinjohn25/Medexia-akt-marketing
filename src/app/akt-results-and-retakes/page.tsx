@@ -458,6 +458,22 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If infectious diseases or travel health questions were weak, use
+              the{" "}
+              <a
+                href="/akt-infectious-diseases-travel"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT infectious diseases and travel health guide
+              </a>{" "}
+              to revise HIV testing, hepatitis, immunisation, malaria,
+              returning traveller fever and antimicrobial stewardship.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               If timing and triage were the issue, use the{" "}
               <a
                 href="/akt-minor-illness-urgent-care"

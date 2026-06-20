@@ -621,6 +621,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Anaphylaxis, food and drug allergy",
                 },
                 {
+                  href: "/akt-infectious-diseases-travel",
+                  title: "AKT infections",
+                  desc: "HIV, hepatitis and travel health",
+                },
+                {
                   href: "/akt-minor-illness-urgent-care",
                   title: "AKT minor illness",
                   desc: "Sepsis, delayed antibiotics and safety-netting",

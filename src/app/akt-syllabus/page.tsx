@@ -424,7 +424,7 @@ export default function AktSyllabusPage() {
                 style={{ color: "var(--brand-violet-light)" }}
               >
                 AKT renal and urology guide
-              </a>{" "}
+              </a>
               ,{" "}
               <a
                 href="/akt-musculoskeletal"
@@ -432,7 +432,7 @@ export default function AktSyllabusPage() {
                 style={{ color: "var(--brand-violet-light)" }}
               >
                 AKT musculoskeletal guide
-              </a>{" "}
+              </a>
               ,{" "}
               <a
                 href="/akt-gastroenterology"
@@ -440,7 +440,7 @@ export default function AktSyllabusPage() {
                 style={{ color: "var(--brand-violet-light)" }}
               >
                 AKT gastroenterology guide
-              </a>{" "}
+              </a>
               ,{" "}
               <a
                 href="/akt-ent-speech-hearing"
@@ -448,7 +448,7 @@ export default function AktSyllabusPage() {
                 style={{ color: "var(--brand-violet-light)" }}
               >
                 AKT ENT guide
-              </a>{" "}
+              </a>
               ,{" "}
               <a
                 href="/akt-eyes-vision"
@@ -456,7 +456,7 @@ export default function AktSyllabusPage() {
                 style={{ color: "var(--brand-violet-light)" }}
               >
                 AKT eyes and vision guide
-              </a>{" "}
+              </a>
               ,{" "}
               <a
                 href="/akt-haematology"
@@ -464,7 +464,7 @@ export default function AktSyllabusPage() {
                 style={{ color: "var(--brand-violet-light)" }}
               >
                 AKT haematology guide
-              </a>{" "}
+              </a>
               ,{" "}
               <a
                 href="/akt-allergy-immunology"
@@ -472,6 +472,14 @@ export default function AktSyllabusPage() {
                 style={{ color: "var(--brand-violet-light)" }}
               >
                 AKT allergy and immunology guide
+              </a>
+              ,{" "}
+              <a
+                href="/akt-infectious-diseases-travel"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT infectious diseases and travel health guide
               </a>{" "}
               and statistics formulas page.
             </p>
@@ -701,6 +709,29 @@ export default function AktSyllabusPage() {
               </a>{" "}
               to revise anaphylaxis, adrenaline, food allergy, drug allergy,
               urticaria, angioedema and immunodeficiency red flags.
+            </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              For infectious diseases and travel health presentations, use the{" "}
+              <a
+                href="/akt-infectious-diseases-travel"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT infectious diseases and travel health guide
+              </a>{" "}
+              with the{" "}
+              <a
+                href="/topics/infectious-diseases-travel"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                infectious diseases and travel topic page
+              </a>{" "}
+              to revise HIV testing, hepatitis, immunisation, malaria,
+              returning traveller fever and antimicrobial stewardship.
             </p>
             <p
               className="mt-3 text-[15px] leading-[1.65]"

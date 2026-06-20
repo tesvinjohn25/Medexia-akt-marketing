@@ -71,6 +71,10 @@ Key facts:
   NT-proBNP, acute coronary syndrome red flags, lipid modification,
   QRISK3, TIA and stroke prevention, AAA screening and peripheral
   vascular disease.
+- AKT respiratory revision should cover asthma diagnosis and treatment,
+  COPD diagnosis and exacerbations, inhaler technique, spirometry, FeNO,
+  peak-flow variability, pneumonia severity, lung cancer red flags,
+  sleep apnoea and acute asthma or COPD escalation.
 - AKT minor illness and urgent care revision should cover sepsis
   recognition, NEWS2 as an adjunct to clinical judgement, delayed or
   back-up antibiotics, acute otitis media, tonsillitis, sinusitis, UTI
@@ -132,6 +136,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [AKT children and young people](https://medexia-akt.com/akt-children-young-people): acute child illness, paediatric cancer red flags, safeguarding, immunisation and adolescent health
 - [AKT dermatology](https://medexia-akt.com/akt-dermatology): rashes, eczema, psoriasis, acne, fungal infection, skin lesions and skin cancer recognition
 - [AKT cardiovascular](https://medexia-akt.com/akt-cardiovascular): hypertension, atrial fibrillation, heart failure, chest pain, lipids, QRISK3 and red flags
+- [AKT respiratory](https://medexia-akt.com/akt-respiratory): asthma, COPD, inhaler technique, spirometry, pneumonia, lung cancer red flags and sleep apnoea
 - [AKT minor illness and urgent care](https://medexia-akt.com/akt-minor-illness-urgent-care): sepsis recognition, NEWS2, delayed antibiotics, common infections and safety-netting
 - [AKT mental health](https://medexia-akt.com/akt-mental-health): depression, anxiety, suicide risk, self-harm, SSRI prescribing, psychosis and legal frameworks
 - [AKT women's health](https://medexia-akt.com/akt-womens-health): contraception, HRT, menopause, abnormal bleeding, breast lumps and cancer red flags

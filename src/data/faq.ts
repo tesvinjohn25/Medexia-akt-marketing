@@ -69,6 +69,10 @@ export const FAQS: Faq[] = [
     a: "Prioritise hypertension diagnosis and treatment, atrial fibrillation anticoagulation, heart failure and NT-proBNP, acute coronary syndrome red flags, lipid modification, QRISK3, TIA and stroke prevention, AAA screening and peripheral vascular disease.",
   },
   {
+    q: "What respiratory topics should I revise for the AKT?",
+    a: "Prioritise asthma diagnosis and treatment, COPD diagnosis and exacerbations, inhaler technique, spirometry, FeNO and peak-flow variability, pneumonia severity, lung cancer red flags, sleep apnoea and acute asthma or COPD escalation.",
+  },
+  {
     q: "What minor illness and urgent care topics should I revise for the AKT?",
     a: "Prioritise sepsis recognition, acute deterioration, NEWS2 as an adjunct to clinical judgement, same-day triage, delayed antibiotics, acute otitis media, tonsillitis, sinusitis, respiratory infections, UTI red flags, safety-netting and antimicrobial stewardship.",
   },

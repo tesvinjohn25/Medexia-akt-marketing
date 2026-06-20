@@ -22,6 +22,7 @@ const RESOURCE_LINKS = [
   { href: "/akt-children-young-people", label: "Children" },
   { href: "/akt-dermatology", label: "Dermatology" },
   { href: "/akt-cardiovascular", label: "Cardiovascular" },
+  { href: "/akt-respiratory", label: "Respiratory" },
   { href: "/akt-minor-illness-urgent-care", label: "Minor illness" },
   { href: "/akt-mental-health", label: "Mental health" },
   { href: "/akt-womens-health", label: "Women's health" },

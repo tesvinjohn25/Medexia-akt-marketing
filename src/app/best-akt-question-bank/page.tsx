@@ -508,6 +508,11 @@ export default function BestAktQuestionBankPage() {
                   desc: "AF, hypertension and heart failure",
                 },
                 {
+                  href: "/akt-respiratory",
+                  title: "AKT respiratory",
+                  desc: "Asthma, COPD, inhalers and red flags",
+                },
+                {
                   href: "/akt-minor-illness-urgent-care",
                   title: "AKT minor illness",
                   desc: "Sepsis, delayed antibiotics and safety-netting",

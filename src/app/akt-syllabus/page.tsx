@@ -401,6 +401,14 @@ export default function AktSyllabusPage() {
               >
                 AKT cardiovascular guide
               </a>{" "}
+              ,{" "}
+              <a
+                href="/akt-respiratory"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT respiratory guide
+              </a>{" "}
               and statistics formulas page.
             </p>
             <p
@@ -423,6 +431,29 @@ export default function AktSyllabusPage() {
               >
                 urgent and unscheduled care topic page.
               </a>
+            </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              For respiratory presentations, use the{" "}
+              <a
+                href="/akt-respiratory"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT respiratory guide
+              </a>{" "}
+              with the{" "}
+              <a
+                href="/topics/respiratory"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                respiratory topic page
+              </a>{" "}
+              to revise asthma, COPD, inhaler technique, spirometry and red
+              flags.
             </p>
             <p
               className="mt-3 text-[15px] leading-[1.65]"

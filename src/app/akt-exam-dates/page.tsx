@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
+import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { ExamCountdown } from "@/components/sections/ExamCountdown";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
@@ -21,27 +22,95 @@ export const metadata: Metadata = {
   },
 };
 
+const sourceLinks = [
+  {
+    href: "https://www.rcgp.org.uk/mrcgp-exams/mrcgp-exam-applications",
+    label: "RCGP: MRCGP key dates and applications",
+  },
+  {
+    href: "https://www.rcgp.org.uk/mrcgp-exams/applied-knowledge-test/akt-applying",
+    label: "RCGP: Applying for the AKT",
+  },
+  {
+    href: "https://www.rcgp.org.uk/mrcgp-exams/applied-knowledge-test/akt-introduction",
+    label: "RCGP: Introducing the AKT",
+  },
+  {
+    href: "https://www.pearsonvue.com/us/en/rcgp.html",
+    label: "Pearson VUE: RCGP test centres",
+  },
+];
+
+const faqs = [
+  {
+    question: "When is the next MRCGP AKT exam?",
+    answer:
+      "The next published MRCGP AKT sitting is 7 July 2026. The following 2026 sitting is 26 October 2026.",
+  },
+  {
+    question: "When is the October 2026 AKT booking deadline?",
+    answer:
+      "The final booking deadline for the October 2026 AKT is 1 September 2026. Pearson centre booking runs from 7 to 16 September 2026.",
+  },
+  {
+    question: "Where do GP trainees book the AKT?",
+    answer:
+      "GP trainees book and manage AKT applications through MyRCGP. Pearson centre booking is accessed from the MyRCGP exam booking area.",
+  },
+  {
+    question: "When are July 2026 AKT results released?",
+    answer:
+      "The RCGP key dates page lists July 2026 AKT results for 6 August 2026 at 17:00.",
+  },
+];
+
 export default function AktExamDatesPage() {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@graph": EXAM_SITTINGS.map((sitting) => ({
-      "@type": "Event",
-      name: `RCGP AKT Exam — ${sitting.label}`,
-      startDate: sitting.date.toISOString().split("T")[0],
-      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-      eventStatus: "https://schema.org/EventScheduled",
-      location: {
-        "@type": "Place",
-        name: "Pearson VUE Test Centre",
-        address: { "@type": "PostalAddress", addressCountry: "GB" },
+    "@graph": [
+      {
+        "@type": "Article",
+        headline: "AKT Exam Dates 2026",
+        description:
+          "Current RCGP AKT exam dates, booking deadlines, Pearson booking windows, results dates and format notes for GP trainees.",
+        author: {
+          "@type": "Organization",
+          name: "Medexia",
+          url: "https://medexia-akt.com",
+        },
+        datePublished: "2026-03-25",
+        dateModified: "2026-06-20",
       },
-      organizer: {
-        "@type": "Organization",
-        name: "Royal College of General Practitioners",
-        url: "https://www.rcgp.org.uk",
+      ...EXAM_SITTINGS.map((sitting) => ({
+        "@type": "Event",
+        name: `RCGP AKT Exam — ${sitting.label}`,
+        startDate: sitting.date.toISOString().split("T")[0],
+        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+        eventStatus: "https://schema.org/EventScheduled",
+        location: {
+          "@type": "Place",
+          name: "Pearson VUE Test Centre",
+          address: { "@type": "PostalAddress", addressCountry: "GB" },
+        },
+        organizer: {
+          "@type": "Organization",
+          name: "Royal College of General Practitioners",
+          url: "https://www.rcgp.org.uk",
+        },
+        description: `MRCGP Applied Knowledge Test — ${EXAM_FORMAT.questions} questions in ${EXAM_FORMAT.durationLabel}`,
+      })),
+      {
+        "@type": "FAQPage",
+        mainEntity: faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
       },
-      description: `MRCGP Applied Knowledge Test — ${EXAM_FORMAT.questions} questions in ${EXAM_FORMAT.durationLabel}`,
-    })),
+    ],
   };
 
   const formatDate = (date: Date) =>
@@ -61,6 +130,15 @@ export default function AktExamDatesPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "https://medexia-akt.com/" },
+          {
+            name: "AKT Exam Dates 2026",
+            url: "https://medexia-akt.com/akt-exam-dates",
+          },
+        ]}
       />
       <Nav />
 
@@ -321,7 +399,7 @@ export default function AktExamDatesPage() {
               </a>{" "}
               or{" "}
               <a
-                href="https://app.medexia-akt.com"
+                href="https://app.medexia-akt.com/join/free"
                 className="font-medium transition-colors"
                 style={{ color: "var(--brand-violet-light)" }}
               >
@@ -331,11 +409,94 @@ export default function AktExamDatesPage() {
             </p>
           </div>
 
+          {/* FAQs */}
+          <section className="mt-12">
+            <h2
+              className="text-[24px] md:text-[28px] leading-[1.15]"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              AKT dates FAQs
+            </h2>
+            <div className="mt-5 grid gap-3">
+              {faqs.map((faq) => (
+                <div
+                  key={faq.question}
+                  className="rounded-xl p-4"
+                  style={{
+                    background: "var(--bg-surface)",
+                    border: "1px solid var(--border)",
+                  }}
+                >
+                  <h3
+                    className="text-[16px] font-semibold"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {faq.question}
+                  </h3>
+                  <p
+                    className="mt-2 text-[14px] leading-[1.65]"
+                    style={{ color: "var(--fg-mid)" }}
+                  >
+                    {faq.answer}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Official sources */}
+          <section
+            className="mt-12 rounded-xl p-4"
+            style={{
+              background: "var(--bg-surface)",
+              border: "1px solid var(--border)",
+            }}
+          >
+            <h2
+              className="text-[20px] md:text-[24px] leading-[1.15]"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Official sources
+            </h2>
+            <p
+              className="mt-3 text-[14px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              This page is independent of the RCGP. Exam dates, application
+              process, Pearson booking information and AKT format are checked
+              against public RCGP and Pearson VUE information.
+            </p>
+            <div className="mt-4 grid gap-2">
+              {sourceLinks.map((source) => (
+                <a
+                  key={source.href}
+                  href={source.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-xl px-4 py-3 text-[13px] font-medium transition-colors hover:bg-white/[.05]"
+                  style={{
+                    background: "var(--bg-elevated)",
+                    border: "1px solid var(--border)",
+                    color: "var(--fg-high)",
+                  }}
+                >
+                  {source.label} &rarr;
+                </a>
+              ))}
+            </div>
+          </section>
+
           {/* CTA */}
           <div className="mt-10">
             <a
               className="btn-primary inline-block text-[16px]"
-              href="https://app.medexia-akt.com"
+              href="https://app.medexia-akt.com/join/free"
             >
               Start free practice &rarr;
             </a>

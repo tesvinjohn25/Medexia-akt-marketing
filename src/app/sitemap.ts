@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { aktTopics } from "@/data/akt-topics";
 
-const LAST_MODIFIED = new Date("2026-06-19");
+const LAST_MODIFIED = new Date("2026-06-20");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const topicPages = aktTopics.map((topic) => ({
@@ -74,6 +74,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: "https://medexia-akt.com/akt-statistics",
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    },
+    {
+      url: "https://medexia-akt.com/akt-evidence-in-practice",
       lastModified: LAST_MODIFIED,
       changeFrequency: "monthly" as const,
       priority: 0.85,

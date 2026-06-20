@@ -473,6 +473,11 @@ export default function BestAktQuestionBankPage() {
                   desc: "Evidence-based practice and key formulas",
                 },
                 {
+                  href: "/akt-evidence-in-practice",
+                  title: "AKT evidence",
+                  desc: "Critical appraisal and risk communication",
+                },
+                {
                   href: "/akt-statistics-formulas",
                   title: "AKT statistics formulas",
                   desc: "NNT, NNH, sensitivity, specificity, PPV and NPV",

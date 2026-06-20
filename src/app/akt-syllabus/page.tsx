@@ -356,6 +356,14 @@ export default function AktSyllabusPage() {
             >
               For the professional 10%, use the{" "}
               <a
+                href="/akt-evidence-in-practice"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT evidence in practice guide
+              </a>
+              {", "}
+              <a
                 href="/akt-prescribing-and-medication-safety"
                 className="font-medium transition-colors"
                 style={{ color: "var(--brand-violet-light)" }}

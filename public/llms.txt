@@ -44,6 +44,10 @@ Key facts:
   NPV, absolute and relative risk, NNT, NNH, confidence intervals,
   forest plots, prescribing charts, practice data and common study
   design terminology.
+- AKT evidence in practice revision should cover study design, bias,
+  confounding, diagnostic-test interpretation, confidence intervals,
+  risk communication, shared decisions and applying guidance to
+  individual GP patients.
 - Core AKT statistics formulas include sensitivity, specificity, PPV,
   NPV, absolute risk, relative risk, absolute risk reduction, absolute
   risk increase, NNT and NNH.
@@ -207,6 +211,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [AKT results and retakes](https://medexia-akt.com/akt-results-and-retakes): result reports, unsuccessful attempts, retake planning, appeals and attempt limits
 - [AKT feedback reports](https://medexia-akt.com/akt-feedback-reports): latest RCGP feedback report weak areas and recurring revision themes
 - [AKT statistics](https://medexia-akt.com/akt-statistics): evidence-based practice, data interpretation and key statistics formulas
+- [AKT evidence in practice](https://medexia-akt.com/akt-evidence-in-practice): critical appraisal, study design, diagnostic tests, risk communication and applying guidance in GP
 - [AKT statistics formulas](https://medexia-akt.com/akt-statistics-formulas): NNT, NNH, sensitivity, specificity, PPV, NPV and risk formulas
 - [AKT prescribing and medication safety](https://medexia-akt.com/akt-prescribing-and-medication-safety): medication monitoring, prescribing errors, side effects and BNF/NICE CKS checking
 - [AKT confidentiality, safeguarding and data protection](https://medexia-akt.com/akt-confidentiality-safeguarding-data-protection): confidentiality, information sharing, recorded consultations, safeguarding and GMC guidance

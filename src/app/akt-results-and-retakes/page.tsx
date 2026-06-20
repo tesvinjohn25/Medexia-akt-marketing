@@ -307,6 +307,21 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If evidence interpretation was weak, use the{" "}
+              <a
+                href="/akt-evidence-in-practice"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT evidence in practice guide
+              </a>{" "}
+              to revise critical appraisal, study design, bias, diagnostic
+              tests, risk communication and applying guidance in GP.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               If screening, immunisation or health-inequality questions were
               weak, use the{" "}
               <a

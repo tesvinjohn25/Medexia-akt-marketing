@@ -15,6 +15,7 @@ const RESOURCE_LINKS = [
   { href: "/akt-results-and-retakes", label: "Results" },
   { href: "/akt-feedback-reports", label: "Feedback reports" },
   { href: "/akt-statistics", label: "Statistics" },
+  { href: "/akt-evidence-in-practice", label: "Evidence" },
   { href: "/akt-statistics-formulas", label: "Formulas" },
   { href: "/akt-prescribing-and-medication-safety", label: "Prescribing" },
   { href: "/akt-confidentiality-safeguarding-data-protection", label: "Confidentiality" },

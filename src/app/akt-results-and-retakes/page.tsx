@@ -443,6 +443,21 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If allergy or immunology questions were weak, use the{" "}
+              <a
+                href="/akt-allergy-immunology"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT allergy and immunology guide
+              </a>{" "}
+              to revise anaphylaxis, adrenaline, food allergy, drug allergy,
+              urticaria, angioedema and immunodeficiency red flags.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               If timing and triage were the issue, use the{" "}
               <a
                 href="/akt-minor-illness-urgent-care"

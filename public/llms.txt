@@ -103,6 +103,11 @@ Key facts:
   interpretation, iron replacement, B12 and folate deficiency, VTE
   probability and D-dimer use, DOAC safety, thrombocytopenia,
   neutropenia, abnormal FBCs and haematological cancer red flags.
+- AKT allergy and immunology revision should cover anaphylaxis
+  recognition, IM adrenaline, tryptase timing, allergy referral,
+  adrenaline auto-injector counselling, IgE versus non-IgE food allergy,
+  drug allergy documentation, urticaria, angioedema and immunodeficiency
+  red flags.
 - AKT minor illness and urgent care revision should cover sepsis
   recognition, NEWS2 as an adjunct to clinical judgement, delayed or
   back-up antibiotics, acute otitis media, tonsillitis, sinusitis, UTI
@@ -172,6 +177,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [AKT ENT, speech and hearing](https://medexia-akt.com/akt-ent-speech-hearing): otitis media, sore throat, sinusitis, hearing loss, vertigo, epistaxis and head and neck cancer red flags
 - [AKT eyes and vision](https://medexia-akt.com/akt-eyes-vision): red eye, visual loss, flashes and floaters, diplopia, glaucoma, cataracts, AMD and diabetic eye disease
 - [AKT haematology](https://medexia-akt.com/akt-haematology): anaemia, iron deficiency, B12 and folate, VTE, anticoagulation, abnormal FBCs and haematological cancer red flags
+- [AKT allergy and immunology](https://medexia-akt.com/akt-allergy-immunology): anaphylaxis, adrenaline auto-injectors, food allergy, drug allergy, urticaria, angioedema and immunodeficiency red flags
 - [AKT minor illness and urgent care](https://medexia-akt.com/akt-minor-illness-urgent-care): sepsis recognition, NEWS2, delayed antibiotics, common infections and safety-netting
 - [AKT mental health](https://medexia-akt.com/akt-mental-health): depression, anxiety, suicide risk, self-harm, SSRI prescribing, psychosis and legal frameworks
 - [AKT women's health](https://medexia-akt.com/akt-womens-health): contraception, HRT, menopause, abnormal bleeding, breast lumps and cancer red flags

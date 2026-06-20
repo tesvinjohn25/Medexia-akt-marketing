@@ -30,6 +30,7 @@ const RESOURCE_LINKS = [
   { href: "/akt-ent-speech-hearing", label: "ENT" },
   { href: "/akt-eyes-vision", label: "Eyes" },
   { href: "/akt-haematology", label: "Haematology" },
+  { href: "/akt-allergy-immunology", label: "Allergy" },
   { href: "/akt-minor-illness-urgent-care", label: "Minor illness" },
   { href: "/akt-mental-health", label: "Mental health" },
   { href: "/akt-womens-health", label: "Women's health" },

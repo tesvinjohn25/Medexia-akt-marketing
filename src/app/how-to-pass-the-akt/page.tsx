@@ -616,6 +616,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Anaemia, VTE and anticoagulation",
                 },
                 {
+                  href: "/akt-allergy-immunology",
+                  title: "AKT allergy",
+                  desc: "Anaphylaxis, food and drug allergy",
+                },
+                {
                   href: "/akt-minor-illness-urgent-care",
                   title: "AKT minor illness",
                   desc: "Sepsis, delayed antibiotics and safety-netting",

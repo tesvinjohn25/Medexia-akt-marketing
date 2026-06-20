@@ -465,6 +465,14 @@ export default function AktSyllabusPage() {
               >
                 AKT haematology guide
               </a>{" "}
+              ,{" "}
+              <a
+                href="/akt-allergy-immunology"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT allergy and immunology guide
+              </a>{" "}
               and statistics formulas page.
             </p>
             <p
@@ -670,6 +678,29 @@ export default function AktSyllabusPage() {
               </a>{" "}
               to revise anaemia, iron deficiency, B12 and folate, VTE,
               anticoagulation, abnormal FBCs and cancer red flags.
+            </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              For allergy and immunology presentations, use the{" "}
+              <a
+                href="/akt-allergy-immunology"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT allergy and immunology guide
+              </a>{" "}
+              with the{" "}
+              <a
+                href="/topics/allergy-immunology"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                allergy and immunology topic page
+              </a>{" "}
+              to revise anaphylaxis, adrenaline, food allergy, drug allergy,
+              urticaria, angioedema and immunodeficiency red flags.
             </p>
             <p
               className="mt-3 text-[15px] leading-[1.65]"

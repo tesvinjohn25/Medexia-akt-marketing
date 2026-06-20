@@ -149,6 +149,10 @@ Key facts:
   health action plans, reasonable adjustments, diagnostic overshadowing,
   supported communication, capacity, safeguarding, epilepsy, mental
   health and medication review.
+- AKT neurodiversity revision should cover ADHD and autism recognition,
+  referral pathways, reasonable adjustments, shared-care medication
+  monitoring, diagnostic overshadowing, safeguarding and mental health
+  comorbidity.
 - Recent RCGP AKT feedback reports repeatedly highlight neurology,
   prescribing and medication monitoring, evidence/statistics chart
   interpretation, confidentiality/data protection, and children or
@@ -217,6 +221,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [AKT long-term conditions and cancer](https://medexia-akt.com/akt-long-term-conditions-cancer): multimorbidity, treatment burden, chronic disease reviews, cancer red flags, safety-netting and palliative transition
 - [AKT end of life](https://medexia-akt.com/akt-end-of-life): palliative care, anticipatory medicines, DNACPR, advance care planning, capacity and care after death
 - [AKT learning disability](https://medexia-akt.com/akt-learning-disability): annual health checks, reasonable adjustments, diagnostic overshadowing, capacity, safeguarding and behaviour that challenges
+- [AKT neurodiversity](https://medexia-akt.com/akt-neurodevelopmental-neurodiversity): ADHD, autism, referral pathways, medication monitoring, reasonable adjustments and mental health overlap
 - [AKT syllabus](https://medexia-akt.com/akt-syllabus): section weighting and all 32 RCGP curriculum topic guides
 - [AKT mock exams](https://medexia-akt.com/akt-mock-exam): free timed mocks with AI debriefs
 - [AKT audio revision](https://medexia-akt.com/akt-audio-revision): the 90+ hour audiobook library

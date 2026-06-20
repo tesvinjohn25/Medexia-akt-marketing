@@ -877,6 +877,29 @@ export default function AktSyllabusPage() {
               className="mt-3 text-[15px] leading-[1.65]"
               style={{ color: "var(--fg-mid)" }}
             >
+              For neurodevelopmental and neurodiversity scenarios, use the{" "}
+              <a
+                href="/akt-neurodevelopmental-neurodiversity"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT neurodiversity guide
+              </a>{" "}
+              with the{" "}
+              <a
+                href="/topics/neurodevelopmental-neurodiversity"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                neurodevelopmental conditions topic page
+              </a>{" "}
+              to revise ADHD, autism, referral pathways, medication
+              monitoring, reasonable adjustments and mental health overlap.
+            </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               For mental-health scenarios, use the{" "}
               <a
                 href="/akt-mental-health"

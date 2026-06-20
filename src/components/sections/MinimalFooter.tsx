@@ -41,6 +41,7 @@ const RESOURCE_LINKS = [
   { href: "/akt-long-term-conditions-cancer", label: "Long-term conditions" },
   { href: "/akt-end-of-life", label: "End of life" },
   { href: "/akt-learning-disability", label: "Learning disability" },
+  { href: "/akt-neurodevelopmental-neurodiversity", label: "Neurodiversity" },
   { href: "/akt-syllabus", label: "Syllabus" },
   { href: "/akt-exam-fee", label: "Fees" },
   { href: "/faq", label: "FAQ" },

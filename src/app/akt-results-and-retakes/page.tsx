@@ -567,6 +567,21 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If ADHD, autism or neurodiversity pathways were weak, use the{" "}
+              <a
+                href="/akt-neurodevelopmental-neurodiversity"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT neurodiversity guide
+              </a>{" "}
+              to revise recognition, referral, medication monitoring,
+              reasonable adjustments and mental health overlap.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               If timing and triage were the issue, use the{" "}
               <a
                 href="/akt-minor-illness-urgent-care"

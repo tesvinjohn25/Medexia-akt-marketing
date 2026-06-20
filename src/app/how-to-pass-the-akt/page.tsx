@@ -671,6 +671,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Health checks and diagnostic overshadowing",
                 },
                 {
+                  href: "/akt-neurodevelopmental-neurodiversity",
+                  title: "AKT neurodiversity",
+                  desc: "ADHD, autism and medication monitoring",
+                },
+                {
                   href: "/akt-syllabus",
                   title: "AKT syllabus",
                   desc: "80/10/10 weighting and all 32 RCGP topics",

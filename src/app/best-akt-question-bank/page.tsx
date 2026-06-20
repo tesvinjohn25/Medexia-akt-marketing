@@ -602,6 +602,11 @@ export default function BestAktQuestionBankPage() {
                   title: "AKT learning disability",
                   desc: "Health checks and diagnostic overshadowing",
                 },
+                {
+                  href: "/akt-neurodevelopmental-neurodiversity",
+                  title: "AKT neurodiversity",
+                  desc: "ADHD, autism and medication monitoring",
+                },
               ].map((link) => (
                 <a
                   key={link.href}

@@ -830,6 +830,29 @@ export default function AktSyllabusPage() {
               className="mt-3 text-[15px] leading-[1.65]"
               style={{ color: "var(--fg-mid)" }}
             >
+              For end-of-life scenarios, use the{" "}
+              <a
+                href="/akt-end-of-life"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT end of life guide
+              </a>{" "}
+              with the{" "}
+              <a
+                href="/topics/end-of-life"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                end of life topic page
+              </a>{" "}
+              to revise palliative care planning, anticipatory medicines,
+              DNACPR, capacity, symptom control, carers and care after death.
+            </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               For mental-health scenarios, use the{" "}
               <a
                 href="/akt-mental-health"

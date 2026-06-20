@@ -592,6 +592,11 @@ export default function BestAktQuestionBankPage() {
                   title: "AKT long-term conditions",
                   desc: "Cancer red flags and multimorbidity",
                 },
+                {
+                  href: "/akt-end-of-life",
+                  title: "AKT end of life",
+                  desc: "Palliative care, DNACPR and capacity",
+                },
               ].map((link) => (
                 <a
                   key={link.href}

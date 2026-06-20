@@ -661,6 +661,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Cancer red flags and multimorbidity",
                 },
                 {
+                  href: "/akt-end-of-life",
+                  title: "AKT end of life",
+                  desc: "Palliative care, DNACPR and capacity",
+                },
+                {
                   href: "/akt-syllabus",
                   title: "AKT syllabus",
                   desc: "80/10/10 weighting and all 32 RCGP topics",

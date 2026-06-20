@@ -14,10 +14,10 @@ export function SchemaJsonLd() {
           priceCurrency: "GBP",
           offerCount: 3,
           description:
-            "Everything in AKT Navigator is free until 8 July 2026. After that, Free Practice remains £0 with 2 hours of audio, Early Access is £59 from 8 July, and Full Audio Access is £79.",
+            "Everything in AKT Navigator is free until 8 July 2026. After that, Free Practice remains £0 with 2 hours of audio, £59 Early Access starts on 8 July for users who buy before 8 July, and Full Audio Access is £79.",
         },
         description:
-          "Audio-first MRCGP AKT revision covering the full syllabus in 90+ hours. Everything is free until 8 July 2026, including questions, audio, statistics, statistics explainer videos and Dermatology Navigator. After that, questions remain free with 2 hours of audio, and paid access starts from £59 early access.",
+          "Audio-first MRCGP AKT revision covering the full syllabus in 90+ hours. Everything is free until 8 July 2026, including questions, audio, statistics, statistics explainer videos and Dermatology Navigator. After that, questions remain free with 2 hours of audio, £59 Early Access applies only before 8 July, and standard full audio access is £79.",
         url: "https://app.medexia-akt.com",
         author: {
           "@type": "Organization",

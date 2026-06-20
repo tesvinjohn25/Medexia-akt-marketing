@@ -483,12 +483,12 @@ export default function HowToPassTheAktPage() {
                 {
                   href: "/akt-mock-exam",
                   title: "Mock exams",
-                  desc: "Mocks from thousands of free questions with AI debriefs",
+                  desc: "Timed mocks from free AKT questions",
                 },
                 {
                   href: "/akt-audio-revision",
                   title: "Audio revision",
-                  desc: "90+ hours across all 32 topics, from £59",
+                  desc: "90+ hours; £59 Early Access before 8 July",
                 },
                 {
                   href: "/best-akt-question-bank",

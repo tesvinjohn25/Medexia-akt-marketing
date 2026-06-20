@@ -45,8 +45,8 @@ export function FinalCTA() {
           className="r-up mx-auto mt-4 max-w-[480px] text-[15px] md:text-[17px] leading-[1.6]"
           style={{ color: "rgba(232,236,255,.68)", "--i": 2 } as React.CSSProperties}
         >
-          Free until 8 July. Then questions stay free &mdash; full audio from
-          &pound;59.
+          Free until 8 July. Then questions stay free &mdash; &pound;59 Early
+          Access before 8 July, &pound;79 from 8 July.
         </p>
 
         <div

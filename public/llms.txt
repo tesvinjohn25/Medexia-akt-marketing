@@ -3,7 +3,7 @@
 > AKT Navigator is an independent, audio-first revision resource for the
 > MRCGP Applied Knowledge Test (AKT) — the RCGP-administered exam that UK
 > GP trainees sit during specialty training. It offers free syllabus-mapped
-> questions, mock exams with AI debriefs, and 90+ hours of audio revision
+> questions, timed mock exams, deep structured explanations, and 90+ hours of audio revision
 > covering all 32 RCGP curriculum topics. It is not affiliated with, or
 > endorsed by, the Royal College of General Practitioners.
 
@@ -274,7 +274,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [AKT learning disability](https://medexia-akt.com/akt-learning-disability): annual health checks, reasonable adjustments, diagnostic overshadowing, capacity, safeguarding and behaviour that challenges
 - [AKT neurodiversity](https://medexia-akt.com/akt-neurodevelopmental-neurodiversity): ADHD, autism, referral pathways, medication monitoring, reasonable adjustments and mental health overlap
 - [AKT syllabus](https://medexia-akt.com/akt-syllabus): section weighting and all 32 RCGP curriculum topic guides
-- [AKT mock exams](https://medexia-akt.com/akt-mock-exam): free timed mocks with AI debriefs
+- [AKT mock exams](https://medexia-akt.com/akt-mock-exam): free timed mocks with performance debriefs
 - [AKT audio revision](https://medexia-akt.com/akt-audio-revision): the 90+ hour audiobook library
 - [AKT question banks compared](https://medexia-akt.com/best-akt-question-bank): how AKT Navigator compares
 - [All 32 AKT topics](https://medexia-akt.com/topics): per-topic revision guides

@@ -8,7 +8,7 @@ import { aktTopics } from "@/data/akt-topics";
 export const metadata: Metadata = {
   title: "All 32 AKT Topics — Full RCGP Curriculum Coverage",
   description:
-    "Every topic in the RCGP AKT curriculum. Clinical (80%), Professional (10%), and Life Stages. Free AKT questions and explanations, with full audio access from £59.",
+    "Every topic in the RCGP AKT curriculum. Clinical (80%), Professional (10%), and Life Stages. Free AKT questions and explanations, with £59 Early Access before 8 July and £79 full audio access from 8 July.",
   alternates: {
     canonical: "https://medexia-akt.com/topics",
   },

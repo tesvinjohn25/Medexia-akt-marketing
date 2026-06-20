@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 export const alt =
-  "AKT Navigator by Medexia — the whole AKT in 90 hours of audio. Full access free until 8 July. Early Access £59 before 8 July, then £79.";
+  "AKT Navigator by Medexia — the whole AKT in 90 hours of audio. Full access free until 8 July. £59 Early Access before 8 July; £79 from 8 July.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -143,7 +143,7 @@ export default function OGImage() {
               letterSpacing: "-0.01em",
             }}
           >
-            Early Access £59
+            £59 Early Access before 8 July
           </div>
           <div
             style={{

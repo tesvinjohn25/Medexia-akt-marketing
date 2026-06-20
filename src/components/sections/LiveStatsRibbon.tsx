@@ -127,7 +127,8 @@ export function LiveStatsRibbon() {
         className="mt-8 md:mt-10 text-center text-[13px] md:text-[14px] font-medium"
         style={{ color: "rgba(52,211,153,.9)" }}
       >
-        Free until 8 July. Then questions stay free — full audio from £59.
+        Free until 8 July. Then questions stay free — £59 Early Access before
+        8 July, £79 from 8 July.
       </p>
     </div>
   );

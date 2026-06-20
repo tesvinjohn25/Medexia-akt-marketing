@@ -149,8 +149,8 @@ export function HeroSection() {
               className="r-up mt-3 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
               style={{ color: "rgba(232,236,255,.6)", "--i": 7 } as React.CSSProperties}
             >
-              Free until 8 July. Then questions stay free &mdash; full audio
-              from &pound;59.
+              Free until 8 July. Then questions stay free &mdash; &pound;59
+              Early Access before 8 July, &pound;79 from 8 July.
             </p>
 
             {/* Countdown */}

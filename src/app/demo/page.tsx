@@ -114,7 +114,7 @@ export default function DemoPage() {
             name: "Is the AKT Navigator demo free?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Yes, the demo is free with no signup. The full product is also free until 8 July 2026; after that questions stay free and full audio access starts from £59.",
+              text: "Yes, the demo is free with no signup. The full product is also free until 8 July 2026; after that questions stay free, £59 Early Access applies before 8 July, and standard full audio access is £79.",
             },
           },
         ],

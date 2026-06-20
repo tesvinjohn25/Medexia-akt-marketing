@@ -183,8 +183,8 @@ export function PricingSection() {
             className="r-up mx-auto mt-4 max-w-[650px] text-[15px] md:text-[17px] leading-[1.65]"
             style={{ color: "rgba(232,236,255,.68)", "--i": 2 } as React.CSSProperties}
           >
-            Then questions stay free — full audio from £59. The cards show
-            exactly what changes on 8 July 2026.
+            Then questions stay free. £59 Early Access is available before 8
+            July; standard full audio access is £79 from 8 July.
           </p>
         </div>
 

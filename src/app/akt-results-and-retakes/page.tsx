@@ -520,6 +520,22 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If long-term conditions or cancer recognition were weak, use the{" "}
+              <a
+                href="/akt-long-term-conditions-cancer"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT long-term conditions and cancer guide
+              </a>{" "}
+              to revise multimorbidity, treatment burden, chronic disease
+              reviews, cancer red flags, safety-netting and suspected-cancer
+              referral decisions.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               If timing and triage were the issue, use the{" "}
               <a
                 href="/akt-minor-illness-urgent-care"

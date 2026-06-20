@@ -656,6 +656,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Frailty, falls and dementia",
                 },
                 {
+                  href: "/akt-long-term-conditions-cancer",
+                  title: "AKT long-term conditions",
+                  desc: "Cancer red flags and multimorbidity",
+                },
+                {
                   href: "/akt-syllabus",
                   title: "AKT syllabus",
                   desc: "80/10/10 weighting and all 32 RCGP topics",

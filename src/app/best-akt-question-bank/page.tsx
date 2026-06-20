@@ -587,6 +587,11 @@ export default function BestAktQuestionBankPage() {
                   title: "AKT older adults",
                   desc: "Frailty, falls and dementia",
                 },
+                {
+                  href: "/akt-long-term-conditions-cancer",
+                  title: "AKT long-term conditions",
+                  desc: "Cancer red flags and multimorbidity",
+                },
               ].map((link) => (
                 <a
                   key={link.href}

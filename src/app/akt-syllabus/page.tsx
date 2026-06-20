@@ -807,6 +807,29 @@ export default function AktSyllabusPage() {
               className="mt-3 text-[15px] leading-[1.65]"
               style={{ color: "var(--fg-mid)" }}
             >
+              For long-term conditions and cancer scenarios, use the{" "}
+              <a
+                href="/akt-long-term-conditions-cancer"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT long-term conditions and cancer guide
+              </a>{" "}
+              with the{" "}
+              <a
+                href="/topics/long-term-conditions-cancer"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                long-term conditions topic page
+              </a>{" "}
+              to revise multimorbidity, chronic disease reviews, cancer red
+              flags, safety-netting, survivorship and palliative transition.
+            </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               For mental-health scenarios, use the{" "}
               <a
                 href="/akt-mental-health"

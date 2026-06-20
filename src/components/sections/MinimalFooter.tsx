@@ -38,6 +38,7 @@ const RESOURCE_LINKS = [
   { href: "/akt-maternity-reproductive-health", label: "Maternity" },
   { href: "/akt-sexual-health", label: "Sexual health" },
   { href: "/akt-older-adults", label: "Older adults" },
+  { href: "/akt-long-term-conditions-cancer", label: "Long-term conditions" },
   { href: "/akt-syllabus", label: "Syllabus" },
   { href: "/akt-exam-fee", label: "Fees" },
   { href: "/faq", label: "FAQ" },

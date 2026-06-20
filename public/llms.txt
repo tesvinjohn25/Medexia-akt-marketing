@@ -138,6 +138,10 @@ Key facts:
   assessment, dementia work-up, delirium, polypharmacy, medication
   review, multimorbidity, care-home medicine, safeguarding and
   decision-specific mental capacity.
+- AKT long-term conditions and cancer revision should cover
+  multimorbidity, treatment burden, chronic disease reviews, cancer red
+  flags, suspected-cancer referral, safety-netting, survivorship and
+  palliative transition.
 - Recent RCGP AKT feedback reports repeatedly highlight neurology,
   prescribing and medication monitoring, evidence/statistics chart
   interpretation, confidentiality/data protection, and children or
@@ -203,6 +207,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [AKT maternity and reproductive health](https://medexia-akt.com/akt-maternity-reproductive-health): antenatal care, early pregnancy bleeding, pre-eclampsia, gestational diabetes, postnatal care and contraception after pregnancy
 - [AKT sexual health](https://medexia-akt.com/akt-sexual-health): STIs, chlamydia, gonorrhoea, genital herpes, HIV testing, partner notification, consent and safeguarding
 - [AKT older adults](https://medexia-akt.com/akt-older-adults): frailty, falls, dementia, delirium, polypharmacy, multimorbidity, care homes and mental capacity
+- [AKT long-term conditions and cancer](https://medexia-akt.com/akt-long-term-conditions-cancer): multimorbidity, treatment burden, chronic disease reviews, cancer red flags, safety-netting and palliative transition
 - [AKT syllabus](https://medexia-akt.com/akt-syllabus): section weighting and all 32 RCGP curriculum topic guides
 - [AKT mock exams](https://medexia-akt.com/akt-mock-exam): free timed mocks with AI debriefs
 - [AKT audio revision](https://medexia-akt.com/akt-audio-revision): the 90+ hour audiobook library

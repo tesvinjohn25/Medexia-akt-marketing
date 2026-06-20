@@ -133,6 +133,10 @@ export const FAQS: Faq[] = [
     a: "Prioritise frailty recognition, falls assessment, dementia work-up, delirium, polypharmacy, medication review, multimorbidity, anticholinergic burden, care-home medicine, advance care planning and decision-specific capacity.",
   },
   {
+    q: "What long-term conditions and cancer topics should I revise for the AKT?",
+    a: "Prioritise multimorbidity, treatment burden, shared decisions, chronic disease reviews, medicines optimisation, cancer red flags, NICE suspected-cancer referral, safety-netting, survivorship and palliative transitions.",
+  },
+  {
     q: "What is the AKT pass rate?",
     a: "The pass rate changes each sitting. In official RCGP feedback reports, 80.22% of all candidates passed in April 2026, 76.52% passed in January 2026, and 70.63% passed in October 2025. The pass marks were 107, 108 and 109 out of 160 respectively. UKG first-time pass rates were higher, at 88.68%, 88.39% and 88.84%. The areas where people struggle most include data interpretation, prescribing, organisation topics and time pressure. AKT Navigator targets these weak spots with syllabus-mapped practice, timed mocks, debriefs and 90+ hours of audio revision.",
   },

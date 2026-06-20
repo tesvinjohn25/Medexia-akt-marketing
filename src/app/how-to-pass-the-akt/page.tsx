@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
+import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { aktTopics } from "@/data/akt-topics";
@@ -15,11 +16,30 @@ export const metadata: Metadata = {
   openGraph: {
     title: "How to Pass the AKT — Complete Study Guide",
     description:
-      "Everything GP trainees need to know about passing the RCGP AKT: format, strategy, topic coverage, and free resources.",
+      "How to pass the RCGP AKT: current format, topic weighting, pass-rate context, timed mocks, weak-area review and audio revision.",
     type: "article",
     url: "https://medexia-akt.com/how-to-pass-the-akt",
   },
 };
+
+const sourceLinks = [
+  {
+    href: "https://www.rcgp.org.uk/mrcgp-exams/applied-knowledge-test/akt-introduction",
+    label: "RCGP: Introducing the AKT",
+  },
+  {
+    href: "https://www.rcgp.org.uk/mrcgp-exams/applied-knowledge-test/akt-preparing",
+    label: "RCGP: Preparing for the AKT",
+  },
+  {
+    href: "https://www.rcgp.org.uk/mrcgp-exams/applied-knowledge-test/further-help-support",
+    label: "RCGP: AKT feedback reports",
+  },
+  {
+    href: "https://www.pearsonvue.com/us/en/rcgp.html",
+    label: "Pearson VUE: RCGP AKT test centres",
+  },
+];
 
 export default function HowToPassTheAktPage() {
   const clinical = aktTopics.filter((t) => t.category === "Clinical");
@@ -40,7 +60,7 @@ export default function HowToPassTheAktPage() {
           url: "https://medexia-akt.com",
         },
         datePublished: "2026-03-25",
-        dateModified: "2026-06-19",
+        dateModified: "2026-06-20",
       },
       {
         "@type": "FAQPage",
@@ -80,6 +100,15 @@ export default function HowToPassTheAktPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "https://medexia-akt.com/" },
+          {
+            name: "How to Pass the AKT",
+            url: "https://medexia-akt.com/how-to-pass-the-akt",
+          },
+        ]}
+      />
       <Nav />
 
       <section
@@ -107,6 +136,31 @@ export default function HowToPassTheAktPage() {
             topics. This guide covers everything you need to know to prepare
             effectively.
           </p>
+
+          <div
+            className="mt-6 rounded-xl p-4"
+            style={{
+              background: "rgba(52,211,153,.06)",
+              border: "1px solid rgba(52,211,153,.18)",
+            }}
+          >
+            <h2
+              className="text-[18px] font-semibold"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Quick answer
+            </h2>
+            <p
+              className="mt-2 text-[14px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              To pass the MRCGP AKT, revise the full RCGP curriculum, practise
+              one-minute-per-question timing, protect evidence-based practice
+              and organisation topics, and use repeated mocks to find weak
+              areas. Most trainees need consistent practice over weeks rather
+              than a last-minute question-bank sprint.
+            </p>
+          </div>
 
           {/* The exam at a glance */}
           <div className="mt-10">
@@ -757,11 +811,55 @@ export default function HowToPassTheAktPage() {
             </div>
           </div>
 
+          <section
+            className="mt-12 rounded-xl p-4"
+            style={{
+              background: "var(--bg-surface)",
+              border: "1px solid var(--border)",
+            }}
+          >
+            <h2
+              className="text-[20px] md:text-[24px] leading-[1.15]"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Official sources
+            </h2>
+            <p
+              className="mt-3 text-[14px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              This guide is independent of the RCGP. Exam format, preparation
+              guidance, feedback-report context and test-centre logistics are
+              checked against public RCGP and Pearson VUE information.
+            </p>
+            <div className="mt-4 grid gap-2">
+              {sourceLinks.map((source) => (
+                <a
+                  key={source.href}
+                  href={source.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-xl px-4 py-3 text-[13px] font-medium transition-colors hover:bg-white/[.05]"
+                  style={{
+                    background: "var(--bg-elevated)",
+                    border: "1px solid var(--border)",
+                    color: "var(--fg-high)",
+                  }}
+                >
+                  {source.label} &rarr;
+                </a>
+              ))}
+            </div>
+          </section>
+
           {/* CTA */}
           <div className="mt-10">
             <a
               className="btn-primary inline-block text-[16px]"
-              href="https://app.medexia-akt.com"
+              href="https://app.medexia-akt.com/join/free"
             >
               Start revising free &rarr;
             </a>
@@ -773,7 +871,7 @@ export default function HowToPassTheAktPage() {
             style={{ color: "var(--fg-muted)" }}
           >
             Content aligned to NICE CKS and the RCGP curriculum. Written by a GP
-            trainee. Last reviewed March 2026.
+            trainee. Last reviewed June 2026.
           </p>
         </div>
       </section>

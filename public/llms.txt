@@ -113,6 +113,10 @@ Key facts:
   immunisation schedules, travel vaccines, malaria prevention, fever in
   the returning traveller, notifiable infections, antimicrobial
   stewardship and sepsis recognition.
+- AKT urgent and unscheduled care revision should cover sepsis, acute
+  deterioration, NEWS2 as an adjunct, anaphylaxis, acute asthma, chest
+  pain, acute abdomen, OOH triage, emergency escalation and
+  safety-netting.
 - AKT minor illness and urgent care revision should cover sepsis
   recognition, NEWS2 as an adjunct to clinical judgement, delayed or
   back-up antibiotics, acute otitis media, tonsillitis, sinusitis, UTI
@@ -212,6 +216,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [AKT haematology](https://medexia-akt.com/akt-haematology): anaemia, iron deficiency, B12 and folate, VTE, anticoagulation, abnormal FBCs and haematological cancer red flags
 - [AKT allergy and immunology](https://medexia-akt.com/akt-allergy-immunology): anaphylaxis, adrenaline auto-injectors, food allergy, drug allergy, urticaria, angioedema and immunodeficiency red flags
 - [AKT infectious diseases and travel health](https://medexia-akt.com/akt-infectious-diseases-travel): HIV testing, hepatitis, immunisation, travel vaccines, malaria, returning traveller fever and antimicrobial stewardship
+- [AKT urgent and unscheduled care](https://medexia-akt.com/akt-urgent-unscheduled-care): sepsis, NEWS2, acute deterioration, anaphylaxis, acute abdomen, OOH triage and emergency escalation
 - [AKT minor illness and urgent care](https://medexia-akt.com/akt-minor-illness-urgent-care): sepsis recognition, NEWS2, delayed antibiotics, common infections and safety-netting
 - [AKT mental health](https://medexia-akt.com/akt-mental-health): depression, anxiety, suicide risk, self-harm, SSRI prescribing, psychosis and legal frameworks
 - [AKT women's health](https://medexia-akt.com/akt-womens-health): contraception, HRT, menopause, abnormal bleeding, breast lumps and cancer red flags

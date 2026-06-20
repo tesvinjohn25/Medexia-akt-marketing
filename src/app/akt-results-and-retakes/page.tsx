@@ -597,6 +597,21 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If emergency escalation or OOH triage was weak, use the{" "}
+              <a
+                href="/akt-urgent-unscheduled-care"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT urgent and unscheduled care guide
+              </a>{" "}
+              to revise sepsis, NEWS2, acute deterioration, anaphylaxis,
+              acute abdomen, chest pain and explicit safety-netting.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               If your mistakes were around risk, prescribing or legal
               frameworks, use the{" "}
               <a

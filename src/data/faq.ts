@@ -113,6 +113,10 @@ export const FAQS: Faq[] = [
     a: "Prioritise sepsis recognition, acute deterioration, NEWS2 as an adjunct to clinical judgement, same-day triage, delayed antibiotics, acute otitis media, tonsillitis, sinusitis, respiratory infections, UTI red flags, safety-netting and antimicrobial stewardship.",
   },
   {
+    q: "What urgent and unscheduled care topics should I revise for the AKT?",
+    a: "Prioritise sepsis recognition, acute deterioration, NEWS2 as an adjunct, anaphylaxis, acute asthma, chest pain, acute abdomen, same-day or out-of-hours triage, emergency escalation and explicit safety-netting.",
+  },
+  {
     q: "What mental health topics should I revise for the AKT?",
     a: "Prioritise depression severity, anxiety and panic, suicide risk, self-harm, SSRI prescribing, psychosis, antipsychotic monitoring, eating disorders, safeguarding, the Mental Health Act and the Mental Capacity Act.",
   },

@@ -563,6 +563,11 @@ export default function BestAktQuestionBankPage() {
                   desc: "Sepsis, delayed antibiotics and safety-netting",
                 },
                 {
+                  href: "/akt-urgent-unscheduled-care",
+                  title: "AKT urgent care",
+                  desc: "Sepsis, NEWS2 and emergency escalation",
+                },
+                {
                   href: "/akt-mental-health",
                   title: "AKT mental health",
                   desc: "Depression, suicide risk and SSRI prescribing",

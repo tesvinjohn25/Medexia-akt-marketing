@@ -497,12 +497,22 @@ export default function AktSyllabusPage() {
               </a>{" "}
               alongside the{" "}
               <a
+                href="/akt-urgent-unscheduled-care"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT urgent and unscheduled care guide
+              </a>{" "}
+              and the{" "}
+              <a
                 href="/topics/urgent-unscheduled-care"
                 className="font-medium transition-colors"
                 style={{ color: "var(--brand-violet-light)" }}
               >
                 urgent and unscheduled care topic page.
               </a>
+              Revise sepsis, NEWS2, acute deterioration, anaphylaxis, chest
+              pain, acute abdomen, OOH triage and emergency escalation.
             </p>
             <p
               className="mt-3 text-[15px] leading-[1.65]"

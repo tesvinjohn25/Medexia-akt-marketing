@@ -33,6 +33,7 @@ const RESOURCE_LINKS = [
   { href: "/akt-allergy-immunology", label: "Allergy" },
   { href: "/akt-infectious-diseases-travel", label: "Infections" },
   { href: "/akt-minor-illness-urgent-care", label: "Minor illness" },
+  { href: "/akt-urgent-unscheduled-care", label: "Urgent care" },
   { href: "/akt-mental-health", label: "Mental health" },
   { href: "/akt-womens-health", label: "Women's health" },
   { href: "/akt-maternity-reproductive-health", label: "Maternity" },

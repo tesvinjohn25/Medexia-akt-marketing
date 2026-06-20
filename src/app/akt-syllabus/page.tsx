@@ -761,6 +761,29 @@ export default function AktSyllabusPage() {
               className="mt-3 text-[15px] leading-[1.65]"
               style={{ color: "var(--fg-mid)" }}
             >
+              For sexual-health presentations, use the{" "}
+              <a
+                href="/akt-sexual-health"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT sexual health guide
+              </a>{" "}
+              with the{" "}
+              <a
+                href="/topics/sexual-health"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                sexual health topic page
+              </a>{" "}
+              to revise STI testing, chlamydia, gonorrhoea, genital herpes,
+              HIV testing, partner notification, consent and safeguarding.
+            </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               For mental-health scenarios, use the{" "}
               <a
                 href="/akt-mental-health"

@@ -646,6 +646,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Pregnancy, postnatal care and red flags",
                 },
                 {
+                  href: "/akt-sexual-health",
+                  title: "AKT sexual health",
+                  desc: "STIs, HIV testing and safeguarding",
+                },
+                {
                   href: "/akt-syllabus",
                   title: "AKT syllabus",
                   desc: "80/10/10 weighting and all 32 RCGP topics",

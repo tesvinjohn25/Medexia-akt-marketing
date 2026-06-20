@@ -490,6 +490,21 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If sexual-health questions were weak, use the{" "}
+              <a
+                href="/akt-sexual-health"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT sexual health guide
+              </a>{" "}
+              to revise STI testing, chlamydia, gonorrhoea, genital herpes,
+              HIV testing, partner notification, consent and safeguarding.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               If timing and triage were the issue, use the{" "}
               <a
                 href="/akt-minor-illness-urgent-care"

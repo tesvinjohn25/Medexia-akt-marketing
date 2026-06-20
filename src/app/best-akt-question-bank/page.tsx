@@ -577,6 +577,11 @@ export default function BestAktQuestionBankPage() {
                   title: "AKT maternity",
                   desc: "Pregnancy, postnatal care and red flags",
                 },
+                {
+                  href: "/akt-sexual-health",
+                  title: "AKT sexual health",
+                  desc: "STIs, HIV testing and safeguarding",
+                },
               ].map((link) => (
                 <a
                   key={link.href}

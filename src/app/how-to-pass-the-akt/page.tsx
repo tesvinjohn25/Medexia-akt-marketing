@@ -571,6 +571,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Rashes, skin cancer and image-led revision",
                 },
                 {
+                  href: "/akt-cardiovascular",
+                  title: "AKT cardiovascular",
+                  desc: "AF, hypertension and heart failure",
+                },
+                {
                   href: "/akt-minor-illness-urgent-care",
                   title: "AKT minor illness",
                   desc: "Sepsis, delayed antibiotics and safety-netting",

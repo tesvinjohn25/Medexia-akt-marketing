@@ -307,6 +307,21 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If clinical thresholds were the issue, use the{" "}
+              <a
+                href="/akt-cardiovascular"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT cardiovascular guide
+              </a>{" "}
+              to revise hypertension, AF anticoagulation, heart failure and
+              chest-pain red flags.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               If timing and triage were the issue, use the{" "}
               <a
                 href="/akt-minor-illness-urgent-care"

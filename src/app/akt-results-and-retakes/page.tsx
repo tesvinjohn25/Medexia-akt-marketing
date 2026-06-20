@@ -337,6 +337,21 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If diabetes or endocrine questions were weak, use the{" "}
+              <a
+                href="/akt-diabetes-endocrinology"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT diabetes and endocrinology guide
+              </a>{" "}
+              to revise diabetes medicines, thyroid function tests, sick-day
+              rules and adrenal red flags.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               If timing and triage were the issue, use the{" "}
               <a
                 href="/akt-minor-illness-urgent-care"

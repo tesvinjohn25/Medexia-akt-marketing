@@ -409,6 +409,14 @@ export default function AktSyllabusPage() {
               >
                 AKT respiratory guide
               </a>{" "}
+              ,{" "}
+              <a
+                href="/akt-diabetes-endocrinology"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT diabetes and endocrinology guide
+              </a>{" "}
               and statistics formulas page.
             </p>
             <p
@@ -454,6 +462,29 @@ export default function AktSyllabusPage() {
               </a>{" "}
               to revise asthma, COPD, inhaler technique, spirometry and red
               flags.
+            </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              For metabolic and endocrine topics, use the{" "}
+              <a
+                href="/akt-diabetes-endocrinology"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT diabetes and endocrinology guide
+              </a>{" "}
+              with the{" "}
+              <a
+                href="/topics/metabolic-endocrinology"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                metabolic and endocrinology topic page
+              </a>{" "}
+              to revise diabetes medicines, thyroid tests, sick-day rules and
+              adrenal red flags.
             </p>
             <p
               className="mt-3 text-[15px] leading-[1.65]"

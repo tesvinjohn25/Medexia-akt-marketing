@@ -513,6 +513,11 @@ export default function BestAktQuestionBankPage() {
                   desc: "Asthma, COPD, inhalers and red flags",
                 },
                 {
+                  href: "/akt-diabetes-endocrinology",
+                  title: "AKT diabetes",
+                  desc: "Diabetes, thyroid tests and sick-day rules",
+                },
+                {
                   href: "/akt-minor-illness-urgent-care",
                   title: "AKT minor illness",
                   desc: "Sepsis, delayed antibiotics and safety-netting",

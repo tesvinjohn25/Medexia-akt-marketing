@@ -71,6 +71,10 @@ Key facts:
 - AKT prescribing revision should cover medication monitoring,
   prescribing errors, side effects and interactions, repeat prescribing
   systems, higher-risk groups and BNF or NICE CKS checking.
+- AKT continuity, quality, safety and prescribing revision should
+  cover continuity of care, clinical governance, audit, PDSA,
+  significant-event learning, patient-safety systems, medicines
+  optimisation, repeat prescribing and test-result follow-up.
 - AKT continuity, quality and safety revision should cover continuity
   of care, audit cycles, PDSA, significant-event learning,
   safety-netting, test-result follow-up, handover, medicines
@@ -239,6 +243,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [AKT evidence in practice](https://medexia-akt.com/akt-evidence-in-practice): critical appraisal, study design, diagnostic tests, risk communication and applying guidance in GP
 - [AKT statistics formulas](https://medexia-akt.com/akt-statistics-formulas): NNT, NNH, sensitivity, specificity, PPV, NPV and risk formulas
 - [AKT prescribing and medication safety](https://medexia-akt.com/akt-prescribing-and-medication-safety): medication monitoring, prescribing errors, side effects and BNF/NICE CKS checking
+- [AKT continuity, quality, safety and prescribing](https://medexia-akt.com/akt-continuity-quality-safety-prescribing): continuity of care, clinical governance, QI, patient safety, medicines optimisation and prescribing systems
 - [AKT continuity, quality and patient safety](https://medexia-akt.com/akt-continuity-quality-safety): continuity, QI, audit, significant-event learning, patient-safety systems and prescribing risk
 - [AKT confidentiality, safeguarding and data protection](https://medexia-akt.com/akt-confidentiality-safeguarding-data-protection): confidentiality, information sharing, recorded consultations, safeguarding and GMC guidance
 - [AKT neurology](https://medexia-akt.com/akt-neurology): gait disturbance, headache red flags, seizures, stroke, Parkinson's, MS and neurology feedback themes

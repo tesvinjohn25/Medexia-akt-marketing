@@ -69,6 +69,10 @@ export const FAQS: Faq[] = [
     a: "Prioritise common medication monitoring, prescribing errors, side effects and interactions, repeat prescribing safety, higher-risk groups such as pregnancy, breastfeeding, older adults and renal impairment, and high-risk medicines. Use the BNF and NICE CKS as reference sources during question review rather than trying to memorise the whole BNF.",
   },
   {
+    q: "What continuity, quality, safety and prescribing topics should I revise for the AKT?",
+    a: "Prioritise continuity of care, clinical governance, audit, PDSA, significant-event learning, patient-safety systems, test-result follow-up, handover, medicines reconciliation, repeat prescribing, monitoring and medicines optimisation.",
+  },
+  {
     q: "What continuity, quality and safety topics should I revise for the AKT?",
     a: "Prioritise continuity of care, audit cycles, PDSA, significant-event learning, patient-safety reporting, safety-netting, test-result follow-up, handover, medicines reconciliation and repeat-prescribing systems.",
   },

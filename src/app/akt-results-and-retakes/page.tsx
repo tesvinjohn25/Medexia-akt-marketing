@@ -400,6 +400,22 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If combined continuity, safety and prescribing-system questions
+              were weak, use the{" "}
+              <a
+                href="/akt-continuity-quality-safety-prescribing"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT continuity, quality, safety and prescribing guide
+              </a>{" "}
+              to revise continuity, governance, medicines optimisation,
+              repeat-prescribing systems and test-result follow-up.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               If screening, immunisation or health-inequality questions were
               weak, use the{" "}
               <a

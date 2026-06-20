@@ -508,6 +508,11 @@ export default function BestAktQuestionBankPage() {
                   desc: "Medication monitoring, errors and safety themes",
                 },
                 {
+                  href: "/akt-continuity-quality-safety-prescribing",
+                  title: "AKT continuity safety",
+                  desc: "Continuity, governance and prescribing systems",
+                },
+                {
                   href: "/akt-continuity-quality-safety",
                   title: "AKT quality safety",
                   desc: "QI, audit and patient-safety systems",

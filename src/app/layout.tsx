@@ -54,6 +54,7 @@ export const metadata: Metadata = {
     "AKT medication monitoring",
     "AKT quality improvement",
     "AKT patient safety",
+    "AKT continuity quality safety prescribing",
     "AKT continuity of care",
     "AKT audit cycle",
     "AKT significant event analysis",

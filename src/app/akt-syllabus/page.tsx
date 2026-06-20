@@ -404,6 +404,14 @@ export default function AktSyllabusPage() {
               </a>
               {", "}
               <a
+                href="/akt-continuity-quality-safety-prescribing"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT continuity, quality, safety and prescribing guide
+              </a>
+              {", "}
+              <a
                 href="/akt-continuity-quality-safety"
                 className="font-medium transition-colors"
                 style={{ color: "var(--brand-violet-light)" }}

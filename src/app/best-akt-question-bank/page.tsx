@@ -502,6 +502,11 @@ export default function BestAktQuestionBankPage() {
                   title: "AKT dermatology",
                   desc: "Rashes, skin cancer and image-led revision",
                 },
+                {
+                  href: "/akt-minor-illness-urgent-care",
+                  title: "AKT minor illness",
+                  desc: "Sepsis, delayed antibiotics and safety-netting",
+                },
               ].map((link) => (
                 <a
                   key={link.href}

@@ -97,6 +97,12 @@ const recurringThemes = [
       "Acute illness, safeguarding, confidentiality, paediatric cancer and other child-health presentations recur in recent feedback.",
     href: "/akt-children-young-people",
   },
+  {
+    title: "AKT minor illness and urgent care",
+    detail:
+      "Minor illnesses, acute deterioration, safety-netting and common infection decisions appear in recent feedback and same-day GP practice.",
+    href: "/akt-minor-illness-urgent-care",
+  },
 ];
 
 const faqs = [

@@ -571,6 +571,11 @@ export default function HowToPassTheAktPage() {
                   desc: "Rashes, skin cancer and image-led revision",
                 },
                 {
+                  href: "/akt-minor-illness-urgent-care",
+                  title: "AKT minor illness",
+                  desc: "Sepsis, delayed antibiotics and safety-netting",
+                },
+                {
                   href: "/akt-syllabus",
                   title: "AKT syllabus",
                   desc: "80/10/10 weighting and all 32 RCGP topics",

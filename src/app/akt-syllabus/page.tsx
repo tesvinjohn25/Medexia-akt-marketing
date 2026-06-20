@@ -395,6 +395,27 @@ export default function AktSyllabusPage() {
               </a>{" "}
               and statistics formulas page.
             </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              For same-day presentations, use the{" "}
+              <a
+                href="/akt-minor-illness-urgent-care"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT minor illness and urgent care guide
+              </a>{" "}
+              alongside the{" "}
+              <a
+                href="/topics/urgent-unscheduled-care"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                urgent and unscheduled care topic page.
+              </a>
+            </p>
           </section>
 
           <section className="mt-10">

@@ -65,6 +65,10 @@ export const FAQS: Faq[] = [
     a: "Prioritise rashes and eruptions, eczema, psoriasis, acne, fungal infections, cellulitis, shingles, urticaria, leg ulcers, benign skin lesions, skin cancer recognition and urgent referral thresholds. Dermatology is visual, so pair written explanations with image-led practice where possible.",
   },
   {
+    q: "What minor illness and urgent care topics should I revise for the AKT?",
+    a: "Prioritise sepsis recognition, acute deterioration, NEWS2 as an adjunct to clinical judgement, same-day triage, delayed antibiotics, acute otitis media, tonsillitis, sinusitis, respiratory infections, UTI red flags, safety-netting and antimicrobial stewardship.",
+  },
+  {
     q: "What is the AKT pass rate?",
     a: "The pass rate changes each sitting. In official RCGP feedback reports, 80.22% of all candidates passed in April 2026, 76.52% passed in January 2026, and 70.63% passed in October 2025. The pass marks were 107, 108 and 109 out of 160 respectively. UKG first-time pass rates were higher, at 88.68%, 88.39% and 88.84%. The areas where people struggle most include data interpretation, prescribing, organisation topics and time pressure. AKT Navigator targets these weak spots with syllabus-mapped practice, timed mocks, debriefs and 90+ hours of audio revision.",
   },

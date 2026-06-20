@@ -62,6 +62,10 @@ Key facts:
   illness recognition, paediatric cancer red flags, safeguarding,
   developmental milestones, immunisation, childhood infections,
   adolescent health, confidentiality and Fraser guidance.
+- AKT population and planetary health revision should prioritise NHS
+  screening, routine immunisation, prevention, health inequalities,
+  wider determinants, antimicrobial stewardship, inhaler carbon
+  footprint and safe resource stewardship.
 - AKT dermatology revision should prioritise rashes and eruptions,
   eczema, psoriasis, acne, fungal infections, cellulitis, shingles,
   urticaria, leg ulcers, benign skin lesions, skin cancer recognition
@@ -222,6 +226,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [AKT infectious diseases and travel health](https://medexia-akt.com/akt-infectious-diseases-travel): HIV testing, hepatitis, immunisation, travel vaccines, malaria, returning traveller fever and antimicrobial stewardship
 - [AKT urgent and unscheduled care](https://medexia-akt.com/akt-urgent-unscheduled-care): sepsis, NEWS2, acute deterioration, anaphylaxis, acute abdomen, OOH triage and emergency escalation
 - [AKT smoking, alcohol and substance misuse](https://medexia-akt.com/akt-smoking-alcohol-substance-misuse): smoking cessation, AUDIT, alcohol withdrawal, opioid dependence, harm reduction and safeguarding
+- [AKT population and planetary health](https://medexia-akt.com/akt-population-planetary-health): screening, immunisation, prevention, health inequalities, wider determinants and greener primary care
 - [AKT minor illness and urgent care](https://medexia-akt.com/akt-minor-illness-urgent-care): sepsis recognition, NEWS2, delayed antibiotics, common infections and safety-netting
 - [AKT mental health](https://medexia-akt.com/akt-mental-health): depression, anxiety, suicide risk, self-harm, SSRI prescribing, psychosis and legal frameworks
 - [AKT women's health](https://medexia-akt.com/akt-womens-health): contraception, HRT, menopause, abnormal bleeding, breast lumps and cancer red flags

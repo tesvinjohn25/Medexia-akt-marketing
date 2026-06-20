@@ -121,6 +121,10 @@ export const FAQS: Faq[] = [
     a: "Prioritise smoking cessation, AUDIT scoring, alcohol withdrawal risk, detox thresholds, relapse prevention, opioid substitution, naloxone, blood-borne virus testing, harm reduction and safeguarding.",
   },
   {
+    q: "What population and planetary health topics should I revise for the AKT?",
+    a: "Prioritise NHS screening programmes, routine immunisation, prevention, health inequalities, wider determinants of health, antimicrobial stewardship, inhaler carbon footprint and safe resource stewardship.",
+  },
+  {
     q: "What mental health topics should I revise for the AKT?",
     a: "Prioritise depression severity, anxiety and panic, suicide risk, self-harm, SSRI prescribing, psychosis, antipsychotic monitoring, eating disorders, safeguarding, the Mental Health Act and the Mental Capacity Act.",
   },

@@ -573,6 +573,11 @@ export default function BestAktQuestionBankPage() {
                   desc: "Smoking, alcohol and opioid dependence",
                 },
                 {
+                  href: "/akt-population-planetary-health",
+                  title: "AKT population health",
+                  desc: "Screening, immunisation and planetary health",
+                },
+                {
                   href: "/akt-mental-health",
                   title: "AKT mental health",
                   desc: "Depression, suicide risk and SSRI prescribing",

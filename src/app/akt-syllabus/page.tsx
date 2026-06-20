@@ -910,6 +910,29 @@ export default function AktSyllabusPage() {
               className="mt-3 text-[15px] leading-[1.65]"
               style={{ color: "var(--fg-mid)" }}
             >
+              For prevention and public-health scenarios, use the{" "}
+              <a
+                href="/akt-population-planetary-health"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT population and planetary health guide
+              </a>{" "}
+              with the{" "}
+              <a
+                href="/topics/population-planetary-health"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                population and planetary health topic page
+              </a>{" "}
+              to revise screening, immunisation, prevention, health
+              inequalities, wider determinants and greener primary care.
+            </p>
+            <p
+              className="mt-3 text-[15px] leading-[1.65]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               For neurodevelopmental and neurodiversity scenarios, use the{" "}
               <a
                 href="/akt-neurodevelopmental-neurodiversity"

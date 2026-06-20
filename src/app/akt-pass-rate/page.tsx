@@ -53,6 +53,25 @@ const reports = [
   },
 ];
 
+const sourceLinks = [
+  {
+    href: "https://www.rcgp.org.uk/mrcgp-exams/applied-knowledge-test/further-help-support",
+    label: "RCGP: AKT feedback reports",
+  },
+  {
+    href: reports[0].source,
+    label: "RCGP: April 2026 AKT feedback report",
+  },
+  {
+    href: reports[1].source,
+    label: "RCGP: January 2026 AKT feedback report",
+  },
+  {
+    href: reports[2].source,
+    label: "RCGP: October 2025 AKT feedback report",
+  },
+];
+
 const faqs = [
   {
     question: "What is the MRCGP AKT pass rate?",
@@ -86,7 +105,7 @@ export default function AktPassRatePage() {
           url: "https://medexia-akt.com",
         },
         datePublished: "2026-06-19",
-        dateModified: "2026-06-19",
+        dateModified: "2026-06-20",
       },
       {
         "@type": "FAQPage",
@@ -160,11 +179,12 @@ export default function AktPassRatePage() {
               className="mt-2 text-[14px] leading-[1.65]"
               style={{ color: "var(--fg-mid)" }}
             >
-              In April 2026, <strong>80.22%</strong> of all AKT candidates
+              The latest RCGP AKT feedback report currently listed is April
+              2026. In that sitting, <strong>80.22%</strong> of all candidates
               passed and the pass mark was <strong>107 out of 160</strong>. In
-              January 2026, <strong>76.52%</strong> passed and the pass mark was{" "}
-              <strong>108 out of 160</strong>. UKG first-time takers had higher
-              pass rates in both reports, at 88.68% and 88.39%.
+              January 2026, <strong>76.52%</strong> passed and the pass mark
+              was <strong>108 out of 160</strong>. UKG first-time takers had
+              higher pass rates in both reports, at 88.68% and 88.39%.
             </p>
           </div>
 
@@ -445,6 +465,51 @@ export default function AktPassRatePage() {
               ))}
             </div>
           </div>
+
+          <section
+            className="mt-10 rounded-xl p-4"
+            style={{
+              background: "var(--bg-surface)",
+              border: "1px solid var(--border)",
+            }}
+          >
+            <h2
+              className="text-[20px] md:text-[24px] leading-[1.15]"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Official sources
+            </h2>
+            <p
+              className="mt-3 text-[14px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              This page is independent of the RCGP. Pass rates, pass marks,
+              candidate counts and first-time taker figures are checked against
+              the public RCGP AKT feedback report list and the individual
+              feedback report PDFs.
+            </p>
+            <div className="mt-4 grid gap-2">
+              {sourceLinks.map((source) => (
+                <a
+                  key={source.href}
+                  href={source.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-xl px-4 py-3 text-[13px] font-medium transition-colors hover:bg-white/[.05]"
+                  style={{
+                    background: "var(--bg-elevated)",
+                    border: "1px solid var(--border)",
+                    color: "var(--fg-high)",
+                  }}
+                >
+                  {source.label} &rarr;
+                </a>
+              ))}
+            </div>
+          </section>
 
           <div className="mt-10">
             <a

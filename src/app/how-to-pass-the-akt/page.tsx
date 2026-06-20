@@ -651,6 +651,11 @@ export default function HowToPassTheAktPage() {
                   desc: "STIs, HIV testing and safeguarding",
                 },
                 {
+                  href: "/akt-older-adults",
+                  title: "AKT older adults",
+                  desc: "Frailty, falls and dementia",
+                },
+                {
                   href: "/akt-syllabus",
                   title: "AKT syllabus",
                   desc: "80/10/10 weighting and all 32 RCGP topics",

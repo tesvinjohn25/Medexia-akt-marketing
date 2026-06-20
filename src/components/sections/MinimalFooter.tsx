@@ -37,6 +37,7 @@ const RESOURCE_LINKS = [
   { href: "/akt-womens-health", label: "Women's health" },
   { href: "/akt-maternity-reproductive-health", label: "Maternity" },
   { href: "/akt-sexual-health", label: "Sexual health" },
+  { href: "/akt-older-adults", label: "Older adults" },
   { href: "/akt-syllabus", label: "Syllabus" },
   { href: "/akt-exam-fee", label: "Fees" },
   { href: "/faq", label: "FAQ" },

@@ -134,6 +134,10 @@ Key facts:
   screening, chlamydia, gonorrhoea, genital herpes, HIV testing, PEP
   timing, PrEP awareness, partner notification, contraception overlap,
   consent, confidentiality and safeguarding thresholds.
+- AKT older adults revision should cover frailty recognition, falls
+  assessment, dementia work-up, delirium, polypharmacy, medication
+  review, multimorbidity, care-home medicine, safeguarding and
+  decision-specific mental capacity.
 - Recent RCGP AKT feedback reports repeatedly highlight neurology,
   prescribing and medication monitoring, evidence/statistics chart
   interpretation, confidentiality/data protection, and children or
@@ -198,6 +202,7 @@ aligned to NICE, CKS and the BNF, regularly reviewed and updated.
 - [AKT women's health](https://medexia-akt.com/akt-womens-health): contraception, HRT, menopause, abnormal bleeding, breast lumps and cancer red flags
 - [AKT maternity and reproductive health](https://medexia-akt.com/akt-maternity-reproductive-health): antenatal care, early pregnancy bleeding, pre-eclampsia, gestational diabetes, postnatal care and contraception after pregnancy
 - [AKT sexual health](https://medexia-akt.com/akt-sexual-health): STIs, chlamydia, gonorrhoea, genital herpes, HIV testing, partner notification, consent and safeguarding
+- [AKT older adults](https://medexia-akt.com/akt-older-adults): frailty, falls, dementia, delirium, polypharmacy, multimorbidity, care homes and mental capacity
 - [AKT syllabus](https://medexia-akt.com/akt-syllabus): section weighting and all 32 RCGP curriculum topic guides
 - [AKT mock exams](https://medexia-akt.com/akt-mock-exam): free timed mocks with AI debriefs
 - [AKT audio revision](https://medexia-akt.com/akt-audio-revision): the 90+ hour audiobook library

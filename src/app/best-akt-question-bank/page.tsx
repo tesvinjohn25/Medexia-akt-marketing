@@ -582,6 +582,11 @@ export default function BestAktQuestionBankPage() {
                   title: "AKT sexual health",
                   desc: "STIs, HIV testing and safeguarding",
                 },
+                {
+                  href: "/akt-older-adults",
+                  title: "AKT older adults",
+                  desc: "Frailty, falls and dementia",
+                },
               ].map((link) => (
                 <a
                   key={link.href}

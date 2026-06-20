@@ -505,6 +505,21 @@ export default function AktResultsAndRetakesPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
+              If older-adult scenarios were weak, use the{" "}
+              <a
+                href="/akt-older-adults"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                AKT older adults guide
+              </a>{" "}
+              to revise frailty, falls, dementia, delirium, polypharmacy,
+              multimorbidity, care homes and mental capacity.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
               If timing and triage were the issue, use the{" "}
               <a
                 href="/akt-minor-illness-urgent-care"

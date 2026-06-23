@@ -162,6 +162,14 @@ function resetTrackingEnv() {
   process.env.NEXT_PUBLIC_CONSENT_VERSION = "2026-06-23-v1";
 }
 
+async function parseBeaconPayload(call) {
+  const body = call.body;
+  if (body && typeof body.text === "function") {
+    return JSON.parse(await body.text());
+  }
+  return JSON.parse(String(body));
+}
+
 test("referral offer is only selected when public sprint and discount flags are enabled", () => {
   const now = new Date("2026-06-23T12:00:00+01:00");
 
@@ -263,6 +271,46 @@ test("reject all stores the decision and leaves analytics and pixels disabled", 
   assert.equal(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.firstTouch), null);
   assert.equal(browser.sendBeaconCalls.length, 0);
   assert.equal(browser.scripts.length, 0);
+});
+
+test("consent_updated without analytics consent sends only a minimal consent audit payload", async () => {
+  resetTrackingEnv();
+  const browser = installBrowser("https://medexia-akt.com/?utm_source=reddit&gclid=G123", "https://example.com/post");
+
+  trackLandingEvent("consent_updated", {
+    mechanism: "banner",
+    functional: false,
+    analytics: false,
+    marketing: false,
+  });
+
+  assert.equal(browser.sendBeaconCalls.length, 1);
+  const payload = await parseBeaconPayload(browser.sendBeaconCalls[0]);
+  assert.deepEqual(Object.keys(payload).sort(), [
+    "choices",
+    "consent_version",
+    "event_name",
+    "event_timestamp",
+    "mechanism",
+    "source",
+  ].sort());
+  assert.equal(payload.event_name, "consent_updated");
+  assert.equal(payload.consent_version, "2026-06-23-v1");
+  assert.deepEqual(payload.choices, {
+    functional: false,
+    analytics: false,
+    marketing: false,
+  });
+  assert.equal(payload.mechanism, "banner");
+  assert.equal(payload.event_id, undefined);
+  assert.equal(payload.mx_visitor_id, undefined);
+  assert.equal(payload.page_path, undefined);
+  assert.equal(payload.user_agent, undefined);
+  assert.equal(payload.utm_source, undefined);
+  assert.equal(payload.referrer, undefined);
+  assert.equal(payload.first_touch, undefined);
+  assert.equal(payload.last_touch, undefined);
+  assert.equal(payload.gclid, undefined);
 });
 
 test("analytics consent creates first-party attribution without loading pixels or forwarding ad click ids", () => {

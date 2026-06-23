@@ -2,7 +2,11 @@
 
 No database migration was run from this landing repo.
 
-The landing endpoint currently validates marketing event shape and returns `202`; persistence should be added by the Replit app agent after the schema is approved.
+The landing endpoint currently validates marketing event shape and returns `202`; it does not persist custom Growth Ledger events. Persistence should be added by the Replit app agent after the schema is approved.
+
+Until persistence exists, landing events are consent-gated and can be sent to a validation endpoint, but there is no stored tracking table or dashboard for source -> signup -> activation -> purchase analysis.
+
+When the backend persistence endpoint is ready, set `NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT` to that app/backend endpoint so consent-approved landing events are forwarded there. Keep the default local route as validation-only.
 
 ## Suggested Tables
 
@@ -73,4 +77,3 @@ The landing endpoint currently validates marketing event shape and returns `202`
 - Do not write sensitive learning performance, deanery, or question-result data to ad platforms.
 - Purchase attribution should ultimately come from Stripe webhook metadata, not a frontend success page.
 - The 30-minute activation event must be app-side and fire only once per user.
-

@@ -73,9 +73,16 @@ Marketing pixels still require:
 - `initMarketingAttribution()` creates/persists visitor/session IDs only after analytics or marketing consent.
 - Functional-only consent can persist referral continuity without creating analytics IDs.
 - `trackLandingEvent()` is a no-op unless analytics consent is true, except for the first-party `consent_updated` audit event.
+- When analytics consent is false, `consent_updated` is stripped to a minimal consent audit payload: event name, timestamp, consent version, choices, and source/mechanism only. It must not include `mx_visitor_id`, UTMs, referrer, ad click IDs, or first/last-touch attribution.
 - `maybeLoadMarketingPixels()` is a no-op unless marketing consent and pixel env vars are present.
 - `buildAppUrl()` strips `mx_*`, UTM, referrer, campaign, and ad click ID params before consent. It can still pass `referral_code`, `ref`, referral `offer_id`, and `intent` when needed to honour a referral link.
 - Vercel Analytics only renders after analytics consent.
+
+## Growth Ledger Persistence Status
+
+The landing site now gates first-party event collection behind analytics consent, but the default `/api/marketing/events` route only validates payload shape and returns `202`. It does not write Growth Ledger events to a database yet.
+
+To persist events later, point `NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT` at the app/backend marketing event endpoint after Replit DB schema work is complete. Until that is done, this PR should be treated as consent-safe capture and handoff infrastructure, not a tracking dashboard.
 
 ## Withdrawal
 
@@ -138,9 +145,10 @@ Withdraw consent:
 
 1. Deploy consent UX with `NEXT_PUBLIC_ENABLE_MARKETING_PIXELS=false`.
 2. Test Reject all, Accept analytics, Accept marketing, withdrawal, and referral handoff.
-3. Enable first-party analytics events through analytics consent.
-4. Configure Meta/Google ids only after consent QA.
-5. Start paid retargeting only after marketing-consent paths are verified.
+3. Connect and verify Growth Ledger persistence through `NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT` after Replit DB work is complete.
+4. Enable first-party analytics events through analytics consent.
+5. Configure Meta/Google ids only after consent QA.
+6. Start paid retargeting only after marketing-consent paths are verified.
 
 ## Ad Platform Guardrail
 

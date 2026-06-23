@@ -3,6 +3,7 @@ import { Nav } from "@/components/Nav";
 import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
+import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 
 export const metadata: Metadata = {
   title: "AKT Mock Exam — Free Timed MRCGP AKT Practice",
@@ -448,12 +449,13 @@ export default function AktMockExamPage() {
 
           {/* CTA */}
           <div className="mt-10">
-            <a
+            <TrackedAppLink
               className="btn-primary inline-block text-[16px]"
-              href="https://app.medexia-akt.com/join/free"
+              href="/join/free"
+              intent="start_free"
             >
               Generate your first mock free &rarr;
-            </a>
+            </TrackedAppLink>
           </div>
 
           {/* Trust signal */}

@@ -4,6 +4,7 @@ import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { ExamCountdown } from "@/components/sections/ExamCountdown";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
+import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 import { EXAM_SITTINGS, EXAM_FORMAT } from "@/data/exam-dates";
 
 export const metadata: Metadata = {
@@ -398,13 +399,14 @@ export default function AktExamDatesPage() {
                 check AKT fees and eligibility
               </a>{" "}
               or{" "}
-              <a
-                href="https://app.medexia-akt.com/join/free"
+              <TrackedAppLink
+                href="/join/free"
+                intent="start_free"
                 className="font-medium transition-colors"
                 style={{ color: "var(--brand-violet-light)" }}
               >
                 start free practice
-              </a>
+              </TrackedAppLink>
               .
             </p>
           </div>
@@ -494,12 +496,13 @@ export default function AktExamDatesPage() {
 
           {/* CTA */}
           <div className="mt-10">
-            <a
+            <TrackedAppLink
               className="btn-primary inline-block text-[16px]"
-              href="https://app.medexia-akt.com/join/free"
+              href="/join/free"
+              intent="start_free"
             >
               Start free practice &rarr;
-            </a>
+            </TrackedAppLink>
           </div>
 
           {/* Trust signal */}

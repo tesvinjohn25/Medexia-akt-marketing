@@ -3,6 +3,7 @@ import { Nav } from "@/components/Nav";
 import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
+import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 import { aktTopics } from "@/data/akt-topics";
 import { EXAM_FORMAT } from "@/data/exam-dates";
 
@@ -857,12 +858,13 @@ export default function HowToPassTheAktPage() {
 
           {/* CTA */}
           <div className="mt-10">
-            <a
+            <TrackedAppLink
               className="btn-primary inline-block text-[16px]"
-              href="https://app.medexia-akt.com/join/free"
+              href="/join/free"
+              intent="start_free"
             >
               Start revising free &rarr;
-            </a>
+            </TrackedAppLink>
           </div>
 
           {/* Trust signal */}

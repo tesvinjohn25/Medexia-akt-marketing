@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { aktTopics } from "@/data/akt-topics";
 import { AudioEqualizer } from "@/components/AudioEqualizer";
+import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 
 /**
  * "Scroll to listen" — the audio library, made tangible.
@@ -197,13 +198,14 @@ export function AudioJourney() {
               style={{ color: "rgba(232,236,255,.5)" }}
             >
               All 32 RCGP topic areas, fully narrated.{" "}
-              <a
-                href="https://app.medexia-akt.com/demo/audiobook/player"
+              <TrackedAppLink
+                href="/demo/audiobook/player"
+                intent="demo"
                 className="transition-colors hover:text-white"
                 style={{ color: "rgba(236,72,153,.85)" }}
               >
                 Listen to the demo &rarr;
-              </a>
+              </TrackedAppLink>
             </p>
           </div>
         </div>

@@ -1,12 +1,34 @@
 "use client";
 
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
+import { useMarketingAttribution } from "@/components/marketing/MarketingAttributionProvider";
+import {
+  OFFER_IDS,
+  type CtaIntent,
+  type OfferId,
+} from "@/lib/marketing/attribution";
 
-const FREE_JOIN_URL = "https://app.medexia-akt.com/join/free";
-const EARLY_ACCESS_JOIN_URL = "https://app.medexia-akt.com/join/early-access";
-const FULL_ACCESS_JOIN_URL = "https://app.medexia-akt.com/join/full-access";
+type Plan = {
+  title: string;
+  eyebrow: string;
+  price: string;
+  priceDetail: string;
+  comparePrice?: string;
+  includedHeading: string;
+  features: string[];
+  note: string;
+  cta: string;
+  href?: string;
+  intent?: CtaIntent;
+  offerId?: OfferId;
+  highlighted: boolean;
+  tone: "green" | "violet" | "blue";
+  variant: "baseline" | "primary" | "standard";
+  locked?: boolean;
+};
 
-const PLANS = [
+const PRE_CUTOVER_PLANS: Plan[] = [
   {
     title: "Free Practice",
     eyebrow: "Free — now and after 8 July",
@@ -21,7 +43,9 @@ const PLANS = [
     ],
     note: "Until 8 July you get the whole product free — not just this list.",
     cta: "Start free",
-    href: FREE_JOIN_URL,
+    href: "/join/free",
+    intent: "start_free",
+    offerId: OFFER_IDS.freePre,
     highlighted: false,
     tone: "green",
     variant: "baseline",
@@ -42,7 +66,9 @@ const PLANS = [
     ],
     note: "Nothing is restricted today — £59 locks in the paid period at £20 off.",
     cta: "Lock in early access",
-    href: EARLY_ACCESS_JOIN_URL,
+    href: "/join/early-access",
+    intent: "earlybird_upgrade",
+    offerId: OFFER_IDS.earlybird59Pre,
     highlighted: true,
     tone: "violet",
     variant: "primary",
@@ -60,14 +86,58 @@ const PLANS = [
       "4 months of access",
     ],
     note: "The standard price once Early Access ends. Not on sale before 8 July.",
-    cta: "Available from 8 July",
-    href: FULL_ACCESS_JOIN_URL,
+    cta: "Price anchor",
     highlighted: false,
     tone: "blue",
     variant: "standard",
     locked: true,
   },
-] as const;
+] as Plan[];
+
+const POST_CUTOVER_PLANS: Plan[] = [
+  {
+    title: "Free Practice",
+    eyebrow: "Free",
+    price: "£0",
+    priceDetail: "",
+    includedHeading: "Included",
+    features: [
+      "Thousands of syllabus-mapped AKT questions",
+      "Deep structured explanations",
+      "Mock exams and basic practice",
+      "2 hours of audiobook listening",
+    ],
+    note: "Questions remain free. The audio allowance lets you test whether hands-free revision fits your day.",
+    cta: "Start free",
+    href: "/join/free",
+    intent: "start_free",
+    offerId: OFFER_IDS.freePost,
+    highlighted: false,
+    tone: "green",
+    variant: "baseline",
+  },
+  {
+    title: "Full Audio Access",
+    eyebrow: "4-month audio upgrade",
+    price: "£79",
+    priceDetail: "for 4 months",
+    includedHeading: "Everything free, plus",
+    features: [
+      "Full 90+ hour audiobook library — all 32 topics",
+      "Interactive statistics course + explainer videos",
+      "Dermatology Navigator image pocket guide",
+      "4 months of access",
+    ],
+    note: "Upgrade when the free 2-hour allowance proves the audio is useful.",
+    cta: "Upgrade to full audio",
+    href: "/join/full-access",
+    intent: "checkout",
+    offerId: OFFER_IDS.standard79Post,
+    highlighted: true,
+    tone: "blue",
+    variant: "primary",
+  },
+] as Plan[];
 
 const SEO_FAQS = [
   {
@@ -92,13 +162,29 @@ const SEO_FAQS = [
   },
 ] as const;
 
-function accentFor(tone: (typeof PLANS)[number]["tone"]) {
+function referralPlans(): Plan[] {
+  return PRE_CUTOVER_PLANS.map((plan) => {
+    if (plan.title !== "Early Access") return plan;
+    return {
+      ...plan,
+      eyebrow: "Referral Early Access",
+      price: "£49",
+      comparePrice: "£59",
+      note: "This referral link gives £10 off Early Access before 8 July. The £49 price is not shown without a valid referral link.",
+      cta: "Lock in £49 Early Access",
+      intent: "referral_earlybird",
+      offerId: OFFER_IDS.earlybird49ReferralPre,
+    };
+  });
+}
+
+function accentFor(tone: Plan["tone"]) {
   if (tone === "green") return "rgba(52,211,153,.88)";
   if (tone === "blue") return "rgba(96,165,250,.9)";
   return "rgba(167,139,250,.95)";
 }
 
-function cardChrome(plan: (typeof PLANS)[number]) {
+function cardChrome(plan: Plan) {
   if ("locked" in plan && plan.locked) {
     return {
       background:
@@ -141,6 +227,15 @@ function cardChrome(plan: (typeof PLANS)[number]) {
 
 export function PricingSection() {
   const { ref, visible } = useScrollReveal(0.05);
+  const marketing = useMarketingAttribution();
+  const referralCode = marketing?.referral?.referral_code ?? null;
+  const isPreCutover = marketing?.offer_context.phase !== "post_2026_07_08";
+  const plans = isPreCutover
+    ? referralCode
+      ? referralPlans()
+      : PRE_CUTOVER_PLANS
+    : POST_CUTOVER_PLANS;
+
   return (
     <section
       id="pricing"
@@ -177,19 +272,22 @@ export function PricingSection() {
               "--i": 1,
             } as React.CSSProperties}
           >
-            Free until 8 July.
+            {isPreCutover ? "Free until 8 July." : "Questions stay free."}
           </h2>
           <p
             className="r-up mx-auto mt-4 max-w-[650px] text-[15px] md:text-[17px] leading-[1.65]"
             style={{ color: "rgba(232,236,255,.68)", "--i": 2 } as React.CSSProperties}
           >
-            Then questions stay free. £59 Early Access is available before 8
-            July; standard full audio access is £79 from 8 July.
+            {isPreCutover
+              ? referralCode
+                ? "Everything is free until 8 July. Through this referral link, Early Access is £49 instead of £59 before 8 July; standard full audio access is £79 from 8 July."
+                : "Everything is free until 8 July. £59 Early Access is available before 8 July; standard full audio access is £79 from 8 July."
+              : "Questions are free. Your first 2 hours of AKT audio are free. Upgrade to full 4-month audio access for £79."}
           </p>
         </div>
 
-        <div className="mt-9 grid gap-4 lg:grid-cols-[minmax(0,.86fr)_minmax(0,1.18fr)_minmax(0,.96fr)] lg:items-stretch">
-          {PLANS.map((plan, i) => {
+        <div className={`mt-9 grid gap-4 ${plans.length === 2 ? "lg:grid-cols-2" : "lg:grid-cols-[minmax(0,.86fr)_minmax(0,1.18fr)_minmax(0,.96fr)]"} lg:items-stretch`}>
+          {plans.map((plan, i) => {
             const locked = "locked" in plan ? Boolean(plan.locked) : false;
             const accent = locked ? "rgba(170,176,195,.7)" : accentFor(plan.tone);
             const chrome = cardChrome(plan);
@@ -426,14 +524,16 @@ export function PricingSection() {
                       </svg>
                       {plan.cta}
                     </div>
-                  ) : (
-                    <a
+                  ) : plan.href && plan.intent ? (
+                    <TrackedAppLink
                       className={
                         plan.highlighted
                           ? "btn-primary block text-center text-[14px]"
                           : "block rounded-[14px] px-4 py-3 text-center text-[14px] font-semibold transition-colors hover:bg-white/[.08]"
                       }
                       href={plan.href}
+                      intent={plan.intent}
+                      offerId={plan.offerId}
                       style={
                         plan.highlighted
                           ? undefined
@@ -445,7 +545,18 @@ export function PricingSection() {
                       }
                     >
                       {plan.cta}
-                    </a>
+                    </TrackedAppLink>
+                  ) : (
+                    <div
+                      className="flex items-center justify-center rounded-[14px] px-4 py-3 text-center text-[14px] font-semibold"
+                      style={{
+                        color: "rgba(232,236,255,.54)",
+                        background: "rgba(255,255,255,.028)",
+                        border: "1px solid rgba(255,255,255,.08)",
+                      }}
+                    >
+                      {plan.cta}
+                    </div>
                   )}
                 </div>
               </article>

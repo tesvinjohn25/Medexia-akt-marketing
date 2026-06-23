@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 const SHARE_TEXT =
-  "Hey — found AKT Navigator. The whole AKT in 90 hours of audio. Full access is free until 8 July; Early Access is £59 before then, then £79 from 8 July. https://medexia-akt.com";
+  "I’ve been trying AKT Navigator for audio revision. It’s useful when you’re too tired to sit and read. Everything is free until 8 July, and there’s an early-bird option before it goes up to £79.\n\nMy link is here: [referral link]\n\nJust to be transparent, I get referral credit if someone upgrades through it.";
 const WHATSAPP_URL = `whatsapp://send?text=${encodeURIComponent(SHARE_TEXT)}`;
 const EMAIL_URL = `mailto:?subject=${encodeURIComponent("AKT Navigator")}&body=${encodeURIComponent(SHARE_TEXT)}`;
 
@@ -65,6 +65,14 @@ export function SharePrompt() {
         style={{ color: "var(--fg-mid)" }}
       >
         Know someone sitting the AKT?
+      </p>
+      <p
+        className="mb-4 text-[13px] leading-[1.55]"
+        style={{ color: "var(--fg-muted)" }}
+      >
+        Give &pound;10, get &pound;10. They pay &pound;49 instead of
+        &pound;59 before 8 July, and you get &pound;10 back when they upgrade.
+        Valid for your first 2 paid referrals before 8 July.
       </p>
       <div className="flex items-center justify-center gap-2">
         <button

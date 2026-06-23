@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -45,8 +46,9 @@ export function Nav() {
         </div>
 
         <div className="flex items-center gap-2">
-          <a
-            href="https://app.medexia-akt.com"
+          <TrackedAppLink
+            href="/"
+            intent="login"
             className="inline-flex rounded-full border px-3 py-[8px] text-sm font-semibold transition-colors"
             style={{
               borderColor: "rgba(255,255,255,.14)",
@@ -56,14 +58,15 @@ export function Nav() {
             }}
           >
             Log in
-          </a>
+          </TrackedAppLink>
 
-          <a
-            href="https://app.medexia-akt.com/join/free"
+          <TrackedAppLink
+            href="/join/free"
+            intent="start_free"
             className="btn-primary hidden text-sm !py-[8px] !px-[14px] md:inline-flex"
           >
             Start free
-          </a>
+          </TrackedAppLink>
         </div>
       </div>
     </nav>

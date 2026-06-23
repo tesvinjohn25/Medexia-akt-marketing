@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useMarketingAttribution } from "@/components/marketing/MarketingAttributionProvider";
 
 const AUDIO_ACCESS_STANDARD_START = new Date("2026-07-08T00:00:00+01:00");
 
 export function AccessNotice() {
   const [standardPricingStarted, setStandardPricingStarted] = useState(false);
+  const marketing = useMarketingAttribution();
+  const referralCode = marketing?.referral?.referral_code ?? null;
 
   useEffect(() => {
     setStandardPricingStarted(Date.now() >= AUDIO_ACCESS_STANDARD_START.getTime());
@@ -34,7 +37,9 @@ export function AccessNotice() {
             >
               {standardPricingStarted
                 ? "Questions and 2h audio remain free"
-                : "Everything free until 8 July 2026"}
+                : referralCode
+                  ? "Referral Early Access before 8 July"
+                  : "Everything free until 8 July 2026"}
             </div>
             <p
               className="mt-1 text-[14px] md:text-[15px] leading-[1.55]"
@@ -42,7 +47,9 @@ export function AccessNotice() {
             >
               {standardPricingStarted
                 ? "Free Practice includes syllabus-mapped questions and 2 hours of audio. Full audio and premium revision tools are £79 for 4 months."
-                : "Use the full product free until 8 July: questions, audio, statistics, stats videos and Dermatology Navigator. After that, questions and 2 hours of audio stay free."}
+                : referralCode
+                  ? "You came through a referral link. Everything is free until 8 July; if the audio helps, this referral can lock Early Access at £49 instead of £59 before 8 July."
+                  : "Everything is free until 8 July. Try AKT Navigator now. If the audio helps, lock in 4 months from 8 July for £59 before it becomes £79."}
             </p>
           </div>
           <a

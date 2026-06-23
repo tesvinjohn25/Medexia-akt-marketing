@@ -1,0 +1,102 @@
+import {
+  determineOfferContext,
+  getMarketingSnapshot,
+  OFFER_IDS,
+  type CtaIntent,
+  type OfferId,
+} from "./attribution";
+import { canUseAnalytics, canUseMarketing } from "../consent/consent";
+
+const DEFAULT_APP_BASE_URL = "https://app.medexia-akt.com";
+
+function appBaseUrl(): string {
+  return process.env.NEXT_PUBLIC_APP_BASE_URL || DEFAULT_APP_BASE_URL;
+}
+
+function nullable(value: string | null | undefined): string | null {
+  if (!value || !value.trim()) return null;
+  return value.trim();
+}
+
+function setIfPresent(params: URLSearchParams, key: string, value: string | null | undefined): void {
+  const next = nullable(value);
+  if (next) params.set(key, next);
+}
+
+export function getAppOrigin(): string {
+  try {
+    return new URL(appBaseUrl()).origin;
+  } catch {
+    return DEFAULT_APP_BASE_URL;
+  }
+}
+
+export function buildAppUrl(
+  pathOrExistingUrl: string,
+  options: {
+    intent?: CtaIntent;
+    offerId?: OfferId;
+  } = {},
+): string {
+  const base = appBaseUrl();
+  const url = /^https?:\/\//i.test(pathOrExistingUrl)
+    ? new URL(pathOrExistingUrl)
+    : new URL(pathOrExistingUrl.startsWith("/") ? pathOrExistingUrl : `/${pathOrExistingUrl}`, base);
+
+  const snapshot = getMarketingSnapshot();
+  const first = snapshot.first_touch;
+  const last = snapshot.last_touch;
+  const referralCode = snapshot.referral?.referral_code ?? snapshot.offer_context.referral_code ?? null;
+  const offer = options.offerId
+    ? { ...snapshot.offer_context, offer_id: options.offerId }
+    : determineOfferContext({
+        referralCode,
+        intent: options.intent,
+        explicitOfferId: snapshot.offer_context.offer_id,
+      });
+
+  if (canUseAnalytics()) {
+    setIfPresent(url.searchParams, "mx_vid", snapshot.mx_visitor_id);
+    setIfPresent(url.searchParams, "mx_sid", snapshot.mx_session_id);
+
+    setIfPresent(url.searchParams, "utm_source", last?.utm_source ?? first?.utm_source);
+    setIfPresent(url.searchParams, "utm_medium", last?.utm_medium ?? first?.utm_medium);
+    setIfPresent(url.searchParams, "utm_campaign", last?.utm_campaign ?? first?.utm_campaign);
+    setIfPresent(url.searchParams, "utm_content", last?.utm_content ?? first?.utm_content);
+    setIfPresent(url.searchParams, "utm_term", last?.utm_term ?? first?.utm_term);
+
+    setIfPresent(url.searchParams, "first_touch_source", first?.utm_source);
+    setIfPresent(url.searchParams, "first_touch_medium", first?.utm_medium);
+    setIfPresent(url.searchParams, "first_touch_campaign", first?.utm_campaign);
+    setIfPresent(url.searchParams, "first_touch_content", first?.utm_content);
+    setIfPresent(url.searchParams, "last_touch_source", last?.utm_source);
+    setIfPresent(url.searchParams, "last_touch_medium", last?.utm_medium);
+    setIfPresent(url.searchParams, "last_touch_campaign", last?.utm_campaign);
+    setIfPresent(url.searchParams, "last_touch_content", last?.utm_content);
+
+    setIfPresent(url.searchParams, "referrer", first?.referrer ?? last?.referrer);
+    setIfPresent(url.searchParams, "first_landing_page", first?.first_landing_page ?? last?.first_landing_page);
+    setIfPresent(url.searchParams, "campaign_id", last?.campaign_id ?? first?.campaign_id);
+    setIfPresent(url.searchParams, "offer_id", offer.offer_id);
+  } else if (referralCode && offer.offer_id === OFFER_IDS.earlybird49ReferralPre) {
+    setIfPresent(url.searchParams, "offer_id", offer.offer_id);
+  }
+
+  if (canUseMarketing()) {
+    setIfPresent(url.searchParams, "gclid", last?.gclid ?? first?.gclid);
+    setIfPresent(url.searchParams, "gbraid", last?.gbraid ?? first?.gbraid);
+    setIfPresent(url.searchParams, "wbraid", last?.wbraid ?? first?.wbraid);
+    setIfPresent(url.searchParams, "fbclid", last?.fbclid ?? first?.fbclid);
+    setIfPresent(url.searchParams, "ttclid", last?.ttclid ?? first?.ttclid);
+    setIfPresent(url.searchParams, "msclkid", last?.msclkid ?? first?.msclkid);
+  }
+
+  setIfPresent(url.searchParams, "intent", options.intent);
+
+  if (referralCode) {
+    url.searchParams.set("referral_code", referralCode);
+    url.searchParams.set("ref", referralCode);
+  }
+
+  return url.toString();
+}

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { APRIL_SITTING } from "@/data/exam-dates";
+import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 
 const APRIL_DATE = APRIL_SITTING.date;
 
@@ -51,13 +52,14 @@ export function AprilBanner() {
             {mounted ? daysLeft : "--"} days
           </span>{" "}
           remaining.{" "}
-          <a
-            href="https://app.medexia-akt.com"
+          <TrackedAppLink
+            href="/"
+            intent="app_open"
             className="font-semibold transition-colors hover:text-white"
             style={{ color: "var(--brand-violet-light)", textDecoration: "none" }}
           >
             Start a mock &rarr;
-          </a>
+          </TrackedAppLink>
         </div>
       </div>
     </div>

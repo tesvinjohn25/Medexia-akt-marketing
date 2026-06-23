@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 
-const SHARE_TEXT =
-  "Hey — found AKT Navigator. The whole AKT in 90 hours of audio. Full access is free until 8 July; Early Access is £59 before then, then £79 from 8 July. https://medexia-akt.com";
-const WHATSAPP_URL = `whatsapp://send?text=${encodeURIComponent(SHARE_TEXT)}`;
-const EMAIL_URL = `mailto:?subject=${encodeURIComponent("AKT Navigator")}&body=${encodeURIComponent(SHARE_TEXT)}`;
+function shareText(referralLink: string): string {
+  return `I’ve been trying AKT Navigator for audio revision. It’s useful when you’re too tired to sit and read. Everything is free until 8 July, and this referral link gives £10 off Early Access before it goes up to £79.\n\nMy link: ${referralLink}\n\nJust to be transparent, I get referral credit if someone upgrades through it.`;
+}
 
 function WhatsAppIcon() {
   return (
@@ -33,16 +32,20 @@ function EmailIcon() {
   );
 }
 
-export function SharePrompt() {
+export function SharePrompt({ referralLink }: { referralLink?: string | null }) {
   const [copied, setCopied] = useState(false);
+  if (!referralLink) return null;
+
+  const text = shareText(referralLink);
+  const emailUrl = `mailto:?subject=${encodeURIComponent("AKT Navigator")}&body=${encodeURIComponent(text)}`;
 
   const copyLink = async () => {
     try {
-      await navigator.clipboard.writeText("https://medexia-akt.com");
+      await navigator.clipboard.writeText(referralLink);
     } catch {
       // Fallback for older browsers
       const input = document.createElement("input");
-      input.value = "https://medexia-akt.com";
+      input.value = referralLink;
       document.body.appendChild(input);
       input.select();
       document.execCommand("copy");
@@ -66,17 +69,25 @@ export function SharePrompt() {
       >
         Know someone sitting the AKT?
       </p>
+      <p
+        className="mb-4 text-[13px] leading-[1.55]"
+        style={{ color: "var(--fg-muted)" }}
+      >
+        Give &pound;10, get &pound;10. They pay &pound;49 instead of
+        &pound;59 before 8 July, and you get &pound;10 back when they upgrade.
+        Valid for your first 2 paid referrals before 8 July.
+      </p>
       <div className="flex items-center justify-center gap-2">
         <button
           onClick={() => {
             if (navigator.share) {
               navigator.share({
                 title: "AKT Navigator",
-                text: SHARE_TEXT,
+                text,
               }).catch(() => {});
             } else {
               window.open(
-                `https://web.whatsapp.com/send?text=${encodeURIComponent(SHARE_TEXT)}`,
+                `https://web.whatsapp.com/send?text=${encodeURIComponent(text)}`,
                 "_blank",
                 "noopener,noreferrer"
               );
@@ -105,7 +116,7 @@ export function SharePrompt() {
           <LinkIcon /> {copied ? "Copied!" : "Copy link"}
         </button>
         <a
-          href={EMAIL_URL}
+          href={emailUrl}
           className="inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-colors hover:bg-white/[.06]"
           style={{
             background: "var(--bg-elevated)",

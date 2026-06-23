@@ -4,6 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { AudioEqualizer } from "@/components/AudioEqualizer";
+import { TrackedAppLink, useTrackedAppUrl } from "@/components/marketing/TrackedAppLink";
+import { getAppOrigin } from "@/lib/marketing/url";
 
 /**
  * The live product demo, embedded in the landing page.
@@ -30,8 +32,8 @@ import { AudioEqualizer } from "@/components/AudioEqualizer";
  */
 const EMBED = true;
 
-const DEMO_HOME = "https://app.medexia-akt.com/demo";
-const APP_ORIGIN = "https://app.medexia-akt.com";
+const DEMO_HOME = "/demo";
+const APP_ORIGIN = getAppOrigin();
 
 /** True when a cross-origin iframe has navigated back onto our own
  * origin (e.g. the demo's back button pointing at the marketing site). */
@@ -46,6 +48,7 @@ function iframeOnOurOrigin(frame: HTMLIFrameElement | null): boolean {
 
 export function LiveDemo() {
   const { ref, visible } = useScrollReveal();
+  const demoHome = useTrackedAppUrl(DEMO_HOME, { intent: "demo" });
   const [overlayOpen, setOverlayOpen] = useState(false);
   const [deskFrameKey, setDeskFrameKey] = useState(0);
   const deskFrameRef = useRef<HTMLIFrameElement>(null);
@@ -164,7 +167,7 @@ export function LiveDemo() {
               <iframe
                 key={deskFrameKey}
                 ref={deskFrameRef}
-                src={DEMO_HOME}
+                src={demoHome}
                 title="AKT Navigator live demo"
                 loading="lazy"
                 allow="autoplay"
@@ -184,8 +187,9 @@ export function LiveDemo() {
                 }}
               />
             ) : (
-              <a
+              <TrackedAppLink
                 href={DEMO_HOME}
+                intent="demo"
                 className="flex items-center justify-center rounded-[34px] text-[14px] font-semibold"
                 style={{
                   width: 360,
@@ -195,7 +199,7 @@ export function LiveDemo() {
                 }}
               >
                 Open the demo &rarr;
-              </a>
+              </TrackedAppLink>
             )}
           </div>
 
@@ -234,15 +238,16 @@ export function LiveDemo() {
                 </p>
               </li>
             </ul>
-            <a
+            <TrackedAppLink
               href={DEMO_HOME}
+              intent="demo"
               target="_blank"
               rel="noopener"
               className="mt-6 inline-block text-[13px] font-semibold transition-colors hover:text-white"
               style={{ color: "rgba(197,170,255,.9)" }}
             >
               Open full screen &rarr;
-            </a>
+            </TrackedAppLink>
           </div>
         </div>
 
@@ -305,9 +310,9 @@ export function LiveDemo() {
             </button>
           ) : (
             <div className="flex justify-center">
-              <a href={DEMO_HOME} className="btn-primary text-[14px]">
+              <TrackedAppLink href={DEMO_HOME} intent="demo" className="btn-primary text-[14px]">
                 Start the demo &rarr;
-              </a>
+              </TrackedAppLink>
             </div>
           )}
         </div>
@@ -373,7 +378,7 @@ export function LiveDemo() {
           </div>
           <iframe
             ref={overlayFrameRef}
-            src={DEMO_HOME}
+            src={demoHome}
             title="AKT Navigator live demo"
             allow="autoplay"
             onLoad={() => {

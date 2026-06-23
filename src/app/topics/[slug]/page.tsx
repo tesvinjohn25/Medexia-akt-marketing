@@ -5,6 +5,7 @@ import { Nav } from "@/components/Nav";
 import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
+import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -168,12 +169,13 @@ export default async function TopicPage({ params }: Props) {
 
           {/* CTA */}
           <div className="mt-8">
-            <a
+            <TrackedAppLink
               className="btn-primary inline-block text-[16px]"
-              href="https://app.medexia-akt.com"
+              href="/join/free"
+              intent="start_free"
             >
               Start free practice &rarr;
-            </a>
+            </TrackedAppLink>
           </div>
 
           {/* Explore more */}

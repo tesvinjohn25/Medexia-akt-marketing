@@ -3,12 +3,19 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { ExamCountdown } from "./ExamCountdown";
 import { HeroVideo } from "./HeroVideo";
+import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
+import { useMarketingAttribution } from "@/components/marketing/MarketingAttributionProvider";
+import { OFFER_IDS, canShowReferralEarlybirdOffer } from "@/lib/marketing/attribution";
 
 export function HeroSection() {
   // The keynote cascade is visibility-triggered, not load-triggered:
   // on mobile the headline sits below the video (below the fold), so a
   // load-time animation would finish before anyone saw it.
   const { ref, visible } = useScrollReveal(0.1);
+  const marketing = useMarketingAttribution();
+  const referralCode = marketing?.referral?.referral_code ?? null;
+  const isPreCutover = marketing?.offer_context.phase !== "post_2026_07_08";
+  const hasReferralOffer = canShowReferralEarlybirdOffer(referralCode);
 
   return (
     <section className="relative overflow-hidden">
@@ -105,6 +112,21 @@ export function HeroSection() {
               </span>
             </div>
 
+            {hasReferralOffer && (
+              <div
+                className="r-up mt-4 max-w-[520px] rounded-xl px-4 py-3 text-[13px] md:text-[14px] font-semibold"
+                style={{
+                  "--i": 0.6,
+                  background: "rgba(52,211,153,.10)",
+                  border: "1px solid rgba(52,211,153,.26)",
+                  color: "rgba(232,236,255,.88)",
+                } as React.CSSProperties}
+              >
+                You&rsquo;ve been invited: Early Access is &pound;49 instead of
+                &pound;59 before 8 July through this referral link.
+              </div>
+            )}
+
             {/* Keynote cascade: line one lands word by word, then the
                 audio line arrives whole with the light-sweep. */}
             <h1
@@ -149,8 +171,9 @@ export function HeroSection() {
               className="r-up mt-3 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
               style={{ color: "rgba(232,236,255,.6)", "--i": 7 } as React.CSSProperties}
             >
-              Free until 8 July. Then questions stay free &mdash; &pound;59
-              Early Access before 8 July, &pound;79 from 8 July.
+              {isPreCutover
+                ? "Everything is free until 8 July. Try AKT Navigator now. If the audio helps, lock in 4 months from 8 July before it becomes £79."
+                : "Questions are free. Your first 2 hours of AKT audio are free. Upgrade to full 4-month audio access for £79."}
             </p>
 
             {/* Countdown */}
@@ -163,16 +186,55 @@ export function HeroSection() {
 
             {/* CTA */}
             <div
-              className="r-scale mt-6"
+              className="r-scale mt-6 flex flex-wrap gap-3"
               style={{ "--i": 8.4 } as React.CSSProperties}
             >
-              <a
+              <TrackedAppLink
                 data-hero-cta
                 className="btn-primary inline-block text-[16px]"
-                href="https://app.medexia-akt.com/join/free"
+                href="/join/free"
+                intent="start_free"
+                offerId={
+                  isPreCutover
+                    ? OFFER_IDS.freePre
+                    : OFFER_IDS.freePost
+                }
               >
                 Start free &rarr;
-              </a>
+              </TrackedAppLink>
+              {isPreCutover ? (
+                <TrackedAppLink
+                  className="inline-flex items-center justify-center rounded-[14px] px-5 py-3 text-[14px] font-semibold transition-colors hover:bg-white/[.08]"
+                  href="/join/early-access"
+                  intent={hasReferralOffer ? "referral_earlybird" : "earlybird_upgrade"}
+                  offerId={
+                    hasReferralOffer
+                      ? OFFER_IDS.earlybird49ReferralPre
+                      : OFFER_IDS.earlybird59Pre
+                  }
+                  style={{
+                    color: "var(--fg-high)",
+                    background: "rgba(255,255,255,.045)",
+                    border: "1px solid rgba(255,255,255,.10)",
+                  }}
+                >
+                  Lock in {hasReferralOffer ? "£49" : "£59"} Early Access
+                </TrackedAppLink>
+              ) : (
+                <TrackedAppLink
+                  className="inline-flex items-center justify-center rounded-[14px] px-5 py-3 text-[14px] font-semibold transition-colors hover:bg-white/[.08]"
+                  href="/join/full-access"
+                  intent="checkout"
+                  offerId={OFFER_IDS.standard79Post}
+                  style={{
+                    color: "var(--fg-high)",
+                    background: "rgba(255,255,255,.045)",
+                    border: "1px solid rgba(255,255,255,.10)",
+                  }}
+                >
+                  Upgrade to full audio
+                </TrackedAppLink>
+              )}
             </div>
           </div>
         </div>

@@ -4,10 +4,11 @@ import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { SAMPLE_QUESTION } from "@/data/sample-question";
+import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 
 const DEMO_HOME = "https://app.medexia-akt.com/demo";
-const DEMO_AUDIO = "https://app.medexia-akt.com/demo/audiobook";
-const DEMO_QUESTIONS = "https://app.medexia-akt.com/demo/questions";
+const DEMO_AUDIO = "/demo/audiobook";
+const DEMO_QUESTIONS = "/demo/questions";
 
 export const metadata: Metadata = {
   title: "Try AKT Navigator Free — Audio Sample + 5 Real AKT Questions",
@@ -166,11 +167,12 @@ export default function DemoPage() {
           </p>
 
           <div className="mt-7 flex flex-wrap gap-3">
-            <a href={DEMO_AUDIO} className="btn-primary text-[14px]">
+            <TrackedAppLink href={DEMO_AUDIO} intent="demo" className="btn-primary text-[14px]">
               Listen to the audio demo &rarr;
-            </a>
-            <a
+            </TrackedAppLink>
+            <TrackedAppLink
               href={DEMO_QUESTIONS}
+              intent="demo"
               className="rounded-[14px] px-5 py-3 text-[14px] font-semibold transition-colors hover:bg-white/[.08]"
               style={{
                 color: "var(--fg-high)",
@@ -179,7 +181,7 @@ export default function DemoPage() {
               }}
             >
               Sit 5 real questions &rarr;
-            </a>
+            </TrackedAppLink>
           </div>
         </div>
       </section>

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/next";
 import { MarketingAttributionProvider } from "@/components/marketing/MarketingAttributionProvider";
 import "./globals.css";
 
@@ -268,7 +267,6 @@ export default function RootLayout({
       </head>
       <body>
         <MarketingAttributionProvider>{children}</MarketingAttributionProvider>
-        <Analytics />
       </body>
     </html>
   );

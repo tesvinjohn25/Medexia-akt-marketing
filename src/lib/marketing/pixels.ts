@@ -1,15 +1,9 @@
+import { canUseAnalytics, canUseMarketing } from "../consent/consent";
+
 let loaded = false;
 
 function envEnabled(): boolean {
   return process.env.NEXT_PUBLIC_ENABLE_MARKETING_PIXELS === "true";
-}
-
-function marketingConsentGranted(): boolean {
-  try {
-    return window.localStorage.getItem("mx_marketing_consent") === "granted";
-  } catch {
-    return false;
-  }
 }
 
 function appendScript(id: string, src: string): void {
@@ -23,7 +17,7 @@ function appendScript(id: string, src: string): void {
 
 export function maybeLoadMarketingPixels(): void {
   if (loaded || typeof window === "undefined" || typeof document === "undefined") return;
-  if (!envEnabled() || !marketingConsentGranted()) return;
+  if (!envEnabled() || !canUseMarketing()) return;
 
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
   const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
@@ -56,6 +50,18 @@ export function maybeLoadMarketingPixels(): void {
     w.gtag = (...args: unknown[]) => {
       w.dataLayer?.push(args);
     };
+    w.gtag("consent", "default", {
+      analytics_storage: "denied",
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+    });
+    w.gtag("consent", "update", {
+      analytics_storage: canUseAnalytics() ? "granted" : "denied",
+      ad_storage: "granted",
+      ad_user_data: "granted",
+      ad_personalization: "granted",
+    });
     appendScript("mx-google-tag", `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(googleId)}`);
     w.gtag("js", new Date());
     if (gaMeasurementId) w.gtag("config", gaMeasurementId);
@@ -64,4 +70,3 @@ export function maybeLoadMarketingPixels(): void {
 
   loaded = true;
 }
-

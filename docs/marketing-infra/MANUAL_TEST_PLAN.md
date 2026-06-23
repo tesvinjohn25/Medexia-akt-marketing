@@ -10,6 +10,8 @@ Open:
 
 Expected:
 
+- Before consent, no `mx_visitor_id` exists and the app URL does not include `mx_vid`, UTM params, or ad click IDs.
+- Accept Analytics in Cookie settings.
 - `mx_visitor_id` exists in localStorage.
 - `mx_first_touch.utm_source` is `reddit`.
 - Start Free app URL includes `mx_vid`, `mx_sid`, `utm_source=reddit`, `utm_medium=organic`, `utm_campaign=audio_first_post`, `utm_content=too_tired_to_read`, `offer_id=free_unlimited_pre_2026_07_08`, and `intent=start_free`.
@@ -47,17 +49,17 @@ Open:
 
 Before 8 July 2026 with `NEXT_PUBLIC_REFERRAL_SPRINT_ENABLED=false` or `NEXT_PUBLIC_REFERRAL_FRIEND_DISCOUNT_ENABLED=false` expected:
 
-- `mx_referral.referral_code` is `ABC123`.
 - No `£49` price appears.
 - Early Access remains `£59`.
-- App CTA includes `ref=ABC123`, `referral_code=ABC123`, and `mx_vid`.
+- Before consent, app CTA includes `ref=ABC123` and `referral_code=ABC123`, but not `mx_vid` or UTM params.
+- With functional or analytics consent, referral continuity can be persisted.
 
 Before 8 July 2026 with both referral flags enabled expected:
 
 - Referral banner appears.
-- `mx_referral.referral_code` is `ABC123`.
 - Early Access offer displays `£49`.
-- App CTA includes `ref=ABC123`, `referral_code=ABC123`, `mx_vid`, and `offer_id=earlybird_49_referral_pre_2026_07_08`.
+- Before analytics consent, app CTA includes `ref=ABC123`, `referral_code=ABC123`, and `offer_id=earlybird_49_referral_pre_2026_07_08`, but not `mx_vid`.
+- After analytics consent, app CTA also includes `mx_vid` and attribution fields.
 
 After 8 July 2026 expected:
 
@@ -80,6 +82,31 @@ With all pixel env vars unset or `NEXT_PUBLIC_ENABLE_MARKETING_PIXELS=false`:
 - No Meta or Google tag script is injected.
 
 With env vars set, pixels still require explicit marketing consent before loading.
+
+## Consent UX
+
+Fresh browser profile expected:
+
+- Banner title is `Control cookies and tracking`.
+- First layer shows `Accept all`, `Reject all`, and `Manage choices`.
+- `Reject all` is as prominent and easy to click as `Accept all`.
+- Manage choices opens a keyboard-accessible modal.
+- Necessary is always on and disabled.
+- Functional, Analytics, and Marketing default off.
+- Escape closes settings without changing an existing decision.
+- Footer `Cookie settings` reopens settings at any time.
+
+Reject all expected:
+
+- `mx_consent_v1` stores analytics `false` and marketing `false`.
+- Banner does not immediately reappear.
+- No `mx_visitor_id`, first touch, landing events, Vercel Analytics, Meta, or Google scripts.
+
+Withdraw consent expected:
+
+- Non-essential `mx_*` attribution storage is cleared.
+- Future landing/CTA events are no-op.
+- Already loaded third-party scripts are not called again by Medexia code.
 
 ## Build Checks
 

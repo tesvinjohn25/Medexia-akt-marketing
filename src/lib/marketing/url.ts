@@ -1,9 +1,11 @@
 import {
   determineOfferContext,
   getMarketingSnapshot,
+  OFFER_IDS,
   type CtaIntent,
   type OfferId,
 } from "./attribution";
+import { canUseAnalytics, canUseMarketing } from "../consent/consent";
 
 const DEFAULT_APP_BASE_URL = "https://app.medexia-akt.com";
 
@@ -53,28 +55,42 @@ export function buildAppUrl(
         explicitOfferId: snapshot.offer_context.offer_id,
       });
 
-  setIfPresent(url.searchParams, "mx_vid", snapshot.mx_visitor_id);
-  setIfPresent(url.searchParams, "mx_sid", snapshot.mx_session_id);
+  if (canUseAnalytics()) {
+    setIfPresent(url.searchParams, "mx_vid", snapshot.mx_visitor_id);
+    setIfPresent(url.searchParams, "mx_sid", snapshot.mx_session_id);
 
-  setIfPresent(url.searchParams, "utm_source", last?.utm_source ?? first?.utm_source);
-  setIfPresent(url.searchParams, "utm_medium", last?.utm_medium ?? first?.utm_medium);
-  setIfPresent(url.searchParams, "utm_campaign", last?.utm_campaign ?? first?.utm_campaign);
-  setIfPresent(url.searchParams, "utm_content", last?.utm_content ?? first?.utm_content);
-  setIfPresent(url.searchParams, "utm_term", last?.utm_term ?? first?.utm_term);
+    setIfPresent(url.searchParams, "utm_source", last?.utm_source ?? first?.utm_source);
+    setIfPresent(url.searchParams, "utm_medium", last?.utm_medium ?? first?.utm_medium);
+    setIfPresent(url.searchParams, "utm_campaign", last?.utm_campaign ?? first?.utm_campaign);
+    setIfPresent(url.searchParams, "utm_content", last?.utm_content ?? first?.utm_content);
+    setIfPresent(url.searchParams, "utm_term", last?.utm_term ?? first?.utm_term);
 
-  setIfPresent(url.searchParams, "first_touch_source", first?.utm_source);
-  setIfPresent(url.searchParams, "first_touch_medium", first?.utm_medium);
-  setIfPresent(url.searchParams, "first_touch_campaign", first?.utm_campaign);
-  setIfPresent(url.searchParams, "first_touch_content", first?.utm_content);
-  setIfPresent(url.searchParams, "last_touch_source", last?.utm_source);
-  setIfPresent(url.searchParams, "last_touch_medium", last?.utm_medium);
-  setIfPresent(url.searchParams, "last_touch_campaign", last?.utm_campaign);
-  setIfPresent(url.searchParams, "last_touch_content", last?.utm_content);
+    setIfPresent(url.searchParams, "first_touch_source", first?.utm_source);
+    setIfPresent(url.searchParams, "first_touch_medium", first?.utm_medium);
+    setIfPresent(url.searchParams, "first_touch_campaign", first?.utm_campaign);
+    setIfPresent(url.searchParams, "first_touch_content", first?.utm_content);
+    setIfPresent(url.searchParams, "last_touch_source", last?.utm_source);
+    setIfPresent(url.searchParams, "last_touch_medium", last?.utm_medium);
+    setIfPresent(url.searchParams, "last_touch_campaign", last?.utm_campaign);
+    setIfPresent(url.searchParams, "last_touch_content", last?.utm_content);
 
-  setIfPresent(url.searchParams, "referrer", first?.referrer ?? last?.referrer);
-  setIfPresent(url.searchParams, "first_landing_page", first?.first_landing_page ?? last?.first_landing_page);
-  setIfPresent(url.searchParams, "campaign_id", last?.campaign_id ?? first?.campaign_id);
-  setIfPresent(url.searchParams, "offer_id", offer.offer_id);
+    setIfPresent(url.searchParams, "referrer", first?.referrer ?? last?.referrer);
+    setIfPresent(url.searchParams, "first_landing_page", first?.first_landing_page ?? last?.first_landing_page);
+    setIfPresent(url.searchParams, "campaign_id", last?.campaign_id ?? first?.campaign_id);
+    setIfPresent(url.searchParams, "offer_id", offer.offer_id);
+  } else if (referralCode && offer.offer_id === OFFER_IDS.earlybird49ReferralPre) {
+    setIfPresent(url.searchParams, "offer_id", offer.offer_id);
+  }
+
+  if (canUseMarketing()) {
+    setIfPresent(url.searchParams, "gclid", last?.gclid ?? first?.gclid);
+    setIfPresent(url.searchParams, "gbraid", last?.gbraid ?? first?.gbraid);
+    setIfPresent(url.searchParams, "wbraid", last?.wbraid ?? first?.wbraid);
+    setIfPresent(url.searchParams, "fbclid", last?.fbclid ?? first?.fbclid);
+    setIfPresent(url.searchParams, "ttclid", last?.ttclid ?? first?.ttclid);
+    setIfPresent(url.searchParams, "msclkid", last?.msclkid ?? first?.msclkid);
+  }
+
   setIfPresent(url.searchParams, "intent", options.intent);
 
   if (referralCode) {
@@ -84,4 +100,3 @@ export function buildAppUrl(
 
   return url.toString();
 }
-

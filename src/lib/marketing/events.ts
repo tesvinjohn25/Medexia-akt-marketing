@@ -1,4 +1,5 @@
 import { attributionForEvent, getMarketingSnapshot } from "./attribution";
+import { canUseAnalytics } from "../consent/consent";
 
 type LandingEventProperties = Record<string, unknown>;
 
@@ -29,6 +30,8 @@ function userAgent(): string | null {
 
 export function trackLandingEvent(eventName: string, properties: LandingEventProperties = {}): void {
   try {
+    if (eventName !== "consent_updated" && !canUseAnalytics()) return;
+
     const snapshot = getMarketingSnapshot();
     const payload = {
       event_id: randomEventId(),
@@ -66,4 +69,3 @@ export function trackLandingEvent(eventName: string, properties: LandingEventPro
     }
   }
 }
-

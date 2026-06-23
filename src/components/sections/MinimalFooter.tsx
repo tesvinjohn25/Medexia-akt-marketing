@@ -1,5 +1,7 @@
 "use client";
 
+import { openCookieSettings } from "@/lib/consent/consent";
+
 const RESOURCE_LINKS = [
   { href: "/demo", label: "Demo" },
   { href: "/topics", label: "Topics" },
@@ -161,13 +163,24 @@ export function MinimalFooter() {
           {/* Legal links */}
           <div className="flex items-center gap-5 text-[13px]" style={{ color: "rgba(232,236,255,.45)" }}>
             <a
-              href="https://app.medexia-akt.com/privacy"
-              target="_blank"
-              rel="noopener"
+              href="/privacy"
               className="transition-colors hover:text-white/70"
             >
               Privacy
             </a>
+            <a
+              href="/cookies"
+              className="transition-colors hover:text-white/70"
+            >
+              Cookies
+            </a>
+            <button
+              type="button"
+              onClick={openCookieSettings}
+              className="transition-colors hover:text-white/70"
+            >
+              Cookie settings
+            </button>
             <a
               href="https://app.medexia-akt.com/terms"
               target="_blank"

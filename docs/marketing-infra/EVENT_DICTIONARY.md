@@ -1,6 +1,6 @@
 # Marketing Event Dictionary
 
-This landing repo records first-party marketing events only. Third-party ad pixels stay disabled unless explicitly configured and consented.
+This landing repo records first-party marketing events only after analytics consent. Third-party ad pixels stay disabled unless explicitly configured and marketing consent is granted.
 
 | Event | When it fires | Required properties | Optional properties | Destination |
 | --- | --- | --- | --- | --- |
@@ -12,7 +12,8 @@ This landing repo records first-party marketing events only. Third-party ad pixe
 | `cta_clicked_referral_earlybird` | Visitor clicks a referral Early Access CTA | `event_id`, `mx_visitor_id`, `mx_session_id`, `intent`, `href`, `offer_id`, `referral_code` | attribution snapshot | First-party only |
 | `cta_clicked_login` | Visitor clicks Log in | `event_id`, `mx_visitor_id`, `mx_session_id`, `intent`, `href` | attribution snapshot | First-party only |
 | `app_handoff_started` | Any tracked app-bound CTA starts handoff | `event_id`, `mx_visitor_id`, `mx_session_id`, `intent`, `href` | `offer_id`, `referral_code` | First-party only |
-| `cookie_consent_updated` | Reserved for a future consent banner | consent state, `event_id`, `mx_visitor_id` | previous consent state | First-party only |
+| `consent_updated` | Visitor accepts, rejects, or saves granular cookie choices | `event_id`, `event_timestamp`, `functional`, `analytics`, `marketing`, `mechanism` | page path, consent source | First-party consent audit only |
+
+`consent_updated` is not sent to Meta or Google. Ordinary landing and CTA events are no-ops unless analytics consent is true.
 
 Future ad-platform standard events must stay limited to `PageView`, `CompleteRegistration`, `InitiateCheckout`, and `Purchase`. The future custom optimisation event is `Reached30MinAudio`, but it should only be emitted from the app after the user has genuinely reached 30 minutes of audio.
-

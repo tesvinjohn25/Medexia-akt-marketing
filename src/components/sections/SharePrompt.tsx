@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 
-const SHARE_TEXT =
-  "I’ve been trying AKT Navigator for audio revision. It’s useful when you’re too tired to sit and read. Everything is free until 8 July, and there’s an early-bird option before it goes up to £79.\n\nMy link is here: [referral link]\n\nJust to be transparent, I get referral credit if someone upgrades through it.";
-const WHATSAPP_URL = `whatsapp://send?text=${encodeURIComponent(SHARE_TEXT)}`;
-const EMAIL_URL = `mailto:?subject=${encodeURIComponent("AKT Navigator")}&body=${encodeURIComponent(SHARE_TEXT)}`;
+function shareText(referralLink: string): string {
+  return `I’ve been trying AKT Navigator for audio revision. It’s useful when you’re too tired to sit and read. Everything is free until 8 July, and this referral link gives £10 off Early Access before it goes up to £79.\n\nMy link: ${referralLink}\n\nJust to be transparent, I get referral credit if someone upgrades through it.`;
+}
 
 function WhatsAppIcon() {
   return (
@@ -33,16 +32,20 @@ function EmailIcon() {
   );
 }
 
-export function SharePrompt() {
+export function SharePrompt({ referralLink }: { referralLink?: string | null }) {
   const [copied, setCopied] = useState(false);
+  if (!referralLink) return null;
+
+  const text = shareText(referralLink);
+  const emailUrl = `mailto:?subject=${encodeURIComponent("AKT Navigator")}&body=${encodeURIComponent(text)}`;
 
   const copyLink = async () => {
     try {
-      await navigator.clipboard.writeText("https://medexia-akt.com");
+      await navigator.clipboard.writeText(referralLink);
     } catch {
       // Fallback for older browsers
       const input = document.createElement("input");
-      input.value = "https://medexia-akt.com";
+      input.value = referralLink;
       document.body.appendChild(input);
       input.select();
       document.execCommand("copy");
@@ -80,11 +83,11 @@ export function SharePrompt() {
             if (navigator.share) {
               navigator.share({
                 title: "AKT Navigator",
-                text: SHARE_TEXT,
+                text,
               }).catch(() => {});
             } else {
               window.open(
-                `https://web.whatsapp.com/send?text=${encodeURIComponent(SHARE_TEXT)}`,
+                `https://web.whatsapp.com/send?text=${encodeURIComponent(text)}`,
                 "_blank",
                 "noopener,noreferrer"
               );
@@ -113,7 +116,7 @@ export function SharePrompt() {
           <LinkIcon /> {copied ? "Copied!" : "Copy link"}
         </button>
         <a
-          href={EMAIL_URL}
+          href={emailUrl}
           className="inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-colors hover:bg-white/[.06]"
           style={{
             background: "var(--bg-elevated)",

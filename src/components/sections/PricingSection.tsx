@@ -5,6 +5,7 @@ import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 import { useMarketingAttribution } from "@/components/marketing/MarketingAttributionProvider";
 import {
   OFFER_IDS,
+  canShowReferralEarlybirdOffer,
   type CtaIntent,
   type OfferId,
 } from "@/lib/marketing/attribution";
@@ -230,8 +231,9 @@ export function PricingSection() {
   const marketing = useMarketingAttribution();
   const referralCode = marketing?.referral?.referral_code ?? null;
   const isPreCutover = marketing?.offer_context.phase !== "post_2026_07_08";
+  const hasReferralOffer = canShowReferralEarlybirdOffer(referralCode);
   const plans = isPreCutover
-    ? referralCode
+    ? hasReferralOffer
       ? referralPlans()
       : PRE_CUTOVER_PLANS
     : POST_CUTOVER_PLANS;
@@ -279,7 +281,7 @@ export function PricingSection() {
             style={{ color: "rgba(232,236,255,.68)", "--i": 2 } as React.CSSProperties}
           >
             {isPreCutover
-              ? referralCode
+              ? hasReferralOffer
                 ? "Everything is free until 8 July. Through this referral link, Early Access is £49 instead of £59 before 8 July; standard full audio access is £79 from 8 July."
                 : "Everything is free until 8 July. £59 Early Access is available before 8 July; standard full audio access is £79 from 8 July."
               : "Questions are free. Your first 2 hours of AKT audio are free. Upgrade to full 4-month audio access for £79."}
@@ -337,7 +339,11 @@ export function PricingSection() {
                       >
                         <path d="M12 2l2.9 6.26 6.6.7-4.9 4.5 1.35 6.54L12 16.9 6.05 20l1.35-6.54-4.9-4.5 6.6-.7z" />
                       </svg>
-                      Most popular &middot; Save &pound;20
+                      {isPreCutover
+                        ? hasReferralOffer
+                          ? "Referral price · £10 off"
+                          : "Most popular · Save £20"
+                        : "Most popular"}
                     </span>
                   </div>
                 )}

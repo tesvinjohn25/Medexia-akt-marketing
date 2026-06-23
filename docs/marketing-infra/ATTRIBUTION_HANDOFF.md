@@ -50,7 +50,12 @@ Before 8 July 2026, a persisted referral code makes the landing offer context:
 
 - `earlybird_49_referral_pre_2026_07_08`
 
-Without a referral code, the landing site must not display the `£49` price.
+only when both public flags are enabled:
+
+- `NEXT_PUBLIC_REFERRAL_SPRINT_ENABLED=true`
+- `NEXT_PUBLIC_REFERRAL_FRIEND_DISCOUNT_ENABLED=true`
+
+If either flag is disabled, the referral code is still persisted and passed to the app, but the landing site displays the normal `£59` Early Access offer. Without a referral code, the landing site must not display the `£49` price.
 
 ## Offer Logic
 
@@ -64,7 +69,7 @@ Offer ids:
 - `free_questions_2h_audio_post_2026_07_08`
 - `standard_79_post_2026_07_08`
 
-Explicit `offer_id` query params are accepted only when they are known and safe. The referral `£49` offer is ignored unless a referral code is present.
+Explicit `offer_id` query params are accepted only when they are known and safe. The referral `£49` offer is ignored unless a referral code is present, both public referral flags are enabled, and the date is before 8 July 2026.
 
 ## App Query Params
 
@@ -84,4 +89,3 @@ Every tracked app CTA appends:
 - `intent`
 
 Existing app URL query params are preserved.
-

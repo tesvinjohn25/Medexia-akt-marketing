@@ -46,7 +46,9 @@ export function useTrackedAppUrl(
       ].join("|"),
     [snapshot, options.intent, options.offerId],
   );
-  const [trackedHref, setTrackedHref] = useState(href);
+  const [trackedHref, setTrackedHref] = useState(() =>
+    buildAppUrl(href, { intent: options.intent, offerId: options.offerId }),
+  );
 
   useEffect(() => {
     setTrackedHref(buildAppUrl(href, { intent: options.intent, offerId: options.offerId }));

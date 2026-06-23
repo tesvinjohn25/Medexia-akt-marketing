@@ -10,6 +10,9 @@ Add names only; do not commit values.
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | GA4 measurement id | empty |
 | `NEXT_PUBLIC_GOOGLE_ADS_ID` | Google Ads tag id | empty |
 | `NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT` | First-party event endpoint | `/api/marketing/events` |
+| `NEXT_PUBLIC_REFERRAL_SPRINT_ENABLED` | Allows referral-sprint public copy when a referral code is present | `false` |
+| `NEXT_PUBLIC_REFERRAL_FRIEND_DISCOUNT_ENABLED` | Allows public `£49` friend-side referral price copy | `false` |
 
 Third-party pixels also require `mx_marketing_consent=granted` in localStorage. There is no consent banner in this repo yet, so do not enable pixels in production until consent UX is implemented.
 
+Referral codes are still captured and passed to the app when these referral flags are disabled. The landing page must not display the `£49` price unless both referral flags are `true`, a referral code is present, and the date is before 8 July 2026.

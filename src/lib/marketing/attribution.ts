@@ -281,6 +281,26 @@ export function isPreOfferCutover(now: Date = new Date()): boolean {
   return now.getTime() < OFFER_CUTOVER_UK.getTime();
 }
 
+export function publicReferralSprintEnabled(): boolean {
+  return process.env.NEXT_PUBLIC_REFERRAL_SPRINT_ENABLED === "true";
+}
+
+export function publicReferralFriendDiscountEnabled(): boolean {
+  return process.env.NEXT_PUBLIC_REFERRAL_FRIEND_DISCOUNT_ENABLED === "true";
+}
+
+export function canShowReferralEarlybirdOffer(
+  referralCode: string | null | undefined,
+  now: Date = new Date(),
+): boolean {
+  return Boolean(
+    referralCode &&
+      isPreOfferCutover(now) &&
+      publicReferralSprintEnabled() &&
+      publicReferralFriendDiscountEnabled(),
+  );
+}
+
 function isOfferId(value: string | null | undefined): value is OfferId {
   return Boolean(value && Object.values(OFFER_IDS).includes(value as OfferId));
 }
@@ -295,6 +315,7 @@ export function determineOfferContext(options: {
   const preCutover = isPreOfferCutover(now);
   const referralCode = options.referralCode || null;
   const explicitOfferId = isOfferId(options.explicitOfferId) ? options.explicitOfferId : null;
+  const referralOfferVisible = canShowReferralEarlybirdOffer(referralCode, now);
 
   if (
     explicitOfferId &&
@@ -309,7 +330,7 @@ export function determineOfferContext(options: {
     };
   }
 
-  if (preCutover && referralCode && options.intent === "referral_earlybird") {
+  if (explicitOfferId === OFFER_IDS.earlybird49ReferralPre && referralOfferVisible) {
     return {
       offer_id: OFFER_IDS.earlybird49ReferralPre,
       phase: "pre_2026_07_08",
@@ -318,7 +339,7 @@ export function determineOfferContext(options: {
     };
   }
 
-  if (preCutover && referralCode && !options.intent) {
+  if (preCutover && referralOfferVisible && options.intent === "referral_earlybird") {
     return {
       offer_id: OFFER_IDS.earlybird49ReferralPre,
       phase: "pre_2026_07_08",
@@ -327,7 +348,16 @@ export function determineOfferContext(options: {
     };
   }
 
-  if (preCutover && options.intent === "earlybird_upgrade") {
+  if (preCutover && referralOfferVisible && !options.intent) {
+    return {
+      offer_id: OFFER_IDS.earlybird49ReferralPre,
+      phase: "pre_2026_07_08",
+      referral_code: referralCode,
+      reason: "referral",
+    };
+  }
+
+  if (preCutover && (options.intent === "earlybird_upgrade" || options.intent === "referral_earlybird")) {
     return {
       offer_id: OFFER_IDS.earlybird59Pre,
       phase: "pre_2026_07_08",
@@ -456,4 +486,3 @@ export function attributionForEvent(): Record<string, unknown> {
     offer_id: snapshot.offer_context.offer_id,
   };
 }
-

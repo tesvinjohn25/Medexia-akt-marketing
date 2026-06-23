@@ -45,12 +45,24 @@ Open:
 /?ref=ABC123
 ```
 
-Before 8 July 2026 expected:
+Before 8 July 2026 with `NEXT_PUBLIC_REFERRAL_SPRINT_ENABLED=false` or `NEXT_PUBLIC_REFERRAL_FRIEND_DISCOUNT_ENABLED=false` expected:
+
+- `mx_referral.referral_code` is `ABC123`.
+- No `£49` price appears.
+- Early Access remains `£59`.
+- App CTA includes `ref=ABC123`, `referral_code=ABC123`, and `mx_vid`.
+
+Before 8 July 2026 with both referral flags enabled expected:
 
 - Referral banner appears.
 - `mx_referral.referral_code` is `ABC123`.
 - Early Access offer displays `£49`.
 - App CTA includes `ref=ABC123`, `referral_code=ABC123`, `mx_vid`, and `offer_id=earlybird_49_referral_pre_2026_07_08`.
+
+After 8 July 2026 expected:
+
+- No `£49` or `£59` early-bird CTA appears.
+- The paid CTA points to the standard full-audio upgrade.
 
 ## Non-Referral Journey
 
@@ -77,4 +89,3 @@ Run:
 npm run lint
 npm run build
 ```
-

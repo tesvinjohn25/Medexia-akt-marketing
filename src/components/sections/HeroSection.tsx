@@ -5,7 +5,7 @@ import { ExamCountdown } from "./ExamCountdown";
 import { HeroVideo } from "./HeroVideo";
 import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 import { useMarketingAttribution } from "@/components/marketing/MarketingAttributionProvider";
-import { OFFER_IDS } from "@/lib/marketing/attribution";
+import { OFFER_IDS, canShowReferralEarlybirdOffer } from "@/lib/marketing/attribution";
 
 export function HeroSection() {
   // The keynote cascade is visibility-triggered, not load-triggered:
@@ -15,7 +15,7 @@ export function HeroSection() {
   const marketing = useMarketingAttribution();
   const referralCode = marketing?.referral?.referral_code ?? null;
   const isPreCutover = marketing?.offer_context.phase !== "post_2026_07_08";
-  const hasReferralOffer = Boolean(referralCode && isPreCutover);
+  const hasReferralOffer = canShowReferralEarlybirdOffer(referralCode);
 
   return (
     <section className="relative overflow-hidden">

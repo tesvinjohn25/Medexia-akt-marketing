@@ -2,6 +2,8 @@ node_modules
 .next
 out
 .env*
+!.env.example
+!.env.referral-test.example
 .DS_Store
 .vercel
 .env*.local

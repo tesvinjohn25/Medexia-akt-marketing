@@ -152,7 +152,7 @@ function installBrowser(url, referrer = "") {
 }
 
 function resetTrackingEnv() {
-  process.env.NEXT_PUBLIC_APP_BASE_URL = "https://app.medexia-akt.com";
+  process.env.NEXT_PUBLIC_APP_BASE_URL = "https://medexia-akt.com";
   process.env.NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT = "/api/marketing/events";
   process.env.NEXT_PUBLIC_ENABLE_MARKETING_PIXELS = "false";
   process.env.NEXT_PUBLIC_META_PIXEL_ID = "";
@@ -169,6 +169,17 @@ async function parseBeaconPayload(call) {
   }
   return JSON.parse(String(body));
 }
+
+test("app url fallback targets the deployed Replit app domain", () => {
+  resetTrackingEnv();
+  delete process.env.NEXT_PUBLIC_APP_BASE_URL;
+  installBrowser("https://landing.medexia-akt.com/");
+
+  const appUrl = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
+
+  assert.equal(appUrl.origin, "https://medexia-akt.com");
+  assert.equal(appUrl.pathname, "/join/free");
+});
 
 test("referral offer is only selected when public sprint and discount flags are enabled", () => {
   const now = new Date("2026-06-23T12:00:00+01:00");

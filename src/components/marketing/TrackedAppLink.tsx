@@ -3,12 +3,13 @@
 import {
   useEffect,
   useMemo,
+  useRef,
   useState,
   type AnchorHTMLAttributes,
   type MouseEvent,
 } from "react";
 import { buildAppFallbackUrl, buildAppUrl } from "@/lib/marketing/url";
-import { trackLandingEvent } from "@/lib/marketing/events";
+import { flushLandingEvent, trackLandingEvent } from "@/lib/marketing/events";
 import {
   OFFER_IDS,
   type CtaIntent,
@@ -72,22 +73,58 @@ export function TrackedAppLink({
   ...props
 }: TrackedAppLinkProps) {
   const trackedHref = useTrackedAppUrl(href, { intent, offerId });
+  const navigatingRef = useRef(false);
 
   const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    onClick?.(event);
+    if (event.defaultPrevented) return;
+
     const ctaEventName = CTA_EVENT_BY_INTENT[intent];
-    if (ctaEventName !== "app_handoff_started") {
-      trackLandingEvent(ctaEventName, {
-        href: trackedHref,
-        intent,
-        offer_id: offerId ?? null,
-      });
-    }
-    trackLandingEvent("app_handoff_started", {
+    const ctaProperties = {
+      href: trackedHref,
+      intent,
+      offer_id: offerId ?? null,
+    };
+    const handoffProperties = {
       href: trackedHref,
       intent,
       offer_id: offerId ?? (intent === "referral_earlybird" ? OFFER_IDS.earlybird49ReferralPre : null),
+    };
+
+    const shouldFlushBeforeNavigation =
+      event.button === 0 &&
+      !event.metaKey &&
+      !event.ctrlKey &&
+      !event.shiftKey &&
+      !event.altKey &&
+      (!props.target || props.target === "_self");
+
+    if (!shouldFlushBeforeNavigation) {
+      if (ctaEventName !== "app_handoff_started") {
+        trackLandingEvent(ctaEventName, ctaProperties);
+      }
+      trackLandingEvent("app_handoff_started", handoffProperties);
+      return;
+    }
+
+    event.preventDefault();
+    if (navigatingRef.current) return;
+    navigatingRef.current = true;
+
+    const flushes = [
+      ctaEventName !== "app_handoff_started"
+        ? flushLandingEvent(ctaEventName, ctaProperties)
+        : Promise.resolve(false),
+      flushLandingEvent("app_handoff_started", handoffProperties),
+    ];
+
+    const timeout = new Promise<void>((resolve) => {
+      window.setTimeout(resolve, 700);
     });
-    onClick?.(event);
+
+    void Promise.race([Promise.allSettled(flushes), timeout]).finally(() => {
+      window.location.assign(trackedHref);
+    });
   };
 
   return (

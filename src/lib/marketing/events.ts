@@ -3,6 +3,14 @@ import { canUseAnalytics, CONSENT_VERSION } from "../consent/consent";
 
 type LandingEventProperties = Record<string, unknown>;
 type EventPayload = Record<string, unknown>;
+type SendOptions = {
+  /**
+   * Normal page-view events can use sendBeacon. CTA navigation events use
+   * fetch keepalive and wait briefly before leaving the page so the browser
+   * does not abort the request during cross-origin navigation.
+   */
+  preferBeacon?: boolean;
+};
 
 function randomEventId(): string {
   try {
@@ -61,55 +69,81 @@ function consentAuditPayload(properties: LandingEventProperties): EventPayload {
   };
 }
 
-function sendEventPayload(eventName: string, payload: EventPayload): void {
+function sendEventPayload(eventName: string, payload: EventPayload, options: SendOptions = {}): Promise<boolean> {
   const body = JSON.stringify(payload);
   const url = endpoint();
+  const preferBeacon = options.preferBeacon !== false;
 
-  if (typeof navigator !== "undefined" && typeof navigator.sendBeacon === "function") {
+  if (preferBeacon && typeof navigator !== "undefined" && typeof navigator.sendBeacon === "function") {
     const sent = navigator.sendBeacon(url, new Blob([body], { type: "application/json" }));
-    if (sent) return;
+    if (sent) {
+      if (process.env.NODE_ENV === "development") {
+        console.debug("[marketing]", eventName, payload);
+      }
+      return Promise.resolve(true);
+    }
   }
 
-  fetch(url, {
+  return fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body,
     keepalive: true,
-  }).catch(() => {});
+    credentials: "omit",
+  })
+    .then((response) => response.ok)
+    .catch(() => false)
+    .finally(() => {
+      if (process.env.NODE_ENV === "development") {
+        console.debug("[marketing]", eventName, payload);
+      }
+    });
+}
 
-  if (process.env.NODE_ENV === "development") {
-    console.debug("[marketing]", eventName, payload);
+function buildLandingEventPayload(eventName: string, properties: LandingEventProperties = {}): EventPayload | null {
+  const analyticsAllowed = canUseAnalytics();
+
+  if (eventName === "consent_updated" && !analyticsAllowed) {
+    return consentAuditPayload(properties);
   }
+
+  if (!analyticsAllowed) return null;
+
+  const snapshot = getMarketingSnapshot();
+  return {
+    event_id: randomEventId(),
+    event_name: eventName,
+    event_timestamp: new Date().toISOString(),
+    page_path: pagePath(),
+    user_agent: userAgent(),
+    offer_id: snapshot.offer_context.offer_id,
+    referral_code: snapshot.referral?.referral_code ?? null,
+    ...attributionForEvent(),
+    properties,
+  };
 }
 
 export function trackLandingEvent(eventName: string, properties: LandingEventProperties = {}): void {
   try {
-    const analyticsAllowed = canUseAnalytics();
-
-    if (eventName === "consent_updated" && !analyticsAllowed) {
-      sendEventPayload(eventName, consentAuditPayload(properties));
-      return;
-    }
-
-    if (!analyticsAllowed) return;
-
-    const snapshot = getMarketingSnapshot();
-    const payload = {
-      event_id: randomEventId(),
-      event_name: eventName,
-      event_timestamp: new Date().toISOString(),
-      page_path: pagePath(),
-      user_agent: userAgent(),
-      offer_id: snapshot.offer_context.offer_id,
-      referral_code: snapshot.referral?.referral_code ?? null,
-      ...attributionForEvent(),
-      properties,
-    };
-
-    sendEventPayload(eventName, payload);
+    const payload = buildLandingEventPayload(eventName, properties);
+    if (!payload) return;
+    void sendEventPayload(eventName, payload);
   } catch (error) {
     if (process.env.NODE_ENV === "development") {
       console.debug("[marketing] event dropped", eventName, error);
     }
+  }
+}
+
+export function flushLandingEvent(eventName: string, properties: LandingEventProperties = {}): Promise<boolean> {
+  try {
+    const payload = buildLandingEventPayload(eventName, properties);
+    if (!payload) return Promise.resolve(false);
+    return sendEventPayload(eventName, payload, { preferBeacon: false });
+  } catch (error) {
+    if (process.env.NODE_ENV === "development") {
+      console.debug("[marketing] event dropped", eventName, error);
+    }
+    return Promise.resolve(false);
   }
 }

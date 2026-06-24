@@ -80,9 +80,9 @@ Marketing pixels still require:
 
 ## Growth Ledger Persistence Status
 
-The landing site now gates first-party event collection behind analytics consent, but the default `/api/marketing/events` route only validates payload shape and returns `202`. It does not write Growth Ledger events to a database yet.
+The landing site now gates first-party event collection behind analytics consent and posts to `NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT`, which should be the app backend endpoint: `https://app.medexia-akt.com/api/marketing/events`.
 
-To persist events later, point `NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT` at the app/backend marketing event endpoint after Replit DB schema work is complete. Until that is done, this PR should be treated as consent-safe capture and handoff infrastructure, not a tracking dashboard.
+The app backend must still provide CORS allowlisting, validation, and DB persistence. Until that Replit-side work is complete and enabled, this should be treated as consent-safe capture and handoff infrastructure, not a tracking dashboard.
 
 ## Withdrawal
 
@@ -145,7 +145,7 @@ Withdraw consent:
 
 1. Deploy consent UX with `NEXT_PUBLIC_ENABLE_MARKETING_PIXELS=false`.
 2. Test Reject all, Accept analytics, Accept marketing, withdrawal, and referral handoff.
-3. Connect and verify Growth Ledger persistence through `NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT` after Replit DB work is complete.
+3. Connect and verify Growth Ledger persistence through the app backend configured at `NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT` after Replit DB work is complete.
 4. Enable first-party analytics events through analytics consent.
 5. Configure Meta/Google ids only after consent QA.
 6. Start paid retargeting only after marketing-consent paths are verified.

@@ -16,7 +16,10 @@ function randomEventId(): string {
 }
 
 function endpoint(): string {
-  return process.env.NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT || "/api/marketing/events";
+  return (
+    process.env.NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT ||
+    "https://app.medexia-akt.com/api/marketing/events"
+  );
 }
 
 function pagePath(): string {

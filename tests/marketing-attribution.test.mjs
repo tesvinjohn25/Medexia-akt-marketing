@@ -153,7 +153,7 @@ function installBrowser(url, referrer = "") {
 
 function resetTrackingEnv() {
   process.env.NEXT_PUBLIC_APP_BASE_URL = "https://app.medexia-akt.com";
-  process.env.NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT = "/api/marketing/events";
+  process.env.NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT = "https://app.medexia-akt.com/api/marketing/events";
   process.env.NEXT_PUBLIC_ENABLE_MARKETING_PIXELS = "false";
   process.env.NEXT_PUBLIC_META_PIXEL_ID = "";
   process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID = "";
@@ -179,6 +179,24 @@ test("app url fallback targets the deployed Replit app domain", () => {
 
   assert.equal(appUrl.origin, "https://app.medexia-akt.com");
   assert.equal(appUrl.pathname, "/join/free");
+});
+
+test("landing events default to the app backend bridge when no endpoint env is set", async () => {
+  resetTrackingEnv();
+  delete process.env.NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT;
+  const browser = installBrowser("https://medexia-akt.com/?utm_source=reddit");
+
+  saveConsent({ functional: false, analytics: true, marketing: false }, "settings");
+  initMarketingAttribution();
+  trackLandingEvent("cta_clicked_start_free", {
+    href: "https://app.medexia-akt.com/join/free",
+    intent: "start_free",
+  });
+
+  assert.equal(browser.sendBeaconCalls.length, 1);
+  assert.equal(browser.sendBeaconCalls[0].endpoint, "https://app.medexia-akt.com/api/marketing/events");
+  const payload = await parseBeaconPayload(browser.sendBeaconCalls[0]);
+  assert.equal(payload.event_name, "cta_clicked_start_free");
 });
 
 test("app url ignores a same-origin landing base to avoid CTA 404s", () => {

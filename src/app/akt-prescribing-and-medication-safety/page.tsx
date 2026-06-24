@@ -3,6 +3,7 @@ import { Nav } from "@/components/Nav";
 import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
+import { AiAnswerBox } from "@/components/sections/AiAnswerBox";
 
 export const metadata: Metadata = {
   title: "MRCGP AKT Prescribing and Medication Safety",
@@ -84,6 +85,11 @@ const faqs = [
       "Yes. Prescribing is part of the RCGP curriculum and appears in AKT feedback themes. It can be tested through medication monitoring, side effects, contraindications, repeat prescribing, medicines management and safe systems.",
   },
   {
+    question: "Is prescribing high-yield in the AKT?",
+    answer:
+      "Yes. Prescribing and medication safety are high-yield because they combine clinical knowledge, risk management and everyday GP systems. Recent AKT feedback has highlighted medication monitoring, prescribing errors and long-term medication side effects.",
+  },
+  {
     question: "What prescribing topics should I revise for the AKT?",
     answer:
       "Prioritise common medication monitoring, side effects and interactions, prescribing in higher-risk groups, repeat prescribing safety, prescribing errors, drug allergies, renal-dose issues and medicines that need extra monitoring.",
@@ -92,6 +98,11 @@ const faqs = [
     question: "Should I memorise the BNF for the AKT?",
     answer:
       "No. Use the BNF and NICE CKS as reference sources during revision. The aim is not to memorise the entire BNF, but to recognise common safety patterns and apply them quickly in AKT-style scenarios.",
+  },
+  {
+    question: "What prescribing traps come up in AKT-style questions?",
+    answer:
+      "Common traps include missing renal impairment, pregnancy or breastfeeding cautions, unsafe repeat prescriptions, drug interactions, allergy warnings, high-risk medicine monitoring and continuing a medicine after the clinical situation has changed.",
   },
   {
     question: "Why do AKT feedback reports mention prescribing?",
@@ -173,30 +184,38 @@ export default function AktPrescribingAndMedicationSafetyPage() {
             general practice.
           </p>
 
-          <div
-            className="mt-6 rounded-xl p-4"
-            style={{
-              background: "rgba(52,211,153,.06)",
-              border: "1px solid rgba(52,211,153,.18)",
-            }}
-          >
-            <h2
-              className="text-[18px] font-semibold"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Quick answer
-            </h2>
-            <p
-              className="mt-2 text-[14px] leading-[1.65]"
-              style={{ color: "var(--fg-mid)" }}
-            >
-              For AKT prescribing, prioritise common medication monitoring,
-              high-risk drug side effects and interactions, prescribing in
-              pregnancy, breastfeeding, renal impairment and older adults,
-              repeat prescribing safety, and BNF or NICE CKS checking after
-              practice questions.
-            </p>
-          </div>
+          <AiAnswerBox
+            eyebrow="Prescribing and medication safety"
+            title="Short answer"
+            answer={
+              <p>
+                AKT prescribing revision should focus on safe prescribing
+                decisions, contraindications, pregnancy and breastfeeding, renal
+                impairment, controlled drugs, monitoring, interactions, MHRA
+                alerts and BNF/NICE-aligned management. Practise the decision,
+                then use the BNF or NICE CKS to check why it is safe.
+              </p>
+            }
+            bestFor={[
+              "high-yield prescribing practice",
+              "medication safety questions",
+              "trainees worried about BNF-style scenarios",
+              "final weak-area revision",
+            ]}
+            nextSteps={[
+              {
+                label: "Start free practice",
+                href: "/join/free",
+                intent: "start_free",
+              },
+              { label: "Try AKT mocks", href: "/akt-mock-exam" },
+              { label: "Revise statistics", href: "/akt-statistics" },
+              {
+                label: "See prescribing topic guide",
+                href: "/topics/continuity-quality-safety-prescribing",
+              },
+            ]}
+          />
 
           <section className="mt-10">
             <h2

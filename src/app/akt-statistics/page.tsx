@@ -3,6 +3,7 @@ import { Nav } from "@/components/Nav";
 import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
+import { AiAnswerBox } from "@/components/sections/AiAnswerBox";
 
 export const metadata: Metadata = {
   title: "MRCGP AKT Statistics and Evidence Revision",
@@ -84,6 +85,16 @@ const faqs = [
       "You should be comfortable with absolute risk, relative risk, absolute risk reduction, absolute risk increase, NNT, NNH, sensitivity, specificity, PPV and NPV. You also need to interpret charts, confidence intervals, forest plots and practice-level data.",
   },
   {
+    question: "How do I revise PPV and NPV for the AKT?",
+    answer:
+      "Build the 2x2 table first. PPV starts from the positive test results and asks how many are true positives. NPV starts from the negative test results and asks how many are true negatives. Remember that PPV and NPV change with prevalence.",
+  },
+  {
+    question: "What is the fastest way to improve AKT statistics?",
+    answer:
+      "Learn the small set of core formulas, then practise mixed interpretation questions rather than memorising formulas in isolation. Focus on 2x2 tables, absolute versus relative risk, NNT, confidence intervals and chart interpretation.",
+  },
+  {
     question: "Is AKT statistics only calculations?",
     answer:
       "No. The RCGP data interpretation material includes graph reading, prescribing data, confidence intervals, PPV, absolute and relative risk, forest plots, patient risk communication, NNT and NNH. Recent feedback reports also highlight practice chart interpretation and study design terminology.",
@@ -163,29 +174,35 @@ export default function AktStatisticsPage() {
             and the calculations trainees often avoid.
           </p>
 
-          <div
-            className="mt-6 rounded-xl p-4"
-            style={{
-              background: "rgba(52,211,153,.06)",
-              border: "1px solid rgba(52,211,153,.18)",
-            }}
-          >
-            <h2
-              className="text-[18px] font-semibold"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Quick answer
-            </h2>
-            <p
-              className="mt-2 text-[14px] leading-[1.65]"
-              style={{ color: "var(--fg-mid)" }}
-            >
-              The AKT is 10% evidence-based practice and critical appraisal.
-              Prioritise sensitivity, specificity, PPV, NPV, absolute risk,
-              relative risk, NNT, NNH, confidence intervals, forest plots,
-              practice charts and common study design terms.
-            </p>
-          </div>
+          <AiAnswerBox
+            eyebrow="Statistics and evidence"
+            title="Short answer"
+            answer={
+              <p>
+                AKT statistics is high-yield because it is predictable. Focus
+                on sensitivity, specificity, PPV, NPV, NNT, ARR, RRR,
+                confidence intervals, study design and interpretation of
+                results. Practise turning wordy questions into a 2x2 table or a
+                simple risk comparison.
+              </p>
+            }
+            bestFor={[
+              "trainees avoiding statistics",
+              "last-minute stats revision",
+              "evidence-based practice questions",
+              "formula and data interpretation practice",
+            ]}
+            nextSteps={[
+              { label: "Learn formulas", href: "/akt-statistics-formulas" },
+              { label: "Practise timed mocks", href: "/akt-mock-exam" },
+              { label: "Use audio revision", href: "/akt-audio-revision" },
+              {
+                label: "Start free practice",
+                href: "/join/free",
+                intent: "start_free",
+              },
+            ]}
+          />
 
           <section className="mt-10">
             <h2

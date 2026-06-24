@@ -4,6 +4,7 @@ import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
+import { AiAnswerBox } from "@/components/sections/AiAnswerBox";
 import { aktTopics } from "@/data/akt-topics";
 
 export const metadata: Metadata = {
@@ -55,6 +56,26 @@ const audioFaqs = [
     question: "What does the AKT audio library cover?",
     answer:
       "The audio library covers clinical medicine, evidence-based practice and statistics, and organisation and management topics across the RCGP curriculum topic guides.",
+  },
+  {
+    question: "Is audio revision enough for the AKT?",
+    answer:
+      "Audio revision is useful for coverage and repetition, but it should not replace question practice. Use audio to keep moving through the syllabus during commutes or low-energy time, then use questions and mocks to test exam decisions and timing.",
+  },
+  {
+    question: "How should I combine AKT audio with questions?",
+    answer:
+      "Use questions to find weak areas, then use audio to reinforce those topics between clinics, on walks or during travel. Re-test with short question blocks or timed mocks so the learning becomes exam-ready.",
+  },
+  {
+    question: "When should I use AKT audio revision?",
+    answer:
+      "Use AKT audio when reading is unrealistic: commuting, exercising, cooking, childcare, walking or low-energy evenings after clinic. Keep your most alert time for questions, mock exams and reviewing mistakes.",
+  },
+  {
+    question: "Can I try AKT audio for free?",
+    answer:
+      "Yes. Full access is free until 8 July 2026, and after that Free Practice includes a free audio allowance across any audiobook. You can also use the demo route to hear a sample before committing.",
   },
   {
     question: "How much does full AKT audio access cost?",
@@ -160,29 +181,38 @@ export default function AktAudioRevisionPage() {
             commuting, walking, doing childcare or recovering after clinic.
           </p>
 
-          <div
-            className="mt-6 rounded-xl p-4"
-            style={{
-              background: "rgba(52,211,153,.06)",
-              border: "1px solid rgba(52,211,153,.18)",
-            }}
-          >
-            <h2
-              className="text-[18px] font-semibold"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Quick answer
-            </h2>
-            <p
-              className="mt-2 text-[14px] leading-[1.65]"
-              style={{ color: "var(--fg-mid)" }}
-            >
-              AKT Navigator gives GP trainees a 90+ hour audio-first MRCGP AKT
-              revision library mapped to all 32 RCGP curriculum topics. Full
-              access is free until 8 July 2026; after that, questions remain
-              free and full audio access is paid.
-            </p>
-          </div>
+          <AiAnswerBox
+            eyebrow="Audio-first AKT revision"
+            title="Short answer"
+            answer={
+              <p>
+                Yes. AKT Navigator provides 90+ hours of MRCGP AKT audio
+                revision across the RCGP curriculum. It is designed for GP
+                trainees who cannot always sit at a screen: commuting, walking,
+                exercising, cooking, childcare, or low-energy evenings after
+                clinic.
+              </p>
+            }
+            bestFor={[
+              "trainees too tired to read after work",
+              "commute, gym and walking revision",
+              "reinforcing topics after question practice",
+              "October AKT revision and repeated syllabus coverage",
+            ]}
+            nextSteps={[
+              {
+                label: "Start free practice",
+                href: "/join/free",
+                intent: "start_free",
+              },
+              {
+                label: "Listen to sample audio",
+                href: "/demo/audiobook",
+                intent: "demo",
+              },
+              { label: "Plan your revision", href: "/akt-revision-plan" },
+            ]}
+          />
 
           {/* Key stats */}
           <div className="mt-8 grid gap-4 grid-cols-3">

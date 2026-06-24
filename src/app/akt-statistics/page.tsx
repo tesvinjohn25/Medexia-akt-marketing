@@ -196,6 +196,7 @@ export default function AktStatisticsPage() {
               { label: "Learn formulas", href: "/akt-statistics-formulas" },
               { label: "Practise timed mocks", href: "/akt-mock-exam" },
               { label: "Use audio revision", href: "/akt-audio-revision" },
+              { label: "Compare revision tools", href: "/best-akt-revision-tool" },
               {
                 label: "Start free practice",
                 href: "/join/free",

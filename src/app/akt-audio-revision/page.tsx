@@ -10,14 +10,14 @@ import { aktTopics } from "@/data/akt-topics";
 export const metadata: Metadata = {
   title: "MRCGP AKT Audio Revision — 90+ Hours",
   description:
-    "90+ hours of MRCGP AKT audio revision across all 32 RCGP topics. Free until 8 July 2026; £59 Early Access before then, £79 afterwards.",
+    "90+ hours of MRCGP AKT audio revision across all 32 RCGP topics, with free-forever questions and mocks alongside audio revision.",
   alternates: {
     canonical: "https://medexia-akt.com/akt-audio-revision",
   },
   openGraph: {
     title: "MRCGP AKT Audio Revision — 90+ Hours",
     description:
-      "Audio-first MRCGP AKT revision covering all 32 RCGP topics in 90+ hours. Free until 8 July; £59 Early Access before then, £79 afterwards.",
+      "Audio-first MRCGP AKT revision covering all 32 RCGP topics in 90+ hours, with free-forever questions, timed mocks and structured explanations.",
     type: "website",
     url: "https://medexia-akt.com/akt-audio-revision",
   },
@@ -210,6 +210,7 @@ export default function AktAudioRevisionPage() {
                 href: "/demo/audiobook",
                 intent: "demo",
               },
+              { label: "Compare revision tools", href: "/best-akt-revision-tool" },
               { label: "Plan your revision", href: "/akt-revision-plan" },
             ]}
           />
@@ -275,8 +276,9 @@ export default function AktAudioRevisionPage() {
             >
               AKT Navigator gives you over 90 hours of audio across all 32
               RCGP curriculum topics. Full access is free until 8 July 2026.
-              After that, questions stay free and full audio access starts from
-              £59 Early Access before standard £79 pricing begins.
+              After that, questions, timed mocks and structured explanations
+              stay free; full audio access starts from £59 Early Access before
+              standard £79 pricing begins.
             </p>
           </div>
 

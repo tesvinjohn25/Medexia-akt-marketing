@@ -107,7 +107,21 @@ export function HeroSection() {
                   className="text-[10px] tracking-[0.14em] uppercase font-bold"
                   style={{ color: "rgba(52,211,153,.85)" }}
                 >
-                  Free until 8 July 2026
+                  Questions &amp; mocks free forever
+                </span>
+              </span>
+              <span
+                className="inline-flex items-center rounded-md px-2 py-[3px]"
+                style={{
+                  background: "rgba(167,139,250,.08)",
+                  border: "1px solid rgba(167,139,250,.18)",
+                }}
+              >
+                <span
+                  className="text-[10px] tracking-[0.14em] uppercase font-bold"
+                  style={{ color: "rgba(197,170,255,.9)" }}
+                >
+                  Full audio free until 8 July
                 </span>
               </span>
             </div>
@@ -159,21 +173,22 @@ export function HeroSection() {
               </span>
             </h1>
 
-            {/* Two-paragraph subhead — audio + algorithm */}
+            {/* Two-paragraph subhead: audio-first, but not audio-only. */}
             <p
               className="r-up mt-4 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
               style={{ color: "rgba(232,236,255,.78)", "--i": 6.5 } as React.CSSProperties}
             >
-              Audio-first revision covering the full MRCGP AKT syllabus —
-              audio, questions, statistics and Dermatology Navigator.
+              Audio-first MRCGP AKT revision covering the full syllabus, backed
+              by free-forever question practice, timed mocks and structured
+              explanations.
             </p>
             <p
               className="r-up mt-3 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
               style={{ color: "rgba(232,236,255,.6)", "--i": 7 } as React.CSSProperties}
             >
               {isPreCutover
-                ? "Everything is free until 8 July. Try AKT Navigator now. If the audio helps, lock in 4 months from 8 July before it becomes £79."
-                : "Questions are free. Your first 2 hours of AKT audio are free. Upgrade to full 4-month audio access for £79."}
+                ? "Full audio access is the paid upgrade after 8 July 2026. Until then, the whole product is free to try."
+                : "Questions, mocks and explanations stay free. Upgrade to full 4-month audio access for £79 when you want the complete library."}
             </p>
 
             {/* Countdown */}
@@ -200,7 +215,7 @@ export function HeroSection() {
                     : OFFER_IDS.freePost
                 }
               >
-                Start free &rarr;
+                Start free practice &rarr;
               </TrackedAppLink>
               {isPreCutover ? (
                 <TrackedAppLink

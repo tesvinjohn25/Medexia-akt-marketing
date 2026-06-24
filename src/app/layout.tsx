@@ -9,11 +9,11 @@ export const metadata: Metadata = {
   },
   title: {
     default:
-      "MRCGP AKT Revision — The Whole AKT in 90 Hours of Audio",
+      "AKT Navigator — Audio-First MRCGP AKT Revision + Free Questions",
     template: "%s | Medexia",
   },
   description:
-    "MRCGP AKT audio revision with free syllabus-mapped questions, mocks and 90+ hours of audio. Free until 8 July; £59 Early Access before then, £79 from 8 July.",
+    "Cover the MRCGP AKT with 90+ hours of audio revision, free-forever AKT questions, timed mocks and structured explanations. Full audio paid after 8 July 2026.",
   keywords: [
     "AKT",
     "MRCGP AKT",
@@ -193,9 +193,9 @@ export const metadata: Metadata = {
     "free AKT questions",
   ],
   openGraph: {
-    title: "MRCGP AKT Revision — The Whole AKT in 90 Hours of Audio",
+    title: "AKT Navigator — Audio-First MRCGP AKT Revision + Free Questions",
     description:
-      "Free syllabus-mapped AKT questions, mocks and 90+ hours of audio across all 32 topics. Free until 8 July; £59 Early Access before then, £79 from 8 July.",
+      "90+ hours of MRCGP AKT audio revision with free-forever AKT questions, timed mocks and structured explanations. Full audio is paid after 8 July 2026.",
     type: "website",
     url: "https://medexia-akt.com",
     siteName: "AKT Navigator by Medexia",
@@ -204,9 +204,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "MRCGP AKT Revision — The Whole AKT in 90 Hours of Audio",
+    title: "AKT Navigator — Audio-First MRCGP AKT Revision + Free Questions",
     description:
-      "Free syllabus-mapped AKT questions, mocks and 90+ hours of audio across all 32 topics. Free until 8 July; £59 Early Access before then, £79 from 8 July.",
+      "90+ hours of MRCGP AKT audio revision with free-forever AKT questions, timed mocks and structured explanations. Full audio is paid after 8 July 2026.",
     // twitter:image auto-wired from src/app/twitter-image.tsx
   },
   robots: {
@@ -246,7 +246,7 @@ const jsonLd = {
       url: "https://medexia-akt.com",
       inLanguage: "en-GB",
       description:
-        "Audio-first MRCGP AKT revision: free syllabus-mapped questions, timed mock exams, deep structured explanations and 90+ hours of audio across all 32 RCGP curriculum topics.",
+        "Audio-first MRCGP AKT revision platform with free-forever question practice, timed mocks, structured explanations and 90+ hours of audio across RCGP AKT topic areas.",
       publisher: {
         "@id": "https://medexia-akt.com/#organization",
       },

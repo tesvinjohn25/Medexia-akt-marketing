@@ -72,8 +72,8 @@ export function LiveStatsRibbon() {
       accent: "rgba(236,72,153,.9)",
     },
     {
-      value: "1,000s",
-      label: "of syllabus-mapped questions",
+      value: "Free",
+      label: "questions + mocks",
       accent: "rgba(52,211,153,.9)",
     },
     {
@@ -127,8 +127,8 @@ export function LiveStatsRibbon() {
         className="mt-8 md:mt-10 text-center text-[13px] md:text-[14px] font-medium"
         style={{ color: "rgba(52,211,153,.9)" }}
       >
-        Free until 8 July. Then questions stay free — £59 Early Access before
-        8 July, £79 from 8 July.
+        Full access is free until 8 July. Questions and mocks stay free after
+        that; £59 Early Access is only before 8 July, then full audio is £79.
       </p>
     </div>
   );

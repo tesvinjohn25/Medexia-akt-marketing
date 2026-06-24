@@ -206,6 +206,7 @@ export default function AktRevisionPlanPage() {
               },
               { label: "Try a mock", href: "/akt-mock-exam" },
               { label: "Use audio revision", href: "/akt-audio-revision" },
+              { label: "Compare revision tools", href: "/best-akt-revision-tool" },
             ]}
           />
 

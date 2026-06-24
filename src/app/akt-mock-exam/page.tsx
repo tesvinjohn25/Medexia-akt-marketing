@@ -171,6 +171,7 @@ export default function AktMockExamPage() {
               },
               { label: "Read the revision plan", href: "/akt-revision-plan" },
               { label: "Revise statistics", href: "/akt-statistics" },
+              { label: "Compare revision tools", href: "/best-akt-revision-tool" },
             ]}
           />
 

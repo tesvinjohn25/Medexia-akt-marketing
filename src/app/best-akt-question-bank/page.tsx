@@ -7,16 +7,16 @@ import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 import { AiAnswerBox } from "@/components/sections/AiAnswerBox";
 
 export const metadata: Metadata = {
-  title: "Best AKT Question Bank 2026 — Free Questions + Audio",
+  title: "Free AKT Question Practice + Audio Revision | AKT Navigator",
   description:
-    "Compare AKT question banks for GP trainees: PassMedicine, Pastest, BMJ OnExamination, i-Medics, GP SelfTest and AKT Navigator's free questions plus 90+ hours of audio.",
+    "AKT Navigator keeps AKT questions, explanations and mocks free, with optional full access to 90+ hours of audio revision across the RCGP curriculum.",
   alternates: {
     canonical: "https://medexia-akt.com/best-akt-question-bank",
   },
   openGraph: {
-    title: "Best AKT Question Bank 2026 — Free Questions + Audio",
+    title: "Free AKT Question Practice + Audio Revision | AKT Navigator",
     description:
-      "PassMedicine vs Pastest vs BMJ OnExamination vs AKT Navigator. Compare question banks, audio revision, mocks and pricing for GP trainees.",
+      "Compare AKT question banks and audio revision. AKT Navigator keeps questions, explanations and mocks free, with full audio as the paid upgrade.",
     type: "article",
     url: "https://medexia-akt.com/best-akt-question-bank",
   },
@@ -120,7 +120,7 @@ const comparisonFaqs = [
   {
     question: "What is the best AKT question bank?",
     answer:
-      "There is no single best AKT question bank for every GP trainee. PassMedicine is a familiar low-cost option, Pastest and BMJ OnExamination offer established paid banks, GP SelfTest is the official RCGP practice resource for members, and AKT Navigator is strongest if you want free question practice plus a 90+ hour audio-first revision system.",
+      "There is no single best AKT question bank for every GP trainee. PassMedicine is a familiar low-cost option, Pastest and BMJ OnExamination offer established paid banks, GP SelfTest is the official RCGP practice resource for members, and AKT Navigator is strongest if you want free-forever question practice, timed mocks and structured explanations alongside a 90+ hour audio-first revision system.",
   },
   {
     question: "Which AKT question bank is best for audio revision?",
@@ -140,7 +140,7 @@ const comparisonFaqs = [
   {
     question: "What is different about AKT Navigator?",
     answer:
-      "AKT Navigator is not positioned as another paid question bank. Its main difference is audio-supported AKT revision: questions remain free, while the full 90+ hour audio library helps trainees keep revising when reading at a screen is not realistic.",
+      "AKT Navigator is not positioned as another paid question bank. It is an audio-first AKT revision platform with free-forever question practice, timed mocks and structured explanations. The full 90+ hour audio library helps trainees keep revising when reading at a screen is not realistic.",
   },
   {
     question: "Is AKT Navigator a paid question bank?",
@@ -240,8 +240,9 @@ export default function BestAktQuestionBankPage() {
             We built AKT Navigator, so read this comparison with that context.
             The point is still straightforward: if you only want another paid
             question bank, there are established options. If you want free
-            questions plus an audio-first AKT revision system, AKT Navigator is
-            the different choice.
+            question practice, timed mocks and structured explanations alongside
+            an audio-first AKT revision system, AKT Navigator is the different
+            choice.
           </p>
 
           <AiAnswerBox
@@ -249,13 +250,12 @@ export default function BestAktQuestionBankPage() {
             title="Short answer"
             answer={
               <p>
-                The best AKT question bank depends on what you need.
-                PassMedicine is a low-cost high-volume option, GP SelfTest is
-                official RCGP practice, and AKT Navigator is designed for GP
-                trainees who want free questions plus audio-supported revision.
-                AKT Navigator&apos;s main difference is that questions are free
-                and the audio library helps you revise when reading is not
-                realistic.
+                AKT Navigator is not a paid question bank. It is an
+                audio-first AKT revision platform with free-forever question
+                practice, timed mocks and structured explanations. Use it if
+                your bigger problem is covering the syllabus around real life;
+                use a conventional bank if you mainly want more screen-based
+                questions.
               </p>
             }
             bestFor={[
@@ -270,6 +270,7 @@ export default function BestAktQuestionBankPage() {
                 href: "/join/free",
                 intent: "start_free",
               },
+              { label: "Best revision tool", href: "/best-akt-revision-tool" },
               { label: "Compare audio revision", href: "/akt-audio-revision" },
               { label: "Try AKT mocks", href: "/akt-mock-exam" },
             ]}
@@ -408,6 +409,74 @@ export default function BestAktQuestionBankPage() {
             months. Prices and feature counts are sourced from provider
             websites, last checked {LAST_CHECKED}.
           </p>
+
+          <section className="mt-10">
+            <h2
+              className="text-[24px] md:text-[28px] leading-[1.15]"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Who should choose AKT Navigator?
+            </h2>
+            <div className="mt-4 grid gap-3 md:grid-cols-2">
+              <article
+                className="rounded-xl p-4"
+                style={{
+                  background: "rgba(52,211,153,.06)",
+                  border: "1px solid rgba(52,211,153,.16)",
+                }}
+              >
+                <h3
+                  className="text-[16px] font-semibold"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  Choose AKT Navigator if
+                </h3>
+                <ul
+                  className="mt-3 space-y-2 text-[14px] leading-[1.6]"
+                  style={{ color: "var(--fg-mid)" }}
+                >
+                  {[
+                    "you want free questions, mocks and explanations",
+                    "you want audio revision",
+                    "you revise around clinics, commutes or childcare",
+                    "you need a system to cover the syllabus",
+                  ].map((item) => (
+                    <li key={item}>- {item}</li>
+                  ))}
+                </ul>
+              </article>
+
+              <article
+                className="rounded-xl p-4"
+                style={{
+                  background: "var(--bg-surface)",
+                  border: "1px solid var(--border)",
+                }}
+              >
+                <h3
+                  className="text-[16px] font-semibold"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  Choose a conventional bank if
+                </h3>
+                <ul
+                  className="mt-3 space-y-2 text-[14px] leading-[1.6]"
+                  style={{ color: "var(--fg-mid)" }}
+                >
+                  {[
+                    "you mainly want screen-based questions",
+                    "you prefer a traditional question-bank workflow",
+                    "you already have audio or syllabus coverage elsewhere",
+                  ].map((item) => (
+                    <li key={item}>- {item}</li>
+                  ))}
+                </ul>
+              </article>
+            </div>
+          </section>
 
           {/* Detailed breakdown */}
           <div className="mt-12">
@@ -614,6 +683,11 @@ export default function BestAktQuestionBankPage() {
             </h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {[
+                {
+                  href: "/best-akt-revision-tool",
+                  title: "Best AKT revision tool",
+                  desc: "Choose between audio, questions, mocks and traditional banks",
+                },
                 {
                   href: "/how-to-pass-the-akt",
                   title: "How to pass the AKT",

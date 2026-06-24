@@ -7,7 +7,7 @@ import {
 } from "./attribution";
 import { canUseAnalytics, canUseMarketing } from "../consent/consent";
 
-const DEFAULT_APP_BASE_URL = "https://app.medexia-akt.com";
+const DEFAULT_APP_BASE_URL = "https://medexia-akt.com";
 
 function appBaseUrl(): string {
   return process.env.NEXT_PUBLIC_APP_BASE_URL || DEFAULT_APP_BASE_URL;

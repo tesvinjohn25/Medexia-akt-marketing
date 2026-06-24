@@ -32,7 +32,7 @@ const {
   initMarketingAttribution,
   normalizeReferralCode,
 } = await importBundled("src/lib/marketing/attribution.ts");
-const { buildAppUrl } = await importBundled("src/lib/marketing/url.ts");
+const { buildAppFallbackUrl, buildAppUrl } = await importBundled("src/lib/marketing/url.ts");
 const {
   CONSENT_STORAGE_KEY,
   acceptAllConsent,
@@ -152,7 +152,7 @@ function installBrowser(url, referrer = "") {
 }
 
 function resetTrackingEnv() {
-  process.env.NEXT_PUBLIC_APP_BASE_URL = "https://medexia-akt.com";
+  process.env.NEXT_PUBLIC_APP_BASE_URL = "https://app.medexia-akt.com";
   process.env.NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT = "/api/marketing/events";
   process.env.NEXT_PUBLIC_ENABLE_MARKETING_PIXELS = "false";
   process.env.NEXT_PUBLIC_META_PIXEL_ID = "";
@@ -177,8 +177,25 @@ test("app url fallback targets the deployed Replit app domain", () => {
 
   const appUrl = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
 
-  assert.equal(appUrl.origin, "https://medexia-akt.com");
+  assert.equal(appUrl.origin, "https://app.medexia-akt.com");
   assert.equal(appUrl.pathname, "/join/free");
+});
+
+test("app url ignores a same-origin landing base to avoid CTA 404s", () => {
+  resetTrackingEnv();
+  process.env.NEXT_PUBLIC_APP_BASE_URL = "https://medexia-akt.com";
+  installBrowser("https://medexia-akt.com/?utm_source=reddit");
+
+  const fallbackUrl = new URL(buildAppFallbackUrl("/join/free", { intent: "start_free" }));
+  const startFreeUrl = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
+  const loginUrl = new URL(buildAppUrl("/login", { intent: "login" }));
+
+  assert.equal(fallbackUrl.origin, "https://app.medexia-akt.com");
+  assert.equal(fallbackUrl.pathname, "/join/free");
+  assert.equal(startFreeUrl.origin, "https://app.medexia-akt.com");
+  assert.equal(startFreeUrl.pathname, "/join/free");
+  assert.equal(loginUrl.origin, "https://app.medexia-akt.com");
+  assert.equal(loginUrl.pathname, "/login");
 });
 
 test("referral launch flags default to official on unless explicitly disabled", () => {

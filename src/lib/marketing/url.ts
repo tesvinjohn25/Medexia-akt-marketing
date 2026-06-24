@@ -7,10 +7,34 @@ import {
 } from "./attribution";
 import { canUseAnalytics, canUseMarketing } from "../consent/consent";
 
-const DEFAULT_APP_BASE_URL = "https://medexia-akt.com";
+const DEFAULT_APP_BASE_URL = "https://app.medexia-akt.com";
+const MARKETING_SITE_ORIGIN = "https://medexia-akt.com";
 
-function appBaseUrl(): string {
-  return process.env.NEXT_PUBLIC_APP_BASE_URL || DEFAULT_APP_BASE_URL;
+function appBaseUrl(options: { avoidCurrentOrigin?: boolean } = {}): string {
+  const configured = process.env.NEXT_PUBLIC_APP_BASE_URL || DEFAULT_APP_BASE_URL;
+  try {
+    const configuredUrl = new URL(configured);
+    const defaultOrigin = new URL(DEFAULT_APP_BASE_URL).origin;
+    const currentOrigin =
+      options.avoidCurrentOrigin && typeof window !== "undefined" && window.location?.origin
+        ? window.location.origin
+        : null;
+
+    if (
+      configuredUrl.origin === MARKETING_SITE_ORIGIN ||
+      (
+      currentOrigin &&
+      configuredUrl.origin === currentOrigin &&
+        configuredUrl.origin !== defaultOrigin
+      )
+    ) {
+      return DEFAULT_APP_BASE_URL;
+    }
+
+    return configuredUrl.toString();
+  } catch {
+    return DEFAULT_APP_BASE_URL;
+  }
 }
 
 function nullable(value: string | null | undefined): string | null {
@@ -25,10 +49,28 @@ function setIfPresent(params: URLSearchParams, key: string, value: string | null
 
 export function getAppOrigin(): string {
   try {
-    return new URL(appBaseUrl()).origin;
+    return new URL(appBaseUrl({ avoidCurrentOrigin: true })).origin;
   } catch {
     return DEFAULT_APP_BASE_URL;
   }
+}
+
+export function buildAppFallbackUrl(
+  pathOrExistingUrl: string,
+  options: {
+    intent?: CtaIntent;
+    offerId?: OfferId;
+  } = {},
+): string {
+  const base = appBaseUrl();
+  const url = /^https?:\/\//i.test(pathOrExistingUrl)
+    ? new URL(pathOrExistingUrl)
+    : new URL(pathOrExistingUrl.startsWith("/") ? pathOrExistingUrl : `/${pathOrExistingUrl}`, base);
+
+  setIfPresent(url.searchParams, "intent", options.intent);
+  setIfPresent(url.searchParams, "offer_id", options.offerId);
+
+  return url.toString();
 }
 
 export function buildAppUrl(
@@ -38,7 +80,7 @@ export function buildAppUrl(
     offerId?: OfferId;
   } = {},
 ): string {
-  const base = appBaseUrl();
+  const base = appBaseUrl({ avoidCurrentOrigin: true });
   const url = /^https?:\/\//i.test(pathOrExistingUrl)
     ? new URL(pathOrExistingUrl)
     : new URL(pathOrExistingUrl.startsWith("/") ? pathOrExistingUrl : `/${pathOrExistingUrl}`, base);

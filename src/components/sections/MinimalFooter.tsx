@@ -4,6 +4,7 @@ import { openCookieSettings } from "@/lib/consent/consent";
 
 const RESOURCE_LINKS = [
   { href: "/demo", label: "Demo" },
+  { href: "/best-akt-revision-tool", label: "Revision tools" },
   { href: "/topics", label: "Topics" },
   { href: "/how-to-pass-the-akt", label: "How to pass" },
   { href: "/akt-revision-plan", label: "Revision plan" },

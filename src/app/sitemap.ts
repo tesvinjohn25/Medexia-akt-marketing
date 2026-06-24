@@ -37,6 +37,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: "https://medexia-akt.com/best-akt-revision-tool",
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+    {
       url: "https://medexia-akt.com/akt-exam-dates",
       lastModified: LAST_MODIFIED,
       changeFrequency: "monthly" as const,

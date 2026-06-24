@@ -194,6 +194,7 @@ export default function AktStatisticsFormulasPage() {
             nextSteps={[
               { label: "Revise AKT statistics", href: "/akt-statistics" },
               { label: "Try mock questions", href: "/akt-mock-exam" },
+              { label: "Compare revision tools", href: "/best-akt-revision-tool" },
               {
                 label: "Start free practice",
                 href: "/join/free",

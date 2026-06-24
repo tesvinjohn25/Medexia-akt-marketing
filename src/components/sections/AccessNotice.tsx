@@ -38,20 +38,20 @@ export function AccessNotice() {
               style={{ color: "rgba(52,211,153,.86)" }}
             >
               {standardPricingStarted
-                ? "Questions and 2h audio remain free"
+                ? "Questions, mocks and explanations stay free"
                 : hasReferralOffer
                   ? "Referral Early Access before 8 July"
-                  : "Everything free until 8 July 2026"}
+                  : "Practice stays free; full audio free until 8 July"}
             </div>
             <p
               className="mt-1 text-[14px] md:text-[15px] leading-[1.55]"
               style={{ color: "rgba(232,236,255,.76)" }}
             >
               {standardPricingStarted
-                ? "Free Practice includes syllabus-mapped questions and 2 hours of audio. Full audio and premium revision tools are £79 for 4 months."
+                ? "Free Practice includes syllabus-mapped questions, timed mocks, structured explanations and a starter audio allowance. Full audio and premium revision tools are £79 for 4 months."
                 : hasReferralOffer
-                  ? "You came through a referral link. Everything is free until 8 July; if the audio helps, this referral can lock Early Access at £49 instead of £59 before 8 July."
-                  : "Everything is free until 8 July. Try AKT Navigator now. If the audio helps, lock in 4 months from 8 July for £59 before it becomes £79."}
+                  ? "You came through a referral link. The whole product is free until 8 July; if the audio helps, this referral can lock Early Access at £49 instead of £59 before 8 July."
+                  : "The whole product is free until 8 July. After that, questions, timed mocks and structured explanations remain free; full audio access is £59 Early Access before 8 July, then £79 for 4 months."}
             </p>
           </div>
           <a

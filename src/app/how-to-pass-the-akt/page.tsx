@@ -168,6 +168,7 @@ export default function HowToPassTheAktPage() {
               { label: "Read the revision plan", href: "/akt-revision-plan" },
               { label: "Try timed mocks", href: "/akt-mock-exam" },
               { label: "Use audio revision", href: "/akt-audio-revision" },
+              { label: "Compare revision tools", href: "/best-akt-revision-tool" },
             ]}
           />
 

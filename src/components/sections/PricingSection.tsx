@@ -274,7 +274,7 @@ export function PricingSection() {
               "--i": 1,
             } as React.CSSProperties}
           >
-            {isPreCutover ? "Free until 8 July." : "Questions stay free."}
+            {isPreCutover ? "Practice stays free." : "Questions stay free."}
           </h2>
           <p
             className="r-up mx-auto mt-4 max-w-[650px] text-[15px] md:text-[17px] leading-[1.65]"
@@ -282,8 +282,8 @@ export function PricingSection() {
           >
             {isPreCutover
               ? hasReferralOffer
-                ? "Everything is free until 8 July. Through this referral link, Early Access is £49 instead of £59 before 8 July; standard full audio access is £79 from 8 July."
-                : "Everything is free until 8 July. £59 Early Access is available before 8 July; standard full audio access is £79 from 8 July."
+                ? "The whole product is free until 8 July. Through this referral link, Early Access is £49 instead of £59 before 8 July; questions, mocks and explanations stay free after that, with standard full audio at £79."
+                : "The whole product is free until 8 July. £59 Early Access is available before 8 July; questions, mocks and explanations stay free after that, with standard full audio at £79."
               : "Questions are free. Your first 2 hours of AKT audio are free. Upgrade to full 4-month audio access for £79."}
           </p>
         </div>

@@ -54,9 +54,9 @@ export function FinalCTA() {
         >
           {isPreCutover
             ? hasReferralOffer
-              ? "Everything is free until 8 July. Your referral link unlocks Early Access for £49 instead of £59 before 8 July."
-              : "Everything is free until 8 July. If the audio helps, lock in 4 months from 8 July for £59 before it becomes £79."
-            : "Questions are free. Your first 2 hours of AKT audio are free. Full 4-month audio access is £79."}
+              ? "The whole product is free until 8 July. Questions, mocks and explanations stay free after that; your referral link unlocks Early Access for £49 instead of £59 before 8 July."
+              : "The whole product is free until 8 July. Questions, mocks and explanations stay free after that; full audio can be locked in for £59 before it becomes £79."
+            : "Questions, mocks and explanations are free. Your first 2 hours of AKT audio are free. Full 4-month audio access is £79."}
         </p>
 
         <div
@@ -69,7 +69,7 @@ export function FinalCTA() {
             intent="start_free"
             offerId={isPreCutover ? OFFER_IDS.freePre : OFFER_IDS.freePost}
           >
-            Start free &rarr;
+            Start free practice &rarr;
           </TrackedAppLink>
           {isPreCutover && (
             <TrackedAppLink

@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 function shareText(referralLink: string): string {
-  return `I’ve been trying AKT Navigator for audio revision. It’s useful when you’re too tired to sit and read. Everything is free until 8 July, and this referral link gives £10 off Early Access before it goes up to £79.\n\nMy link: ${referralLink}\n\nJust to be transparent, I get referral credit if someone upgrades through it.`;
+  return `I’ve been trying AKT Navigator for AKT revision. It has free question practice and mocks, plus audio revision for when you’re too tired to sit and read. The whole product is free until 8 July, and this referral link gives £10 off Early Access before full audio goes up to £79.\n\nMy link: ${referralLink}\n\nJust to be transparent, I get referral credit if someone upgrades through it.`;
 }
 
 function WhatsAppIcon() {

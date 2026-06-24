@@ -47,7 +47,7 @@ export function Nav() {
 
         <div className="flex items-center gap-2">
           <TrackedAppLink
-            href="/"
+            href="/login"
             intent="login"
             className="inline-flex rounded-full border px-3 py-[8px] text-sm font-semibold transition-colors"
             style={{

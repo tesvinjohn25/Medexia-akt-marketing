@@ -7,7 +7,7 @@ import {
   type AnchorHTMLAttributes,
   type MouseEvent,
 } from "react";
-import { buildAppUrl } from "@/lib/marketing/url";
+import { buildAppFallbackUrl, buildAppUrl } from "@/lib/marketing/url";
 import { trackLandingEvent } from "@/lib/marketing/events";
 import {
   OFFER_IDS,
@@ -47,7 +47,7 @@ export function useTrackedAppUrl(
     [snapshot, options.intent, options.offerId],
   );
   const [trackedHref, setTrackedHref] = useState(() =>
-    buildAppUrl(href, { intent: options.intent, offerId: options.offerId }),
+    buildAppFallbackUrl(href, { intent: options.intent, offerId: options.offerId }),
   );
 
   useEffect(() => {

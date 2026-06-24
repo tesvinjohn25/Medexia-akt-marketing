@@ -6,7 +6,7 @@ Use these landing-host public environment variables for the official July 2026 r
 
 Use `.env.production.example` values:
 
-- `NEXT_PUBLIC_APP_BASE_URL=https://medexia-akt.com`
+- `NEXT_PUBLIC_APP_BASE_URL=https://app.medexia-akt.com`
 - `NEXT_PUBLIC_CONSENT_BANNER_ENABLED=true`
 - `NEXT_PUBLIC_ENABLE_MARKETING_PIXELS=false`
 - `NEXT_PUBLIC_REFERRAL_SPRINT_ENABLED=true`

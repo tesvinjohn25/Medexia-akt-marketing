@@ -1,5 +1,4 @@
 import { Nav } from "@/components/Nav";
-import { AccessNotice } from "@/components/sections/AccessNotice";
 import { AppShowcase } from "@/components/sections/AppShowcase";
 import { AudioJourney } from "@/components/sections/AudioJourney";
 import { FeatureHighlights } from "@/components/sections/FeatureHighlights";
@@ -27,10 +26,6 @@ export default function Home() {
 
       <ProductFacts />
 
-      <AccessNotice />
-
-      <HomePositioningFaq />
-
       <FeatureHighlights />
 
       <AudioJourney />
@@ -42,6 +37,8 @@ export default function Home() {
       <SocialProof />
 
       <PricingSection />
+
+      <HomePositioningFaq />
 
       <FinalCTA />
 

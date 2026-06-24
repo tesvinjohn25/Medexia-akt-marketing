@@ -6,7 +6,7 @@ The landing endpoint currently validates marketing event shape and returns `202`
 
 Until persistence exists, landing events are consent-gated and can be sent to a validation endpoint, but there is no stored tracking table or dashboard for source -> signup -> activation -> purchase analysis.
 
-When the backend persistence endpoint is ready, set `NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT` to that app/backend endpoint so consent-approved landing events are forwarded there. Keep the default local route as validation-only.
+The landing site should use `NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT=https://app.medexia-akt.com/api/marketing/events` so consent-approved landing events are forwarded to the app backend. The app endpoint must allow the landing origin and must persist only when app-side persistence is explicitly enabled.
 
 ## Suggested Tables
 

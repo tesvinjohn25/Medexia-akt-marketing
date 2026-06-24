@@ -46,4 +46,4 @@ Only enable third-party pixels when all of these are true:
 
 These are Next.js public build-time values. Changing them on the landing host requires a rebuild/redeploy of the landing site. Republishing the Replit app alone does not update a separately hosted landing site.
 
-Growth Ledger persistence is still not live unless `NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT` points at a backend endpoint that actually persists events.
+Growth Ledger persistence is still not live unless the app backend behind `NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT` is configured to persist events.

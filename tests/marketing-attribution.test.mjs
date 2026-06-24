@@ -39,7 +39,7 @@ const {
   rejectAllConsent,
   saveConsent,
 } = await importBundled("src/lib/consent/consent.ts");
-const { trackLandingEvent } = await importBundled("src/lib/marketing/events.ts");
+const { flushLandingEvent, trackLandingEvent } = await importBundled("src/lib/marketing/events.ts");
 const { maybeLoadMarketingPixels } = await importBundled("src/lib/marketing/pixels.ts");
 
 function setReferralFlags(enabled) {
@@ -170,6 +170,14 @@ async function parseBeaconPayload(call) {
   return JSON.parse(String(body));
 }
 
+async function parseFetchPayload(call) {
+  const body = call.options.body;
+  if (body && typeof body.text === "function") {
+    return JSON.parse(await body.text());
+  }
+  return JSON.parse(String(body));
+}
+
 test("app url fallback targets the deployed Replit app domain", () => {
   resetTrackingEnv();
   delete process.env.NEXT_PUBLIC_APP_BASE_URL;
@@ -197,6 +205,29 @@ test("landing events default to the app backend bridge when no endpoint env is s
   assert.equal(browser.sendBeaconCalls[0].endpoint, "https://app.medexia-akt.com/api/marketing/events");
   const payload = await parseBeaconPayload(browser.sendBeaconCalls[0]);
   assert.equal(payload.event_name, "cta_clicked_start_free");
+});
+
+test("flushed CTA events use fetch keepalive so navigation does not abort them", async () => {
+  resetTrackingEnv();
+  const browser = installBrowser("https://medexia-akt.com/?utm_source=reddit&utm_medium=organic&utm_campaign=audio_first_post");
+
+  saveConsent({ functional: false, analytics: true, marketing: false }, "settings");
+  initMarketingAttribution();
+  const ok = await flushLandingEvent("cta_clicked_start_free", {
+    href: "https://app.medexia-akt.com/join/free",
+    intent: "start_free",
+  });
+
+  assert.equal(ok, true);
+  assert.equal(browser.sendBeaconCalls.length, 0);
+  assert.equal(browser.fetchCalls.length, 1);
+  assert.equal(browser.fetchCalls[0].endpoint, "https://app.medexia-akt.com/api/marketing/events");
+  assert.equal(browser.fetchCalls[0].options.keepalive, true);
+  assert.equal(browser.fetchCalls[0].options.credentials, "omit");
+  const payload = await parseFetchPayload(browser.fetchCalls[0]);
+  assert.equal(payload.event_name, "cta_clicked_start_free");
+  assert.equal(payload.first_touch.utm_source, "reddit");
+  assert.equal(payload.first_touch.utm_campaign, "audio_first_post");
 });
 
 test("app url ignores a same-origin landing base to avoid CTA 404s", () => {

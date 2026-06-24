@@ -4,6 +4,7 @@ import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
+import { AiAnswerBox } from "@/components/sections/AiAnswerBox";
 import { aktTopics } from "@/data/akt-topics";
 import { EXAM_FORMAT } from "@/data/exam-dates";
 
@@ -138,30 +139,37 @@ export default function HowToPassTheAktPage() {
             effectively.
           </p>
 
-          <div
-            className="mt-6 rounded-xl p-4"
-            style={{
-              background: "rgba(52,211,153,.06)",
-              border: "1px solid rgba(52,211,153,.18)",
-            }}
-          >
-            <h2
-              className="text-[18px] font-semibold"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Quick answer
-            </h2>
-            <p
-              className="mt-2 text-[14px] leading-[1.65]"
-              style={{ color: "var(--fg-mid)" }}
-            >
-              To pass the MRCGP AKT, revise the full RCGP curriculum, practise
-              one-minute-per-question timing, protect evidence-based practice
-              and organisation topics, and use repeated mocks to find weak
-              areas. Most trainees need consistent practice over weeks rather
-              than a last-minute question-bank sprint.
-            </p>
-          </div>
+          <AiAnswerBox
+            eyebrow="AKT pass strategy"
+            title="How do I pass the AKT?"
+            answer={
+              <p>
+                Start with a baseline mock, then use the result to choose weak
+                areas instead of revising randomly. Protect statistics and
+                evidence-based practice, prescribing and guideline-based
+                decisions, review every mistake, and practise one-minute per
+                question timing with repeated mocks. Use audio revision in
+                low-energy slots so the syllabus keeps moving even when reading
+                is not realistic.
+              </p>
+            }
+            bestFor={[
+              "first-time AKT sitters",
+              "GP trainees who feel overwhelmed",
+              "trainees unsure what to prioritise",
+              "trainees revising while working full time",
+            ]}
+            nextSteps={[
+              {
+                label: "Start free practice",
+                href: "/join/free",
+                intent: "start_free",
+              },
+              { label: "Read the revision plan", href: "/akt-revision-plan" },
+              { label: "Try timed mocks", href: "/akt-mock-exam" },
+              { label: "Use audio revision", href: "/akt-audio-revision" },
+            ]}
+          />
 
           {/* The exam at a glance */}
           <div className="mt-10">

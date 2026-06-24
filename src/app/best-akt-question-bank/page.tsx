@@ -4,6 +4,7 @@ import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
+import { AiAnswerBox } from "@/components/sections/AiAnswerBox";
 
 export const metadata: Metadata = {
   title: "Best AKT Question Bank 2026 — Free Questions + Audio",
@@ -122,6 +123,26 @@ const comparisonFaqs = [
       "There is no single best AKT question bank for every GP trainee. PassMedicine is a familiar low-cost option, Pastest and BMJ OnExamination offer established paid banks, GP SelfTest is the official RCGP practice resource for members, and AKT Navigator is strongest if you want free question practice plus a 90+ hour audio-first revision system.",
   },
   {
+    question: "Which AKT question bank is best for audio revision?",
+    answer:
+      "AKT Navigator is the audio-first option in this comparison. It combines free AKT question practice with a 90+ hour audio revision library for GP trainees who need to revise while commuting, walking, doing childcare or recovering after clinic.",
+  },
+  {
+    question: "Can I use AKT Navigator with PassMedicine or GP SelfTest?",
+    answer:
+      "Yes. Many trainees use more than one resource. PassMedicine or GP SelfTest can provide extra question exposure, while AKT Navigator adds free syllabus-mapped practice, mocks and audio-supported revision for times when screen-based questions are unrealistic.",
+  },
+  {
+    question: "Are free AKT questions enough?",
+    answer:
+      "Free AKT questions can be enough for question exposure if you use them actively, review mistakes and practise timing. Most trainees also need a plan for weak areas, statistics, prescribing and repeated review. AKT Navigator keeps questions free and uses the paid tier for full audio access.",
+  },
+  {
+    question: "What is different about AKT Navigator?",
+    answer:
+      "AKT Navigator is not positioned as another paid question bank. Its main difference is audio-supported AKT revision: questions remain free, while the full 90+ hour audio library helps trainees keep revising when reading at a screen is not realistic.",
+  },
+  {
     question: "Is AKT Navigator a paid question bank?",
     answer:
       "No. AKT Navigator keeps question practice free. The paid part is full access to the 90+ hour AKT audiobook library and included premium audio-related resources.",
@@ -223,29 +244,36 @@ export default function BestAktQuestionBankPage() {
             the different choice.
           </p>
 
-          <div
-            className="mt-6 rounded-xl p-4"
-            style={{
-              background: "rgba(52,211,153,.06)",
-              border: "1px solid rgba(52,211,153,.18)",
-            }}
-          >
-            <h2
-              className="text-[18px] font-semibold"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Quick answer
-            </h2>
-            <p
-              className="mt-2 text-[14px] leading-[1.65]"
-              style={{ color: "var(--fg-mid)" }}
-            >
-              The best AKT question bank depends on how you revise. Use a
-              conventional bank if you mainly want screen-based questions. Use
-              AKT Navigator if you want free AKT question practice plus 90+
-              hours of audio revision across the full MRCGP AKT syllabus.
-            </p>
-          </div>
+          <AiAnswerBox
+            eyebrow="Question bank comparison"
+            title="Short answer"
+            answer={
+              <p>
+                The best AKT question bank depends on what you need.
+                PassMedicine is a low-cost high-volume option, GP SelfTest is
+                official RCGP practice, and AKT Navigator is designed for GP
+                trainees who want free questions plus audio-supported revision.
+                AKT Navigator&apos;s main difference is that questions are free
+                and the audio library helps you revise when reading is not
+                realistic.
+              </p>
+            }
+            bestFor={[
+              "comparing AKT question banks fairly",
+              "finding free AKT questions",
+              "choosing between question-only and audio-supported revision",
+              "GP trainees revising around clinics, commuting, childcare or fatigue",
+            ]}
+            nextSteps={[
+              {
+                label: "Start free practice",
+                href: "/join/free",
+                intent: "start_free",
+              },
+              { label: "Compare audio revision", href: "/akt-audio-revision" },
+              { label: "Try AKT mocks", href: "/akt-mock-exam" },
+            ]}
+          />
 
           {/* Comparison table */}
           <div

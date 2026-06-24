@@ -4,6 +4,7 @@ import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
+import { AiAnswerBox } from "@/components/sections/AiAnswerBox";
 
 export const metadata: Metadata = {
   title: "AKT Mock Exam — Free Timed MRCGP AKT Practice",
@@ -50,6 +51,16 @@ const mockFaqs = [
     question: "How long is a full AKT mock exam?",
     answer:
       "From October 2025, the RCGP AKT format is 160 single-best-answer questions in 2 hours 40 minutes, so a full AKT Navigator mock uses 160 questions and a 160-minute timing target.",
+  },
+  {
+    question: "How often should I do AKT mocks?",
+    answer:
+      "Early in revision, use a mock or shorter diagnostic to find weak areas. In the final month, regular timed mocks are useful if you review mistakes properly and do not use them as passive score checks.",
+  },
+  {
+    question: "Should I do mocks before I finish the syllabus?",
+    answer:
+      "Yes. A baseline mock before finishing the syllabus can feel uncomfortable, but it shows what to revise next. Use early mocks diagnostically, then move to full timed mocks as the exam gets closer.",
   },
   {
     question: "Are AKT mock exams enough on their own?",
@@ -134,29 +145,34 @@ export default function AktMockExamPage() {
             and use the debrief to identify weak topics before the real exam.
           </p>
 
-          <div
-            className="mt-6 rounded-xl p-4"
-            style={{
-              background: "rgba(52,211,153,.06)",
-              border: "1px solid rgba(52,211,153,.18)",
-            }}
-          >
-            <h2
-              className="text-[18px] font-semibold"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Quick answer
-            </h2>
-            <p
-              className="mt-2 text-[14px] leading-[1.65]"
-              style={{ color: "var(--fg-mid)" }}
-            >
-              A full MRCGP AKT mock should mirror the current RCGP format: 160
-              single-best-answer questions in 2 hours 40 minutes. AKT Navigator
-              also supports shorter 40 and 80-question mocks for focused
-              practice, with questions staying free.
-            </p>
-          </div>
+          <AiAnswerBox
+            eyebrow="Timed mock practice"
+            title="Short answer"
+            answer={
+              <p>
+                Yes. You can use AKT Navigator to generate free timed AKT mock
+                exams. Mocks are most useful when you review mistakes afterwards
+                and use the result to choose what to revise next. A full mock
+                should mirror the current format: 160 questions in 2 hours 40
+                minutes.
+              </p>
+            }
+            bestFor={[
+              "pacing practice",
+              "exam readiness checks",
+              "weak-area detection",
+              "final-month revision",
+            ]}
+            nextSteps={[
+              {
+                label: "Generate your first mock",
+                href: "/join/free",
+                intent: "start_free",
+              },
+              { label: "Read the revision plan", href: "/akt-revision-plan" },
+              { label: "Revise statistics", href: "/akt-statistics" },
+            ]}
+          />
 
           {/* Key stats */}
           <div className="mt-8 grid gap-4 grid-cols-3">

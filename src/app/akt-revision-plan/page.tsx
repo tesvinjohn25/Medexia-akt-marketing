@@ -3,6 +3,7 @@ import { Nav } from "@/components/Nav";
 import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
+import { AiAnswerBox } from "@/components/sections/AiAnswerBox";
 
 export const metadata: Metadata = {
   title: "MRCGP AKT Revision Plan and Timetable",
@@ -50,6 +51,16 @@ const timetablePlans = [
       "Weeks 1-3: use daily timed question blocks, not passive reading.",
       "Protect separate blocks for statistics, prescribing, guideline changes and organisation topics.",
       "Final week: review mistakes, practise pacing and avoid cramming deep new topics.",
+    ],
+  },
+  {
+    title: "Less than 2 weeks",
+    subtitle: "Weak-spot sprint",
+    steps: [
+      "Take a short diagnostic or half mock immediately and accept that triage matters.",
+      "Spend most question time on weak areas, prescribing, statistics and recurring feedback-report themes.",
+      "Use audio revision for repeated exposure while commuting, walking or doing chores.",
+      "Do not try to relearn the whole curriculum from scratch. Fix the highest-risk gaps first.",
     ],
   },
 ];
@@ -169,30 +180,34 @@ export default function AktRevisionPlanPage() {
             gaps around clinics, commuting, childcare and low-energy days.
           </p>
 
-          <div
-            className="mt-6 rounded-xl p-4"
-            style={{
-              background: "rgba(52,211,153,.06)",
-              border: "1px solid rgba(52,211,153,.18)",
-            }}
-          >
-            <h2
-              className="text-[18px] font-semibold"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Quick answer
-            </h2>
-            <p
-              className="mt-2 text-[14px] leading-[1.65]"
-              style={{ color: "var(--fg-mid)" }}
-            >
-              If possible, allow around <strong>12 weeks</strong> of focused AKT
-              revision. With <strong>8 weeks</strong>, take a baseline mock
-              immediately and prioritise weak topics, statistics, prescribing
-              and official feedback-report themes. With <strong>4 weeks</strong>,
-              use daily timed blocks and avoid passive reading.
-            </p>
-          </div>
+          <AiAnswerBox
+            eyebrow="Revision plan"
+            title="Short answer"
+            answer={
+              <p>
+                A good AKT revision plan starts with a baseline mock, then
+                alternates targeted question practice, mistake review, timed
+                mocks and audio revision. Twelve weeks is ideal for many
+                trainees, eight weeks is workable, and four weeks needs
+                aggressive triage.
+              </p>
+            }
+            bestFor={[
+              "trainees choosing between 12, 8 and 4-week plans",
+              "GP trainees revising around clinics and on-calls",
+              "people who need to know what to revise next",
+              "last-month weak-area planning",
+            ]}
+            nextSteps={[
+              {
+                label: "Start free practice",
+                href: "/join/free",
+                intent: "start_free",
+              },
+              { label: "Try a mock", href: "/akt-mock-exam" },
+              { label: "Use audio revision", href: "/akt-audio-revision" },
+            ]}
+          />
 
           <section className="mt-10">
             <h2
@@ -202,7 +217,7 @@ export default function AktRevisionPlanPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Choose your AKT timetable
+              Choose your AKT route
             </h2>
             <div className="mt-4 grid gap-3">
               {timetablePlans.map((plan) => (

@@ -3,6 +3,7 @@ import { Nav } from "@/components/Nav";
 import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
+import { AiAnswerBox } from "@/components/sections/AiAnswerBox";
 
 export const metadata: Metadata = {
   title: "AKT Statistics Formulas: NNT, Sensitivity and PPV",
@@ -53,6 +54,11 @@ const riskFormulas = [
     name: "Absolute risk reduction",
     formula: "control event rate - treatment event rate",
     meaning: "The absolute difference in risk between control and treatment.",
+  },
+  {
+    name: "Relative risk reduction",
+    formula: "absolute risk reduction / control event rate",
+    meaning: "The proportional reduction in risk compared with the control group.",
   },
   {
     name: "Relative risk",
@@ -166,29 +172,35 @@ export default function AktStatisticsFormulasPage() {
             scenarios into a 2x2 table or a pair of event rates.
           </p>
 
-          <div
-            className="mt-6 rounded-xl p-4"
-            style={{
-              background: "rgba(52,211,153,.06)",
-              border: "1px solid rgba(52,211,153,.18)",
-            }}
-          >
-            <h2
-              className="text-[18px] font-semibold"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Quick answer
-            </h2>
-            <p
-              className="mt-2 text-[14px] leading-[1.65]"
-              style={{ color: "var(--fg-mid)" }}
-            >
-              For AKT evidence-based practice, memorise sensitivity,
-              specificity, PPV, NPV, absolute risk, relative risk, absolute risk
-              reduction, absolute risk increase, NNT and NNH. Then practise
-              interpreting the result in patient-friendly language.
-            </p>
-          </div>
+          <AiAnswerBox
+            eyebrow="Statistics formulas"
+            title="Short answer"
+            answer={
+              <p>
+                The core AKT statistics formulas to know are sensitivity,
+                specificity, PPV, NPV, ARR, RRR, NNT, NNH and basic
+                interpretation of confidence intervals. Most calculation
+                questions become straightforward if you build the 2x2 table
+                first. For NNT and NNH, convert percentages to decimals before
+                using 1 divided by the absolute risk difference.
+              </p>
+            }
+            bestFor={[
+              "fast formula review",
+              "2x2 table practice",
+              "NNT, ARR and RRR questions",
+              "diagnostic-test interpretation",
+            ]}
+            nextSteps={[
+              { label: "Revise AKT statistics", href: "/akt-statistics" },
+              { label: "Try mock questions", href: "/akt-mock-exam" },
+              {
+                label: "Start free practice",
+                href: "/join/free",
+                intent: "start_free",
+              },
+            ]}
+          />
 
           <section className="mt-10">
             <h2

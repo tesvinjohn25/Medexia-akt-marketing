@@ -181,6 +181,31 @@ test("app url fallback targets the deployed Replit app domain", () => {
   assert.equal(appUrl.pathname, "/join/free");
 });
 
+test("referral launch flags default to official on unless explicitly disabled", () => {
+  const now = new Date("2026-06-23T12:00:00+01:00");
+  delete process.env.NEXT_PUBLIC_REFERRAL_SPRINT_ENABLED;
+  delete process.env.NEXT_PUBLIC_REFERRAL_FRIEND_DISCOUNT_ENABLED;
+
+  assert.equal(
+    determineOfferContext({
+      referralCode: "ABC123",
+      intent: "referral_earlybird",
+      now,
+    }).offer_id,
+    OFFER_IDS.earlybird49ReferralPre,
+  );
+
+  setReferralFlags(false);
+  assert.equal(
+    determineOfferContext({
+      referralCode: "ABC123",
+      intent: "referral_earlybird",
+      now,
+    }).offer_id,
+    OFFER_IDS.earlybird59Pre,
+  );
+});
+
 test("referral offer is only selected when public sprint and discount flags are enabled", () => {
   const now = new Date("2026-06-23T12:00:00+01:00");
 

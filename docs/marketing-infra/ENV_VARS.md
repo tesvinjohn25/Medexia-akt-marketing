@@ -10,8 +10,8 @@ Add names only; do not commit values.
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | GA4 measurement id | empty |
 | `NEXT_PUBLIC_GOOGLE_ADS_ID` | Google Ads tag id | empty |
 | `NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT` | First-party event endpoint | `/api/marketing/events` |
-| `NEXT_PUBLIC_REFERRAL_SPRINT_ENABLED` | Allows referral-sprint public copy when a referral code is present | `false` |
-| `NEXT_PUBLIC_REFERRAL_FRIEND_DISCOUNT_ENABLED` | Allows public `£49` friend-side referral price copy | `false` |
+| `NEXT_PUBLIC_REFERRAL_SPRINT_ENABLED` | Allows referral-sprint public copy when a referral code is present | `true` |
+| `NEXT_PUBLIC_REFERRAL_FRIEND_DISCOUNT_ENABLED` | Allows public `£49` friend-side referral price copy | `true` |
 | `NEXT_PUBLIC_CONSENT_BANNER_ENABLED` | Shows the consent banner and settings UI | `true` |
 | `NEXT_PUBLIC_CONSENT_VERSION` | Consent record and policy version | `2026-06-23-v1` |
 | `NEXT_PUBLIC_COOKIE_POLICY_URL` | Cookie policy link shown in consent UI | `/cookies` |
@@ -27,4 +27,6 @@ Vercel Analytics and first-party marketing events require analytics consent.
 
 Referral codes are still captured and passed to the app when these referral flags are disabled. The landing page must not display the `£49` price unless both referral flags are `true`, a referral code is present, and the date is before 8 July 2026.
 
-See `.env.example` for safe defaults and `.env.referral-test.example` for the referral QA flag set. Public `NEXT_PUBLIC_*` values are build-time values; changing them on the landing host requires a rebuild/redeploy.
+The official referral sprint default is on: the landing page shows the `£49` referral offer only when both referral flags are true, a referral code is present, and the date is before 8 July 2026. Set either referral flag to `false` to roll back the public referral copy while still preserving referral-code handoff.
+
+See `.env.example` and `.env.production.example` for the official landing flag set. Public `NEXT_PUBLIC_*` values are build-time values; changing them on the landing host requires a rebuild/redeploy.

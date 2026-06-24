@@ -312,12 +312,18 @@ export function isPreOfferCutover(now: Date = new Date()): boolean {
   return now.getTime() < OFFER_CUTOVER_UK.getTime();
 }
 
+function publicFlag(name: string, defaultEnabled: boolean): boolean {
+  const value = process.env[name];
+  if (value === undefined || value === "") return defaultEnabled;
+  return value === "true";
+}
+
 export function publicReferralSprintEnabled(): boolean {
-  return process.env.NEXT_PUBLIC_REFERRAL_SPRINT_ENABLED === "true";
+  return publicFlag("NEXT_PUBLIC_REFERRAL_SPRINT_ENABLED", true);
 }
 
 export function publicReferralFriendDiscountEnabled(): boolean {
-  return process.env.NEXT_PUBLIC_REFERRAL_FRIEND_DISCOUNT_ENABLED === "true";
+  return publicFlag("NEXT_PUBLIC_REFERRAL_FRIEND_DISCOUNT_ENABLED", true);
 }
 
 export function canShowReferralEarlybirdOffer(

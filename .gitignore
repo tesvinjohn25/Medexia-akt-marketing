@@ -3,7 +3,7 @@ node_modules
 out
 .env*
 !.env.example
-!.env.referral-test.example
+!.env.production.example
 .DS_Store
 .vercel
 .env*.local

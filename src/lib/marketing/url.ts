@@ -88,13 +88,20 @@ export function buildAppUrl(
   const snapshot = getMarketingSnapshot();
   const first = snapshot.first_touch;
   const last = snapshot.last_touch;
-  const referralCode = snapshot.referral?.referral_code ?? snapshot.offer_context.referral_code ?? null;
-  const offer = options.offerId
-    ? { ...snapshot.offer_context, offer_id: options.offerId }
+  const referralCode = snapshot.active_referral?.referral_code ?? null;
+  const requestedOfferId =
+    options.offerId === OFFER_IDS.earlybird49ReferralPre && !referralCode
+      ? undefined
+      : options.offerId;
+  const offer = requestedOfferId
+    ? { ...snapshot.offer_context, offer_id: requestedOfferId }
     : determineOfferContext({
         referralCode,
         intent: options.intent,
-        explicitOfferId: snapshot.offer_context.offer_id,
+        explicitOfferId:
+          snapshot.offer_context.reason === "explicit"
+            ? snapshot.offer_context.offer_id
+            : null,
       });
 
   if (canUseAnalytics()) {

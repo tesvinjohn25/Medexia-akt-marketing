@@ -9,7 +9,7 @@ const AUDIO_ACCESS_STANDARD_START = new Date("2026-07-08T00:00:00+01:00");
 export function AccessNotice() {
   const [standardPricingStarted, setStandardPricingStarted] = useState(false);
   const marketing = useMarketingAttribution();
-  const referralCode = marketing?.referral?.referral_code ?? null;
+  const referralCode = marketing?.active_referral?.referral_code ?? null;
   const hasReferralOffer = canShowReferralEarlybirdOffer(referralCode);
 
   useEffect(() => {

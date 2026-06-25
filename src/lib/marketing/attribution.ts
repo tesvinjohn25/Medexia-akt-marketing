@@ -78,6 +78,7 @@ export interface MarketingSnapshot {
   mx_session_id: string | null;
   first_touch: MarketingTouch | null;
   last_touch: MarketingTouch | null;
+  active_referral: ReferralSnapshot | null;
   referral: ReferralSnapshot | null;
   offer_context: OfferContext;
 }
@@ -268,8 +269,7 @@ function readCurrentReferralSnapshot(): ReferralSnapshot | null {
   };
 }
 
-function readAllowedReferralSnapshot(): ReferralSnapshot | null {
-  const current = readCurrentReferralSnapshot();
+function readAllowedReferralSnapshot(current = readCurrentReferralSnapshot()): ReferralSnapshot | null {
   if (current) return current;
   if (canUseFunctional() || canUseAnalytics() || canUseMarketing()) {
     return readJson<ReferralSnapshot>(MARKETING_STORAGE_KEYS.referral);
@@ -457,6 +457,7 @@ function ensureSessionId(): string {
 
 export function getMarketingSnapshot(): MarketingSnapshot {
   const persistentAttributionAllowed = canUseAnalytics() || canUseMarketing();
+  const activeReferral = readCurrentReferralSnapshot();
   const visitorId = persistentAttributionAllowed
     ? safeLocalGet(MARKETING_STORAGE_KEYS.visitorId) ?? safeCookieGet(MARKETING_STORAGE_KEYS.visitorId)
     : null;
@@ -469,16 +470,17 @@ export function getMarketingSnapshot(): MarketingSnapshot {
   const lastTouch = persistentAttributionAllowed
     ? readJson<MarketingTouch>(MARKETING_STORAGE_KEYS.lastTouch)
     : null;
-  const referral = readAllowedReferralSnapshot();
-  const offerContext =
-    (persistentAttributionAllowed ? readJson<OfferContext>(MARKETING_STORAGE_KEYS.offerContext) : null) ??
-    determineOfferContext({ referralCode: referral?.referral_code ?? null });
+  const referral = readAllowedReferralSnapshot(activeReferral);
+  const offerContext = determineOfferContext({
+    referralCode: activeReferral?.referral_code ?? null,
+  });
 
   return {
     mx_visitor_id: visitorId,
     mx_session_id: sessionId,
     first_touch: firstTouch,
     last_touch: lastTouch,
+    active_referral: activeReferral,
     referral,
     offer_context: offerContext,
   };
@@ -513,7 +515,6 @@ export function initMarketingAttribution(): MarketingSnapshot {
   const params = new URLSearchParams(window.location.search);
   const { referralCode, sourceParam } = normalizeReferralCode(params);
   const existingReferral = readJson<ReferralSnapshot>(MARKETING_STORAGE_KEYS.referral);
-  const activeReferralCode = referralCode ?? existingReferral?.referral_code ?? null;
 
   if (referralCode && sourceParam && (functionalAllowed || persistentAttributionAllowed)) {
     persistJson(MARKETING_STORAGE_KEYS.referral, {
@@ -523,7 +524,8 @@ export function initMarketingAttribution(): MarketingSnapshot {
     } satisfies ReferralSnapshot);
   }
 
-  const touch = readCurrentTouch(activeReferralCode, marketingAllowed);
+  const storedReferralCode = referralCode ?? existingReferral?.referral_code ?? null;
+  const touch = readCurrentTouch(referralCode ?? null, marketingAllowed);
   const firstTouch = readJson<MarketingTouch>(MARKETING_STORAGE_KEYS.firstTouch);
   if (touch) {
     if (!firstTouch) {
@@ -533,10 +535,13 @@ export function initMarketingAttribution(): MarketingSnapshot {
   }
 
   const offerContext = determineOfferContext({
-    referralCode: activeReferralCode,
+    referralCode: referralCode ?? null,
     explicitOfferId: getParam(params, "offer_id", 128),
   });
-  persistJson(MARKETING_STORAGE_KEYS.offerContext, offerContext);
+  persistJson(MARKETING_STORAGE_KEYS.offerContext, {
+    ...offerContext,
+    referral_code: referralCode ? offerContext.referral_code : storedReferralCode,
+  });
 
   return getMarketingSnapshot();
 }

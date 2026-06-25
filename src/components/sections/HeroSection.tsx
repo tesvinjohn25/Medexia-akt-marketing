@@ -151,7 +151,7 @@ export function HeroSection() {
                 textShadow: "0 22px 70px rgba(0,0,0,.7)",
               }}
             >
-              {["Feel", "ready", "for", "the", "AKT."].map((word, i) => (
+              {["The", "whole", "AKT."].map((word, i) => (
                 <span
                   key={word}
                   className="r-blur inline-block"
@@ -161,7 +161,7 @@ export function HeroSection() {
                   } as React.CSSProperties}
                 >
                   {word}
-                  {i < 4 ? " " : ""}
+                  {i < 2 ? " " : ""}
                 </span>
               ))}
               <br />
@@ -169,9 +169,7 @@ export function HeroSection() {
                 className="r-blur inline-block"
                 style={{ "--i": 5.2 } as React.CSSProperties}
               >
-                <span className="text-shine">
-                  Even when life leaves no desk time.
-                </span>
+                <span className="text-shine">In 90 hours of audio.</span>
               </span>
             </h1>
 
@@ -180,9 +178,10 @@ export function HeroSection() {
               className="r-up mt-4 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
               style={{ color: "rgba(232,236,255,.78)", "--i": 6.5 } as React.CSSProperties}
             >
-              AKT Navigator turns commutes, walks, school runs and exhausted
-              evenings into MRCGP AKT revision with 90+ hours of audio,
-              free-forever questions, timed mocks and structured explanations.
+              Feel ready for the AKT even when life leaves no desk time. AKT
+              Navigator turns commutes, walks, school runs and exhausted evenings
+              into MRCGP AKT revision, with free-forever questions, timed mocks
+              and structured explanations alongside audio.
             </p>
             <p
               className="r-up mt-3 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"

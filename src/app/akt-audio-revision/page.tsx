@@ -10,7 +10,7 @@ import { aktTopics } from "@/data/akt-topics";
 export const metadata: Metadata = {
   title: "MRCGP AKT Audio Revision — 90+ Hours",
   description:
-    "90+ hours of MRCGP AKT audio revision across all 32 RCGP topics, with free-forever questions and mocks alongside audio revision.",
+    "90+ hours of MRCGP AKT audio revision for GP trainees who need to keep revising on commutes, walks and tired evenings, with free-forever questions and mocks.",
   alternates: {
     canonical: "https://medexia-akt.com/akt-audio-revision",
   },
@@ -75,7 +75,12 @@ const audioFaqs = [
   {
     question: "Can I try AKT audio for free?",
     answer:
-      "Yes. Full access is free until 8 July 2026, and after that Free Practice includes a free audio allowance across any audiobook. You can also use the demo route to hear a sample before committing.",
+      "Yes. Full access is free until 8 July 2026. After that, Free Practice includes 2 hours of AKT audio across any audiobook, and you can use the demo route to hear a sample before committing.",
+  },
+  {
+    question: "How much free AKT audio is included?",
+    answer:
+      "After 8 July 2026, Free Practice includes 2 hours of AKT audio across any audiobook. Full access to the 90+ hour library is the paid upgrade.",
   },
   {
     question: "How much does full AKT audio access cost?",
@@ -178,7 +183,8 @@ export default function AktAudioRevisionPage() {
             AKT Navigator is an audio-first revision library for GP trainees
             preparing for the RCGP MRCGP Applied Knowledge Test. It covers all
             32 RCGP curriculum topics in over 90 hours, so you can revise while
-            commuting, walking, doing childcare or recovering after clinic.
+            commuting, walking, doing childcare or recovering after clinic when
+            reading is not realistic.
           </p>
 
           <AiAnswerBox
@@ -258,27 +264,25 @@ export default function AktAudioRevisionPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Why audio works for the AKT
+              When reading is not happening, revision can still happen.
             </h2>
             <p
               className="mt-4 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
-              The AKT is broad: the RCGP describes it as a computer-based exam
-              with clinical knowledge, evidence-based practice and primary care
-              organisation questions. That breadth is hard to cover only through
-              screen time. Audio lets you keep moving through the syllabus
-              during the parts of the day where reading is unrealistic.
+              Audio revision is not a replacement for questions. It is the way
+              your revision keeps moving on the days when another screen-based
+              session is unrealistic. Use it in the commute, on a walk, at the
+              gym, during cooking, around childcare or on a low-energy evening
+              after clinic.
             </p>
             <p
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
-              AKT Navigator gives you over 90 hours of audio across all 32
-              RCGP curriculum topics. Full access is free until 8 July 2026.
-              After that, questions, timed mocks and structured explanations
-              stay free; full audio access starts from £59 Early Access before
-              standard £79 pricing begins.
+              Use the free audio allowance to test whether AKT audio fits your
+              life. After 8 July, Free Practice includes 2 hours of AKT audio;
+              full access to the 90+ hour library is the paid upgrade.
             </p>
           </div>
 
@@ -301,7 +305,7 @@ export default function AktAudioRevisionPage() {
                 },
                 {
                   title: "At the gym",
-                  text: "Turn a workout into a revision session. Thirty minutes on the treadmill becomes thirty minutes of dermatology or cardiovascular medicine.",
+                  text: "Turn a workout into a revision session. A treadmill or weights session can become dermatology, cardiovascular medicine or statistics reinforcement.",
                 },
                 {
                   title: "Between patients",
@@ -539,7 +543,7 @@ export default function AktAudioRevisionPage() {
               href="/join/free"
               intent="start_free"
             >
-              Start free &rarr;
+              Try free AKT audio &rarr;
             </TrackedAppLink>
           </div>
 

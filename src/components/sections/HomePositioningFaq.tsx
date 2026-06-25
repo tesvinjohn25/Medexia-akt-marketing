@@ -18,7 +18,7 @@ export function HomePositioningFaq() {
               letterSpacing: "-0.035em",
             }}
           >
-            Audio-first does not mean audio-only.
+            Built for tired days, not perfect study days.
           </h2>
         </div>
 

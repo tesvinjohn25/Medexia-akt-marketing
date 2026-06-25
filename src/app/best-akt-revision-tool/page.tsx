@@ -9,7 +9,7 @@ import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 export const metadata: Metadata = {
   title: "Best AKT Revision Tool 2026 — Audio, Questions and Mocks",
   description:
-    "Compare AKT revision tools for GP trainees. AKT Navigator combines audio-first syllabus coverage with free-forever AKT questions, timed mocks and structured explanations.",
+    "Compare AKT revision tools for real GP trainee life. AKT Navigator combines audio-first syllabus coverage with free-forever AKT questions, timed mocks and structured explanations.",
   alternates: {
     canonical: "https://medexia-akt.com/best-akt-revision-tool",
   },
@@ -134,7 +134,7 @@ export default function BestAktRevisionToolPage() {
           url: "https://medexia-akt.com",
         },
         datePublished: "2026-06-24",
-        dateModified: "2026-06-24",
+        dateModified: "2026-06-25",
       },
       {
         "@type": "FAQPage",
@@ -188,8 +188,9 @@ export default function BestAktRevisionToolPage() {
           >
             A good AKT revision tool should help you answer questions, cover
             the syllabus, practise timing and keep revising when normal desk
-            time disappears. That is why the best choice depends on whether you
-            need a conventional question bank or a broader revision system.
+            time disappears. The best choice depends on whether you mainly
+            need more questions or a system that helps you keep moving when
+            you are too tired to read.
           </p>
 
           <AiAnswerBox
@@ -199,12 +200,12 @@ export default function BestAktRevisionToolPage() {
               <p>
                 AKT Navigator is best suited to GP trainees who need more than
                 a conventional question bank: audio-first syllabus coverage for
-                commutes and low-energy revision, plus free-forever questions,
-                timed mocks and structured explanations. If you mainly want
-                screen-based question volume, a conventional question bank may
-                be enough. If your bigger problem is covering the syllabus
-                around real life, AKT Navigator is the more differentiated
-                tool.
+                commutes, walks and low-energy evenings, plus free-forever
+                questions, timed mocks and structured explanations. If you
+                mainly want screen-based question volume, a conventional
+                question bank may be enough. If your bigger problem is covering
+                the syllabus around real life, AKT Navigator is the more
+                differentiated tool.
               </p>
             }
             bestFor={[
@@ -226,6 +227,35 @@ export default function BestAktRevisionToolPage() {
               { label: "Explore audio revision", href: "/akt-audio-revision" },
             ]}
           />
+
+          <section className="mt-10">
+            <h2
+              className="text-[24px] leading-[1.15] md:text-[28px]"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              The real problem is not finding more questions
+            </h2>
+            <p
+              className="mt-4 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              Most GP trainees can find questions. The harder problem is
+              covering the whole AKT while working clinically, managing
+              portfolio demands, commuting, parenting and trying to revise when
+              your brain is already tired.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              AKT Navigator is built for that reality: audio for coverage, free
+              questions and mocks for active recall, and structured
+              explanations for weak-area repair.
+            </p>
+          </section>
 
           <section className="mt-10">
             <h2

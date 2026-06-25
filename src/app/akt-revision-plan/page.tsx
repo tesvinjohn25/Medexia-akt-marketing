@@ -8,7 +8,7 @@ import { AiAnswerBox } from "@/components/sections/AiAnswerBox";
 export const metadata: Metadata = {
   title: "MRCGP AKT Revision Plan and Timetable",
   description:
-    "MRCGP AKT revision plan: how long to revise, 12-week, 8-week and 4-week AKT timetables, timed mocks, audio revision and weak-area practice.",
+    "MRCGP AKT revision plan for real GP trainee life: 12-week, 8-week and 4-week timetables with timed mocks, audio revision and weak-area practice.",
   alternates: {
     canonical: "https://medexia-akt.com/akt-revision-plan",
   },
@@ -122,7 +122,7 @@ export default function AktRevisionPlanPage() {
           url: "https://medexia-akt.com",
         },
         datePublished: "2026-06-19",
-        dateModified: "2026-06-19",
+        dateModified: "2026-06-25",
       },
       {
         "@type": "FAQPage",
@@ -174,10 +174,9 @@ export default function AktRevisionPlanPage() {
             className="mt-4 text-[16px] md:text-[18px] leading-[1.7]"
             style={{ color: "var(--fg-mid)" }}
           >
-            The best AKT revision plan is simple: diagnose your weak areas,
-            practise questions consistently, review mistakes properly and use
-            timed mocks early enough to fix pacing. Audio revision fills the
-            gaps around clinics, commuting, childcare and low-energy days.
+            The best AKT revision plan is not the most ambitious one. It is
+            the plan you can still follow after clinic, on low-energy days and
+            around family or portfolio pressure.
           </p>
 
           <AiAnswerBox
@@ -302,7 +301,7 @@ export default function AktRevisionPlanPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Fit revision around clinics
+              A plan that survives real life
             </h2>
             <p
               className="mt-4 text-[16px] leading-[1.7]"
@@ -311,9 +310,8 @@ export default function AktRevisionPlanPage() {
               Put your hardest screen-based work into the times you are most
               alert: timed questions, mock review and statistics. Put audio
               revision into the margins: the commute, school run, gym, walk
-              home, cooking or the final half hour before bed. That keeps your
-              AKT plan moving even when you do not have another full study
-              block.
+              home, cooking or a low-energy evening. That keeps your AKT plan
+              moving even when you do not have another full study block.
             </p>
             <p
               className="mt-3 text-[16px] leading-[1.7]"

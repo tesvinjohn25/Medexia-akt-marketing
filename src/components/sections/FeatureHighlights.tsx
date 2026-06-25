@@ -14,18 +14,36 @@ export function FeatureHighlights() {
         ref={ref}
         className={`container-x reveal-group ${visible ? "is-visible" : ""}`}
       >
-        <div
-          className="r-blur mb-10 text-center text-[13px] tracking-[0.22em] uppercase font-semibold"
-          style={{
-            color: "rgba(167,139,250,.85)",
-            "--i": 0,
-          } as React.CSSProperties}
-        >
-          Three things. Each built for time-poor trainees.
+        <div className="r-blur mx-auto mb-10 max-w-[760px] text-center">
+          <div
+            className="text-[13px] tracking-[0.22em] uppercase font-semibold"
+            style={{
+              color: "rgba(167,139,250,.85)",
+              "--i": 0,
+            } as React.CSSProperties}
+          >
+            From overwhelmed to in control
+          </div>
+          <h2
+            className="mt-3 text-[28px] md:text-[42px] leading-[1.08]"
+            style={{
+              fontFamily: "var(--font-display)",
+              letterSpacing: "-0.035em",
+            }}
+          >
+            Stop guessing what to revise next.
+          </h2>
+          <p
+            className="mx-auto mt-3 max-w-[620px] text-[15px] md:text-[16px] leading-[1.65]"
+            style={{ color: "rgba(232,236,255,.68)" }}
+          >
+            AKT Navigator gives you a repeatable loop for real GP trainee life:
+            listen, practise, review, repeat.
+          </p>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
-          {/* HERO CARD: Audiobooks — full width */}
+          {/* HERO CARD: Audio for tired days */}
           <div
             className="r-scale md:col-span-2"
             style={{ "--i": 1 } as React.CSSProperties}
@@ -52,7 +70,7 @@ export function FeatureHighlights() {
                   className="text-[11px] md:text-[12px] tracking-[0.22em] uppercase font-semibold"
                   style={{ color: "rgba(236,72,153,.9)" }}
                 >
-                  The USP &middot; Audiobooks
+                  Tired days &middot; Audio
                 </div>
                 <AudioEqualizer />
               </div>
@@ -63,15 +81,15 @@ export function FeatureHighlights() {
                   letterSpacing: "-0.02em",
                 }}
               >
-                90+ hours. The whole RCGP curriculum.
+                Keep revision moving when reading is not happening.
               </h3>
               <p
                 className="mt-3 text-[15px] md:text-[16px] leading-[1.65] max-w-[620px]"
                 style={{ color: "rgba(232,236,255,.72)" }}
               >
-                On the drive to work, at the gym, on the school run, between
-                patients. Revise while you live your life. No other AKT tool
-                has audiobooks at this scale.
+                Turn commutes, walks, gym sessions, cooking, childcare gaps and
+                low-energy evenings after clinic into useful AKT progress.
+                The full library covers 90+ hours across the AKT syllabus.
               </p>
               <blockquote
                 className="mt-5 italic text-[13px] md:text-[14px] leading-[1.6] max-w-[560px]"
@@ -109,7 +127,7 @@ export function FeatureHighlights() {
                 className="text-[10px] md:text-[11px] tracking-[0.22em] uppercase font-semibold"
                 style={{ color: "rgba(167,139,250,.85)" }}
               >
-                The Algorithm
+                Weak areas
               </div>
               <h3
                 className="mt-2 text-[20px] md:text-[22px] leading-[1.18] font-semibold"
@@ -118,22 +136,22 @@ export function FeatureHighlights() {
                   letterSpacing: "-0.02em",
                 }}
               >
-                The fastest path to pass level.
+                Know what to revise next.
               </h3>
               <p
                 className="mt-3 text-[14px] md:text-[15px] leading-[1.65]"
                 style={{ color: "rgba(232,236,255,.68)" }}
               >
-                It calibrates where you are first, then every session is rebuilt
-                around your weak spots. No planning &mdash; you press start, it
-                handles the rest.
+                Use questions and mocks to expose weak areas instead of cycling
+                randomly through topics. Your revision becomes a sequence, not
+                a guess.
               </p>
 
               <AlgorithmViz />
             </TiltCard>
           </div>
 
-          {/* Mocks + AI debrief */}
+          {/* Scary topics */}
           <div className="r-right" style={{ "--i": 3 } as React.CSSProperties}>
             <TiltCard
               className="card-shimmer relative h-full overflow-hidden rounded-[18px] p-6 md:p-7"
@@ -149,7 +167,7 @@ export function FeatureHighlights() {
                 className="text-[10px] md:text-[11px] tracking-[0.22em] uppercase font-semibold"
                 style={{ color: "rgba(52,211,153,.85)" }}
               >
-                Mocks &amp; AI Debrief
+                Weak-area repair
               </div>
               <h3
                 className="mt-2 text-[20px] md:text-[22px] leading-[1.18] font-semibold"
@@ -158,17 +176,91 @@ export function FeatureHighlights() {
                   letterSpacing: "-0.02em",
                 }}
               >
-                See where you&rsquo;re confidently wrong.
+                Turn scary topics into repair work.
               </h3>
               <p
                 className="mt-3 text-[14px] md:text-[15px] leading-[1.65]"
                 style={{ color: "rgba(232,236,255,.68)" }}
               >
-                40, 80 or 160 questions &mdash; pick your time. Every answer
-                carries an examiner-style explanation aligned to NICE, CKS and
-                the BNF. The debrief catches what you can&rsquo;t see yourself:
-                timing drops, fatigue patterns, and the topics you only think
-                you know.
+                Revisit statistics, prescribing and high-yield AKT traps with
+                structured explanations and audio reinforcement, so weak areas
+                become specific jobs rather than background uncertainty.
+              </p>
+            </TiltCard>
+          </div>
+
+          {/* Mocks */}
+          <div className="r-left" style={{ "--i": 4 } as React.CSSProperties}>
+            <TiltCard
+              className="card-shimmer relative h-full overflow-hidden rounded-[18px] p-6 md:p-7"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(17,19,26,.88), rgba(17,19,26,.64))",
+                border: "1px solid rgba(255,255,255,.08)",
+                borderLeftColor: "rgba(96,165,250,.5)",
+                borderLeftWidth: 3,
+              }}
+            >
+              <div
+                className="text-[10px] md:text-[11px] tracking-[0.22em] uppercase font-semibold"
+                style={{ color: "rgba(96,165,250,.86)" }}
+              >
+                Exam pace
+              </div>
+              <h3
+                className="mt-2 text-[20px] md:text-[22px] leading-[1.18] font-semibold"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                Build the one-minute rhythm.
+              </h3>
+              <p
+                className="mt-3 text-[14px] md:text-[15px] leading-[1.65]"
+                style={{ color: "rgba(232,236,255,.68)" }}
+              >
+                Use 40, 80 or 160-question timed mocks to practise pace before
+                exam day, then review mistakes while the decision is still
+                fresh.
+              </p>
+            </TiltCard>
+          </div>
+
+          {/* Prepared loop */}
+          <div className="r-right" style={{ "--i": 5 } as React.CSSProperties}>
+            <TiltCard
+              className="card-shimmer relative h-full overflow-hidden rounded-[18px] p-6 md:p-7"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(17,19,26,.88), rgba(17,19,26,.64))",
+                border: "1px solid rgba(255,255,255,.08)",
+                borderLeftColor: "rgba(236,72,153,.5)",
+                borderLeftWidth: 3,
+              }}
+            >
+              <div
+                className="text-[10px] md:text-[11px] tracking-[0.22em] uppercase font-semibold"
+                style={{ color: "rgba(236,72,153,.88)" }}
+              >
+                Confidence loop
+              </div>
+              <h3
+                className="mt-2 text-[20px] md:text-[22px] leading-[1.18] font-semibold"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                Feel more prepared without needing perfect days.
+              </h3>
+              <p
+                className="mt-3 text-[14px] md:text-[15px] leading-[1.65]"
+                style={{ color: "rgba(232,236,255,.68)" }}
+              >
+                Replace &ldquo;I don&rsquo;t know if I&rsquo;m doing
+                enough&rdquo; with a simple loop you can repeat: listen,
+                practise, review, repeat.
               </p>
             </TiltCard>
           </div>

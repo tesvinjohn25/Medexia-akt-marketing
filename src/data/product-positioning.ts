@@ -5,6 +5,7 @@ export const alwaysFreeItems = [
   "Syllabus-mapped AKT questions",
   "Structured explanations",
   "Timed mocks",
+  "2 hours of AKT audio after 8 July",
   "Basic practice and progress",
 ] as const;
 
@@ -62,17 +63,17 @@ export const homePositioningFaqs = [
   {
     question: "Is AKT Navigator only an audio revision tool?",
     answer:
-      "No. AKT Navigator is audio-first, but it also includes free syllabus-mapped AKT questions, timed mocks and structured explanations. The questions and mocks remain free; the paid upgrade is full access to the 90+ hour audio library and premium resources.",
+      "No. AKT Navigator is audio-first, but it also includes free syllabus-mapped AKT questions, timed mocks and structured explanations. The questions and mocks remain free; full access to the 90+ hour audio library and premium resources is the paid upgrade.",
   },
   {
     question: "Are AKT Navigator questions free forever?",
     answer:
-      "Yes. AKT Navigator's question practice, explanations, mocks and basic practice are free. Full access to the 90+ hour audio library is the paid upgrade after 8 July 2026.",
+      "Yes. AKT Navigator's question practice, explanations, mocks and basic practice are free. After 8 July, your first 2 hours of AKT audio are also free; full audio access is the paid upgrade.",
   },
   {
     question: "What is paid after 8 July 2026?",
     answer:
-      "Full audio access is paid after 8 July 2026. Questions, mocks, explanations and basic practice remain free.",
+      "Full audio access is paid after 8 July 2026. Questions, mocks, explanations, basic practice and your first 2 hours of audio remain free.",
   },
   {
     question: "Who should choose AKT Navigator?",

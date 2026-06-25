@@ -9,7 +9,7 @@ import { AiAnswerBox } from "@/components/sections/AiAnswerBox";
 export const metadata: Metadata = {
   title: "Free AKT Question Practice + Audio Revision | AKT Navigator",
   description:
-    "AKT Navigator keeps AKT questions, explanations and mocks free, with optional full access to 90+ hours of audio revision across the RCGP curriculum.",
+    "AKT Navigator keeps AKT questions, explanations and mocks free, with optional 90+ hours of audio revision for GP trainees who need to revise away from a desk.",
   alternates: {
     canonical: "https://medexia-akt.com/best-akt-question-bank",
   },
@@ -175,7 +175,7 @@ export default function BestAktQuestionBankPage() {
           url: "https://medexia-akt.com",
         },
         datePublished: "2026-03-25",
-        dateModified: "2026-06-20",
+        dateModified: "2026-06-25",
       },
       {
         "@type": "FAQPage",
@@ -230,7 +230,7 @@ export default function BestAktQuestionBankPage() {
             Most AKT resources are built around screen-based question practice.
             That matters, but it is not the whole revision problem. GP trainees
             also need a way to cover the syllabus during commutes, walks,
-            childcare and low-energy days.
+            childcare and low-energy days when reading is not realistic.
           </p>
 
           <p
@@ -275,6 +275,35 @@ export default function BestAktQuestionBankPage() {
               { label: "Try AKT mocks", href: "/akt-mock-exam" },
             ]}
           />
+
+          <section className="mt-10">
+            <h2
+              className="text-[24px] md:text-[28px] leading-[1.15]"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              The real problem is not finding more questions
+            </h2>
+            <p
+              className="mt-4 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              Most GP trainees can find questions. The harder problem is
+              knowing what to revise next, covering the whole AKT around
+              clinics and portfolio work, and still making progress when you
+              are too tired to read.
+            </p>
+            <p
+              className="mt-3 text-[16px] leading-[1.7]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              AKT Navigator keeps the practice layer free, then uses audio to
+              help you keep moving through the syllabus in time that would
+              otherwise be lost.
+            </p>
+          </section>
 
           {/* Comparison table */}
           <div

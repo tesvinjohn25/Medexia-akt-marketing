@@ -50,15 +50,16 @@ export function ProductFacts() {
                   letterSpacing: "-0.03em",
                 }}
               >
-                What stays free after 8 July?
+                Keep making progress before you pay.
               </h2>
               <p
                 className="mt-3 max-w-[560px] text-[14px] leading-[1.6] md:text-[15px]"
                 style={{ color: "rgba(232,236,255,.72)" }}
               >
                 Before 8 July, the whole product is free to try. From 8 July
-                onwards, practice stays free; full audio and premium resources
-                are the upgrade.
+                onwards, questions, mocks, explanations and your first 2 hours
+                of AKT audio stay free; full audio and premium resources are
+                the upgrade.
               </p>
               <a
                 href="/best-akt-revision-tool"

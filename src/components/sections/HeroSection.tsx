@@ -151,7 +151,7 @@ export function HeroSection() {
                 textShadow: "0 22px 70px rgba(0,0,0,.7)",
               }}
             >
-              {["The", "whole", "AKT."].map((word, i) => (
+              {["Feel", "ready", "for", "the", "AKT."].map((word, i) => (
                 <span
                   key={word}
                   className="r-blur inline-block"
@@ -161,7 +161,7 @@ export function HeroSection() {
                   } as React.CSSProperties}
                 >
                   {word}
-                  {i < 2 ? " " : ""}
+                  {i < 4 ? " " : ""}
                 </span>
               ))}
               <br />
@@ -169,26 +169,28 @@ export function HeroSection() {
                 className="r-blur inline-block"
                 style={{ "--i": 5.2 } as React.CSSProperties}
               >
-                <span className="text-shine">In 90 hours of audio.</span>
+                <span className="text-shine">
+                  Even when life leaves no desk time.
+                </span>
               </span>
             </h1>
 
-            {/* Two-paragraph subhead: audio-first, but not audio-only. */}
+            {/* Two-paragraph subhead: dream outcome, mechanism, offer. */}
             <p
               className="r-up mt-4 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
               style={{ color: "rgba(232,236,255,.78)", "--i": 6.5 } as React.CSSProperties}
             >
-              Audio-first MRCGP AKT revision covering the full syllabus, backed
-              by free-forever question practice, timed mocks and structured
-              explanations.
+              AKT Navigator turns commutes, walks, school runs and exhausted
+              evenings into MRCGP AKT revision with 90+ hours of audio,
+              free-forever questions, timed mocks and structured explanations.
             </p>
             <p
               className="r-up mt-3 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
               style={{ color: "rgba(232,236,255,.6)", "--i": 7 } as React.CSSProperties}
             >
               {isPreCutover
-                ? "Full audio access is the paid upgrade after 8 July 2026. Until then, the whole product is free to try."
-                : "Questions, mocks and explanations stay free. Upgrade to full 4-month audio access for £79 when you want the complete library."}
+                ? "Until 8 July, the whole product is free to try. After that, questions and mocks stay free, your first 2 hours of AKT audio stay free, and full audio is the paid upgrade."
+                : "Questions and mocks stay free. Your first 2 hours of AKT audio are free; full 4-month audio access is the paid upgrade."}
             </p>
 
             {/* Countdown */}
@@ -220,20 +222,15 @@ export function HeroSection() {
               {isPreCutover ? (
                 <TrackedAppLink
                   className="inline-flex items-center justify-center rounded-[14px] px-5 py-3 text-[14px] font-semibold transition-colors hover:bg-white/[.08]"
-                  href="/join/early-access"
-                  intent={hasReferralOffer ? "referral_earlybird" : "earlybird_upgrade"}
-                  offerId={
-                    hasReferralOffer
-                      ? OFFER_IDS.earlybird49ReferralPre
-                      : OFFER_IDS.earlybird59Pre
-                  }
+                  href="/demo/audiobook/player"
+                  intent="demo"
                   style={{
                     color: "var(--fg-high)",
                     background: "rgba(255,255,255,.045)",
                     border: "1px solid rgba(255,255,255,.10)",
                   }}
                 >
-                  Lock in {hasReferralOffer ? "£49" : "£59"} Early Access
+                  Try free AKT audio
                 </TrackedAppLink>
               ) : (
                 <TrackedAppLink

@@ -45,7 +45,7 @@ export function FinalCTA() {
             "--i": 1,
           } as React.CSSProperties}
         >
-          Every day counts.
+          Keep moving, even on tired days.
         </h2>
 
         <p
@@ -55,7 +55,7 @@ export function FinalCTA() {
           {isPreCutover
             ? hasReferralOffer
               ? "The whole product is free until 8 July. Questions, mocks and explanations stay free after that; your referral link unlocks Early Access for £49 instead of £59 before 8 July."
-              : "The whole product is free until 8 July. Questions, mocks and explanations stay free after that; full audio can be locked in for £59 before it becomes £79."
+              : "The whole product is free until 8 July. Questions, mocks and explanations stay free after that; your first 2 hours of AKT audio stay free, and full audio can be locked in for £59 before it becomes £79."
             : "Questions, mocks and explanations are free. Your first 2 hours of AKT audio are free. Full 4-month audio access is £79."}
         </p>
 

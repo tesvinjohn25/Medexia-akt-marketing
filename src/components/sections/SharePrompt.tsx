@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 function shareText(referralLink: string): string {
-  return `I’ve been trying AKT Navigator for AKT revision. It has free question practice and mocks, plus audio revision for when you’re too tired to sit and read. The whole product is free until 8 July, and this referral link gives £10 off Early Access before full audio goes up to £79.\n\nMy link: ${referralLink}\n\nJust to be transparent, I get referral credit if someone upgrades through it.`;
+  return `I’ve been trying AKT Navigator for AKT revision. It has free question practice and mocks, plus audio revision for when you’re too tired to sit and read. The whole product is free until 8 July. This referral link gives £10 off Early Access, so it is £49 instead of £59 before 8 July, and I get £10 back if you upgrade through it.\n\nMy link: ${referralLink}\n\nJust to be transparent, I get referral credit only after a paid upgrade. The reward is valid for my first 2 paid referrals before 8 July.`;
 }
 
 function WhatsAppIcon() {
@@ -67,7 +67,7 @@ export function SharePrompt({ referralLink }: { referralLink?: string | null }) 
         className="text-[14px] font-semibold mb-3"
         style={{ color: "var(--fg-mid)" }}
       >
-        Know someone sitting the AKT?
+        Help another GP trainee revise when they&rsquo;re too tired to read.
       </p>
       <p
         className="mb-4 text-[13px] leading-[1.55]"

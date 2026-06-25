@@ -13,7 +13,7 @@ export function HeroSection() {
   // load-time animation would finish before anyone saw it.
   const { ref, visible } = useScrollReveal(0.1);
   const marketing = useMarketingAttribution();
-  const referralCode = marketing?.referral?.referral_code ?? null;
+  const referralCode = marketing?.active_referral?.referral_code ?? null;
   const isPreCutover = marketing?.offer_context.phase !== "post_2026_07_08";
   const hasReferralOffer = canShowReferralEarlybirdOffer(referralCode);
 

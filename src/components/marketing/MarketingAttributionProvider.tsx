@@ -56,9 +56,9 @@ export function MarketingAttributionProvider({ children }: { children: ReactNode
         offer_id: next.offer_context.offer_id,
         phase: next.offer_context.phase,
       });
-      if (next.referral?.referral_code) {
+      if (next.active_referral?.referral_code) {
         trackLandingEvent("referral_landing_viewed", {
-          referral_code: next.referral.referral_code,
+          referral_code: next.active_referral.referral_code,
         });
       }
     }

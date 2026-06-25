@@ -40,7 +40,7 @@ export function useTrackedAppUrl(
       [
         snapshot?.mx_visitor_id,
         snapshot?.mx_session_id,
-        snapshot?.referral?.referral_code,
+        snapshot?.active_referral?.referral_code,
         snapshot?.offer_context.offer_id,
         options.intent,
         options.offerId,

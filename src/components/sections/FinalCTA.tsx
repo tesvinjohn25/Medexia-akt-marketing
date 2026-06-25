@@ -9,7 +9,7 @@ import { OFFER_IDS, canShowReferralEarlybirdOffer } from "@/lib/marketing/attrib
 export function FinalCTA() {
   const { ref, visible } = useScrollReveal();
   const marketing = useMarketingAttribution();
-  const referralCode = marketing?.referral?.referral_code ?? null;
+  const referralCode = marketing?.active_referral?.referral_code ?? null;
   const isPreCutover = marketing?.offer_context.phase !== "post_2026_07_08";
   const hasReferralOffer = canShowReferralEarlybirdOffer(referralCode);
 

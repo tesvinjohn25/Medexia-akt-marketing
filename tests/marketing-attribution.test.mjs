@@ -511,6 +511,37 @@ test("referral handoff is preserved without analytics consent but marketing iden
   assert.equal(appUrl.searchParams.has("gclid"), false);
 });
 
+test("stored referral does not show or hand off the referral price on clean visits", () => {
+  resetTrackingEnv();
+  setReferralFlags(true);
+  const browser = installBrowser("https://medexia-akt.com/?ref=REF123&utm_source=whatsapp");
+
+  acceptAllConsent("banner");
+  const referralLanding = initMarketingAttribution();
+  assert.equal(referralLanding.active_referral?.referral_code, "REF123");
+  assert.equal(referralLanding.offer_context.offer_id, OFFER_IDS.earlybird49ReferralPre);
+  assert.equal(JSON.parse(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.referral)).referral_code, "REF123");
+
+  window.location = new URL("https://medexia-akt.com/");
+  document.referrer = "https://www.google.com/";
+
+  const cleanVisit = initMarketingAttribution();
+  assert.equal(cleanVisit.referral?.referral_code, "REF123");
+  assert.equal(cleanVisit.active_referral, null);
+  assert.notEqual(cleanVisit.offer_context.offer_id, OFFER_IDS.earlybird49ReferralPre);
+
+  const appUrl = new URL(
+    buildAppUrl("/join/early-access", {
+      intent: "referral_earlybird",
+      offerId: OFFER_IDS.earlybird49ReferralPre,
+    }),
+  );
+
+  assert.equal(appUrl.searchParams.has("referral_code"), false);
+  assert.equal(appUrl.searchParams.has("ref"), false);
+  assert.equal(appUrl.searchParams.get("offer_id"), OFFER_IDS.earlybird59Pre);
+});
+
 test("functional-only consent persists referral continuity without analytics identifiers", () => {
   resetTrackingEnv();
   setReferralFlags(true);
@@ -519,6 +550,7 @@ test("functional-only consent persists referral continuity without analytics ide
   saveConsent({ functional: true, analytics: false, marketing: false }, "settings");
   const snapshot = initMarketingAttribution();
 
+  assert.equal(snapshot.active_referral?.referral_code, "REF123");
   assert.equal(snapshot.referral?.referral_code, "REF123");
   assert.equal(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.visitorId), null);
   assert.equal(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.firstTouch), null);

@@ -221,15 +221,20 @@ export function HeroSection() {
               {isPreCutover ? (
                 <TrackedAppLink
                   className="inline-flex items-center justify-center rounded-[14px] px-5 py-3 text-[14px] font-semibold transition-colors hover:bg-white/[.08]"
-                  href="/demo/audiobook/player"
-                  intent="demo"
+                  href="/join/early-access"
+                  intent={hasReferralOffer ? "referral_earlybird" : "earlybird_upgrade"}
+                  offerId={
+                    hasReferralOffer
+                      ? OFFER_IDS.earlybird49ReferralPre
+                      : OFFER_IDS.earlybird59Pre
+                  }
                   style={{
                     color: "var(--fg-high)",
                     background: "rgba(255,255,255,.045)",
                     border: "1px solid rgba(255,255,255,.10)",
                   }}
                 >
-                  Try free AKT audio
+                  Lock in {hasReferralOffer ? "£49" : "£59"} Early Access
                 </TrackedAppLink>
               ) : (
                 <TrackedAppLink

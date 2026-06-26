@@ -494,6 +494,20 @@ test("consent UX exposes equal first-layer choices and granular off-by-default s
   assert.ok(modal.includes("marketing: current?.marketing ?? false"));
 });
 
+test("homepage early access CTAs use tracked app links and earlybird intents", () => {
+  const hero = fs.readFileSync("src/components/sections/HeroSection.tsx", "utf8");
+  const finalCta = fs.readFileSync("src/components/sections/FinalCTA.tsx", "utf8");
+
+  for (const source of [hero, finalCta]) {
+    assert.match(source, /<TrackedAppLink[\s\S]*href="\/join\/early-access"/);
+    assert.match(source, /intent=\{hasReferralOffer \? "referral_earlybird" : "earlybird_upgrade"\}/);
+    assert.match(source, /OFFER_IDS\.earlybird49ReferralPre/);
+    assert.match(source, /OFFER_IDS\.earlybird59Pre/);
+  }
+
+  assert.doesNotMatch(hero, /href="\/demo\/audiobook\/player"[\s\S]{0,400}Try free AKT audio/);
+});
+
 test("referral handoff is preserved without analytics consent but marketing identifiers are not", () => {
   resetTrackingEnv();
   setReferralFlags(true);

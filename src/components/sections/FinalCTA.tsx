@@ -63,32 +63,58 @@ export function FinalCTA() {
           className="r-scale mt-8 flex flex-wrap justify-center gap-3"
           style={{ "--i": 3 } as React.CSSProperties}
         >
-          <TrackedAppLink
-            className="btn-primary inline-block"
-            href="/join/free"
-            intent="start_free"
-            offerId={isPreCutover ? OFFER_IDS.freePre : OFFER_IDS.freePost}
-          >
-            Start free practice &rarr;
-          </TrackedAppLink>
-          {isPreCutover && (
-            <TrackedAppLink
-              className="inline-flex items-center justify-center rounded-[14px] px-5 py-3 text-[14px] font-semibold transition-colors hover:bg-white/[.08]"
-              href="/join/early-access"
-              intent={hasReferralOffer ? "referral_earlybird" : "earlybird_upgrade"}
-              offerId={
-                hasReferralOffer
-                  ? OFFER_IDS.earlybird49ReferralPre
-                  : OFFER_IDS.earlybird59Pre
-              }
-              style={{
-                color: "var(--fg-high)",
-                background: "rgba(255,255,255,.045)",
-                border: "1px solid rgba(255,255,255,.10)",
-              }}
-            >
-              Lock in {hasReferralOffer ? "£49" : "£59"} Early Access
-            </TrackedAppLink>
+          {isPreCutover ? (
+            <>
+              <TrackedAppLink
+                className="btn-primary inline-block"
+                href="/join/early-access"
+                intent={hasReferralOffer ? "referral_earlybird" : "earlybird_upgrade"}
+                offerId={
+                  hasReferralOffer
+                    ? OFFER_IDS.earlybird49ReferralPre
+                    : OFFER_IDS.earlybird59Pre
+                }
+              >
+                Lock in {hasReferralOffer ? "£49" : "£59"} Early Access &rarr;
+              </TrackedAppLink>
+              <TrackedAppLink
+                className="inline-flex items-center justify-center rounded-[14px] px-5 py-3 text-[14px] font-semibold transition-colors hover:bg-white/[.08]"
+                href="/join/free"
+                intent="start_free"
+                offerId={OFFER_IDS.freePre}
+                style={{
+                  color: "var(--fg-high)",
+                  background: "rgba(255,255,255,.045)",
+                  border: "1px solid rgba(255,255,255,.10)",
+                }}
+              >
+                Start free practice
+              </TrackedAppLink>
+            </>
+          ) : (
+            <>
+              <TrackedAppLink
+                className="btn-primary inline-block"
+                href="/join/full-access"
+                intent="checkout"
+                offerId={OFFER_IDS.standard79Post}
+              >
+                Upgrade to full audio &rarr;
+              </TrackedAppLink>
+              <TrackedAppLink
+                className="inline-flex items-center justify-center rounded-[14px] px-5 py-3 text-[14px] font-semibold transition-colors hover:bg-white/[.08]"
+                href="/join/free"
+                intent="start_free"
+                offerId={OFFER_IDS.freePost}
+                style={{
+                  color: "var(--fg-high)",
+                  background: "rgba(255,255,255,.045)",
+                  border: "1px solid rgba(255,255,255,.10)",
+                }}
+              >
+                Start free practice
+              </TrackedAppLink>
+            </>
           )}
         </div>
       </div>

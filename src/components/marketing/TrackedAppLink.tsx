@@ -62,12 +62,17 @@ interface TrackedAppLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string;
   intent: CtaIntent;
   offerId?: OfferId;
+  extraTrackingEvents?: {
+    eventName: string;
+    properties?: Record<string, unknown>;
+  }[];
 }
 
 export function TrackedAppLink({
   href,
   intent,
   offerId,
+  extraTrackingEvents = [],
   onClick,
   children,
   ...props
@@ -90,6 +95,13 @@ export function TrackedAppLink({
       intent,
       offer_id: offerId ?? (intent === "referral_earlybird" ? OFFER_IDS.earlybird49ReferralPre : null),
     };
+    const extraEvents = extraTrackingEvents.map((trackingEvent) => ({
+      eventName: trackingEvent.eventName,
+      properties: {
+        ...ctaProperties,
+        ...trackingEvent.properties,
+      },
+    }));
 
     const shouldFlushBeforeNavigation =
       event.button === 0 &&
@@ -100,6 +112,9 @@ export function TrackedAppLink({
       (!props.target || props.target === "_self");
 
     if (!shouldFlushBeforeNavigation) {
+      extraEvents.forEach((trackingEvent) => {
+        trackLandingEvent(trackingEvent.eventName, trackingEvent.properties);
+      });
       if (ctaEventName !== "app_handoff_started") {
         trackLandingEvent(ctaEventName, ctaProperties);
       }
@@ -112,6 +127,9 @@ export function TrackedAppLink({
     navigatingRef.current = true;
 
     const flushes = [
+      ...extraEvents.map((trackingEvent) =>
+        flushLandingEvent(trackingEvent.eventName, trackingEvent.properties),
+      ),
       ctaEventName !== "app_handoff_started"
         ? flushLandingEvent(ctaEventName, ctaProperties)
         : Promise.resolve(false),

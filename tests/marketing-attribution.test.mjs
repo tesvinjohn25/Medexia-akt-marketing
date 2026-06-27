@@ -438,6 +438,85 @@ test("analytics consent creates first-party attribution without loading pixels o
   assert.equal(appUrl.searchParams.has("gclid"), false);
 });
 
+test("/free route creates custom GPT attribution without visible UTM parameters", () => {
+  resetTrackingEnv();
+  const browser = installBrowser("https://medexia-akt.com/free");
+
+  saveConsent({ functional: false, analytics: true, marketing: false }, "settings");
+  const snapshot = initMarketingAttribution();
+
+  assert.ok(snapshot.first_touch);
+  assert.equal(snapshot.first_touch.utm_source, "custom_gpt");
+  assert.equal(snapshot.first_touch.utm_medium, "gpt_footer");
+  assert.equal(snapshot.first_touch.utm_campaign, "akt_explanation_builder");
+  assert.equal(snapshot.first_touch.utm_content, "short_free_link");
+  assert.equal(snapshot.first_touch.first_landing_page, "/free");
+  assert.equal(JSON.parse(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.firstTouch)).utm_source, "custom_gpt");
+});
+
+test("app handoff from /free carries custom GPT attribution when analytics consent allows", () => {
+  resetTrackingEnv();
+  installBrowser("https://medexia-akt.com/free");
+
+  saveConsent({ functional: false, analytics: true, marketing: false }, "settings");
+  initMarketingAttribution();
+  const appUrl = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
+
+  assert.equal(appUrl.origin, "https://app.medexia-akt.com");
+  assert.equal(appUrl.pathname, "/join/free");
+  assert.equal(appUrl.searchParams.get("utm_source"), "custom_gpt");
+  assert.equal(appUrl.searchParams.get("utm_medium"), "gpt_footer");
+  assert.equal(appUrl.searchParams.get("utm_campaign"), "akt_explanation_builder");
+  assert.equal(appUrl.searchParams.get("utm_content"), "short_free_link");
+  assert.equal(appUrl.searchParams.get("first_landing_page"), "/free");
+  assert.equal(appUrl.searchParams.get("intent"), "start_free");
+});
+
+test("new explanation builder event names pass through the generic event pipeline", async () => {
+  resetTrackingEnv();
+  const browser = installBrowser("https://medexia-akt.com/akt-explanation-builder?utm_source=reddit");
+
+  saveConsent({ functional: false, analytics: true, marketing: false }, "settings");
+  initMarketingAttribution();
+
+  trackLandingEvent("explanation_builder_page_viewed", {
+    page: "akt_explanation_builder",
+    source: "landing_bridge",
+  });
+  trackLandingEvent("explanation_builder_example_viewed", {
+    section: "before_after_example",
+  });
+  trackLandingEvent("explanation_builder_start_free_clicked", {
+    placement: "hero",
+  });
+  trackLandingEvent("custom_gpt_return_landed", {
+    page: "free",
+    source: "custom_gpt",
+  });
+  await flushLandingEvent("explanation_builder_open_gpt_clicked", {
+    destination: "chatgpt_custom_gpt",
+    placement: "hero",
+    href: "https://chatgpt.com/g/example",
+  });
+  await flushLandingEvent("custom_gpt_return_start_free_clicked", {
+    placement: "bridge",
+  });
+
+  const beaconPayloads = await Promise.all(browser.sendBeaconCalls.map(parseBeaconPayload));
+  const fetchPayloads = await Promise.all(browser.fetchCalls.map(parseFetchPayload));
+  const eventNames = [...beaconPayloads, ...fetchPayloads].map((payload) => payload.event_name);
+
+  assert.deepEqual(eventNames.sort(), [
+    "custom_gpt_return_landed",
+    "custom_gpt_return_start_free_clicked",
+    "explanation_builder_example_viewed",
+    "explanation_builder_open_gpt_clicked",
+    "explanation_builder_page_viewed",
+    "explanation_builder_start_free_clicked",
+  ].sort());
+  assert.equal(fetchPayloads.find((payload) => payload.event_name === "explanation_builder_open_gpt_clicked").properties.placement, "hero");
+});
+
 test("marketing consent loads configured pixels after consent and allows ad click id handoff", () => {
   resetTrackingEnv();
   process.env.NEXT_PUBLIC_ENABLE_MARKETING_PIXELS = "true";

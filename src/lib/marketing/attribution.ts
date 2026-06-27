@@ -107,6 +107,12 @@ const REFERRAL_PARAM_KEYS = ["ref", "referral", "referral_code", "r"] as const;
 const AD_CLICK_PARAM_KEYS = ["gclid", "gbraid", "wbraid", "fbclid", "ttclid", "msclkid"] as const;
 const OFFER_CUTOVER_UK = new Date("2026-07-08T00:00:00+01:00");
 const COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 90;
+const CUSTOM_GPT_RETURN_ATTRIBUTION = {
+  utm_source: "custom_gpt",
+  utm_medium: "gpt_footer",
+  utm_campaign: "akt_explanation_builder",
+  utm_content: "short_free_link",
+} as const;
 
 function isBrowser(): boolean {
   return typeof window !== "undefined" && typeof document !== "undefined";
@@ -257,6 +263,19 @@ function hasMeaningfulTouch(params: URLSearchParams, referrer: string | null, in
   });
 }
 
+function hasVisibleTouchParam(params: URLSearchParams): boolean {
+  return TOUCH_PARAM_KEYS.some((key) => Boolean(getParam(params, key)));
+}
+
+function customGptReturnAttribution(params: URLSearchParams):
+  | typeof CUSTOM_GPT_RETURN_ATTRIBUTION
+  | null {
+  if (!isBrowser()) return null;
+  if (window.location.pathname.replace(/\/+$/, "") !== "/free") return null;
+  if (hasVisibleTouchParam(params)) return null;
+  return CUSTOM_GPT_RETURN_ATTRIBUTION;
+}
+
 function readCurrentReferralSnapshot(): ReferralSnapshot | null {
   if (!isBrowser()) return null;
   const params = new URLSearchParams(window.location.search);
@@ -281,15 +300,16 @@ function readCurrentTouch(referralCode: string | null, includeAdClickIds: boolea
   if (!isBrowser()) return null;
   const params = new URLSearchParams(window.location.search);
   const referrer = externalReferrer();
-  if (!hasMeaningfulTouch(params, referrer, includeAdClickIds)) return null;
+  const routeAttribution = customGptReturnAttribution(params);
+  if (!routeAttribution && !hasMeaningfulTouch(params, referrer, includeAdClickIds)) return null;
 
   const explicitOffer = getParam(params, "offer_id", 128);
 
   return {
-    utm_source: getParam(params, "utm_source", 128),
-    utm_medium: getParam(params, "utm_medium", 128),
-    utm_campaign: getParam(params, "utm_campaign", 160),
-    utm_content: getParam(params, "utm_content", 160),
+    utm_source: getParam(params, "utm_source", 128) ?? routeAttribution?.utm_source ?? null,
+    utm_medium: getParam(params, "utm_medium", 128) ?? routeAttribution?.utm_medium ?? null,
+    utm_campaign: getParam(params, "utm_campaign", 160) ?? routeAttribution?.utm_campaign ?? null,
+    utm_content: getParam(params, "utm_content", 160) ?? routeAttribution?.utm_content ?? null,
     utm_term: getParam(params, "utm_term", 160),
     referrer,
     first_landing_page: pagePath(),

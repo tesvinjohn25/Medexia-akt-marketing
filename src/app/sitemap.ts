@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { aktTopics } from "@/data/akt-topics";
 
 const LAST_MODIFIED = new Date("2026-06-20");
+const BRIDGE_LAST_MODIFIED = new Date("2026-06-27");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const topicPages = aktTopics.map((topic) => ({
@@ -12,6 +13,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   const contentPages = [
+    {
+      url: "https://medexia-akt.com/akt-explanation-builder",
+      lastModified: BRIDGE_LAST_MODIFIED,
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    },
+    {
+      url: "https://medexia-akt.com/free",
+      lastModified: BRIDGE_LAST_MODIFIED,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    },
     {
       url: "https://medexia-akt.com/demo",
       lastModified: LAST_MODIFIED,

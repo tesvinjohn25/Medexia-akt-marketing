@@ -95,8 +95,8 @@ export function NebulaFlow() {
 
       const landingX = clamp(
         hasNodeImpact
-          ? impactRect.left - 34
-          : anchorRect.left + Math.min(anchorRect.width * 0.18, 96),
+          ? impactRect.left - 68
+          : anchorRect.left + Math.min(anchorRect.width * 0.12, 72),
         72,
         viewportWidth - 76,
       );
@@ -111,8 +111,8 @@ export function NebulaFlow() {
       const startY = clamp(landingY - 300, 26, viewportHeight - 180);
       const controlOneX = clamp(startX + 46, 28, viewportWidth - 28);
       const controlOneY = clamp(startY + 150, 28, viewportHeight - 28);
-      const controlTwoX = clamp(landingX - 110, 28, viewportWidth - 28);
-      const controlTwoY = clamp(landingY - 104, 28, viewportHeight - 28);
+      const controlTwoX = clamp(landingX - 136, 28, viewportWidth - 28);
+      const controlTwoY = clamp(landingY - 118, 28, viewportHeight - 28);
       const radians = Math.atan2(landingY - startY, landingX - startX);
       const impactX = clamp(landingX - targetRect.left, 0, targetRect.width);
       const impactY = clamp(landingY - targetRect.top, 0, targetRect.height);

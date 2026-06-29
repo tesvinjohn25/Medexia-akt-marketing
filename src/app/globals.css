@@ -586,76 +586,18 @@ body > * { position: relative; z-index: 1; }
   animation: nebulaImpactRing 1.3s 1.74s ease-out both;
 }
 
-.nebula-flow-mounted .nebula-target.card-shimmer::before {
+.nebula-flow-mounted .nebula-target.card-shimmer::before,
+.nebula-flow-mounted .nebula-target .card-shimmer::before {
   animation: none;
-  opacity: .10;
+  opacity: 0;
 }
 
 .nebula-target {
   position: relative;
   isolation: isolate;
-  transition:
-    outline-color .55s var(--ease-glide),
-    box-shadow .55s var(--ease-glide),
-    filter .55s var(--ease-glide);
-}
-.nebula-target::after {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  z-index: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0;
-  background:
-    radial-gradient(circle at var(--nebula-impact-x, 74%) var(--nebula-impact-y, 32%), rgba(255,255,255,.28) 0 3%, rgba(197,170,255,.28) 9%, rgba(155,107,255,.17) 24%, rgba(236,72,153,.09) 36%, transparent 58%),
-    radial-gradient(80% 80% at 50% 50%, rgba(155,107,255,.07), transparent 70%);
-  mix-blend-mode: screen;
-  transition: opacity .45s var(--ease-glide);
-}
-.nebula-target--section::after {
-  display: none;
-}
-.nebula-target[data-nebula-active="true"] {
-  outline: 1px solid rgba(197,170,255,.30);
-  outline-offset: 0;
-  filter: saturate(1.04);
-}
-.nebula-target--section[data-nebula-active="true"] {
-  outline: none;
-  filter: none;
-}
-.nebula-target[data-nebula-active="true"]::after {
-  animation: nebulaTargetImpact 1.65s 1.72s ease-out both;
-}
-.nebula-node,
-.nebula-fill {
-  transition:
-    background-color .5s var(--ease-glide),
-    background .5s var(--ease-glide),
-    border-color .5s var(--ease-glide),
-    box-shadow .5s var(--ease-glide),
-    color .5s var(--ease-glide),
-    transform .5s var(--ease-spring);
 }
 .nebula-fill {
   position: relative;
-}
-.nebula-target[data-nebula-active="true"] .nebula-node {
-  color: rgba(255,255,255,.96) !important;
-  background:
-    radial-gradient(circle at 38% 30%, rgba(255,255,255,.98), rgba(232,236,255,.72) 22%, rgba(197,170,255,.90) 42%, rgba(155,107,255,.88) 68%, rgba(236,72,153,.38)) !important;
-  border-color: rgba(255,255,255,.20) !important;
-  box-shadow:
-    0 0 18px rgba(197,170,255,.72),
-    0 0 36px rgba(109,106,232,.36) !important;
-  transform: scale(1.08);
-}
-.nebula-target[data-nebula-active="true"] .nebula-fill {
-  background-color: transparent;
-  border-color: rgba(197,170,255,.10);
-  box-shadow: none;
-  animation: none;
 }
 
 @keyframes nebulaPathDraw {
@@ -714,11 +656,6 @@ body > * { position: relative; z-index: 1; }
   0% { opacity: 0; transform: scale(.4); }
   22% { opacity: .58; }
   100% { opacity: 0; transform: scale(1.9); }
-}
-@keyframes nebulaTargetImpact {
-  0% { opacity: 0; transform: scale(.985); }
-  20% { opacity: .36; transform: scale(1); }
-  100% { opacity: .08; transform: scale(1); }
 }
 @media (max-width: 1023px) {
   .nebula-flow {
@@ -1138,9 +1075,6 @@ body > * { position: relative; z-index: 1; }
   .nebula-fill {
     transition: none;
     transform: none !important;
-  }
-  .nebula-target::after {
-    animation: none;
   }
   body::after { animation: none; }
   .hero-nebula::before,

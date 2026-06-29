@@ -588,12 +588,14 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   assert.match(nebulaFlow, /nebula-flow__trajectory/);
   assert.match(nebulaFlow, /nebula-impact/);
   assert.match(css, /\.nebula-flow/);
-  assert.match(css, /\.nebula-target\[data-nebula-active="true"\]/);
   assert.match(css, /nebulaCometArrive/);
   assert.match(css, /nebulaAuraArrive/);
   assert.match(css, /nebulaImpactBloom/);
-  assert.match(css, /nebulaTargetImpact/);
   assert.match(css, /\.nebula-flow-mounted \.nebula-target\.card-shimmer::before/);
+  assert.doesNotMatch(css, /\.nebula-target\[data-nebula-active="true"\]\s*\{/);
+  assert.doesNotMatch(css, /\.nebula-target\[data-nebula-active="true"\]\s+\.nebula-node/);
+  assert.doesNotMatch(css, /nebulaTargetImpact/);
+  assert.doesNotMatch(css, /\.nebula-target::after/);
   assert.doesNotMatch(css, /\.nebula-fill::after/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.nebula-flow \{ display: none; \}/);
   assert.match(component, /!isCustomGptReturn \? <FreeQuestionsLiveDemo \/> : null/);

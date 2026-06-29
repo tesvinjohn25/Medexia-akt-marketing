@@ -270,6 +270,7 @@ export default function BestAktQuestionBankPage() {
                 href: "/join/free",
                 intent: "start_free",
               },
+              { label: "Free AKT questions", href: "/free-akt-questions" },
               { label: "Best revision tool", href: "/best-akt-revision-tool" },
               { label: "Compare audio revision", href: "/akt-audio-revision" },
               { label: "Try AKT mocks", href: "/akt-mock-exam" },
@@ -731,6 +732,11 @@ export default function BestAktQuestionBankPage() {
                   href: "/akt-explanation-builder",
                   title: "Free AKT explanation builder",
                   desc: "Turn a pasted SBA into a structured teaching explanation",
+                },
+                {
+                  href: "/free-akt-questions",
+                  title: "Free AKT questions",
+                  desc: "Free MRCGP AKT question bank with mocks and structured explanations",
                 },
                 {
                   href: "/akt-mock-exam",

@@ -63,6 +63,13 @@ export function ProductFacts() {
               </p>
               <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
                 <a
+                  href="/free-akt-questions"
+                  className="inline-flex text-[13px] font-semibold transition-colors hover:text-white"
+                  style={{ color: "rgba(52,211,153,.88)" }}
+                >
+                  Free AKT questions &rarr;
+                </a>
+                <a
                   href="/best-akt-revision-tool"
                   className="inline-flex text-[13px] font-semibold transition-colors hover:text-white"
                   style={{ color: "rgba(167,139,250,.94)" }}
@@ -72,7 +79,7 @@ export function ProductFacts() {
                 <a
                   href="/akt-explanation-builder"
                   className="inline-flex text-[13px] font-semibold transition-colors hover:text-white"
-                  style={{ color: "rgba(52,211,153,.88)" }}
+                  style={{ color: "rgba(96,165,250,.88)" }}
                 >
                   Try the free explanation builder &rarr;
                 </a>

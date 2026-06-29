@@ -30,14 +30,18 @@ export const metadata: Metadata = {
     title: FREE_AKT_QUESTIONS_TITLE,
     description: FREE_AKT_QUESTIONS_SOCIAL_DESCRIPTION,
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
-export default function FreePage() {
+export default function FreeAktQuestionsPage() {
   return (
     <main>
       <FreeAktQuestionsJsonLd />
       <Nav />
-      <FreeAktQuestionsLanding sourceSurface="custom_gpt_return" />
+      <FreeAktQuestionsLanding sourceSurface="free_questions_landing" />
       <MinimalFooter />
     </main>
   );

@@ -312,7 +312,15 @@ export function ExplanationBuilderBridge() {
               style={{ color: "rgba(232,236,255,.48)" }}
             >
               Requires a ChatGPT account. AKT Navigator free practice does not
-              require a card.
+              require a card. Prefer the full landing page?{" "}
+              <a
+                href="/free-akt-questions"
+                className="font-semibold transition-colors hover:text-white"
+                style={{ color: "rgba(197,170,255,.84)" }}
+              >
+                See free AKT questions
+              </a>
+              .
             </p>
           </div>
 

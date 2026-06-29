@@ -50,7 +50,7 @@ export function AdaptivePracticeSection({
         className={`container-x relative reveal-group ${visible ? "is-visible" : ""}`}
       >
         <div
-          className="card card-shimmer r-up grid gap-6 p-5 md:p-7 lg:grid-cols-[.9fr_1.1fr] lg:items-center"
+          className="card card-shimmer r-up grid gap-6 p-5 md:p-6 lg:grid-cols-[.86fr_1.14fr] lg:items-center"
           style={{
             "--i": 0,
             background:
@@ -68,7 +68,7 @@ export function AdaptivePracticeSection({
               Adaptive practice
             </p>
             <h2
-              className="mt-3 text-[28px] leading-[1.1] md:text-[38px]"
+              className="mt-3 text-[27px] leading-[1.1] md:text-[36px]"
               style={{
                 fontFamily: "var(--font-display)",
                 letterSpacing: "-0.035em",
@@ -77,7 +77,7 @@ export function AdaptivePracticeSection({
               Adaptive practice, not a random question shuffle.
             </h2>
             <p
-              className="mt-4 max-w-[650px] text-[15px] leading-[1.7] md:text-[16px]"
+              className="mt-4 max-w-[620px] text-[15px] leading-[1.65]"
               style={{ color: "rgba(232,236,255,.68)" }}
             >
               AKT Navigator uses your practice history to balance AKT blueprint
@@ -85,14 +85,14 @@ export function AdaptivePracticeSection({
               difficulty - so each session has a reason behind it.
             </p>
             <p
-              className="mt-3 max-w-[620px] text-[14px] font-semibold leading-[1.65]"
+              className="mt-3 max-w-[600px] text-[13px] font-semibold leading-[1.6]"
               style={{ color: "rgba(232,236,255,.78)" }}
             >
               21,000+ questions gives breadth; adaptive practice helps decide
               what to do next.
             </p>
             <p
-              className="mt-4 max-w-[620px] text-[12px] leading-[1.65]"
+              className="mt-4 max-w-[600px] text-[12px] leading-[1.6]"
               style={{ color: "rgba(232,236,255,.52)" }}
             >
               Readiness estimates are revision guidance, not a guarantee of
@@ -164,34 +164,46 @@ export function AdaptivePracticeSection({
                 <span className="basis-[16%] bg-violet-200/70" />
               </div>
 
-              <div className="mt-5 grid gap-2 sm:grid-cols-2">
+              <div className="mt-5 overflow-hidden rounded-[14px] border border-white/[.07] bg-black/[.10]">
                 {nextSessionRecipeItems.map((item, index) => (
                   <div
                     key={item.title}
-                    className={
-                      index === nextSessionRecipeItems.length - 1
-                        ? "rounded-[14px] border border-white/[.07] bg-black/[.12] px-3 py-3 sm:col-span-2"
-                        : "rounded-[14px] border border-white/[.07] bg-black/[.12] px-3 py-3"
-                    }
+                    className="grid grid-cols-[10px_1fr] gap-3 border-b border-white/[.06] px-3 py-3 last:border-b-0"
                   >
-                    <h4
-                      className="text-[13px] font-semibold leading-[1.3]"
+                    <span
+                      className="mt-[6px] h-1.5 w-1.5 rounded-full"
                       style={{
-                        color:
+                        background:
                           index === 0 || index === 3
-                            ? "rgba(52,211,153,.9)"
-                            : "rgba(197,170,255,.86)",
-                        fontFamily: "var(--font-display)",
+                            ? "rgba(52,211,153,.85)"
+                            : "rgba(197,170,255,.82)",
+                        boxShadow:
+                          index === 0 || index === 3
+                            ? "0 0 14px rgba(52,211,153,.35)"
+                            : "0 0 14px rgba(167,139,250,.30)",
                       }}
-                    >
-                      {item.title}
-                    </h4>
-                    <p
-                      className="mt-1 text-[12px] leading-[1.55]"
-                      style={{ color: "rgba(232,236,255,.58)" }}
-                    >
-                      {item.body}
-                    </p>
+                      aria-hidden
+                    />
+                    <div>
+                      <h4
+                        className="text-[13px] font-semibold leading-[1.3]"
+                        style={{
+                          color:
+                            index === 0 || index === 3
+                              ? "rgba(52,211,153,.9)"
+                              : "rgba(197,170,255,.86)",
+                          fontFamily: "var(--font-display)",
+                        }}
+                      >
+                        {item.title}
+                      </h4>
+                      <p
+                        className="mt-1 text-[12px] leading-[1.55]"
+                        style={{ color: "rgba(232,236,255,.58)" }}
+                      >
+                        {item.body}
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>

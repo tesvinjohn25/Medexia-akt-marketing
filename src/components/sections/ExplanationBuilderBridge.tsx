@@ -187,6 +187,7 @@ function GptCta({
         destination: "chatgpt_custom_gpt",
         placement,
       }}
+      flushTimeoutMs={400}
       className={className}
     >
       {children}
@@ -197,7 +198,7 @@ function GptCta({
 function StartFreeLink({
   placement,
   className,
-  children = "Start free AKT questions",
+  children = "Or start free AKT questions",
 }: {
   placement: "hero" | "final";
   className?: string;
@@ -302,7 +303,7 @@ export function ExplanationBuilderBridge() {
                 Open in ChatGPT
               </GptCta>
               <StartFreeLink placement="hero" className="btn-secondary inline-flex items-center text-[15px]">
-                Start free AKT questions
+                Or start free AKT questions
               </StartFreeLink>
             </div>
 
@@ -329,7 +330,7 @@ export function ExplanationBuilderBridge() {
                 className="text-[10px] font-bold uppercase tracking-[0.20em]"
                 style={{ color: "rgba(197,170,255,.86)" }}
               >
-                Builder output
+                What you get back
               </div>
               <div className="mt-4 space-y-3">
                 {[
@@ -459,7 +460,7 @@ export function ExplanationBuilderBridge() {
                 ))}
               </ul>
               <div className="mt-5">
-                <GptCta placement="example" className="btn-secondary inline-flex text-[14px]">
+                <GptCta placement="example" className="btn-primary inline-block text-[14px]">
                   Open this builder
                 </GptCta>
               </div>
@@ -475,16 +476,16 @@ export function ExplanationBuilderBridge() {
             {HOW_IT_WORKS.map((step, index) => (
               <div
                 key={step}
-                className="rounded-[16px] border border-white/[.08] bg-white/[.035] p-5"
+                className="rounded-[16px] border border-white/[.08] bg-white/[.035] p-4 md:p-5"
               >
                 <div
-                  className="text-[12px] font-bold uppercase tracking-[0.20em]"
+                  className="text-[11px] font-bold uppercase tracking-[0.20em]"
                   style={{ color: "rgba(197,170,255,.86)" }}
                 >
                   Step {index + 1}
                 </div>
                 <h3
-                  className="mt-3 text-[18px] font-semibold leading-[1.25]"
+                  className="mt-2 text-[17px] font-semibold leading-[1.25] md:text-[18px]"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {step}
@@ -520,7 +521,7 @@ export function ExplanationBuilderBridge() {
             >
               AKT Navigator has free AKT questions, mocks and structured
               explanations &mdash; plus audio revision for commutes, walks and
-              tired evenings.
+              tired evenings. No card required.
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-3">
               <StartFreeLink placement="final" className="btn-primary inline-block text-[15px]">

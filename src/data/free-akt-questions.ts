@@ -67,14 +67,30 @@ export const sampleFreeAktQuestion = {
     "In AKT prescribing questions, identify whether the drug interaction increases effect, reduces effect, or creates a true contraindication.",
 } as const;
 
-export const trustStackItems = [
+export const freeQuestionProcessSteps = [
+  {
+    title: "Topic-structured generation",
+    body: "Questions are organised around AKT-relevant topics and single-best-answer exam style.",
+  },
+  {
+    title: "Multi-stage automated review",
+    body: "The pipeline checks answer consistency, wording, distractors and explanation quality before content is used.",
+  },
+  {
+    title: "Teaching-card explanation format",
+    body: "Explanations focus on the clue, examiner trap, near-miss answer, AKT takeaway and why the other options fail.",
+  },
+  {
+    title: "User flagging loop",
+    body: "If something looks wrong, users can flag it for review and correction.",
+  },
+] as const;
+
+export const freeQuestionTrustStripItems = [
   "AI-assisted, not AI-dumped",
-  "AKT-topic structured",
-  "Multi-stage automated review",
-  "Explanation-focused",
-  "User flagging/correction loop",
+  "Exam revision only",
   "Guideline-aware where relevant",
-  "Independent of RCGP",
+  "Independent of the RCGP",
 ] as const;
 
 export const bestForItems = [

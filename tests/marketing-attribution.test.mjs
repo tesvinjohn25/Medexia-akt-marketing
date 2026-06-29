@@ -552,16 +552,26 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
     "src/components/sections/FreeAktQuestionsLanding.tsx",
     "utf8",
   );
+  const demo = fs.readFileSync(
+    "src/components/sections/FreeQuestionsLiveDemo.tsx",
+    "utf8",
+  );
   const data = fs.readFileSync("src/data/free-akt-questions.ts", "utf8");
   const schema = fs.readFileSync("src/components/FreeAktQuestionsJsonLd.tsx", "utf8");
   const sitemap = fs.readFileSync("src/app/sitemap.ts", "utf8");
-  const source = `${route}\n${component}\n${data}\n${schema}`;
+  const source = `${route}\n${component}\n${demo}\n${data}\n${schema}`;
 
   assert.match(route, /FreeAktQuestionsLanding sourceSurface="free_questions_landing"/);
   assert.match(component, /<TrackedAppLink[\s\S]*href="\/join\/free"[\s\S]*intent="start_free"/);
   assert.match(component, /free_akt_questions_start_free_clicked/);
   assert.match(component, /free_akt_questions_explanation_builder_clicked/);
   assert.match(component, /free_akt_questions_sample_viewed/);
+  assert.match(component, /!isCustomGptReturn \? <FreeQuestionsLiveDemo \/> : null/);
+  assert.match(demo, /Sit five AKT-style questions inside the app\./);
+  assert.match(demo, /DEMO_QUESTIONS = "\/demo\/questions"/);
+  assert.match(demo, /free_akt_questions_demo_viewed/);
+  assert.match(demo, /free_akt_questions_demo_opened/);
+  assert.match(demo, /free_akt_questions_demo_fullscreen_clicked/);
 
   assert.match(source, /Free AKT questions/);
   assert.match(source, /21,000\+ AKT-style questions/);
@@ -572,9 +582,15 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   assert.match(source, /AI-assisted/);
   assert.match(source, /multi-stage automated review/);
   assert.match(source, /not affiliated with or endorsed by the RCGP/);
+  assert.match(source, /A patient with COPD taking theophylline develops regular SVT/);
   assert.doesNotMatch(source, /doctor-reviewed/i);
   assert.doesNotMatch(data, /First 2h audio free after 8 July/);
   assert.doesNotMatch(component, /index < 4 \? "Free" : "Optional"/);
+  assert.equal((component.match(/>\s*Trust\s*</g) ?? []).length, 0);
+  assert.match(component, /freeQuestionProcessSteps\.map/);
+  assert.match(data, /Topic-structured generation/);
+  assert.match(data, /Teaching-card explanation format/);
+  assert.match(data, /Exam revision only/);
   assert.match(schema, /"@type": "BreadcrumbList"/);
   assert.match(schema, /"@type": "WebPage"/);
   assert.match(schema, /"@type": "SoftwareApplication"/);
@@ -599,6 +615,7 @@ test("/free renders the shared free questions page in custom GPT return mode", (
   assert.match(component, /const isCustomGptReturn = sourceSurface === "custom_gpt_return"/);
   assert.match(component, /!isCustomGptReturn \? \(/);
   assert.match(component, /Open the Explanation Builder again/);
+  assert.match(component, /!isCustomGptReturn \? <FreeQuestionsLiveDemo \/> : null/);
 });
 
 test("new explanation builder event names pass through the generic event pipeline", async () => {
@@ -661,6 +678,18 @@ test("new free AKT questions event names pass through the generic event pipeline
     page: "free_akt_questions",
     section: "sample_question",
   });
+  trackLandingEvent("free_akt_questions_demo_viewed", {
+    page: "free_akt_questions",
+    placement: "live_demo",
+  });
+  trackLandingEvent("free_akt_questions_demo_opened", {
+    page: "free_akt_questions",
+    placement: "mobile_launcher",
+  });
+  trackLandingEvent("free_akt_questions_demo_fullscreen_clicked", {
+    page: "free_akt_questions",
+    placement: "desktop_demo",
+  });
   trackLandingEvent("free_akt_questions_explanation_builder_clicked", {
     page: "free_akt_questions",
     placement: "hero",
@@ -678,6 +707,9 @@ test("new free AKT questions event names pass through the generic event pipeline
   const eventNames = [...beaconPayloads, ...fetchPayloads].map((payload) => payload.event_name);
 
   assert.deepEqual(eventNames.sort(), [
+    "free_akt_questions_demo_fullscreen_clicked",
+    "free_akt_questions_demo_opened",
+    "free_akt_questions_demo_viewed",
     "free_akt_questions_explanation_builder_clicked",
     "free_akt_questions_page_viewed",
     "free_akt_questions_sample_viewed",

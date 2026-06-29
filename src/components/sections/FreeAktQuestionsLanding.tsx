@@ -11,6 +11,7 @@ import {
 } from "react";
 import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 import { useMarketingAttribution } from "@/components/marketing/MarketingAttributionProvider";
+import { FreeQuestionsLiveDemo } from "@/components/sections/FreeQuestionsLiveDemo";
 import { canUseAnalytics } from "@/lib/consent/consent";
 import { initMarketingAttribution } from "@/lib/marketing/attribution";
 import { trackLandingEvent } from "@/lib/marketing/events";
@@ -21,11 +22,12 @@ import {
   conventionalBankItems,
   explanationDifferenceItems,
   freeAktQuestionsFaqs,
+  freeQuestionProcessSteps,
+  freeQuestionTrustStripItems,
   freePracticeFacts,
   freePracticeIncludes,
   optionalPaidAudioFeatures,
   sampleFreeAktQuestion,
-  trustStackItems,
 } from "@/data/free-akt-questions";
 
 type SourceSurface = "free_questions_landing" | "custom_gpt_return";
@@ -594,6 +596,8 @@ export function FreeAktQuestionsLanding({
         </div>
       </section>
 
+      {!isCustomGptReturn ? <FreeQuestionsLiveDemo /> : null}
+
       <section className="section-padding pt-0">
         <div className="container-x">
           <div className="grid gap-7 lg:grid-cols-[.9fr_1.1fr] lg:items-start">
@@ -620,27 +624,44 @@ export function FreeAktQuestionsLanding({
               ) : null}
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2">
-              {explanationDifferenceItems.map((item, index) => (
-                <div
-                  key={item}
-                  className="rounded-[16px] border border-white/[.08] bg-white/[.035] p-4"
-                >
-                  <p
-                    className="text-[11px] font-bold uppercase tracking-[0.18em]"
-                    style={{ color: "rgba(167,139,250,.82)" }}
+            <GlassCard
+              className="p-4 md:p-5"
+              style={{
+                background:
+                  "linear-gradient(145deg, rgba(17,19,26,.88), rgba(17,19,26,.66) 58%, rgba(109,106,232,.07))",
+                border: "1px solid rgba(167,139,250,.14)",
+              }}
+            >
+              <div className="grid gap-0 overflow-hidden rounded-[14px] border border-white/[.07] sm:grid-cols-2">
+                {explanationDifferenceItems.map((item, index) => (
+                  <div
+                    key={item}
+                    className="grid grid-cols-[34px_1fr] gap-3 border-b border-white/[.06] bg-white/[.025] p-4 sm:even:border-l sm:[&:nth-last-child(-n+2)]:border-b-0"
                   >
-                    0{index + 1}
-                  </p>
-                  <h3
-                    className="mt-2 text-[15px] font-semibold leading-[1.35]"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    {item}
-                  </h3>
-                </div>
-              ))}
-            </div>
+                    <span
+                      className="flex h-[24px] w-[24px] items-center justify-center rounded-full text-[10px] font-bold"
+                      style={{
+                        color:
+                          index % 2 === 0
+                            ? "rgba(52,211,153,.88)"
+                            : "rgba(197,170,255,.84)",
+                        background: "rgba(255,255,255,.04)",
+                        border: "1px solid rgba(255,255,255,.08)",
+                      }}
+                      aria-hidden
+                    >
+                      {index + 1}
+                    </span>
+                    <h3
+                      className="text-[15px] font-semibold leading-[1.35]"
+                      style={{ fontFamily: "var(--font-display)" }}
+                    >
+                      {item}
+                    </h3>
+                  </div>
+                ))}
+              </div>
+            </GlassCard>
           </div>
         </div>
       </section>
@@ -826,54 +847,64 @@ export function FreeAktQuestionsLanding({
             eyebrow="Transparent process"
             title="How the free question bank is built"
             body={
-              <>
-                <p>
-                  AKT Navigator uses an AI-assisted question and explanation
-                  pipeline. Questions are structured around AKT-relevant topics,
-                  checked through multiple automated review stages, and written
-                  to teach the reasoning behind the answer - not just mark it
-                  right or wrong.
-                </p>
-                <p className="mt-3">
-                  This is why we can keep the question bank free. The paid part
-                  of AKT Navigator is the full audio revision layer.
-                </p>
-                <p className="mt-3">
-                  The question bank is for AKT exam revision only. AKT
-                  Navigator is independent and is not affiliated with or
-                  endorsed by the RCGP. If something looks wrong, users can flag
-                  it for review.
-                </p>
-              </>
+              <p>
+                AKT Navigator uses an AI-assisted question and explanation
+                pipeline. Questions are structured around AKT-relevant topics,
+                checked through multiple automated review stages, and written
+                to teach the reasoning behind the answer - not just mark it
+                right or wrong.
+              </p>
             }
           />
 
-          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {trustStackItems.map((item, index) => (
-              <div
-                key={item}
-                className="rounded-[16px] border border-white/[.08] bg-white/[.035] p-4"
-              >
-                <p
-                  className="text-[11px] font-bold uppercase tracking-[0.18em]"
-                  style={{
-                    color:
-                      index % 3 === 0
-                        ? "rgba(52,211,153,.82)"
-                        : "rgba(167,139,250,.82)",
-                  }}
+          <GlassCard
+            className="mt-6 p-5 md:p-7"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(17,19,26,.92), rgba(17,19,26,.72) 48%, rgba(52,211,153,.055))",
+              border: "1px solid rgba(52,211,153,.14)",
+            }}
+          >
+            <div className="grid gap-0 overflow-hidden rounded-[16px] border border-white/[.07] lg:grid-cols-4">
+              {freeQuestionProcessSteps.map((step, index) => (
+                <article
+                  key={step.title}
+                  className="border-b border-white/[.06] bg-white/[.025] p-4 last:border-b-0 lg:border-b-0 lg:border-r lg:last:border-r-0"
                 >
-                  Trust
-                </p>
-                <h3
-                  className="mt-2 text-[15px] font-semibold leading-[1.35]"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  {item}
-                </h3>
-              </div>
-            ))}
-          </div>
+                  <p
+                    className="text-[11px] font-bold uppercase tracking-[0.18em]"
+                    style={{
+                      color:
+                        index === 0
+                          ? "rgba(52,211,153,.86)"
+                          : "rgba(197,170,255,.82)",
+                    }}
+                  >
+                    Step {index + 1}
+                  </p>
+                  <h3
+                    className="mt-2 text-[16px] font-semibold leading-[1.25]"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {step.title}
+                  </h3>
+                  <p
+                    className="mt-2 text-[13px] leading-[1.65]"
+                    style={{ color: "rgba(232,236,255,.64)" }}
+                  >
+                    {step.body}
+                  </p>
+                </article>
+              ))}
+            </div>
+
+            <p
+              className="mt-5 text-[12px] font-semibold leading-[1.6]"
+              style={{ color: "rgba(232,236,255,.66)" }}
+            >
+              {freeQuestionTrustStripItems.join(" · ")}
+            </p>
+          </GlassCard>
         </div>
       </section>
 
@@ -968,27 +999,29 @@ export function FreeAktQuestionsLanding({
         <div className="container-x">
           <SectionHeader eyebrow="FAQ" title="Free AKT questions FAQ" center />
 
-          <div className="mt-6 grid gap-3 lg:grid-cols-2">
-            {freeAktQuestionsFaqs.map((faq) => (
-              <article
-                key={faq.question}
-                className="rounded-[16px] border border-white/[.08] bg-white/[.035] p-5"
-              >
-                <h3
-                  className="text-[17px] font-semibold leading-[1.25]"
-                  style={{ fontFamily: "var(--font-display)" }}
+          <GlassCard className="mt-6 p-0">
+            <div className="grid gap-0 overflow-hidden rounded-[16px] md:grid-cols-2">
+              {freeAktQuestionsFaqs.map((faq) => (
+                <article
+                  key={faq.question}
+                  className="border-b border-white/[.06] bg-white/[.02] p-5 last:border-b-0 md:even:border-l md:[&:nth-last-child(-n+2)]:border-b-0"
                 >
-                  {faq.question}
-                </h3>
-                <p
-                  className="mt-2 text-[14px] leading-[1.7]"
-                  style={{ color: "rgba(232,236,255,.66)" }}
-                >
-                  {faq.answer}
-                </p>
-              </article>
-            ))}
-          </div>
+                  <h3
+                    className="text-[17px] font-semibold leading-[1.25]"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {faq.question}
+                  </h3>
+                  <p
+                    className="mt-2 text-[14px] leading-[1.7]"
+                    style={{ color: "rgba(232,236,255,.66)" }}
+                  >
+                    {faq.answer}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </GlassCard>
         </div>
       </section>
 

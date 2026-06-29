@@ -10,6 +10,7 @@ import {
 import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 import { TrackedExternalLink } from "@/components/marketing/TrackedExternalLink";
 import { useMarketingAttribution } from "@/components/marketing/MarketingAttributionProvider";
+import { explanationBuilderFaqs } from "@/data/explanation-builder";
 import { canUseAnalytics } from "@/lib/consent/consent";
 import { initMarketingAttribution } from "@/lib/marketing/attribution";
 import { trackLandingEvent } from "@/lib/marketing/events";
@@ -42,21 +43,6 @@ const HOW_IT_WORKS = [
   "Paste your AKT-style question",
   "Get a structured teaching explanation",
   "Explain it back and get short feedback",
-];
-
-const FAQS = [
-  {
-    q: "Does this replace AKT Navigator?",
-    a: "No. The builder explains one pasted question at a time. AKT Navigator is the full revision system: question bank, mocks, explanations, progress and audio.",
-  },
-  {
-    q: "Do I need ChatGPT?",
-    a: "Yes, to use the Custom GPT. You can still start free AKT questions without ChatGPT.",
-  },
-  {
-    q: "Is this medical advice?",
-    a: "No. It is for AKT exam revision only and is not medical advice.",
-  },
 ];
 
 function useTrackedPageView() {
@@ -552,22 +538,22 @@ export function ExplanationBuilderBridge() {
         <div className="container-x max-w-[820px]">
           <SectionHeader eyebrow="FAQ" title="A few practical details." />
           <div className="mt-5 grid gap-3">
-            {FAQS.map((faq) => (
+            {explanationBuilderFaqs.map((faq) => (
               <div
-                key={faq.q}
+                key={faq.question}
                 className="rounded-[16px] border border-white/[.08] bg-white/[.035] p-5"
               >
                 <h3
                   className="text-[17px] font-semibold leading-[1.25]"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
-                  {faq.q}
+                  {faq.question}
                 </h3>
                 <p
                   className="mt-2 text-[14px] leading-[1.7]"
                   style={{ color: "rgba(232,236,255,.66)" }}
                 >
-                  {faq.a}
+                  {faq.answer}
                 </p>
               </div>
             ))}

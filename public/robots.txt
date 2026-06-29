@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://medexia-akt.com/sitemap.xml
+LLMs: https://medexia-akt.com/llms.txt

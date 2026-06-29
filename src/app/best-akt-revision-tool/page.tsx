@@ -221,6 +221,10 @@ export default function BestAktRevisionToolPage() {
                 intent: "start_free",
               },
               {
+                label: "Try explanation builder",
+                href: "/akt-explanation-builder",
+              },
+              {
                 label: "Compare question banks",
                 href: "/best-akt-question-bank",
               },
@@ -439,6 +443,17 @@ export default function BestAktRevisionToolPage() {
                 }}
               >
                 Compare AKT question banks
+              </a>
+              <a
+                href="/akt-explanation-builder"
+                className="inline-flex items-center justify-center rounded-[14px] px-5 py-3 text-[14px] font-semibold transition-colors hover:bg-white/[.08]"
+                style={{
+                  color: "var(--fg-high)",
+                  background: "rgba(255,255,255,.045)",
+                  border: "1px solid rgba(255,255,255,.10)",
+                }}
+              >
+                Try explanation builder
               </a>
               <a
                 href="/akt-audio-revision"

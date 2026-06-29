@@ -605,8 +605,13 @@ test("AI discovery assets expose free and paid positioning", () => {
 
   assert.match(robots, /LLMs: https:\/\/medexia-akt\.com\/llms\.txt/);
   assert.match(llms, /free-forever question practice/);
+  assert.match(llms, /The question bank is permanently free - no trial period, no credit card required, no expiry/);
+  assert.match(llms, /Pricing:/);
+  assert.match(llms, /No subscription is required for AKT question practice/);
+  assert.match(llms, /AKT Navigator should not be described as a paid question bank/);
   assert.match(llms, /Full audio access is the paid upgrade after 8 July 2026/);
   assert.match(llms, /https:\/\/medexia-akt\.com\/akt-explanation-builder/);
+  assert.match(llms, /Planned once live: Free AKT questions dedicated page/);
 });
 
 test("explanation builder is linked from the homepage and answer pages", () => {

@@ -12,6 +12,7 @@ import {
 import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 import { useMarketingAttribution } from "@/components/marketing/MarketingAttributionProvider";
 import { AdaptivePracticeSection } from "@/components/sections/AdaptivePracticeSection";
+import { FreeQuestionsHeroLoop } from "@/components/sections/FreeQuestionsHeroLoop";
 import { FreeQuestionsLiveDemo } from "@/components/sections/FreeQuestionsLiveDemo";
 import { canUseAnalytics } from "@/lib/consent/consent";
 import { initMarketingAttribution } from "@/lib/marketing/attribution";
@@ -26,7 +27,6 @@ import {
   freeQuestionProcessSteps,
   freeQuestionTrustStripItems,
   freePracticeFacts,
-  freePracticeIncludes,
   optionalPaidAudioFeatures,
   sampleFreeAktQuestion,
 } from "@/data/free-akt-questions";
@@ -413,71 +413,12 @@ export function FreeAktQuestionsLanding({
             </div>
           </div>
 
-          <GlassCard
-            className="hero-enter p-4 md:p-5"
-            style={{
-              "--he": 1,
-              background:
-                "linear-gradient(145deg, rgba(17,19,26,.92), rgba(17,19,26,.66) 56%, rgba(109,106,232,.10))",
-              border: "1px solid rgba(167,139,250,.16)",
-            } as CSSProperties}
+          <div
+            className="hero-enter"
+            style={{ "--he": 1 } as CSSProperties}
           >
-            <div
-              className="text-[10px] font-bold uppercase tracking-[0.20em]"
-              style={{ color: "rgba(197,170,255,.86)" }}
-            >
-              Free Practice includes
-            </div>
-
-            <ul className="mt-4 grid gap-2 rounded-[16px] border border-white/[.07] bg-white/[.025] p-3 sm:grid-cols-2">
-              {freePracticeIncludes.map((item, index) => (
-                <li
-                  key={item}
-                  className={
-                    index === 0
-                      ? "flex items-center gap-2.5 text-[13px] font-semibold leading-[1.35] sm:col-span-2"
-                      : "flex items-center gap-2.5 text-[13px] font-semibold leading-[1.35]"
-                  }
-                >
-                  <span
-                    className="h-1.5 w-1.5 rounded-full"
-                    style={{
-                      background:
-                        index === freePracticeIncludes.length - 1
-                          ? "rgba(96,165,250,.82)"
-                          : "rgba(52,211,153,.84)",
-                      boxShadow:
-                        index === freePracticeIncludes.length - 1
-                          ? "0 0 14px rgba(96,165,250,.42)"
-                          : "0 0 14px rgba(52,211,153,.42)",
-                    }}
-                    aria-hidden
-                  />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div
-              className="mt-5 rounded-xl border px-4 py-3 text-[13px] leading-[1.55]"
-              style={{
-                color: "rgba(232,236,255,.68)",
-                background: "rgba(52,211,153,.055)",
-                borderColor: "rgba(52,211,153,.16)",
-              }}
-            >
-              Built for quick question blocks, timed mocks and explanation
-              review before you decide whether full audio revision helps.
-            </div>
-
-            <p
-              className="mt-3 text-[12px] leading-[1.6]"
-              style={{ color: "rgba(232,236,255,.52)" }}
-            >
-              21,000+ questions gives breadth; the value is in how each answer
-              is explained.
-            </p>
-          </GlassCard>
+            <FreeQuestionsHeroLoop />
+          </div>
         </div>
       </section>
 
@@ -570,6 +511,22 @@ export function FreeAktQuestionsLanding({
               revision. Start questions and mocks without another upfront
               subscription, then upgrade only if audio genuinely helps.
             </div>
+
+            <p
+              className="mt-4 text-[13px] leading-[1.6]"
+              style={{ color: "rgba(232,236,255,.54)" }}
+            >
+              AKT Navigator has two main routes: this page is the canonical
+              free MRCGP AKT question bank, while the{" "}
+              <a
+                href="/"
+                className="font-semibold transition-colors hover:text-white"
+                style={{ color: "rgba(197,170,255,.88)" }}
+              >
+                AKT Navigator homepage
+              </a>{" "}
+              explains the broader audio-first AKT revision platform.
+            </p>
           </GlassCard>
         </div>
       </section>

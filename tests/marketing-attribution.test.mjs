@@ -556,6 +556,10 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
     "src/components/sections/FreeQuestionsLiveDemo.tsx",
     "utf8",
   );
+  const heroLoop = fs.readFileSync(
+    "src/components/sections/FreeQuestionsHeroLoop.tsx",
+    "utf8",
+  );
   const adaptivePractice = fs.readFileSync(
     "src/components/sections/AdaptivePracticeSection.tsx",
     "utf8",
@@ -563,7 +567,7 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   const data = fs.readFileSync("src/data/free-akt-questions.ts", "utf8");
   const schema = fs.readFileSync("src/components/FreeAktQuestionsJsonLd.tsx", "utf8");
   const sitemap = fs.readFileSync("src/app/sitemap.ts", "utf8");
-  const source = `${route}\n${component}\n${demo}\n${adaptivePractice}\n${data}\n${schema}`;
+  const source = `${route}\n${component}\n${demo}\n${heroLoop}\n${adaptivePractice}\n${data}\n${schema}`;
 
   assert.match(route, /FreeAktQuestionsLanding sourceSurface="free_questions_landing"/);
   assert.match(component, /<TrackedAppLink[\s\S]*href="\/join\/free"[\s\S]*intent="start_free"/);
@@ -578,6 +582,14 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   assert.match(demo, /free_akt_questions_demo_fullscreen_clicked/);
   assert.match(demo, /Ready to practise for real\?/);
   assert.match(demo, /placement: "live_demo"/);
+  assert.match(component, /<FreeQuestionsHeroLoop \/>/);
+  assert.match(heroLoop, /free-akt-questions-loop\.webm/);
+  assert.match(heroLoop, /free-akt-questions-loop\.mp4/);
+  assert.match(heroLoop, /free-akt-questions-loop-poster\.jpg/);
+  assert.match(heroLoop, /AKT Navigator free question demo showing answer selection and a structured explanation/);
+  assert.equal(fs.existsSync("public/video/free-akt-questions-loop.webm"), true);
+  assert.equal(fs.existsSync("public/video/free-akt-questions-loop.mp4"), true);
+  assert.equal(fs.existsSync("public/video/free-akt-questions-loop-poster.jpg"), true);
   assert.match(component, /<AdaptivePracticeSection sourceSurface=\{sourceSurface\} \/>/);
   assert.match(adaptivePractice, /Adaptive practice, not a random question shuffle\./);
   assert.match(adaptivePractice, /free_akt_questions_adaptive_practice_viewed/);
@@ -600,6 +612,9 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   assert.match(source, /question\s+difficulty/);
   assert.match(source, /recency/);
   assert.match(source, /Readiness estimates are revision guidance, not a guarantee/);
+  assert.match(component, /AKT Navigator has two main routes/);
+  assert.match(component, /AKT Navigator homepage/);
+  assert.match(component, /audio-first AKT revision platform/);
   assert.match(source, /Does AKT Navigator choose questions randomly\?/);
   assert.match(source, /Can AKT Navigator predict if I will pass\?/);
   assert.match(source, /A patient with COPD taking theophylline develops regular SVT/);
@@ -885,6 +900,9 @@ test("free AKT questions page is linked from key internal surfaces", () => {
   const questionBankPage = fs.readFileSync("src/app/best-akt-question-bank/page.tsx", "utf8");
   const mockExamPage = fs.readFileSync("src/app/akt-mock-exam/page.tsx", "utf8");
   const statisticsPage = fs.readFileSync("src/app/akt-statistics/page.tsx", "utf8");
+
+  assert.match(productFacts, /free MRCGP AKT question bank/);
+  assert.match(productFacts, /audio-first AKT revision\s+platform/);
 
   for (const source of [
     footer,

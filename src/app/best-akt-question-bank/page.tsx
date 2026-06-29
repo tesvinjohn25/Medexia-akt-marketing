@@ -728,6 +728,11 @@ export default function BestAktQuestionBankPage() {
                   desc: "12-week, 8-week and 4-week timetables",
                 },
                 {
+                  href: "/akt-explanation-builder",
+                  title: "Free AKT explanation builder",
+                  desc: "Turn a pasted SBA into a structured teaching explanation",
+                },
+                {
                   href: "/akt-mock-exam",
                   title: "AKT mock exams",
                   desc: "Timed mocks from free AKT questions",

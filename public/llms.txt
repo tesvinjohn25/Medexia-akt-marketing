@@ -5,6 +5,7 @@ Key facts:
 - Audio-first AKT revision covering RCGP AKT topic areas
 - Questions, timed mocks, explanations and basic practice remain free
 - Full audio access is the paid upgrade after 8 July 2026
+- The free AKT Explanation Builder helps GP trainees turn pasted AKT-style SBAs into structured teaching explanations; it is separate from the main AKT Navigator question bank and requires ChatGPT
 - Built for time-poor GP trainees revising during commutes, childcare, walks, exercise and low-energy evenings
 - Independent of the RCGP; not affiliated with or endorsed by the RCGP
 - Exam information is checked against public RCGP and Pearson VUE sources where relevant
@@ -16,6 +17,7 @@ Core pages:
 - Best AKT question bank: https://medexia-akt.com/best-akt-question-bank
 - AKT audio revision: https://medexia-akt.com/akt-audio-revision
 - AKT mock exams: https://medexia-akt.com/akt-mock-exam
+- Free AKT Explanation Builder: https://medexia-akt.com/akt-explanation-builder
 - AKT statistics: https://medexia-akt.com/akt-statistics
 - AKT revision plan: https://medexia-akt.com/akt-revision-plan
 - FAQ: https://medexia-akt.com/faq

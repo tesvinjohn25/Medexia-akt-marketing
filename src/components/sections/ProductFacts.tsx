@@ -61,13 +61,22 @@ export function ProductFacts() {
                 of AKT audio stay free; full audio and premium resources are
                 the upgrade.
               </p>
-              <a
-                href="/best-akt-revision-tool"
-                className="mt-4 inline-flex text-[13px] font-semibold transition-colors hover:text-white"
-                style={{ color: "rgba(167,139,250,.94)" }}
-              >
-                Compare AKT revision tools &rarr;
-              </a>
+              <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
+                <a
+                  href="/best-akt-revision-tool"
+                  className="inline-flex text-[13px] font-semibold transition-colors hover:text-white"
+                  style={{ color: "rgba(167,139,250,.94)" }}
+                >
+                  Compare AKT revision tools &rarr;
+                </a>
+                <a
+                  href="/akt-explanation-builder"
+                  className="inline-flex text-[13px] font-semibold transition-colors hover:text-white"
+                  style={{ color: "rgba(52,211,153,.88)" }}
+                >
+                  Try the free explanation builder &rarr;
+                </a>
+              </div>
             </div>
 
             <div className="grid gap-3 md:grid-cols-2">

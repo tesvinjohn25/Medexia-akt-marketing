@@ -599,6 +599,30 @@ test("homepage pricing FAQs are included in shared JSON-LD source", () => {
   assert.match(pricing, /pricingFaqs\.map/);
 });
 
+test("AI discovery assets expose free and paid positioning", () => {
+  const llms = fs.readFileSync("public/llms.txt", "utf8");
+  const robots = fs.readFileSync("public/robots.txt", "utf8");
+
+  assert.match(robots, /LLMs: https:\/\/medexia-akt\.com\/llms\.txt/);
+  assert.match(llms, /free-forever question practice/);
+  assert.match(llms, /Full audio access is the paid upgrade after 8 July 2026/);
+  assert.match(llms, /https:\/\/medexia-akt\.com\/akt-explanation-builder/);
+});
+
+test("explanation builder is linked from the homepage and answer pages", () => {
+  const productFacts = fs.readFileSync("src/components/sections/ProductFacts.tsx", "utf8");
+  const revisionToolPage = fs.readFileSync("src/app/best-akt-revision-tool/page.tsx", "utf8");
+  const questionBankPage = fs.readFileSync("src/app/best-akt-question-bank/page.tsx", "utf8");
+  const explanationBuilderPage = fs.readFileSync("src/app/akt-explanation-builder/page.tsx", "utf8");
+
+  for (const source of [productFacts, revisionToolPage, questionBankPage]) {
+    assert.match(source, /\/akt-explanation-builder/);
+  }
+
+  assert.match(explanationBuilderPage, /"@type": "FAQPage"/);
+  assert.match(explanationBuilderPage, /explanationBuilderFaqs\.map/);
+});
+
 test("referral handoff is preserved without analytics consent but marketing identifiers are not", () => {
   resetTrackingEnv();
   setReferralFlags(true);

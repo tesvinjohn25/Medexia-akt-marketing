@@ -10,10 +10,12 @@ Open:
 
 Expected:
 
-- Before consent, no `mx_visitor_id` exists and the app URL does not include `mx_vid`, UTM params, or ad click IDs.
+- Before consent, no `mx_visitor_id` exists.
+- Before consent, `mx_first_touch.source` is `reddit` and the app URL includes `utm_source=reddit`, `utm_medium=organic`, `utm_campaign=audio_first_post`, and `utm_content=too_tired_to_read`.
+- Before consent, the app URL does not include `mx_vid` or ad click IDs.
 - Accept Analytics in Cookie settings.
 - `mx_visitor_id` exists in localStorage.
-- `mx_first_touch.utm_source` is `reddit`.
+- `mx_first_touch.source` and `mx_first_touch.utm_source` are `reddit`.
 - Start Free app URL includes `mx_vid`, `mx_sid`, `utm_source=reddit`, `utm_medium=organic`, `utm_campaign=audio_first_post`, `utm_content=too_tired_to_read`, `offer_id=free_unlimited_pre_2026_07_08`, and `intent=start_free`.
 
 ## Direct Revisit
@@ -36,8 +38,8 @@ Open:
 Expected:
 
 - `mx_first_touch` remains the original Reddit touch.
-- `mx_last_touch.utm_source` updates to `tpd`.
-- App CTA includes the latest UTM values and the original first-touch fields.
+- `mx_last_touch.source` updates to `tpd`.
+- App CTA keeps `utm_source=reddit` for the original first-touch source and includes `last_touch_source=tpd`.
 
 ## Referral Journey
 
@@ -51,7 +53,7 @@ Before 8 July 2026 with `NEXT_PUBLIC_REFERRAL_SPRINT_ENABLED=false` or `NEXT_PUB
 
 - No `£49` price appears.
 - Early Access remains `£59`.
-- Before consent, app CTA includes `ref=ABC123` and `referral_code=ABC123`, but not `mx_vid` or UTM params.
+- Before consent, app CTA includes `ref=ABC123` and `referral_code=ABC123`, but not `mx_vid` or ad click IDs.
 - With functional or analytics consent, referral continuity can be persisted.
 
 Before 8 July 2026 with both referral flags enabled expected:

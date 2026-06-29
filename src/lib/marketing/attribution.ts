@@ -2,6 +2,7 @@ import {
   canUseAnalytics,
   canUseFunctional,
   canUseMarketing,
+  hasConsentDecision,
 } from "../consent/consent";
 
 export const MARKETING_STORAGE_KEYS = {
@@ -33,6 +34,11 @@ export type CtaIntent =
   | "app_open";
 
 export interface MarketingTouch {
+  source: string | null;
+  medium: string | null;
+  campaign: string | null;
+  content: string | null;
+  term: string | null;
   utm_source: string | null;
   utm_medium: string | null;
   utm_campaign: string | null;
@@ -52,6 +58,14 @@ export interface MarketingTouch {
   msclkid: string | null;
   ref: string | null;
   referral_code: string | null;
+}
+
+export interface AppMarketingTouch {
+  source: string | null;
+  medium: string | null;
+  campaign: string | null;
+  content: string | null;
+  term: string | null;
 }
 
 export interface ReferralSnapshot {
@@ -105,6 +119,7 @@ const TOUCH_PARAM_KEYS = [
 
 const REFERRAL_PARAM_KEYS = ["ref", "referral", "referral_code", "r"] as const;
 const AD_CLICK_PARAM_KEYS = ["gclid", "gbraid", "wbraid", "fbclid", "ttclid", "msclkid"] as const;
+const UTM_PARAM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"] as const;
 const OFFER_CUTOVER_UK = new Date("2026-07-08T00:00:00+01:00");
 const COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 90;
 const CUSTOM_GPT_RETURN_ATTRIBUTION = {
@@ -215,6 +230,118 @@ function getParam(params: URLSearchParams, key: string, max = 256): string | nul
   return value.trim().slice(0, max);
 }
 
+function hasUtmParam(params: URLSearchParams): boolean {
+  return UTM_PARAM_KEYS.some((key) => Boolean(getParam(params, key)));
+}
+
+function cleanHostname(hostname: string): string {
+  return hostname
+    .toLowerCase()
+    .replace(/\.+$/, "")
+    .replace(/^www\./, "")
+    .replace(/[^a-z0-9.-]/g, "")
+    .slice(0, 128);
+}
+
+function isInternalHostname(hostname: string): boolean {
+  const host = cleanHostname(hostname);
+  return host === "medexia-akt.com" || host.endsWith(".medexia-akt.com");
+}
+
+function classifiedReferrerTouch(referrer: string | null): AppMarketingTouch | null {
+  if (!referrer) return null;
+
+  let host = "";
+  try {
+    host = cleanHostname(new URL(referrer).hostname);
+  } catch {
+    return null;
+  }
+
+  if (!host || isInternalHostname(host)) return null;
+
+  const touch = (
+    source: string,
+    medium: string,
+  ): AppMarketingTouch => ({
+    source,
+    medium,
+    campaign: null,
+    content: null,
+    term: null,
+  });
+
+  // Specific AI hosts are checked before generic search hosts such as google.
+  if (host === "copilot.microsoft.com" || host.startsWith("copilot.")) return touch("copilot", "ai");
+  if (host === "chatgpt.com" || host === "chat.openai.com" || host === "openai.com" || host.endsWith(".openai.com")) return touch("chatgpt", "ai");
+  if (host === "perplexity.ai" || host.endsWith(".perplexity.ai")) return touch("perplexity", "ai");
+  if (host === "gemini.google.com") return touch("gemini", "ai");
+  if (host === "claude.ai" || host.endsWith(".claude.ai")) return touch("claude", "ai");
+
+  if (host === "google.com" || host.startsWith("google.") || host.includes(".google.")) return touch("google", "organic");
+  if (host === "bing.com" || host.endsWith(".bing.com")) return touch("bing", "organic");
+  if (host === "duckduckgo.com" || host.endsWith(".duckduckgo.com")) return touch("duckduckgo", "organic");
+  if (host === "yahoo.com" || host.startsWith("yahoo.") || host.includes(".yahoo.")) return touch("yahoo", "organic");
+  if (host === "ecosia.org" || host.endsWith(".ecosia.org")) return touch("ecosia", "organic");
+  if (host === "yandex.com" || host.startsWith("yandex.") || host.includes(".yandex.")) return touch("yandex", "organic");
+  if (host === "baidu.com" || host.endsWith(".baidu.com")) return touch("baidu", "organic");
+  if (host === "brave.com" || host.endsWith(".brave.com")) return touch("brave", "organic");
+  if (host === "startpage.com" || host.endsWith(".startpage.com")) return touch("startpage", "organic");
+  if (host === "qwant.com" || host.endsWith(".qwant.com")) return touch("qwant", "organic");
+
+  if (host === "facebook.com" || host.endsWith(".facebook.com") || host === "fb.com" || host.endsWith(".fb.com")) return touch("facebook", "social");
+  if (host === "instagram.com" || host.endsWith(".instagram.com")) return touch("instagram", "social");
+  if (host === "twitter.com" || host.endsWith(".twitter.com") || host === "x.com" || host.endsWith(".x.com") || host === "t.co") return touch("twitter", "social");
+  if (host === "linkedin.com" || host.endsWith(".linkedin.com") || host === "lnkd.in") return touch("linkedin", "social");
+  if (host === "reddit.com" || host.endsWith(".reddit.com")) return touch("reddit", "social");
+  if (host === "youtube.com" || host.endsWith(".youtube.com") || host === "youtu.be") return touch("youtube", "social");
+  if (host === "t.me" || host.endsWith(".t.me")) return touch("telegram", "social");
+  if (host === "tiktok.com" || host.endsWith(".tiktok.com")) return touch("tiktok", "social");
+  if (host === "pinterest.com" || host.endsWith(".pinterest.com")) return touch("pinterest", "social");
+
+  return touch(host, "referral");
+}
+
+function compactTouchFromUtm(params: URLSearchParams): AppMarketingTouch | null {
+  if (!hasUtmParam(params)) return null;
+  return {
+    source: getParam(params, "utm_source", 128),
+    medium: getParam(params, "utm_medium", 128),
+    campaign: getParam(params, "utm_campaign", 160),
+    content: getParam(params, "utm_content", 160),
+    term: getParam(params, "utm_term", 160),
+  };
+}
+
+function compactTouchFromRouteAttribution(
+  attribution: typeof CUSTOM_GPT_RETURN_ATTRIBUTION | null,
+): AppMarketingTouch | null {
+  if (!attribution) return null;
+  return {
+    source: attribution.utm_source,
+    medium: attribution.utm_medium,
+    campaign: attribution.utm_campaign,
+    content: attribution.utm_content,
+    term: null,
+  };
+}
+
+function toAppMarketingTouch(touch: MarketingTouch | null | undefined): AppMarketingTouch | null {
+  if (!touch) return null;
+  const compact = {
+    source: touch.source ?? touch.utm_source ?? null,
+    medium: touch.medium ?? touch.utm_medium ?? null,
+    campaign: touch.campaign ?? touch.utm_campaign ?? null,
+    content: touch.content ?? touch.utm_content ?? null,
+    term: touch.term ?? touch.utm_term ?? null,
+  };
+  return Object.values(compact).some(Boolean) ? compact : null;
+}
+
+export function compactAttributionTouch(touch: MarketingTouch | null | undefined): AppMarketingTouch | null {
+  return toAppMarketingTouch(touch);
+}
+
 export function normalizeReferralCode(params: URLSearchParams): {
   referralCode: string | null;
   sourceParam: string | null;
@@ -248,7 +375,8 @@ function externalReferrer(): string | null {
   if (!isBrowser() || !document.referrer) return null;
   try {
     const ref = new URL(document.referrer);
-    if (ref.hostname === window.location.hostname) return null;
+    if (cleanHostname(ref.hostname) === cleanHostname(window.location.hostname)) return null;
+    if (isInternalHostname(ref.hostname)) return null;
     return document.referrer.slice(0, 1024);
   } catch {
     return document.referrer.slice(0, 1024);
@@ -256,8 +384,11 @@ function externalReferrer(): string | null {
 }
 
 function hasMeaningfulTouch(params: URLSearchParams, referrer: string | null, includeAdClickIds: boolean): boolean {
-  if (referrer) return true;
+  if (compactTouchFromUtm(params)) return true;
+  if (customGptReturnAttribution(params)) return true;
+  if (classifiedReferrerTouch(referrer)) return true;
   return TOUCH_PARAM_KEYS.some((key) => {
+    if ((UTM_PARAM_KEYS as readonly string[]).includes(key)) return false;
     if (!includeAdClickIds && (AD_CLICK_PARAM_KEYS as readonly string[]).includes(key)) return false;
     return Boolean(getParam(params, key));
   });
@@ -290,7 +421,7 @@ function readCurrentReferralSnapshot(): ReferralSnapshot | null {
 
 function readAllowedReferralSnapshot(current = readCurrentReferralSnapshot()): ReferralSnapshot | null {
   if (current) return current;
-  if (canUseFunctional() || canUseAnalytics() || canUseMarketing()) {
+  if (canUseFunctional() || canUseAnalytics() || canUseMarketing() || !hasConsentDecision()) {
     return readJson<ReferralSnapshot>(MARKETING_STORAGE_KEYS.referral);
   }
   return null;
@@ -304,13 +435,29 @@ function readCurrentTouch(referralCode: string | null, includeAdClickIds: boolea
   if (!routeAttribution && !hasMeaningfulTouch(params, referrer, includeAdClickIds)) return null;
 
   const explicitOffer = getParam(params, "offer_id", 128);
+  const resolvedTouch =
+    compactTouchFromUtm(params) ??
+    compactTouchFromRouteAttribution(routeAttribution) ??
+    classifiedReferrerTouch(referrer) ??
+    {
+      source: null,
+      medium: null,
+      campaign: null,
+      content: null,
+      term: null,
+    };
 
   return {
-    utm_source: getParam(params, "utm_source", 128) ?? routeAttribution?.utm_source ?? null,
-    utm_medium: getParam(params, "utm_medium", 128) ?? routeAttribution?.utm_medium ?? null,
-    utm_campaign: getParam(params, "utm_campaign", 160) ?? routeAttribution?.utm_campaign ?? null,
-    utm_content: getParam(params, "utm_content", 160) ?? routeAttribution?.utm_content ?? null,
-    utm_term: getParam(params, "utm_term", 160),
+    source: resolvedTouch.source,
+    medium: resolvedTouch.medium,
+    campaign: resolvedTouch.campaign,
+    content: resolvedTouch.content,
+    term: resolvedTouch.term,
+    utm_source: resolvedTouch.source,
+    utm_medium: resolvedTouch.medium,
+    utm_campaign: resolvedTouch.campaign,
+    utm_content: resolvedTouch.content,
+    utm_term: resolvedTouch.term,
     referrer,
     first_landing_page: pagePath(),
     touch_timestamp: new Date().toISOString(),
@@ -475,8 +622,17 @@ function ensureSessionId(): string {
   return id;
 }
 
+function touchStorageAllowed(): boolean {
+  return !hasConsentDecision() || canUseFunctional() || canUseAnalytics() || canUseMarketing();
+}
+
+function analyticsStorageAllowed(): boolean {
+  return canUseAnalytics() || canUseMarketing();
+}
+
 export function getMarketingSnapshot(): MarketingSnapshot {
-  const persistentAttributionAllowed = canUseAnalytics() || canUseMarketing();
+  const persistentAttributionAllowed = analyticsStorageAllowed();
+  const sourceAttributionAllowed = touchStorageAllowed();
   const activeReferral = readCurrentReferralSnapshot();
   const visitorId = persistentAttributionAllowed
     ? safeLocalGet(MARKETING_STORAGE_KEYS.visitorId) ?? safeCookieGet(MARKETING_STORAGE_KEYS.visitorId)
@@ -484,10 +640,10 @@ export function getMarketingSnapshot(): MarketingSnapshot {
   const sessionId = persistentAttributionAllowed
     ? safeSessionGet(MARKETING_STORAGE_KEYS.sessionId) ?? safeCookieGet(MARKETING_STORAGE_KEYS.sessionId)
     : null;
-  const firstTouch = persistentAttributionAllowed
+  const firstTouch = sourceAttributionAllowed
     ? readJson<MarketingTouch>(MARKETING_STORAGE_KEYS.firstTouch)
     : null;
-  const lastTouch = persistentAttributionAllowed
+  const lastTouch = sourceAttributionAllowed
     ? readJson<MarketingTouch>(MARKETING_STORAGE_KEYS.lastTouch)
     : null;
   const referral = readAllowedReferralSnapshot(activeReferral);
@@ -511,8 +667,9 @@ export function initMarketingAttribution(): MarketingSnapshot {
   const analyticsAllowed = canUseAnalytics();
   const marketingAllowed = canUseMarketing();
   const persistentAttributionAllowed = analyticsAllowed || marketingAllowed;
+  const sourceAttributionAllowed = touchStorageAllowed();
 
-  if (!persistentAttributionAllowed) {
+  if (!persistentAttributionAllowed && !sourceAttributionAllowed) {
     if (functionalAllowed && isBrowser()) {
       const params = new URLSearchParams(window.location.search);
       const { referralCode, sourceParam } = normalizeReferralCode(params);
@@ -527,8 +684,10 @@ export function initMarketingAttribution(): MarketingSnapshot {
     return getMarketingSnapshot();
   }
 
-  ensureVisitorId();
-  ensureSessionId();
+  if (persistentAttributionAllowed) {
+    ensureVisitorId();
+    ensureSessionId();
+  }
 
   if (!isBrowser()) return getMarketingSnapshot();
 
@@ -536,7 +695,7 @@ export function initMarketingAttribution(): MarketingSnapshot {
   const { referralCode, sourceParam } = normalizeReferralCode(params);
   const existingReferral = readJson<ReferralSnapshot>(MARKETING_STORAGE_KEYS.referral);
 
-  if (referralCode && sourceParam && (functionalAllowed || persistentAttributionAllowed)) {
+  if (referralCode && sourceParam && (functionalAllowed || persistentAttributionAllowed || sourceAttributionAllowed)) {
     persistJson(MARKETING_STORAGE_KEYS.referral, {
       referral_code: referralCode,
       captured_at: new Date().toISOString(),
@@ -547,7 +706,7 @@ export function initMarketingAttribution(): MarketingSnapshot {
   const storedReferralCode = referralCode ?? existingReferral?.referral_code ?? null;
   const touch = readCurrentTouch(referralCode ?? null, marketingAllowed);
   const firstTouch = readJson<MarketingTouch>(MARKETING_STORAGE_KEYS.firstTouch);
-  if (touch) {
+  if (touch && sourceAttributionAllowed) {
     if (!firstTouch) {
       persistJson(MARKETING_STORAGE_KEYS.firstTouch, touch);
     }
@@ -558,21 +717,27 @@ export function initMarketingAttribution(): MarketingSnapshot {
     referralCode: referralCode ?? null,
     explicitOfferId: getParam(params, "offer_id", 128),
   });
-  persistJson(MARKETING_STORAGE_KEYS.offerContext, {
-    ...offerContext,
-    referral_code: referralCode ? offerContext.referral_code : storedReferralCode,
-  });
+  if (persistentAttributionAllowed) {
+    persistJson(MARKETING_STORAGE_KEYS.offerContext, {
+      ...offerContext,
+      referral_code: referralCode ? offerContext.referral_code : storedReferralCode,
+    });
+  }
 
   return getMarketingSnapshot();
 }
 
 export function attributionForEvent(): Record<string, unknown> {
   const snapshot = getMarketingSnapshot();
+  const firstTouch = toAppMarketingTouch(snapshot.first_touch);
+  const lastTouch = toAppMarketingTouch(snapshot.last_touch);
+  const source = firstTouch?.source ?? lastTouch?.source ?? null;
   return {
     mx_visitor_id: snapshot.mx_visitor_id,
     mx_session_id: snapshot.mx_session_id,
-    first_touch: snapshot.first_touch,
-    last_touch: snapshot.last_touch,
+    source,
+    first_touch: firstTouch,
+    last_touch: lastTouch,
     referral_code: snapshot.referral?.referral_code ?? null,
     offer_id: snapshot.offer_context.offer_id,
   };

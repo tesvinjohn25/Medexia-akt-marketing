@@ -9,6 +9,7 @@ import {
   type CtaIntent,
   type OfferId,
 } from "@/lib/marketing/attribution";
+import { pricingFaqs } from "@/data/product-positioning";
 
 type Plan = {
   title: string;
@@ -139,29 +140,6 @@ const POST_CUTOVER_PLANS: Plan[] = [
     variant: "primary",
   },
 ] as Plan[];
-
-const SEO_FAQS = [
-  {
-    question: "Are AKT Navigator questions free?",
-    answer:
-      "Yes. Free Practice includes syllabus-mapped AKT questions covering the full MRCGP AKT syllabus, deep structured explanations, mock exams, basic practice and 2 hours of audiobook listening.",
-  },
-  {
-    question: "When does paid audio access start?",
-    answer:
-      "Full AKT Navigator access remains free until 8 July 2026. Early Access paid audio starts on 8 July 2026 and runs for 4 months.",
-  },
-  {
-    question: "What is paid in AKT Navigator?",
-    answer:
-      "From 8 July 2026, full access to the 90+ hour AKT audiobook library, interactive statistics course, 2+ hours of statistics explainer videos and Dermatology Navigator image pocket guide are part of the paid access bundle. Early Access is £59 before 8 July, then Full Audio Access is £79 for 4 months.",
-  },
-  {
-    question: "Is AKT Navigator a paid question bank?",
-    answer:
-      "No. AKT Navigator offers free AKT question practice with an optional paid full-audio upgrade.",
-  },
-] as const;
 
 function referralPlans(): Plan[] {
   return PRE_CUTOVER_PLANS.map((plan) => {
@@ -584,7 +562,7 @@ export function PricingSection() {
             AKT Navigator pricing FAQ
           </h3>
           <div className="mt-5 grid gap-3">
-            {SEO_FAQS.map((item) => (
+            {pricingFaqs.map((item) => (
               <section
                 key={item.question}
                 className="rounded-[16px] p-4 md:p-5"

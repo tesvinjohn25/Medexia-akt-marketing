@@ -1,9 +1,11 @@
 import {
   CANONICAL_POSITIONING,
   homePositioningFaqs,
+  pricingFaqs,
 } from "@/data/product-positioning";
 
 export function SchemaJsonLd() {
+  const homepageFaqs = [...homePositioningFaqs, ...pricingFaqs];
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -35,7 +37,7 @@ export function SchemaJsonLd() {
       },
       {
         "@type": "FAQPage",
-        mainEntity: homePositioningFaqs.map((faq) => ({
+        mainEntity: homepageFaqs.map((faq) => ({
           "@type": "Question",
           name: faq.question,
           acceptedAnswer: {

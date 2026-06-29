@@ -442,20 +442,14 @@ body > * { position: relative; z-index: 1; }
 .nebula-flow__path--haze {
   stroke: url(#nebulaTrajectoryGradient);
   stroke-width: 12px;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
   opacity: .28;
   filter: url(#nebulaTrajectoryGlow);
-  animation: nebulaWakeDraw 3.6s cubic-bezier(.18,.72,.18,1) both;
 }
 .nebula-flow__path--core {
   stroke: rgba(255,255,255,.58);
   stroke-width: 1px;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
   opacity: .48;
   filter: drop-shadow(0 0 10px rgba(197,170,255,.85));
-  animation: nebulaPathDraw 3.6s cubic-bezier(.18,.72,.18,1) both;
 }
 
 .nebula-comet,
@@ -469,8 +463,9 @@ body > * { position: relative; z-index: 1; }
   width: 124px;
   height: 88px;
   transform-origin: 50% 50%;
-  will-change: transform, opacity;
-  animation: nebulaCometArrive 3.6s cubic-bezier(.16,.86,.18,1) both;
+  opacity: .96;
+  transform: translate(-50%, -50%) rotate(var(--comet-angle)) scale(.86);
+  will-change: left, top, transform;
 }
 .nebula-comet__aura {
   position: absolute;
@@ -493,7 +488,7 @@ body > * { position: relative; z-index: 1; }
     0 0 64px rgba(109,106,232,.20),
     inset 0 0 34px rgba(197,170,255,.18);
   filter: saturate(1.18);
-  animation: nebulaAuraArrive 3.6s cubic-bezier(.16,.86,.18,1) both, nebulaAuraIdle 7.2s 3.6s ease-in-out infinite;
+  animation: nebulaAuraIdle 7.2s ease-in-out infinite;
 }
 .nebula-comet__aura::before,
 .nebula-comet__aura::after {
@@ -516,7 +511,7 @@ body > * { position: relative; z-index: 1; }
     radial-gradient(1.6px 1.6px at 76% 68%, rgba(255,255,255,.70), transparent),
     radial-gradient(1.2px 1.2px at 38% 74%, rgba(236,72,153,.72), transparent);
   opacity: .82;
-  animation: nebulaAuraDust 3.6s ease-out both, nebulaDustIdle 8.4s 3.6s ease-in-out infinite;
+  animation: nebulaDustIdle 8.4s ease-in-out infinite;
 }
 .nebula-comet__tail {
   position: absolute;
@@ -539,7 +534,7 @@ body > * { position: relative; z-index: 1; }
     linear-gradient(90deg, transparent, rgba(109,106,232,.22), rgba(197,170,255,.46));
   filter: blur(10px) saturate(1.2);
   opacity: .62;
-  animation: nebulaTailPulse 3.6s ease-out both;
+  animation: nebulaTailIdle 5.8s ease-in-out infinite;
 }
 .nebula-comet__tail--core {
   width: 118px;
@@ -563,7 +558,7 @@ body > * { position: relative; z-index: 1; }
     drop-shadow(0 0 9px rgba(255,255,255,.65))
     drop-shadow(0 0 24px rgba(155,107,255,.68))
     drop-shadow(0 0 44px rgba(236,72,153,.18));
-  animation: nebulaShipIdle 6.4s 3.6s ease-in-out infinite;
+  animation: nebulaShipIdle 6.4s ease-in-out infinite;
 }
 .nebula-comet__spark {
   position: absolute;
@@ -590,7 +585,7 @@ body > * { position: relative; z-index: 1; }
   background:
     radial-gradient(circle, rgba(255,255,255,.52) 0 2%, rgba(197,170,255,.38) 3% 10%, rgba(155,107,255,.22) 18%, rgba(236,72,153,.11) 31%, transparent 58%);
   filter: blur(.4px);
-  animation: nebulaImpactBloom 1.9s 2.58s ease-out both;
+  animation: nebulaImpactIdle 5.2s ease-in-out infinite;
 }
 .nebula-impact span {
   position: absolute;
@@ -601,7 +596,7 @@ body > * { position: relative; z-index: 1; }
     0 0 22px rgba(197,170,255,.58),
     inset 0 0 22px rgba(236,72,153,.12);
   opacity: 0;
-  animation: nebulaImpactRing 1.75s 2.62s ease-out both;
+  animation: nebulaImpactRingIdle 5.2s ease-in-out infinite;
 }
 
 .nebula-flow-mounted .nebula-target.card-shimmer::before,
@@ -618,58 +613,21 @@ body > * { position: relative; z-index: 1; }
   position: relative;
 }
 
-@keyframes nebulaPathDraw {
-  0% { stroke-dashoffset: 1; opacity: 0; }
-  28% { opacity: .34; }
-  100% { stroke-dashoffset: 0; opacity: .08; }
-}
-@keyframes nebulaWakeDraw {
-  0% { stroke-dashoffset: 1; opacity: 0; }
-  28% { opacity: .32; }
-  100% { stroke-dashoffset: 0; opacity: .16; }
-}
-@keyframes nebulaCometArrive {
-  0% {
-    opacity: 0;
-    transform: translate(calc(-50% + var(--comet-travel-x)), calc(-50% + var(--comet-travel-y))) rotate(var(--comet-angle)) scale(.62);
-  }
-  16% { opacity: 1; }
-  72% {
-    opacity: 1;
-    transform: translate(-50%, -50%) rotate(var(--comet-angle)) scale(1.02);
-  }
-  100% {
-    opacity: .96;
-    transform: translate(-50%, -50%) rotate(var(--comet-angle)) scale(.86);
-  }
-}
-@keyframes nebulaTailPulse {
-  0% { opacity: 0; transform: translateY(-50%) scaleX(.35); }
-  46% { opacity: .62; transform: translateY(-50%) scaleX(1); }
-  100% { opacity: .16; transform: translateY(-50%) scaleX(.5); }
-}
-@keyframes nebulaAuraArrive {
-  0% { opacity: 0; transform: scale(.58) rotate(-16deg); }
-  24% { opacity: .96; }
-  72% { opacity: .9; transform: scale(1) rotate(4deg); }
-  100% { opacity: .34; transform: scale(.82) rotate(10deg); }
-}
-@keyframes nebulaAuraDust {
-  0% { opacity: 0; transform: translate(20px, -16px) scale(.72); }
-  28% { opacity: .9; }
-  100% { opacity: .28; transform: translate(-12px, 10px) scale(1.08); }
-}
 @keyframes nebulaCurrentBreathe {
   0%, 100% { opacity: .24; transform: translate(-50%, -50%) scale(.92); }
   50% { opacity: .42; transform: translate(-50%, -50%) scale(1.08); }
 }
 @keyframes nebulaAuraIdle {
-  0%, 100% { opacity: .34; transform: scale(.82) rotate(10deg); }
-  50% { opacity: .54; transform: scale(.92) rotate(16deg); }
+  0%, 100% { opacity: .34; transform: scale(.84) rotate(8deg); }
+  50% { opacity: .54; transform: scale(.94) rotate(16deg); }
 }
 @keyframes nebulaDustIdle {
   0%, 100% { opacity: .22; transform: translate(-12px, 10px) scale(1.08); }
   50% { opacity: .52; transform: translate(-6px, 5px) scale(1.14); }
+}
+@keyframes nebulaTailIdle {
+  0%, 100% { opacity: .30; transform: translateY(-50%) scaleX(.56); }
+  50% { opacity: .54; transform: translateY(-50%) scaleX(.74); }
 }
 @keyframes nebulaShipIdle {
   0%, 100% { transform: translate3d(0, 0, 0); }
@@ -686,15 +644,13 @@ body > * { position: relative; z-index: 1; }
     transform: translate(-42px, var(--spark-drift)) scale(.2);
   }
 }
-@keyframes nebulaImpactBloom {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(.18); }
-  28% { opacity: .72; }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.1); }
+@keyframes nebulaImpactIdle {
+  0%, 100% { opacity: .10; transform: translate(-50%, -50%) scale(.72); }
+  50% { opacity: .24; transform: translate(-50%, -50%) scale(1.04); }
 }
-@keyframes nebulaImpactRing {
-  0% { opacity: 0; transform: scale(.4); }
-  22% { opacity: .58; }
-  100% { opacity: 0; transform: scale(1.9); }
+@keyframes nebulaImpactRingIdle {
+  0%, 100% { opacity: .10; transform: scale(.76); }
+  50% { opacity: .28; transform: scale(1.08); }
 }
 @media (max-width: 1023px) {
   .nebula-flow {

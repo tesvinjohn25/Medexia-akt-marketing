@@ -1,34 +1,19 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 
 const ACTIVE_ATTRIBUTE = "data-nebula-active";
 const TARGET_SELECTOR = "[data-nebula-target]";
 
-type CometState = {
-  activeTarget: string;
-  angle: number;
-  flightKey: number;
-  pathD: string;
-  ready: boolean;
-  travelX: number;
-  travelY: number;
-  viewBox: string;
+type Point = {
   x: number;
   y: number;
 };
 
-const INITIAL_COMET_STATE: CometState = {
-  activeTarget: "hero-proof",
-  angle: 138,
-  flightKey: 0,
-  pathD: "",
-  ready: false,
-  travelX: 180,
-  travelY: -220,
-  viewBox: "0 0 1280 720",
-  x: 0,
-  y: 0,
+type Waypoint = Point & {
+  focusY: number;
+  id: string;
+  target: HTMLElement;
 };
 
 const sparkPositions = [
@@ -44,198 +29,272 @@ const sparkPositions = [
 const clamp = (value: number, min: number, max: number) =>
   Math.min(Math.max(value, min), max);
 
+const interpolate = (start: number, end: number, progress: number) =>
+  start + (end - start) * progress;
+
+const smoothstep = (progress: number) => progress * progress * (3 - 2 * progress);
+
+function getVisibleElement<T extends HTMLElement>(
+  root: HTMLElement,
+  selector: string,
+) {
+  return Array.from(root.querySelectorAll<T>(selector)).find((element) => {
+    const rect = element.getBoundingClientRect();
+    return rect.width > 1 && rect.height > 1;
+  });
+}
+
 function getAnchorElement(target: HTMLElement) {
   if (!target.classList.contains("nebula-target--section")) return target;
   return (
-    target.querySelector<HTMLElement>(".nebula-fill") ??
-    target.querySelector<HTMLElement>(".card") ??
+    getVisibleElement<HTMLElement>(target, ".nebula-fill") ??
+    getVisibleElement<HTMLElement>(target, ".card") ??
     target
   );
 }
 
 function getImpactElement(target: HTMLElement) {
   return (
-    target.querySelector<HTMLElement>(".nebula-node") ??
-    target.querySelector<HTMLElement>(".nebula-fill") ??
+    getVisibleElement<HTMLElement>(target, ".nebula-node") ??
+    getVisibleElement<HTMLElement>(target, ".nebula-fill") ??
     getAnchorElement(target)
   );
 }
 
+function getWaypoint(target: HTMLElement): Waypoint {
+  const anchor = getAnchorElement(target);
+  const anchorRect = anchor.getBoundingClientRect();
+  const impactElement = getImpactElement(target);
+  const impactRect = impactElement.getBoundingClientRect();
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
+  const scrollY = window.scrollY;
+  const isCompactViewport = viewportWidth < 768;
+  const isHeroProofTarget = target.dataset.nebulaTarget === "hero-proof";
+  const hasNodeImpact = impactElement.classList.contains("nebula-node");
+  const maxLandingX = isCompactViewport ? viewportWidth - 38 : viewportWidth - 76;
+
+  if (isCompactViewport && isHeroProofTarget) {
+    return {
+      focusY: viewportHeight * 0.42,
+      id: target.dataset.nebulaTarget ?? "unknown",
+      target,
+      x: clamp(viewportWidth - 54, 72, maxLandingX),
+      y: clamp(viewportHeight * 0.24, 86, viewportHeight - 86),
+    };
+  }
+
+  const x = clamp(
+    hasNodeImpact
+      ? impactRect.left - 68
+      : anchorRect.left + Math.min(anchorRect.width * 0.12, 72),
+    72,
+    maxLandingX,
+  );
+  const y = clamp(
+    hasNodeImpact
+      ? impactRect.top + impactRect.height / 2
+      : anchorRect.top + Math.min(anchorRect.height * 0.42, 92),
+    86,
+    viewportHeight - 86,
+  );
+
+  return {
+    focusY:
+      anchorRect.top +
+      scrollY +
+      Math.min(anchorRect.height * 0.42, viewportHeight * 0.52),
+    id: target.dataset.nebulaTarget ?? "unknown",
+    target,
+    x,
+    y,
+  };
+}
+
+function getScrollLinkedPoint(waypoints: Waypoint[]): Waypoint {
+  const focusY = window.scrollY + window.innerHeight * 0.42;
+
+  if (focusY <= waypoints[0].focusY) return waypoints[0];
+  const last = waypoints[waypoints.length - 1];
+  if (focusY >= last.focusY) return last;
+
+  for (let index = 0; index < waypoints.length - 1; index += 1) {
+    const start = waypoints[index];
+    const end = waypoints[index + 1];
+    if (focusY < start.focusY || focusY > end.focusY) continue;
+
+    const distance = Math.max(end.focusY - start.focusY, 1);
+    const progress = smoothstep(clamp((focusY - start.focusY) / distance, 0, 1));
+
+    return {
+      focusY,
+      id: progress < 0.5 ? start.id : end.id,
+      target: progress < 0.5 ? start.target : end.target,
+      x: interpolate(start.x, end.x, progress),
+      y: interpolate(start.y, end.y, progress),
+    };
+  }
+
+  return last;
+}
+
+function buildTrailPath(point: Point, angle: number) {
+  const viewportWidth = window.innerWidth;
+  const isCompactViewport = viewportWidth < 768;
+  const length = isCompactViewport ? 168 : 260;
+  const curve = isCompactViewport ? 22 : 36;
+  const radians = (angle * Math.PI) / 180;
+  const forwardX = Math.cos(radians);
+  const forwardY = Math.sin(radians);
+  const normalX = -forwardY;
+  const normalY = forwardX;
+  const startX = point.x - forwardX * length;
+  const startY = point.y - forwardY * length;
+  const controlOneX = startX + forwardX * length * 0.36 + normalX * curve;
+  const controlOneY = startY + forwardY * length * 0.36 + normalY * curve;
+  const controlTwoX = point.x - forwardX * length * 0.32 - normalX * curve * 0.42;
+  const controlTwoY = point.y - forwardY * length * 0.32 - normalY * curve * 0.42;
+
+  return `M ${startX.toFixed(1)} ${startY.toFixed(1)} C ${controlOneX.toFixed(1)} ${controlOneY.toFixed(1)}, ${controlTwoX.toFixed(1)} ${controlTwoY.toFixed(1)}, ${point.x.toFixed(1)} ${point.y.toFixed(1)}`;
+}
+
 export function NebulaFlow() {
-  const [comet, setComet] = useState<CometState>(INITIAL_COMET_STATE);
+  const flowRef = useRef<HTMLDivElement>(null);
+  const trajectoryRef = useRef<SVGSVGElement>(null);
+  const hazePathRef = useRef<SVGPathElement>(null);
+  const corePathRef = useRef<SVGPathElement>(null);
 
   useEffect(() => {
+    const flow = flowRef.current;
+    const trajectory = trajectoryRef.current;
+    const hazePath = hazePathRef.current;
+    const corePath = corePathRef.current;
     const targets = Array.from(
       document.querySelectorAll<HTMLElement>(TARGET_SELECTOR),
     );
 
-    if (targets.length === 0) return;
-
-    let currentTarget = "";
-    let currentElement: HTMLElement | null = null;
-    let frame = 0;
-
-    const clearActiveTargets = () => {
-      targets.forEach((target) => {
-        target.removeAttribute(ACTIVE_ATTRIBUTE);
-        target.style.removeProperty("--nebula-impact-x");
-        target.style.removeProperty("--nebula-impact-y");
-      });
-    };
-
-    const measureTarget = (target: HTMLElement, restartFlight: boolean) => {
-      const anchor = getAnchorElement(target);
-      const anchorRect = anchor.getBoundingClientRect();
-      const impactElement = getImpactElement(target);
-      const impactRect = impactElement.getBoundingClientRect();
-      const targetRect = target.getBoundingClientRect();
-      const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
-      const hasNodeImpact = impactElement.classList.contains("nebula-node");
-      const isCompactViewport = viewportWidth < 768;
-      const isHeroProofTarget = target.dataset.nebulaTarget === "hero-proof";
-      const targetStartsBelowHero =
-        anchorRect.top > viewportHeight * 0.58 && isHeroProofTarget;
-      const maxLandingX = isCompactViewport
-        ? viewportWidth - 38
-        : viewportWidth - 76;
-
-      const landingX = clamp(
-        isCompactViewport && targetStartsBelowHero
-          ? viewportWidth - 54
-          : hasNodeImpact
-          ? impactRect.left - 68
-          : anchorRect.left + Math.min(anchorRect.width * 0.12, 72),
-        72,
-        maxLandingX,
-      );
-      const landingY = clamp(
-        isCompactViewport && targetStartsBelowHero
-          ? viewportHeight * 0.24
-          : hasNodeImpact
-          ? impactRect.top + impactRect.height / 2
-          : anchorRect.top + Math.min(anchorRect.height * 0.42, 92),
-        86,
-        viewportHeight - 86,
-      );
-      const startX = clamp(landingX - 220, 36, viewportWidth - 160);
-      const startY = clamp(landingY - 300, 26, viewportHeight - 180);
-      const controlOneX = clamp(startX + 46, 28, viewportWidth - 28);
-      const controlOneY = clamp(startY + 150, 28, viewportHeight - 28);
-      const controlTwoX = clamp(landingX - 136, 28, viewportWidth - 28);
-      const controlTwoY = clamp(landingY - 118, 28, viewportHeight - 28);
-      const radians = Math.atan2(landingY - startY, landingX - startX);
-      const impactX = clamp(landingX - targetRect.left, 0, targetRect.width);
-      const impactY = clamp(landingY - targetRect.top, 0, targetRect.height);
-
-      target.style.setProperty("--nebula-impact-x", `${impactX}px`);
-      target.style.setProperty("--nebula-impact-y", `${impactY}px`);
-
-      setComet((previous) => ({
-        activeTarget: target.dataset.nebulaTarget ?? "unknown",
-        angle: (radians * 180) / Math.PI,
-        flightKey: restartFlight ? previous.flightKey + 1 : previous.flightKey,
-        pathD: `M ${startX.toFixed(1)} ${startY.toFixed(1)} C ${controlOneX.toFixed(1)} ${controlOneY.toFixed(1)}, ${controlTwoX.toFixed(1)} ${controlTwoY.toFixed(1)}, ${landingX.toFixed(1)} ${landingY.toFixed(1)}`,
-        ready: true,
-        travelX: startX - landingX,
-        travelY: startY - landingY,
-        viewBox: `0 0 ${viewportWidth} ${viewportHeight}`,
-        x: landingX,
-        y: landingY,
-      }));
-    };
-
-    const setActive = (target: HTMLElement | null) => {
-      if (!target) return;
-
-      const nextTarget = target.dataset.nebulaTarget ?? "";
-      if (nextTarget === currentTarget) return;
-
-      currentTarget = nextTarget;
-      currentElement = target;
-      clearActiveTargets();
-      target.setAttribute(ACTIVE_ATTRIBUTE, "true");
-      measureTarget(target, true);
-    };
-
-    document.documentElement.classList.add("nebula-flow-mounted");
+    if (!flow || !trajectory || !hazePath || !corePath || targets.length === 0) {
+      return;
+    }
 
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    if (
-      prefersReducedMotion ||
-      typeof window.IntersectionObserver === "undefined"
-    ) {
-      setActive(targets[0]);
-      setComet((previous) => ({ ...previous, ready: false }));
-      return () => {
-        clearActiveTargets();
-        document.documentElement.classList.remove("nebula-flow-mounted");
-      };
+    if (prefersReducedMotion) {
+      flow.dataset.ready = "false";
+      return;
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleTarget = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
-          ?.target;
+    let animationFrame = 0;
+    let initialized = false;
+    let currentActiveTarget = "";
+    let currentX = 0;
+    let currentY = 0;
+    let currentAngle = -28;
 
-        if (visibleTarget instanceof HTMLElement) {
-          setActive(visibleTarget);
-        }
-      },
-      {
-        rootMargin: "-28% 0px -48% 0px",
-        threshold: [0.16, 0.28, 0.42, 0.58],
-      },
-    );
-
-    targets.forEach((target) => observer.observe(target));
-    setActive(targets[0]);
-
-    const scheduleMeasure = () => {
-      if (frame || !currentElement) return;
-      frame = window.requestAnimationFrame(() => {
-        frame = 0;
-        if (currentElement) measureTarget(currentElement, false);
-      });
+    const clearActiveTargets = () => {
+      targets.forEach((target) => target.removeAttribute(ACTIVE_ATTRIBUTE));
     };
 
-    window.addEventListener("resize", scheduleMeasure);
-    window.addEventListener("scroll", scheduleMeasure, { passive: true });
+    const setActiveTarget = (waypoint: Waypoint) => {
+      if (waypoint.id === currentActiveTarget) return;
+      currentActiveTarget = waypoint.id;
+      clearActiveTargets();
+      waypoint.target.setAttribute(ACTIVE_ATTRIBUTE, "true");
+      flow.dataset.activeTarget = waypoint.id;
+    };
+
+    const applyMotion = (point: Point, angle: number) => {
+      flow.style.setProperty("--comet-x", `${point.x.toFixed(1)}px`);
+      flow.style.setProperty("--comet-y", `${point.y.toFixed(1)}px`);
+      flow.style.setProperty("--comet-angle", `${angle.toFixed(2)}deg`);
+      trajectory.setAttribute(
+        "viewBox",
+        `0 0 ${window.innerWidth} ${window.innerHeight}`,
+      );
+
+      const pathD = buildTrailPath(point, angle);
+      hazePath.setAttribute("d", pathD);
+      corePath.setAttribute("d", pathD);
+      flow.dataset.ready = "true";
+    };
+
+    const tick = () => {
+      animationFrame = 0;
+
+      const waypoints = targets
+        .map(getWaypoint)
+        .sort((left, right) => left.focusY - right.focusY);
+      const desired = getScrollLinkedPoint(waypoints);
+
+      if (!initialized) {
+        currentX = desired.x;
+        currentY = desired.y;
+        initialized = true;
+      }
+
+      const deltaX = desired.x - currentX;
+      const deltaY = desired.y - currentY;
+      const distance = Math.hypot(deltaX, deltaY);
+      const easing = distance > 180 ? 0.24 : 0.18;
+
+      currentX += deltaX * easing;
+      currentY += deltaY * easing;
+
+      if (distance > 0.35) {
+        currentAngle = (Math.atan2(deltaY, deltaX) * 180) / Math.PI;
+      }
+
+      setActiveTarget(desired);
+      applyMotion({ x: currentX, y: currentY }, currentAngle);
+
+      if (distance > 0.6) {
+        animationFrame = window.requestAnimationFrame(tick);
+      }
+    };
+
+    const scheduleTick = () => {
+      if (animationFrame) return;
+      animationFrame = window.requestAnimationFrame(tick);
+    };
+
+    document.documentElement.classList.add("nebula-flow-mounted");
+    scheduleTick();
+
+    window.addEventListener("scroll", scheduleTick, { passive: true });
+    window.addEventListener("resize", scheduleTick);
+    window.addEventListener("orientationchange", scheduleTick);
 
     return () => {
-      if (frame) window.cancelAnimationFrame(frame);
-      observer.disconnect();
-      window.removeEventListener("resize", scheduleMeasure);
-      window.removeEventListener("scroll", scheduleMeasure);
+      if (animationFrame) window.cancelAnimationFrame(animationFrame);
+      window.removeEventListener("scroll", scheduleTick);
+      window.removeEventListener("resize", scheduleTick);
+      window.removeEventListener("orientationchange", scheduleTick);
       clearActiveTargets();
       document.documentElement.classList.remove("nebula-flow-mounted");
     };
   }, []);
 
-  const flowStyle = {
-    "--comet-angle": `${comet.angle}deg`,
-    "--comet-travel-x": `${comet.travelX}px`,
-    "--comet-travel-y": `${comet.travelY}px`,
-    "--comet-x": `${comet.x}px`,
-    "--comet-y": `${comet.y}px`,
-  } as CSSProperties;
-
   return (
     <div
+      ref={flowRef}
       className="nebula-flow"
       aria-hidden="true"
-      data-active-target={comet.activeTarget}
-      data-ready={comet.ready ? "true" : "false"}
-      style={flowStyle}
+      data-active-target="hero-proof"
+      data-ready="false"
+      style={
+        {
+          "--comet-angle": "-28deg",
+          "--comet-x": "0px",
+          "--comet-y": "0px",
+        } as CSSProperties
+      }
     >
       <svg
+        ref={trajectoryRef}
         className="nebula-flow__trajectory"
-        viewBox={comet.viewBox}
+        viewBox="0 0 1280 720"
         preserveAspectRatio="none"
       >
         <defs>
@@ -255,20 +314,18 @@ export function NebulaFlow() {
           </filter>
         </defs>
         <path
-          key={`trajectory-haze-${comet.flightKey}`}
+          ref={hazePathRef}
           className="nebula-flow__path nebula-flow__path--haze"
-          d={comet.pathD}
-          pathLength={1}
+          d=""
         />
         <path
-          key={`trajectory-core-${comet.flightKey}`}
+          ref={corePathRef}
           className="nebula-flow__path nebula-flow__path--core"
-          d={comet.pathD}
-          pathLength={1}
+          d=""
         />
       </svg>
 
-      <div className="nebula-comet" key={`comet-${comet.flightKey}`}>
+      <div className="nebula-comet">
         <span className="nebula-comet__aura" />
         <span className="nebula-comet__tail nebula-comet__tail--wide" />
         <span className="nebula-comet__tail nebula-comet__tail--core" />
@@ -324,7 +381,7 @@ export function NebulaFlow() {
         </svg>
       </div>
 
-      <div className="nebula-impact" key={`impact-${comet.flightKey}`}>
+      <div className="nebula-impact">
         <span />
       </div>
     </div>

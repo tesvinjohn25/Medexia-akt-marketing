@@ -32,6 +32,7 @@ const {
   initMarketingAttribution,
   normalizeReferralCode,
 } = await importBundled("src/lib/marketing/attribution.ts");
+const { pricingFaqs } = await importBundled("src/data/product-positioning.ts");
 const { buildAppFallbackUrl, buildAppUrl } = await importBundled("src/lib/marketing/url.ts");
 const {
   CONSENT_STORAGE_KEY,
@@ -585,6 +586,17 @@ test("homepage early access CTAs use tracked app links and earlybird intents", (
   }
 
   assert.doesNotMatch(hero, /href="\/demo\/audiobook\/player"[\s\S]{0,400}Try free AKT audio/);
+});
+
+test("homepage pricing FAQs are included in shared JSON-LD source", () => {
+  const schema = fs.readFileSync("src/components/SchemaJsonLd.tsx", "utf8");
+  const pricing = fs.readFileSync("src/components/sections/PricingSection.tsx", "utf8");
+  const questions = pricingFaqs.map((faq) => faq.question);
+
+  assert.ok(questions.includes("Are AKT Navigator questions free?"));
+  assert.ok(questions.includes("Is AKT Navigator a paid question bank?"));
+  assert.match(schema, /homePositioningFaqs, \.\.\.pricingFaqs/);
+  assert.match(pricing, /pricingFaqs\.map/);
 });
 
 test("referral handoff is preserved without analytics consent but marketing identifiers are not", () => {

@@ -81,3 +81,26 @@ export const homePositioningFaqs = [
       "Choose AKT Navigator if your bigger problem is covering the AKT around real life - clinics, commutes, childcare, walks or low-energy evenings - while still having free question practice and mocks to consolidate. Choose a conventional question bank if you mainly want more screen-based questions and already have a strong revision system.",
   },
 ] as const;
+
+export const pricingFaqs = [
+  {
+    question: "Are AKT Navigator questions free?",
+    answer:
+      "Yes. Free Practice includes syllabus-mapped AKT questions covering the full MRCGP AKT syllabus, deep structured explanations, mock exams, basic practice and 2 hours of audiobook listening.",
+  },
+  {
+    question: "When does paid audio access start?",
+    answer:
+      "Full AKT Navigator access remains free until 8 July 2026. Early Access paid audio starts on 8 July 2026 and runs for 4 months.",
+  },
+  {
+    question: "What is paid in AKT Navigator?",
+    answer:
+      "From 8 July 2026, full access to the 90+ hour AKT audiobook library, interactive statistics course, 2+ hours of statistics explainer videos and Dermatology Navigator image pocket guide are part of the paid access bundle. Early Access is £59 before 8 July, then Full Audio Access is £79 for 4 months.",
+  },
+  {
+    question: "Is AKT Navigator a paid question bank?",
+    answer:
+      "No. AKT Navigator offers free AKT question practice with an optional paid full-audio upgrade.",
+  },
+] as const;

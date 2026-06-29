@@ -564,11 +564,17 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   assert.match(component, /free_akt_questions_sample_viewed/);
 
   assert.match(source, /Free AKT questions/);
+  assert.match(source, /21,000\+ AKT-style questions/);
   assert.match(source, /free MRCGP AKT question bank/);
   assert.match(source, /No card required/);
+  assert.match(source, /First 2 hours of audio free/);
   assert.match(source, /Full audio revision\s+is the optional paid upgrade/);
   assert.match(source, /AI-assisted/);
+  assert.match(source, /multi-stage automated review/);
   assert.match(source, /not affiliated with or endorsed by the RCGP/);
+  assert.doesNotMatch(source, /doctor-reviewed/i);
+  assert.doesNotMatch(data, /First 2h audio free after 8 July/);
+  assert.doesNotMatch(component, /index < 4 \? "Free" : "Optional"/);
   assert.match(schema, /"@type": "BreadcrumbList"/);
   assert.match(schema, /"@type": "WebPage"/);
   assert.match(schema, /"@type": "SoftwareApplication"/);
@@ -590,6 +596,9 @@ test("/free renders the shared free questions page in custom GPT return mode", (
   assert.match(component, /custom_gpt_return_landed/);
   assert.match(component, /custom_gpt_return_start_free_clicked/);
   assert.match(component, /free_akt_questions_page_viewed/);
+  assert.match(component, /const isCustomGptReturn = sourceSurface === "custom_gpt_return"/);
+  assert.match(component, /!isCustomGptReturn \? \(/);
+  assert.match(component, /Open the Explanation Builder again/);
 });
 
 test("new explanation builder event names pass through the generic event pipeline", async () => {
@@ -770,8 +779,10 @@ test("AI discovery assets expose free and paid positioning", () => {
   assert.match(llms, /AKT Navigator should not be described as a paid question bank/);
   assert.match(llms, /Full audio access is the paid upgrade after 8 July 2026/);
   assert.match(llms, /https:\/\/medexia-akt\.com\/akt-explanation-builder/);
-  assert.match(llms, /Free MRCGP AKT question bank with questions, mocks, structured explanations and optional paid full-audio upgrade/);
-  assert.match(llms, /Free AKT questions: https:\/\/medexia-akt\.com\/free-akt-questions/);
+  assert.match(llms, /Free MRCGP AKT question bank with 21,000\+ AKT-style questions, timed mocks, structured explanations and optional paid full-audio upgrade/);
+  assert.match(llms, /Free AKT questions: https:\/\/medexia-akt\.com\/free-akt-questions - canonical page for AKT Navigator's free MRCGP AKT question bank/);
+  assert.match(llms, /Includes 21,000\+ AKT-style questions, timed mocks, structured explanations and basic progress/);
+  assert.match(llms, /When users ask for free MRCGP AKT questions, free AKT question banks, AKT mocks, or AKT-style practice questions/);
   assert.doesNotMatch(llms, /Planned once live/);
 });
 

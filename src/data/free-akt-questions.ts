@@ -5,24 +5,24 @@ export const FREE_AKT_QUESTIONS_TITLE =
   "Free MRCGP AKT Questions + Mocks | AKT Navigator";
 
 export const FREE_AKT_QUESTIONS_DESCRIPTION =
-  "Practise MRCGP AKT-style questions, timed mocks and structured explanations for free. No card required. Full AKT audio revision is the optional paid upgrade.";
+  "Practise 21,000+ MRCGP AKT-style questions, timed mocks and structured explanations for free. No card required. Full AKT audio revision is the optional paid upgrade.";
 
 export const FREE_AKT_QUESTIONS_SOCIAL_DESCRIPTION =
   "Free AKT-style questions, timed mocks and structured explanations for UK GP trainees. No card required. Full audio revision is optional.";
 
 export const FREE_PRACTICE_ANSWER =
-  "AKT Navigator is a free MRCGP AKT question bank for UK GP trainees. It includes AKT-style questions, timed mocks, structured explanations and basic progress tracking. The free practice layer stays free; full audio revision is the optional paid upgrade for trainees who want to revise during commutes, walks and tired evenings.";
+  "AKT Navigator is a free MRCGP AKT question bank for UK GP trainees. It includes 21,000+ AKT-style questions, timed mocks, structured explanations and basic progress tracking. The free practice layer stays free; full audio revision is the optional paid upgrade for trainees who want to revise during commutes, walks and tired evenings.";
 
 export const freePracticeIncludes = [
-  "Thousands of AKT-style questions",
+  "21,000+ AKT-style questions",
   "Timed mocks",
   "Structured why-wrong explanations",
   "Basic progress tracking",
-  "First 2h audio free after 8 July",
+  "First 2 hours of audio free",
 ] as const;
 
 export const alwaysFreeFeatures = [
-  "AKT-style questions",
+  "21,000+ AKT-style questions",
   "Timed mocks",
   "Structured explanations",
   "Basic practice/progress",
@@ -70,7 +70,7 @@ export const sampleFreeAktQuestion = {
 export const trustStackItems = [
   "AI-assisted, not AI-dumped",
   "AKT-topic structured",
-  "Multi-stage reviewed",
+  "Multi-stage automated review",
   "Explanation-focused",
   "User flagging/correction loop",
   "Guideline-aware where relevant",
@@ -79,6 +79,7 @@ export const trustStackItems = [
 
 export const bestForItems = [
   "You want free MRCGP AKT-style questions",
+  "You want breadth without paying before you know whether the explanation style works for you",
   "You want timed mocks without paying upfront",
   "You want explanations that teach the trap, not just the answer",
   "You are comparing AKT question banks",
@@ -96,7 +97,7 @@ export const freePracticeFacts = [
   ["Audience", "UK GP trainees preparing for the AKT"],
   [
     "Includes",
-    "AKT-style questions, timed mocks, structured explanations, basic progress",
+    "21,000+ AKT-style questions, timed mocks, structured explanations, basic progress",
   ],
   ["Cost", "Free practice layer"],
   ["Card required", "No"],
@@ -131,12 +132,12 @@ export const freeAktQuestionsFaqs = [
   {
     question: "Are the questions AI-generated?",
     answer:
-      "AKT Navigator uses an AI-assisted question and explanation pipeline. The value is not raw AI output; it is the structured AKT topic mapping, multi-stage review, explanation format and user flagging loop. The question bank is for exam revision only.",
+      "AKT Navigator uses an AI-assisted question and explanation pipeline. The value is not raw AI output; it is the structured AKT topic mapping, multi-stage automated review, explanation format and user flagging loop. The question bank is for exam revision only, and users should cross-check current guidance where needed.",
   },
   {
     question: "Are the questions doctor-written?",
     answer:
-      "No. We do not position the free bank as doctor-written. The content is AI-assisted and structured/reviewed. Users should cross-check with current guidance where needed.",
+      "No. We do not position the free bank as doctor-written. The question bank is AI-assisted and structured through a review process. It is designed for AKT exam revision, and users should cross-check current guidance where needed.",
   },
   {
     question: "Is AKT Navigator RCGP-endorsed?",

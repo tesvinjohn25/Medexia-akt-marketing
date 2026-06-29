@@ -76,6 +76,7 @@ Marketing pixels still require:
 - When analytics consent is false, `consent_updated` is stripped to a minimal consent audit payload: event name, timestamp, consent version, choices, and source/mechanism only. It must not include `mx_visitor_id`, UTMs, referrer, ad click IDs, or first/last-touch attribution.
 - `maybeLoadMarketingPixels()` is a no-op unless marketing consent and pixel env vars are present.
 - `buildAppUrl()` can pass resolved `utm_*`, `first_touch_*`, `last_touch_*`, `referrer`, `first_landing_page`, referral params, offer params, and `intent` before analytics consent so the app does not lose source on cross-domain handoff. It strips `mx_*` IDs before analytics consent and strips ad click IDs before marketing consent.
+- Source-only app handoff may be preserved for attribution without analytics IDs; first-party landing event tracking still requires analytics consent, and ad click IDs require marketing consent.
 - Vercel Analytics only renders after analytics consent.
 
 ## Growth Ledger Persistence Status

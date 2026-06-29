@@ -314,6 +314,7 @@ export function FreeAktQuestionsLanding({
   sourceSurface?: SourceSurface;
 }) {
   const sampleRef = useRef<HTMLElement>(null);
+  const isCustomGptReturn = sourceSurface === "custom_gpt_return";
 
   useFreeQuestionsPageTracking(sourceSurface);
   useSampleViewed(sampleRef, sourceSurface);
@@ -399,11 +400,13 @@ export function FreeAktQuestionsLanding({
                 placement="hero"
                 className="btn-primary inline-block text-[15px]"
               />
-              <ExplanationBuilderLink
-                sourceSurface={sourceSurface}
-                placement="hero"
-                className="btn-secondary inline-flex items-center text-[15px]"
-              />
+              {!isCustomGptReturn ? (
+                <ExplanationBuilderLink
+                  sourceSurface={sourceSurface}
+                  placement="hero"
+                  className="btn-secondary inline-flex items-center text-[15px]"
+                />
+              ) : null}
             </div>
           </div>
 
@@ -436,12 +439,14 @@ export function FreeAktQuestionsLanding({
                     className="text-[11px] font-bold uppercase tracking-[0.16em]"
                     style={{
                       color:
-                        index < 4
-                          ? "rgba(52,211,153,.84)"
-                          : "rgba(96,165,250,.82)",
+                        index === freePracticeIncludes.length - 1
+                          ? "rgba(96,165,250,.82)"
+                          : "rgba(52,211,153,.84)",
                     }}
                   >
-                    {index < 4 ? "Free" : "Optional"}
+                    {index === freePracticeIncludes.length - 1
+                      ? "Included"
+                      : "Free"}
                   </span>
                 </div>
               ))}
@@ -456,8 +461,16 @@ export function FreeAktQuestionsLanding({
               }}
             >
               Built for quick question blocks, timed mocks and explanation
-              review before you decide whether audio revision helps.
+              review before you decide whether full audio revision helps.
             </div>
+
+            <p
+              className="mt-3 text-[12px] leading-[1.6]"
+              style={{ color: "rgba(232,236,255,.52)" }}
+            >
+              21,000+ questions gives breadth; the value is in how each answer
+              is explained.
+            </p>
           </GlassCard>
         </div>
       </section>
@@ -553,6 +566,31 @@ export function FreeAktQuestionsLanding({
             You can use the question bank without paying. Full audio is there
             if audio revision helps you.
           </p>
+
+          <GlassCard
+            className="mt-5 p-5 md:p-6"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(109,106,232,.08), rgba(17,19,26,.84) 52%, rgba(52,211,153,.055))",
+              border: "1px solid rgba(167,139,250,.14)",
+            }}
+          >
+            <h3
+              className="text-[20px] leading-[1.2]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Why is it free?
+            </h3>
+            <p
+              className="mt-3 max-w-[820px] text-[14px] leading-[1.7] md:text-[15px]"
+              style={{ color: "rgba(232,236,255,.68)" }}
+            >
+              We keep the practice layer free because the paid product is full
+              audio revision. That lets trainees start questions and mocks
+              without another upfront subscription, then upgrade only if audio
+              genuinely helps their revision.
+            </p>
+          </GlassCard>
         </div>
       </section>
 
@@ -571,13 +609,15 @@ export function FreeAktQuestionsLanding({
                   </p>
                 }
               />
-              <div className="mt-6">
-                <ExplanationBuilderLink
-                  sourceSurface={sourceSurface}
-                  placement="explanation_quality"
-                  className="btn-primary inline-block text-[14px]"
-                />
-              </div>
+              {!isCustomGptReturn ? (
+                <div className="mt-6">
+                  <ExplanationBuilderLink
+                    sourceSurface={sourceSurface}
+                    placement="explanation_quality"
+                    className="btn-primary inline-block text-[14px]"
+                  />
+                </div>
+              ) : null}
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">
@@ -611,10 +651,16 @@ export function FreeAktQuestionsLanding({
             eyebrow="Sample question"
             title="See the explanation style before you sign up."
             body={
-              <p>
-                A compact preview of the reasoning-first explanation format
-                used inside free AKT question practice.
-              </p>
+              <>
+                <p>
+                  This is the difference between a thin answer key and an
+                  explanation that helps you avoid the same trap next time.
+                </p>
+                <p className="mt-3">
+                  A compact preview of the reasoning-first explanation format
+                  used inside free AKT question practice.
+                </p>
+              </>
             }
           />
 
@@ -655,6 +701,13 @@ export function FreeAktQuestionsLanding({
                 style={{ color: "rgba(52,211,153,.86)" }}
               >
                 Explanation preview
+              </p>
+              <p
+                className="mt-3 text-[13px] leading-[1.6]"
+                style={{ color: "rgba(232,236,255,.64)" }}
+              >
+                Inside AKT Navigator, questions are already explained in this
+                style.
               </p>
 
               {[
@@ -716,31 +769,51 @@ export function FreeAktQuestionsLanding({
                     letterSpacing: "-0.035em",
                   }}
                 >
-                  Want to test the explanation style on your own question?
+                  {isCustomGptReturn
+                    ? "Ready to keep practising inside AKT Navigator?"
+                    : "Want to test the explanation style on your own question?"}
                 </h2>
                 <p
                   className="mt-4 max-w-[720px] text-[15px] leading-[1.7] md:text-[16px]"
                   style={{ color: "rgba(232,236,255,.70)" }}
                 >
-                  Paste any AKT-style SBA into the free AKT Explanation Builder
-                  and get a teaching-card breakdown: key clues, examiner trap,
-                  near-miss answer, why-wrong explanations and a
-                  check-your-understanding prompt.
+                  {isCustomGptReturn
+                    ? "You have already seen the explanation style in the Custom GPT. The next step is free AKT question practice with mocks, structured explanations and progress tracking."
+                    : "Paste any AKT-style SBA into the free AKT Explanation Builder and get a teaching-card breakdown: key clues, examiner trap, near-miss answer, why-wrong explanations and a check-your-understanding prompt."}
                 </p>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
-                <ExplanationBuilderLink
-                  sourceSurface={sourceSurface}
-                  placement="builder_section"
-                  className="btn-primary inline-flex justify-center text-[14px]"
-                />
-                <StartFreeLink
-                  sourceSurface={sourceSurface}
-                  placement="comparison"
-                  className="btn-secondary inline-flex justify-center text-[14px]"
-                >
-                  Or start free AKT questions
-                </StartFreeLink>
+                {isCustomGptReturn ? (
+                  <>
+                    <StartFreeLink
+                      sourceSurface={sourceSurface}
+                      placement="comparison"
+                      className="btn-primary inline-flex justify-center text-[14px]"
+                    />
+                    <ExplanationBuilderLink
+                      sourceSurface={sourceSurface}
+                      placement="builder_section"
+                      className="inline-flex justify-center text-[13px] font-semibold text-white/55 transition hover:text-white/80"
+                    >
+                      Open the Explanation Builder again
+                    </ExplanationBuilderLink>
+                  </>
+                ) : (
+                  <>
+                    <ExplanationBuilderLink
+                      sourceSurface={sourceSurface}
+                      placement="builder_section"
+                      className="btn-primary inline-flex justify-center text-[14px]"
+                    />
+                    <StartFreeLink
+                      sourceSurface={sourceSurface}
+                      placement="comparison"
+                      className="btn-secondary inline-flex justify-center text-[14px]"
+                    >
+                      Or start free AKT questions
+                    </StartFreeLink>
+                  </>
+                )}
               </div>
             </div>
           </GlassCard>
@@ -757,9 +830,9 @@ export function FreeAktQuestionsLanding({
                 <p>
                   AKT Navigator uses an AI-assisted question and explanation
                   pipeline. Questions are structured around AKT-relevant topics,
-                  checked through multiple review stages, and written to teach
-                  the reasoning behind the answer - not just mark it right or
-                  wrong.
+                  checked through multiple automated review stages, and written
+                  to teach the reasoning behind the answer - not just mark it
+                  right or wrong.
                 </p>
                 <p className="mt-3">
                   This is why we can keep the question bank free. The paid part
@@ -951,11 +1024,13 @@ export function FreeAktQuestionsLanding({
                 placement="final"
                 className="btn-primary inline-block text-[15px]"
               />
-              <ExplanationBuilderLink
-                sourceSurface={sourceSurface}
-                placement="builder_section"
-                className="btn-secondary inline-flex text-[15px]"
-              />
+              {!isCustomGptReturn ? (
+                <ExplanationBuilderLink
+                  sourceSurface={sourceSurface}
+                  placement="builder_section"
+                  className="btn-secondary inline-flex text-[15px]"
+                />
+              ) : null}
             </div>
           </GlassCard>
         </div>

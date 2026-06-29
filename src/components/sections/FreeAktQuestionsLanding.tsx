@@ -306,7 +306,10 @@ function FeatureList({
   return (
     <ul className="grid gap-3">
       {items.map((item) => (
-        <li key={item} className="flex gap-3 text-[14px] leading-[1.55]">
+        <li
+          key={item}
+          className="nebula-fill -mx-2 flex gap-3 rounded-[10px] px-2 py-1 text-[14px] leading-[1.55]"
+        >
           <Dot tone={tone} />
           <span style={{ color: "rgba(232,236,255,.72)" }}>{item}</span>
         </li>

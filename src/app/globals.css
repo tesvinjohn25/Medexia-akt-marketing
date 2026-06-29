@@ -493,11 +493,12 @@ body > * { position: relative; z-index: 1; }
   pointer-events: none;
   opacity: 0;
   background:
-    radial-gradient(80% 70% at 16% 0%, rgba(255,255,255,.12), transparent 48%),
-    radial-gradient(70% 80% at 88% 22%, rgba(155,107,255,.24), transparent 54%),
-    linear-gradient(110deg, transparent 0%, rgba(197,170,255,.12) 38%, rgba(255,255,255,.13) 48%, rgba(52,211,153,.08) 58%, transparent 72%);
-  background-size: 100% 100%, 100% 100%, 230% 100%;
-  background-position: 0 0, 0 0, 120% 0;
+    radial-gradient(80% 70% at 16% 0%, rgba(255,255,255,.16), transparent 48%),
+    radial-gradient(70% 80% at 88% 22%, rgba(155,107,255,.34), transparent 54%),
+    radial-gradient(65% 80% at 38% 82%, rgba(52,211,153,.14), transparent 62%),
+    linear-gradient(110deg, transparent 0%, rgba(197,170,255,.18) 38%, rgba(255,255,255,.16) 48%, rgba(52,211,153,.10) 58%, transparent 72%);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 230% 100%;
+  background-position: 0 0, 0 0, 0 0, 120% 0;
   mix-blend-mode: screen;
   transition: opacity .55s var(--ease-glide), background-position 1.2s var(--ease-fluid);
 }
@@ -514,8 +515,8 @@ body > * { position: relative; z-index: 1; }
   filter: none;
 }
 .nebula-target[data-nebula-active="true"]::after {
-  opacity: .88;
-  background-position: 0 0, 0 0, -90% 0;
+  opacity: .98;
+  background-position: 0 0, 0 0, 0 0, -90% 0;
   animation: nebulaTargetPulse 5.5s ease-in-out infinite;
 }
 .nebula-node,
@@ -528,6 +529,37 @@ body > * { position: relative; z-index: 1; }
     color .5s var(--ease-glide),
     transform .5s var(--ease-spring);
 }
+.nebula-fill {
+  position: relative;
+  overflow: hidden;
+}
+.nebula-fill > * {
+  position: relative;
+  z-index: 1;
+}
+.nebula-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-42%) scaleX(.74);
+  transform-origin: left center;
+  background:
+    radial-gradient(78% 140% at 8% 10%, rgba(255,255,255,.16), transparent 38%),
+    radial-gradient(78% 150% at 16% 52%, rgba(197,170,255,.34), transparent 58%),
+    radial-gradient(72% 140% at 54% 70%, rgba(52,211,153,.16), transparent 62%),
+    linear-gradient(100deg, rgba(109,106,232,.28), rgba(236,72,153,.15) 42%, rgba(52,211,153,.08) 70%, transparent 100%);
+  background-size: 120% 120%, 120% 120%, 140% 140%, 180% 100%;
+  background-position: 0 0, 0 50%, 60% 80%, 0 0;
+  mix-blend-mode: screen;
+  transition:
+    opacity .55s var(--ease-glide),
+    transform .75s var(--ease-fluid),
+    background-position 1.4s var(--ease-fluid);
+}
 .nebula-target[data-nebula-active="true"] .nebula-node {
   color: rgba(255,255,255,.96) !important;
   background:
@@ -539,11 +571,19 @@ body > * { position: relative; z-index: 1; }
   transform: scale(1.08);
 }
 .nebula-target[data-nebula-active="true"] .nebula-fill {
-  background-color: rgba(155,107,255,.055);
-  border-color: rgba(197,170,255,.18);
+  background-color: rgba(155,107,255,.09);
+  border-color: rgba(197,170,255,.30);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.055),
-    0 0 30px rgba(109,106,232,.08);
+    inset 0 1px 0 rgba(255,255,255,.09),
+    inset 0 0 36px rgba(155,107,255,.12),
+    0 0 36px rgba(109,106,232,.16);
+  transform: translateY(-1px);
+}
+.nebula-target[data-nebula-active="true"] .nebula-fill::after {
+  opacity: .86;
+  transform: translateX(0) scaleX(1);
+  background-position: 20% 0, 24% 50%, 74% 72%, 100% 0;
+  animation: nebulaFillDrift 5.8s ease-in-out infinite;
 }
 .nebula-target[data-nebula-active="true"] .nebula-fill:nth-child(2) {
   transition-delay: .06s;
@@ -580,6 +620,16 @@ body > * { position: relative; z-index: 1; }
 @keyframes nebulaTargetPulse {
   0%, 100% { opacity: .58; }
   48%      { opacity: .88; }
+}
+@keyframes nebulaFillDrift {
+  0%, 100% {
+    filter: saturate(1.08);
+    background-position: 20% 0, 24% 50%, 74% 72%, 100% 0;
+  }
+  50% {
+    filter: saturate(1.22);
+    background-position: 34% 12%, 42% 44%, 58% 62%, 42% 0;
+  }
 }
 
 @media (max-width: 1023px) {

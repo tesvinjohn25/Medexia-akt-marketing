@@ -5,7 +5,6 @@ import {
   useRef,
   useState,
   type CSSProperties,
-  type HTMLAttributes,
   type MouseEvent,
   type ReactNode,
   type RefObject,
@@ -14,7 +13,6 @@ import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 import { useMarketingAttribution } from "@/components/marketing/MarketingAttributionProvider";
 import { AdaptivePracticeSection } from "@/components/sections/AdaptivePracticeSection";
 import { FreeQuestionsLiveDemo } from "@/components/sections/FreeQuestionsLiveDemo";
-import { NebulaFlow } from "@/components/sections/NebulaFlow";
 import { canUseAnalytics } from "@/lib/consent/consent";
 import { initMarketingAttribution } from "@/lib/marketing/attribution";
 import { trackLandingEvent } from "@/lib/marketing/events";
@@ -185,17 +183,15 @@ function GlassCard({
   children,
   className = "",
   style,
-  ...props
 }: {
   children: ReactNode;
   className?: string;
   style?: CSSProperties;
-} & HTMLAttributes<HTMLDivElement>) {
+}) {
   return (
     <div
       className={`card card-shimmer relative overflow-hidden ${className}`}
       style={style}
-      {...props}
     >
       {children}
     </div>
@@ -211,7 +207,7 @@ function Dot({ tone = "violet" }: { tone?: "violet" | "green" | "blue" }) {
 
   return (
     <span
-      className="nebula-node mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full"
+      className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full"
       style={{
         background: color,
         boxShadow: `0 0 14px ${color}`,
@@ -306,10 +302,7 @@ function FeatureList({
   return (
     <ul className="grid gap-3">
       {items.map((item) => (
-        <li
-          key={item}
-          className="nebula-fill -mx-2 flex gap-3 rounded-[10px] px-2 py-1 text-[14px] leading-[1.55]"
-        >
+        <li key={item} className="flex gap-3 text-[14px] leading-[1.55]">
           <Dot tone={tone} />
           <span style={{ color: "rgba(232,236,255,.72)" }}>{item}</span>
         </li>
@@ -331,8 +324,6 @@ export function FreeAktQuestionsLanding({
 
   return (
     <>
-      {!isCustomGptReturn ? <NebulaFlow /> : null}
-
       <section className="relative overflow-hidden">
         <div className="hero-noise" />
         <div
@@ -423,8 +414,7 @@ export function FreeAktQuestionsLanding({
           </div>
 
           <GlassCard
-            data-nebula-target="hero-proof"
-            className="nebula-target hero-enter p-4 md:p-5"
+            className="hero-enter p-4 md:p-5"
             style={{
               "--he": 1,
               background:
@@ -443,10 +433,10 @@ export function FreeAktQuestionsLanding({
               {freePracticeIncludes.map((item, index) => (
                 <div
                   key={item}
-                  className="nebula-fill grid grid-cols-[12px_1fr] items-center gap-3 border-b border-white/[.06] px-4 py-3 last:border-b-0"
+                  className="grid grid-cols-[12px_1fr] items-center gap-3 border-b border-white/[.06] px-4 py-3 last:border-b-0"
                 >
                   <span
-                    className="nebula-node h-1.5 w-1.5 rounded-full"
+                    className="h-1.5 w-1.5 rounded-full"
                     style={{
                       background:
                         index === freePracticeIncludes.length - 1
@@ -492,8 +482,7 @@ export function FreeAktQuestionsLanding({
       <section className="pb-8 md:pb-10">
         <div className="container-x">
           <GlassCard
-            data-nebula-target="quick-answer"
-            className="nebula-target p-4 md:p-5"
+            className="p-4 md:p-5"
             style={{
               background:
                 "linear-gradient(135deg, rgba(52,211,153,.075), rgba(17,19,26,.86) 46%, rgba(109,106,232,.07))",
@@ -542,8 +531,7 @@ export function FreeAktQuestionsLanding({
 
           <div className="mt-6 grid gap-4 lg:grid-cols-2">
             <GlassCard
-              data-nebula-target="free-layer"
-              className="nebula-target p-5 md:p-6"
+              className="p-5 md:p-6"
               style={{
                 background:
                   "linear-gradient(145deg, rgba(17,19,26,.9), rgba(17,19,26,.66) 58%, rgba(52,211,153,.08))",
@@ -561,7 +549,7 @@ export function FreeAktQuestionsLanding({
               </div>
             </GlassCard>
 
-            <GlassCard className="nebula-fill p-5 md:p-6">
+            <GlassCard className="p-5 md:p-6">
               <h3
                 className="text-[20px] leading-[1.2]"
                 style={{ fontFamily: "var(--font-display)" }}
@@ -595,11 +583,7 @@ export function FreeAktQuestionsLanding({
 
       {!isCustomGptReturn ? <FreeQuestionsLiveDemo /> : null}
 
-      <section
-        ref={sampleRef}
-        className="nebula-target nebula-target--section section-padding pt-0"
-        data-nebula-target="explanation-proof"
-      >
+      <section ref={sampleRef} className="section-padding pt-0">
         <div className="container-x">
           <div className="grid gap-7 lg:grid-cols-[.82fr_1.18fr] lg:items-start">
             <div className="lg:sticky lg:top-24">
@@ -625,10 +609,10 @@ export function FreeAktQuestionsLanding({
                 {explanationDifferenceItems.map((item, index) => (
                   <div
                     key={item}
-                    className="nebula-fill grid grid-cols-[30px_1fr] gap-3 border-b border-white/[.06] bg-white/[.025] px-4 py-3 last:border-b-0"
+                    className="grid grid-cols-[30px_1fr] gap-3 border-b border-white/[.06] bg-white/[.025] px-4 py-3 last:border-b-0"
                   >
                     <span
-                      className="nebula-node mt-0.5 flex h-[22px] w-[22px] items-center justify-center rounded-full text-[10px] font-bold"
+                      className="mt-0.5 flex h-[22px] w-[22px] items-center justify-center rounded-full text-[10px] font-bold"
                       style={{
                         color:
                           index % 2 === 0
@@ -676,7 +660,7 @@ export function FreeAktQuestionsLanding({
             </div>
 
             <GlassCard
-              className="nebula-fill p-5 md:p-6"
+              className="p-5 md:p-6"
               style={{
                 background:
                   "linear-gradient(145deg, rgba(17,19,26,.9), rgba(17,19,26,.68) 56%, rgba(52,211,153,.07))",
@@ -783,8 +767,7 @@ export function FreeAktQuestionsLanding({
           />
 
           <GlassCard
-            data-nebula-target="process"
-            className="nebula-target mt-6 p-5 md:p-7"
+            className="mt-6 p-5 md:p-7"
             style={{
               background:
                 "linear-gradient(135deg, rgba(17,19,26,.92), rgba(17,19,26,.72) 48%, rgba(52,211,153,.055))",
@@ -795,7 +778,7 @@ export function FreeAktQuestionsLanding({
               {freeQuestionProcessSteps.map((step, index) => (
                 <article
                   key={step.title}
-                  className="nebula-fill border-b border-white/[.06] bg-white/[.025] p-4 last:border-b-0 lg:border-b-0 lg:border-r lg:last:border-r-0"
+                  className="border-b border-white/[.06] bg-white/[.025] p-4 last:border-b-0 lg:border-b-0 lg:border-r lg:last:border-r-0"
                 >
                   <p
                     className="text-[11px] font-bold uppercase tracking-[0.18em]"
@@ -837,8 +820,7 @@ export function FreeAktQuestionsLanding({
       <section className="section-padding pt-0">
         <div className="container-x">
           <GlassCard
-            data-nebula-target="fit-facts"
-            className="nebula-target p-5 md:p-7"
+            className="p-5 md:p-7"
             style={{
               background:
                 "linear-gradient(145deg, rgba(17,19,26,.92), rgba(17,19,26,.72) 54%, rgba(109,106,232,.06))",
@@ -904,7 +886,7 @@ export function FreeAktQuestionsLanding({
                   {freePracticeFacts.map(([label, value]) => (
                     <div
                       key={label}
-                      className="nebula-fill grid gap-2 border-b border-white/[.06] bg-white/[.025] p-4 last:border-b-0 md:grid-cols-[150px_1fr]"
+                      className="grid gap-2 border-b border-white/[.06] bg-white/[.025] p-4 last:border-b-0 md:grid-cols-[150px_1fr]"
                     >
                       <dt
                         className="text-[11px] font-bold uppercase tracking-[0.18em]"
@@ -960,8 +942,7 @@ export function FreeAktQuestionsLanding({
       <section className="section-padding pt-0">
         <div className="container-x">
           <GlassCard
-            data-nebula-target="final-cta"
-            className="nebula-target p-6 text-center md:p-8"
+            className="p-6 text-center md:p-8"
             style={{
               background:
                 "linear-gradient(135deg, rgba(109,106,232,.10), rgba(17,19,26,.88) 42%, rgba(236,72,153,.06))",

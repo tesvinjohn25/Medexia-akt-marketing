@@ -560,59 +560,18 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
     "src/components/sections/AdaptivePracticeSection.tsx",
     "utf8",
   );
-  const nebulaFlow = fs.readFileSync(
-    "src/components/sections/NebulaFlow.tsx",
-    "utf8",
-  );
   const data = fs.readFileSync("src/data/free-akt-questions.ts", "utf8");
   const schema = fs.readFileSync("src/components/FreeAktQuestionsJsonLd.tsx", "utf8");
   const sitemap = fs.readFileSync("src/app/sitemap.ts", "utf8");
-  const css = fs.readFileSync("src/app/globals.css", "utf8");
-  const source = `${route}\n${component}\n${demo}\n${adaptivePractice}\n${nebulaFlow}\n${data}\n${schema}`;
+  const source = `${route}\n${component}\n${demo}\n${adaptivePractice}\n${data}\n${schema}`;
 
   assert.match(route, /FreeAktQuestionsLanding sourceSurface="free_questions_landing"/);
   assert.match(component, /<TrackedAppLink[\s\S]*href="\/join\/free"[\s\S]*intent="start_free"/);
   assert.match(component, /free_akt_questions_start_free_clicked/);
   assert.match(component, /free_akt_questions_explanation_builder_clicked/);
   assert.match(component, /free_akt_questions_sample_viewed/);
-  assert.match(component, /!isCustomGptReturn \? <NebulaFlow \/> : null/);
-  assert.match(component, /data-nebula-target="hero-proof"/);
-  assert.match(component, /data-nebula-target="quick-answer"/);
-  assert.match(component, /data-nebula-target="explanation-proof"/);
-  assert.match(component, /data-nebula-target="process"/);
-  assert.match(component, /data-nebula-target="final-cta"/);
-  assert.match(nebulaFlow, /requestAnimationFrame/);
-  assert.match(nebulaFlow, /getScrollLinkedPoint/);
-  assert.match(nebulaFlow, /data-nebula-active/);
-  assert.match(nebulaFlow, /nebula-comet__ship/);
-  assert.match(nebulaFlow, /nebula-comet__aura/);
-  assert.match(nebulaFlow, /nebula-flow__trajectory/);
-  assert.match(nebulaFlow, /nebula-impact/);
-  assert.doesNotMatch(nebulaFlow, /IntersectionObserver/);
-  assert.doesNotMatch(nebulaFlow, /flightKey/);
-  assert.doesNotMatch(nebulaFlow, /key=\{`comet-/);
-  assert.match(css, /\.nebula-flow/);
-  assert.match(css, /nebulaShipIdle/);
-  assert.match(css, /nebulaTailIdle/);
-  assert.match(css, /nebulaCurrentBreathe/);
-  assert.doesNotMatch(css, /nebulaCometArrive/);
-  assert.doesNotMatch(css, /nebulaAuraArrive/);
-  assert.doesNotMatch(css, /nebulaWakeDraw/);
-  assert.doesNotMatch(css, /nebulaImpactBloom/);
-  assert.match(css, /\.nebula-flow-mounted \.nebula-target\.card-shimmer::before/);
-  assert.doesNotMatch(css, /\.nebula-target\[data-nebula-active="true"\]\s*\{/);
-  assert.doesNotMatch(css, /\.nebula-target\[data-nebula-active="true"\]\s+\.nebula-node/);
-  assert.doesNotMatch(css, /nebulaTargetImpact/);
-  assert.doesNotMatch(css, /\.nebula-target::after/);
-  assert.doesNotMatch(css, /\.nebula-fill::after/);
-  const compactNebulaMedia =
-    css.match(/@media \(max-width: 1023px\) \{[\s\S]*?\.nebula-impact span \{ inset: 24px; \}\n\}/)?.[0] ?? "";
-  assert.match(compactNebulaMedia, /\.nebula-flow \{\s*z-index: 2;\s*opacity: \.72;\s*\}/);
-  assert.doesNotMatch(compactNebulaMedia, /display:\s*none/);
-  assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.nebula-flow \{ display: none; \}/);
   assert.match(component, /!isCustomGptReturn \? <FreeQuestionsLiveDemo \/> : null/);
   assert.match(demo, /Sit five AKT-style questions inside the app\./);
-  assert.match(demo, /data-nebula-target="live-demo"/);
   assert.match(demo, /DEMO_QUESTIONS = "\/demo\/questions"/);
   assert.match(demo, /free_akt_questions_demo_viewed/);
   assert.match(demo, /free_akt_questions_demo_opened/);
@@ -621,7 +580,6 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   assert.match(demo, /placement: "live_demo"/);
   assert.match(component, /<AdaptivePracticeSection sourceSurface=\{sourceSurface\} \/>/);
   assert.match(adaptivePractice, /Adaptive practice, not a random question shuffle\./);
-  assert.match(adaptivePractice, /data-nebula-target="adaptive-practice"/);
   assert.match(adaptivePractice, /free_akt_questions_adaptive_practice_viewed/);
 
   assert.match(source, /Free AKT questions/);
@@ -691,7 +649,6 @@ test("/free renders the shared free questions page in custom GPT return mode", (
   assert.match(component, /const isCustomGptReturn = sourceSurface === "custom_gpt_return"/);
   assert.match(component, /!isCustomGptReturn \? \(/);
   assert.match(component, /Open the Explanation Builder again/);
-  assert.match(component, /!isCustomGptReturn \? <NebulaFlow \/> : null/);
   assert.match(component, /!isCustomGptReturn \? <FreeQuestionsLiveDemo \/> : null/);
   assert.match(component, /!isCustomGptReturn \? \(\s*<AdaptivePracticeSection sourceSurface=\{sourceSurface\} \/>/);
 });

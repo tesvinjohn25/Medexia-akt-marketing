@@ -50,8 +50,7 @@ export function AdaptivePracticeSection({
         className={`container-x relative reveal-group ${visible ? "is-visible" : ""}`}
       >
         <div
-          data-nebula-target="adaptive-practice"
-          className="nebula-target card card-shimmer r-up grid gap-6 p-5 md:p-7 lg:grid-cols-[.9fr_1.1fr] lg:items-center"
+          className="card card-shimmer r-up grid gap-6 p-5 md:p-7 lg:grid-cols-[.9fr_1.1fr] lg:items-center"
           style={{
             "--i": 0,
             background:
@@ -171,8 +170,8 @@ export function AdaptivePracticeSection({
                     key={item.title}
                     className={
                       index === nextSessionRecipeItems.length - 1
-                        ? "nebula-fill rounded-[14px] border border-white/[.07] bg-black/[.12] px-3 py-3 sm:col-span-2"
-                        : "nebula-fill rounded-[14px] border border-white/[.07] bg-black/[.12] px-3 py-3"
+                        ? "rounded-[14px] border border-white/[.07] bg-black/[.12] px-3 py-3 sm:col-span-2"
+                        : "rounded-[14px] border border-white/[.07] bg-black/[.12] px-3 py-3"
                     }
                   >
                     <h4
@@ -198,7 +197,7 @@ export function AdaptivePracticeSection({
               </div>
 
               <div
-                className="nebula-fill mt-4 rounded-[14px] border px-4 py-3 text-[13px] font-semibold leading-[1.55]"
+                className="mt-4 rounded-[14px] border px-4 py-3 text-[13px] font-semibold leading-[1.55]"
                 style={{
                   color: "rgba(232,236,255,.72)",
                   background: "rgba(52,211,153,.055)",

@@ -92,16 +92,27 @@ export function NebulaFlow() {
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
       const hasNodeImpact = impactElement.classList.contains("nebula-node");
+      const isCompactViewport = viewportWidth < 768;
+      const isHeroProofTarget = target.dataset.nebulaTarget === "hero-proof";
+      const targetStartsBelowHero =
+        anchorRect.top > viewportHeight * 0.58 && isHeroProofTarget;
+      const maxLandingX = isCompactViewport
+        ? viewportWidth - 38
+        : viewportWidth - 76;
 
       const landingX = clamp(
-        hasNodeImpact
+        isCompactViewport && targetStartsBelowHero
+          ? viewportWidth - 54
+          : hasNodeImpact
           ? impactRect.left - 68
           : anchorRect.left + Math.min(anchorRect.width * 0.12, 72),
         72,
-        viewportWidth - 76,
+        maxLandingX,
       );
       const landingY = clamp(
-        hasNodeImpact
+        isCompactViewport && targetStartsBelowHero
+          ? viewportHeight * 0.24
+          : hasNodeImpact
           ? impactRect.top + impactRect.height / 2
           : anchorRect.top + Math.min(anchorRect.height * 0.42, 92),
         86,

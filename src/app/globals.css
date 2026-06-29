@@ -424,21 +424,21 @@ body > * { position: relative; z-index: 1; }
 }
 .nebula-flow__path--haze {
   stroke: url(#nebulaTrajectoryGradient);
-  stroke-width: 22px;
+  stroke-width: 9px;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  opacity: .44;
+  opacity: .24;
   filter: url(#nebulaTrajectoryGlow);
-  animation: nebulaPathDraw 1.05s cubic-bezier(.18,.72,.18,1) both;
+  animation: nebulaPathDraw 2.45s cubic-bezier(.18,.72,.18,1) both;
 }
 .nebula-flow__path--core {
-  stroke: rgba(255,255,255,.72);
-  stroke-width: 1.5px;
+  stroke: rgba(255,255,255,.58);
+  stroke-width: 1px;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  opacity: .68;
+  opacity: .48;
   filter: drop-shadow(0 0 10px rgba(197,170,255,.85));
-  animation: nebulaPathDraw 1.05s cubic-bezier(.18,.72,.18,1) both;
+  animation: nebulaPathDraw 2.45s cubic-bezier(.18,.72,.18,1) both;
 }
 
 .nebula-comet,
@@ -453,7 +453,7 @@ body > * { position: relative; z-index: 1; }
   height: 88px;
   transform-origin: 50% 50%;
   will-change: transform, opacity;
-  animation: nebulaCometArrive 1.08s cubic-bezier(.16,.86,.18,1) both;
+  animation: nebulaCometArrive 2.45s cubic-bezier(.16,.86,.18,1) both;
 }
 .nebula-comet__aura {
   position: absolute;
@@ -476,7 +476,7 @@ body > * { position: relative; z-index: 1; }
     0 0 64px rgba(109,106,232,.20),
     inset 0 0 34px rgba(197,170,255,.18);
   filter: saturate(1.18);
-  animation: nebulaAuraArrive 1.08s cubic-bezier(.16,.86,.18,1) both;
+  animation: nebulaAuraArrive 2.45s cubic-bezier(.16,.86,.18,1) both;
 }
 .nebula-comet__aura::before,
 .nebula-comet__aura::after {
@@ -499,7 +499,7 @@ body > * { position: relative; z-index: 1; }
     radial-gradient(1.6px 1.6px at 76% 68%, rgba(255,255,255,.70), transparent),
     radial-gradient(1.2px 1.2px at 38% 74%, rgba(236,72,153,.72), transparent);
   opacity: .82;
-  animation: nebulaAuraDust 1.08s ease-out both;
+  animation: nebulaAuraDust 2.45s ease-out both;
 }
 .nebula-comet__tail {
   position: absolute;
@@ -512,21 +512,21 @@ body > * { position: relative; z-index: 1; }
   pointer-events: none;
 }
 .nebula-comet__tail--wide {
-  width: 270px;
-  height: 58px;
+  width: 160px;
+  height: 36px;
   background:
     radial-gradient(60% 130% at 85% 50%, rgba(255,255,255,.34), transparent 55%),
     radial-gradient(70% 150% at 65% 48%, rgba(197,170,255,.44), transparent 62%),
     radial-gradient(76% 140% at 42% 54%, rgba(155,107,255,.26), transparent 68%),
     radial-gradient(58% 120% at 92% 45%, rgba(236,72,153,.14), transparent 58%),
     linear-gradient(90deg, transparent, rgba(109,106,232,.22), rgba(197,170,255,.46));
-  filter: blur(15px) saturate(1.22);
-  opacity: .92;
-  animation: nebulaTailPulse 1.08s ease-out both;
+  filter: blur(10px) saturate(1.2);
+  opacity: .62;
+  animation: nebulaTailPulse 2.45s ease-out both;
 }
 .nebula-comet__tail--core {
-  width: 190px;
-  height: 14px;
+  width: 118px;
+  height: 8px;
   background: linear-gradient(90deg, transparent, rgba(109,106,232,.34), rgba(197,170,255,.90), rgba(255,255,255,.94));
   box-shadow:
     0 0 18px rgba(197,170,255,.75),
@@ -560,8 +560,8 @@ body > * { position: relative; z-index: 1; }
     0 0 8px rgba(255,255,255,.85),
     0 0 18px rgba(197,170,255,.64);
   opacity: 0;
-  animation: nebulaSparkTrail .95s ease-out both;
-  animation-delay: calc(var(--spark) * .055s);
+  animation: nebulaSparkTrail 1.9s ease-out both;
+  animation-delay: calc(.18s + var(--spark) * .09s);
 }
 .nebula-impact {
   width: 210px;
@@ -572,7 +572,7 @@ body > * { position: relative; z-index: 1; }
   background:
     radial-gradient(circle, rgba(255,255,255,.52) 0 2%, rgba(197,170,255,.38) 3% 10%, rgba(155,107,255,.22) 18%, rgba(236,72,153,.11) 31%, transparent 58%);
   filter: blur(.4px);
-  animation: nebulaImpactBloom 1.25s .72s ease-out both;
+  animation: nebulaImpactBloom 1.45s 1.72s ease-out both;
 }
 .nebula-impact span {
   position: absolute;
@@ -583,7 +583,12 @@ body > * { position: relative; z-index: 1; }
     0 0 22px rgba(197,170,255,.58),
     inset 0 0 22px rgba(236,72,153,.12);
   opacity: 0;
-  animation: nebulaImpactRing 1.1s .74s ease-out both;
+  animation: nebulaImpactRing 1.3s 1.74s ease-out both;
+}
+
+.nebula-flow-mounted .nebula-target.card-shimmer::before {
+  animation: none;
+  opacity: .10;
 }
 
 .nebula-target {
@@ -621,7 +626,7 @@ body > * { position: relative; z-index: 1; }
   filter: none;
 }
 .nebula-target[data-nebula-active="true"]::after {
-  animation: nebulaTargetImpact 1.65s .55s ease-out both;
+  animation: nebulaTargetImpact 1.65s 1.72s ease-out both;
 }
 .nebula-node,
 .nebula-fill {
@@ -639,7 +644,7 @@ body > * { position: relative; z-index: 1; }
 .nebula-target[data-nebula-active="true"] .nebula-node {
   color: rgba(255,255,255,.96) !important;
   background:
-    radial-gradient(circle at 38% 30%, rgba(255,255,255,.98), rgba(232,236,255,.72) 22%, rgba(197,170,255,.86) 42%, rgba(109,106,232,.88) 68%, rgba(52,211,153,.66)) !important;
+    radial-gradient(circle at 38% 30%, rgba(255,255,255,.98), rgba(232,236,255,.72) 22%, rgba(197,170,255,.90) 42%, rgba(155,107,255,.88) 68%, rgba(236,72,153,.38)) !important;
   border-color: rgba(255,255,255,.20) !important;
   box-shadow:
     0 0 18px rgba(197,170,255,.72),
@@ -647,29 +652,15 @@ body > * { position: relative; z-index: 1; }
   transform: scale(1.08);
 }
 .nebula-target[data-nebula-active="true"] .nebula-fill {
-  background-color: rgba(155,107,255,.045);
-  border-color: rgba(197,170,255,.18);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.05),
-    0 0 18px rgba(109,106,232,.09);
-  animation: nebulaElementIgnite .96s .62s ease-out both;
-}
-.nebula-target[data-nebula-active="true"] .nebula-fill:nth-child(2) {
-  animation-delay: .70s;
-}
-.nebula-target[data-nebula-active="true"] .nebula-fill:nth-child(3) {
-  animation-delay: .78s;
-}
-.nebula-target[data-nebula-active="true"] .nebula-fill:nth-child(4) {
-  animation-delay: .86s;
-}
-.nebula-target[data-nebula-active="true"] .nebula-fill:nth-child(5) {
-  animation-delay: .94s;
+  background-color: transparent;
+  border-color: rgba(197,170,255,.10);
+  box-shadow: none;
+  animation: none;
 }
 
 @keyframes nebulaPathDraw {
   0% { stroke-dashoffset: 1; opacity: 0; }
-  18% { opacity: .95; }
+  28% { opacity: .34; }
   100% { stroke-dashoffset: 0; opacity: 0; }
 }
 @keyframes nebulaCometArrive {
@@ -689,8 +680,8 @@ body > * { position: relative; z-index: 1; }
 }
 @keyframes nebulaTailPulse {
   0% { opacity: 0; transform: translateY(-50%) scaleX(.35); }
-  45% { opacity: .95; transform: translateY(-50%) scaleX(1); }
-  100% { opacity: .12; transform: translateY(-50%) scaleX(.46); }
+  46% { opacity: .62; transform: translateY(-50%) scaleX(1); }
+  100% { opacity: .06; transform: translateY(-50%) scaleX(.38); }
 }
 @keyframes nebulaAuraArrive {
   0% { opacity: 0; transform: scale(.58) rotate(-16deg); }
@@ -716,38 +707,19 @@ body > * { position: relative; z-index: 1; }
 }
 @keyframes nebulaImpactBloom {
   0% { opacity: 0; transform: translate(-50%, -50%) scale(.18); }
-  28% { opacity: .92; }
+  28% { opacity: .72; }
   100% { opacity: 0; transform: translate(-50%, -50%) scale(1.1); }
 }
 @keyframes nebulaImpactRing {
   0% { opacity: 0; transform: scale(.4); }
-  22% { opacity: .82; }
+  22% { opacity: .58; }
   100% { opacity: 0; transform: scale(1.9); }
 }
 @keyframes nebulaTargetImpact {
   0% { opacity: 0; transform: scale(.985); }
-  20% { opacity: .86; transform: scale(1); }
-  100% { opacity: .20; transform: scale(1); }
+  20% { opacity: .36; transform: scale(1); }
+  100% { opacity: .08; transform: scale(1); }
 }
-@keyframes nebulaElementIgnite {
-  0% {
-    background-color: rgba(255,255,255,.02);
-    box-shadow: none;
-  }
-  36% {
-    background-color: rgba(197,170,255,.13);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.10),
-      0 0 20px rgba(197,170,255,.22);
-  }
-  100% {
-    background-color: rgba(255,255,255,.025);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.045),
-      0 0 12px rgba(109,106,232,.08);
-  }
-}
-
 @media (max-width: 1023px) {
   .nebula-flow {
     display: none;

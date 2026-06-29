@@ -53,6 +53,14 @@ function getAnchorElement(target: HTMLElement) {
   );
 }
 
+function getImpactElement(target: HTMLElement) {
+  return (
+    target.querySelector<HTMLElement>(".nebula-node") ??
+    target.querySelector<HTMLElement>(".nebula-fill") ??
+    getAnchorElement(target)
+  );
+}
+
 export function NebulaFlow() {
   const [comet, setComet] = useState<CometState>(INITIAL_COMET_STATE);
 
@@ -78,26 +86,33 @@ export function NebulaFlow() {
     const measureTarget = (target: HTMLElement, restartFlight: boolean) => {
       const anchor = getAnchorElement(target);
       const anchorRect = anchor.getBoundingClientRect();
+      const impactElement = getImpactElement(target);
+      const impactRect = impactElement.getBoundingClientRect();
       const targetRect = target.getBoundingClientRect();
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
+      const hasNodeImpact = impactElement.classList.contains("nebula-node");
 
       const landingX = clamp(
-        anchorRect.left + anchorRect.width * 0.82,
+        hasNodeImpact
+          ? impactRect.left - 34
+          : anchorRect.left + Math.min(anchorRect.width * 0.18, 96),
         72,
         viewportWidth - 76,
       );
       const landingY = clamp(
-        anchorRect.top + anchorRect.height * 0.34,
+        hasNodeImpact
+          ? impactRect.top + impactRect.height / 2
+          : anchorRect.top + Math.min(anchorRect.height * 0.42, 92),
         86,
         viewportHeight - 86,
       );
-      const startX = clamp(landingX + 220, 120, viewportWidth - 28);
-      const startY = clamp(landingY - 260, 28, viewportHeight - 140);
-      const controlOneX = clamp(startX - 96, 36, viewportWidth - 36);
-      const controlOneY = clamp(startY + 120, 36, viewportHeight - 36);
-      const controlTwoX = clamp(landingX + 140, 36, viewportWidth - 36);
-      const controlTwoY = clamp(landingY - 70, 36, viewportHeight - 36);
+      const startX = clamp(landingX - 220, 36, viewportWidth - 160);
+      const startY = clamp(landingY - 300, 26, viewportHeight - 180);
+      const controlOneX = clamp(startX + 46, 28, viewportWidth - 28);
+      const controlOneY = clamp(startY + 150, 28, viewportHeight - 28);
+      const controlTwoX = clamp(landingX - 110, 28, viewportWidth - 28);
+      const controlTwoY = clamp(landingY - 104, 28, viewportHeight - 28);
       const radians = Math.atan2(landingY - startY, landingX - startX);
       const impactX = clamp(landingX - targetRect.left, 0, targetRect.width);
       const impactY = clamp(landingY - targetRect.top, 0, targetRect.height);

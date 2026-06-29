@@ -593,6 +593,8 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   assert.match(css, /nebulaAuraArrive/);
   assert.match(css, /nebulaImpactBloom/);
   assert.match(css, /nebulaTargetImpact/);
+  assert.match(css, /\.nebula-flow-mounted \.nebula-target\.card-shimmer::before/);
+  assert.doesNotMatch(css, /\.nebula-fill::after/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.nebula-flow \{ display: none; \}/);
   assert.match(component, /!isCustomGptReturn \? <FreeQuestionsLiveDemo \/> : null/);
   assert.match(demo, /Sit five AKT-style questions inside the app\./);

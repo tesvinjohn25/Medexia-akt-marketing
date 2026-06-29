@@ -129,7 +129,8 @@ export function FreeQuestionsLiveDemo() {
   return (
     <section
       id="free-question-demo"
-      className="section-padding relative overflow-hidden pt-0"
+      data-nebula-target="live-demo"
+      className="nebula-target nebula-target--section section-padding relative overflow-hidden pt-0"
     >
       <div
         className="pointer-events-none absolute inset-x-0 top-6 h-[420px]"
@@ -179,10 +180,10 @@ export function FreeQuestionsLiveDemo() {
               {desktopNotes.map((note, index) => (
                 <div
                   key={note.title}
-                  className="grid grid-cols-[34px_1fr] gap-3 border-t border-white/[.08] pt-4"
+                  className="nebula-fill grid grid-cols-[34px_1fr] gap-3 border-t border-white/[.08] pt-4"
                 >
                   <span
-                    className="flex h-[26px] w-[26px] items-center justify-center rounded-full text-[11px] font-bold"
+                    className="nebula-node flex h-[26px] w-[26px] items-center justify-center rounded-full text-[11px] font-bold"
                     style={{
                       color:
                         index === 0
@@ -240,7 +241,7 @@ export function FreeQuestionsLiveDemo() {
             style={{ "--i": 4 } as CSSProperties}
           >
             <div
-              className="relative overflow-hidden rounded-[44px] p-[10px]"
+              className="nebula-fill relative overflow-hidden rounded-[44px] p-[10px]"
               style={{
                 background: "#06070b",
                 border: "1px solid rgba(255,255,255,.14)",
@@ -394,7 +395,7 @@ export function FreeQuestionsLiveDemo() {
               <button
                 type="button"
                 onClick={openOverlay}
-                className="card-shimmer relative mx-auto flex w-full max-w-[340px] flex-col items-center gap-4 overflow-hidden rounded-[26px] px-6 py-9 text-center"
+                className="nebula-fill card-shimmer relative mx-auto flex w-full max-w-[340px] flex-col items-center gap-4 overflow-hidden rounded-[26px] px-6 py-9 text-center"
                 style={{
                   background:
                     "linear-gradient(160deg, rgba(17,30,28,.96), rgba(17,19,28,.92) 50%, rgba(12,14,22,.94))",

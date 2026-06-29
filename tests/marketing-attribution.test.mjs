@@ -227,8 +227,16 @@ test("flushed CTA events use fetch keepalive so navigation does not abort them",
   assert.equal(browser.fetchCalls[0].options.credentials, "omit");
   const payload = await parseFetchPayload(browser.fetchCalls[0]);
   assert.equal(payload.event_name, "cta_clicked_start_free");
-  assert.equal(payload.first_touch.utm_source, "reddit");
-  assert.equal(payload.first_touch.utm_campaign, "audio_first_post");
+  assert.equal(payload.source, "reddit");
+  assert.equal(payload.first_touch.source, "reddit");
+  assert.equal(payload.first_touch.campaign, "audio_first_post");
+  assert.deepEqual(Object.keys(payload.first_touch).sort(), [
+    "campaign",
+    "content",
+    "medium",
+    "source",
+    "term",
+  ].sort());
 });
 
 test("app url ignores a same-origin landing base to avoid CTA 404s", () => {
@@ -337,25 +345,89 @@ test("ref query params normalize into referral_code", () => {
   });
 });
 
-test("fresh visitor with no consent creates no marketing storage, events, pixels, or attributed app params", () => {
+test("fresh visitor before consent captures source handoff without IDs, events, pixels, or ad click ids", () => {
   resetTrackingEnv();
   setReferralFlags(false);
   const browser = installBrowser("https://medexia-akt.com/?utm_source=reddit&utm_campaign=audio_first_post&gclid=G123");
 
-  const snapshot = getMarketingSnapshot();
+  const snapshot = initMarketingAttribution();
   trackLandingEvent("landing_page_viewed");
   maybeLoadMarketingPixels();
   const appUrl = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
 
   assert.equal(snapshot.mx_visitor_id, null);
   assert.equal(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.visitorId), null);
-  assert.equal(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.firstTouch), null);
+  assert.equal(JSON.parse(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.firstTouch)).source, "reddit");
+  assert.equal(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.offerContext), null);
   assert.equal(browser.sendBeaconCalls.length, 0);
   assert.equal(browser.fetchCalls.length, 0);
   assert.equal(browser.scripts.length, 0);
   assert.equal(appUrl.searchParams.has("mx_vid"), false);
-  assert.equal(appUrl.searchParams.has("utm_source"), false);
+  assert.equal(appUrl.searchParams.get("utm_source"), "reddit");
+  assert.equal(appUrl.searchParams.get("first_touch_source"), "reddit");
   assert.equal(appUrl.searchParams.has("gclid"), false);
+});
+
+test("document.referrer becomes fallback source when no UTM is present", () => {
+  resetTrackingEnv();
+  const browser = installBrowser("https://medexia-akt.com/", "https://www.google.co.uk/search?q=akt+navigator");
+
+  const snapshot = initMarketingAttribution();
+  const firstTouch = JSON.parse(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.firstTouch));
+  const appUrl = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
+
+  assert.equal(snapshot.first_touch.source, "google");
+  assert.equal(snapshot.first_touch.medium, "organic");
+  assert.equal(firstTouch.source, "google");
+  assert.equal(firstTouch.medium, "organic");
+  assert.equal(appUrl.searchParams.get("utm_source"), "google");
+  assert.equal(appUrl.searchParams.get("utm_medium"), "organic");
+  assert.equal(appUrl.searchParams.get("first_touch_source"), "google");
+});
+
+test("UTM tags win over document.referrer and first touch is not overwritten", () => {
+  resetTrackingEnv();
+  const browser = installBrowser("https://medexia-akt.com/", "https://www.google.com/search?q=akt");
+
+  initMarketingAttribution();
+  window.location = new URL("https://medexia-akt.com/?utm_source=newsletter&utm_medium=email&utm_campaign=july");
+  document.referrer = "https://www.google.com/search?q=akt";
+  const snapshot = initMarketingAttribution();
+  const appUrl = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
+
+  assert.equal(JSON.parse(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.firstTouch)).source, "google");
+  assert.equal(JSON.parse(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.lastTouch)).source, "newsletter");
+  assert.equal(snapshot.first_touch.source, "google");
+  assert.equal(snapshot.last_touch.source, "newsletter");
+  assert.equal(appUrl.searchParams.get("utm_source"), "google");
+  assert.equal(appUrl.searchParams.get("first_touch_source"), "google");
+  assert.equal(appUrl.searchParams.get("last_touch_source"), "newsletter");
+});
+
+test("referrer classification covers AI, social, referral, and internal hosts", () => {
+  const cases = [
+    ["https://chatgpt.com/c/abc", "chatgpt", "ai"],
+    ["https://perplexity.ai/search/akt", "perplexity", "ai"],
+    ["https://gemini.google.com/app/abc", "gemini", "ai"],
+    ["https://www.reddit.com/r/GPtraining/", "reddit", "social"],
+    ["https://example.co.uk/path", "example.co.uk", "referral"],
+  ];
+
+  for (const [referrer, source, medium] of cases) {
+    resetTrackingEnv();
+    installBrowser("https://medexia-akt.com/", referrer);
+    const snapshot = initMarketingAttribution();
+    assert.equal(snapshot.first_touch.source, source);
+    assert.equal(snapshot.first_touch.medium, medium);
+  }
+
+  resetTrackingEnv();
+  const browser = installBrowser("https://medexia-akt.com/", "https://app.medexia-akt.com/join/free");
+  const snapshot = initMarketingAttribution();
+  const appUrl = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
+  assert.equal(snapshot.first_touch, null);
+  assert.equal(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.firstTouch), null);
+  assert.equal(appUrl.searchParams.has("utm_source"), false);
 });
 
 test("reject all stores the decision and leaves analytics and pixels disabled", () => {
@@ -432,6 +504,7 @@ test("analytics consent creates first-party attribution without loading pixels o
   assert.ok(snapshot.mx_visitor_id);
   assert.ok(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.visitorId));
   assert.equal(JSON.parse(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.firstTouch)).utm_source, "reddit");
+  assert.equal(JSON.parse(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.firstTouch)).source, "reddit");
   assert.equal(browser.sendBeaconCalls.length, 1);
   assert.equal(browser.scripts.length, 0);
   assert.equal(appUrl.searchParams.get("utm_source"), "reddit");
@@ -640,7 +713,8 @@ test("referral handoff is preserved without analytics consent but marketing iden
   assert.equal(appUrl.searchParams.get("referral_code"), "REF123");
   assert.equal(appUrl.searchParams.get("ref"), "REF123");
   assert.equal(appUrl.searchParams.get("offer_id"), OFFER_IDS.earlybird49ReferralPre);
-  assert.equal(appUrl.searchParams.has("utm_source"), false);
+  assert.equal(appUrl.searchParams.get("utm_source"), "whatsapp");
+  assert.equal(appUrl.searchParams.get("utm_campaign"), "share");
   assert.equal(appUrl.searchParams.has("mx_vid"), false);
   assert.equal(appUrl.searchParams.has("gclid"), false);
 });
@@ -687,7 +761,7 @@ test("functional-only consent persists referral continuity without analytics ide
   assert.equal(snapshot.active_referral?.referral_code, "REF123");
   assert.equal(snapshot.referral?.referral_code, "REF123");
   assert.equal(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.visitorId), null);
-  assert.equal(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.firstTouch), null);
+  assert.equal(JSON.parse(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.firstTouch)).source, "whatsapp");
   assert.equal(JSON.parse(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.referral)).referral_code, "REF123");
 });
 

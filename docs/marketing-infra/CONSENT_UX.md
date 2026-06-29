@@ -20,22 +20,22 @@ Allowed key:
 
 ### Functional
 
-Optional and default off. Used for non-essential UI preferences and referral-code continuity across marketing-site navigation.
+Optional and default off. Used for non-essential UI preferences, referral-code continuity across marketing-site navigation, and source handoff continuity without analytics IDs.
 
 Allowed key:
 
 - `mx_referral`
+- `mx_first_touch`
+- `mx_last_touch`
 
 ### Analytics
 
-Optional and default off. Used for first-party landing events, Vercel Analytics, source/campaign measurement, and funnel events.
+Optional and default off. Used for first-party landing events, Vercel Analytics, anonymous visitor/session IDs, source/campaign measurement, and funnel events.
 
 Allowed keys:
 
 - `mx_visitor_id`
 - `mx_session_id`
-- `mx_first_touch`
-- `mx_last_touch`
 - `mx_offer_context`
 
 Analytics consent enables these first-party events:
@@ -69,13 +69,13 @@ Marketing pixels still require:
 
 ## Gated Code Paths
 
-- `MarketingAttributionProvider` reads consent before persistent attribution initialization.
+- `MarketingAttributionProvider` initializes source attribution on first load so app handoff links can preserve the original acquisition source.
 - `initMarketingAttribution()` creates/persists visitor/session IDs only after analytics or marketing consent.
-- Functional-only consent can persist referral continuity without creating analytics IDs.
+- Functional-only consent can persist referral and source continuity without creating analytics IDs.
 - `trackLandingEvent()` is a no-op unless analytics consent is true, except for the first-party `consent_updated` audit event.
 - When analytics consent is false, `consent_updated` is stripped to a minimal consent audit payload: event name, timestamp, consent version, choices, and source/mechanism only. It must not include `mx_visitor_id`, UTMs, referrer, ad click IDs, or first/last-touch attribution.
 - `maybeLoadMarketingPixels()` is a no-op unless marketing consent and pixel env vars are present.
-- `buildAppUrl()` strips `mx_*`, UTM, referrer, campaign, and ad click ID params before consent. It can still pass `referral_code`, `ref`, referral `offer_id`, and `intent` when needed to honour a referral link.
+- `buildAppUrl()` can pass resolved `utm_*`, `first_touch_*`, `last_touch_*`, `referrer`, `first_landing_page`, referral params, offer params, and `intent` before analytics consent so the app does not lose source on cross-domain handoff. It strips `mx_*` IDs before analytics consent and strips ad click IDs before marketing consent.
 - Vercel Analytics only renders after analytics consent.
 
 ## Growth Ledger Persistence Status
@@ -104,11 +104,12 @@ The consent record remains. If third-party scripts were already loaded, Medexia 
 No consent:
 
 - no `mx_visitor_id`
-- no first/last touch storage
+- first/last source touch may be stored for app handoff
 - no first-party landing events
 - no Vercel Analytics
 - no Meta or Google scripts
-- app handoff has no `mx_*`, UTM, referrer, campaign, or ad click ID params
+- app handoff may include resolved `utm_*`, `first_touch_*`, `last_touch_*`, `referrer`, and `first_landing_page`
+- app handoff has no `mx_*` or ad click ID params
 - referral code may pass through current CTA
 
 Reject all:

@@ -1,6 +1,7 @@
 import {
+  compactAttributionTouch,
   determineOfferContext,
-  getMarketingSnapshot,
+  initMarketingAttribution,
   OFFER_IDS,
   type CtaIntent,
   type OfferId,
@@ -85,9 +86,12 @@ export function buildAppUrl(
     ? new URL(pathOrExistingUrl)
     : new URL(pathOrExistingUrl.startsWith("/") ? pathOrExistingUrl : `/${pathOrExistingUrl}`, base);
 
-  const snapshot = getMarketingSnapshot();
+  const snapshot = initMarketingAttribution();
   const first = snapshot.first_touch;
   const last = snapshot.last_touch;
+  const firstTouch = compactAttributionTouch(first);
+  const lastTouch = compactAttributionTouch(last);
+  const handoffTouch = firstTouch ?? lastTouch;
   const referralCode = snapshot.active_referral?.referral_code ?? null;
   const requestedOfferId =
     options.offerId === OFFER_IDS.earlybird49ReferralPre && !referralCode
@@ -104,28 +108,30 @@ export function buildAppUrl(
             : null,
       });
 
+  setIfPresent(url.searchParams, "utm_source", handoffTouch?.source);
+  setIfPresent(url.searchParams, "utm_medium", handoffTouch?.medium);
+  setIfPresent(url.searchParams, "utm_campaign", handoffTouch?.campaign);
+  setIfPresent(url.searchParams, "utm_content", handoffTouch?.content);
+  setIfPresent(url.searchParams, "utm_term", handoffTouch?.term);
+
+  setIfPresent(url.searchParams, "first_touch_source", firstTouch?.source);
+  setIfPresent(url.searchParams, "first_touch_medium", firstTouch?.medium);
+  setIfPresent(url.searchParams, "first_touch_campaign", firstTouch?.campaign);
+  setIfPresent(url.searchParams, "first_touch_content", firstTouch?.content);
+  setIfPresent(url.searchParams, "first_touch_term", firstTouch?.term);
+  setIfPresent(url.searchParams, "last_touch_source", lastTouch?.source);
+  setIfPresent(url.searchParams, "last_touch_medium", lastTouch?.medium);
+  setIfPresent(url.searchParams, "last_touch_campaign", lastTouch?.campaign);
+  setIfPresent(url.searchParams, "last_touch_content", lastTouch?.content);
+  setIfPresent(url.searchParams, "last_touch_term", lastTouch?.term);
+
+  setIfPresent(url.searchParams, "referrer", first?.referrer ?? last?.referrer);
+  setIfPresent(url.searchParams, "first_landing_page", first?.first_landing_page ?? last?.first_landing_page);
+  setIfPresent(url.searchParams, "campaign_id", last?.campaign_id ?? first?.campaign_id);
+
   if (canUseAnalytics()) {
     setIfPresent(url.searchParams, "mx_vid", snapshot.mx_visitor_id);
     setIfPresent(url.searchParams, "mx_sid", snapshot.mx_session_id);
-
-    setIfPresent(url.searchParams, "utm_source", last?.utm_source ?? first?.utm_source);
-    setIfPresent(url.searchParams, "utm_medium", last?.utm_medium ?? first?.utm_medium);
-    setIfPresent(url.searchParams, "utm_campaign", last?.utm_campaign ?? first?.utm_campaign);
-    setIfPresent(url.searchParams, "utm_content", last?.utm_content ?? first?.utm_content);
-    setIfPresent(url.searchParams, "utm_term", last?.utm_term ?? first?.utm_term);
-
-    setIfPresent(url.searchParams, "first_touch_source", first?.utm_source);
-    setIfPresent(url.searchParams, "first_touch_medium", first?.utm_medium);
-    setIfPresent(url.searchParams, "first_touch_campaign", first?.utm_campaign);
-    setIfPresent(url.searchParams, "first_touch_content", first?.utm_content);
-    setIfPresent(url.searchParams, "last_touch_source", last?.utm_source);
-    setIfPresent(url.searchParams, "last_touch_medium", last?.utm_medium);
-    setIfPresent(url.searchParams, "last_touch_campaign", last?.utm_campaign);
-    setIfPresent(url.searchParams, "last_touch_content", last?.utm_content);
-
-    setIfPresent(url.searchParams, "referrer", first?.referrer ?? last?.referrer);
-    setIfPresent(url.searchParams, "first_landing_page", first?.first_landing_page ?? last?.first_landing_page);
-    setIfPresent(url.searchParams, "campaign_id", last?.campaign_id ?? first?.campaign_id);
     setIfPresent(url.searchParams, "offer_id", offer.offer_id);
   } else if (referralCode && offer.offer_id === OFFER_IDS.earlybird49ReferralPre) {
     setIfPresent(url.searchParams, "offer_id", offer.offer_id);

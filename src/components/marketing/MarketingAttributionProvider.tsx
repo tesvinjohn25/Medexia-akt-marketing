@@ -47,7 +47,7 @@ export function MarketingAttributionProvider({ children }: { children: ReactNode
   useEffect(() => {
     const analyticsAllowed = canUseAnalytics();
     const marketingAllowed = canUseMarketing();
-    const next = canUseFunctional() || analyticsAllowed || marketingAllowed ? initMarketingAttribution() : getMarketingSnapshot();
+    const next = initMarketingAttribution();
     setSnapshot(next);
 
     if (analyticsAllowed) {

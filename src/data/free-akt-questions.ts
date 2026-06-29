@@ -36,6 +36,48 @@ export const optionalPaidAudioFeatures = [
   "Premium audio resources",
 ] as const;
 
+export const adaptivePracticeItems = [
+  {
+    title: "Cover the AKT blueprint",
+    body: "Keeps practice spread across the AKT curriculum, so familiar topics do not crowd out quieter areas.",
+  },
+  {
+    title: "Target weak spots",
+    body: "Brings back subtopics where your answers suggest uncertainty or repeated mistakes.",
+  },
+  {
+    title: "Mix breadth with repair",
+    body: "Balances unseen high-yield areas with deliberate weak-area remediation.",
+  },
+  {
+    title: "Avoid wasted repetition",
+    body: "Holds back recently seen questions so you are not just recognising answers from memory.",
+  },
+] as const;
+
+export const nextSessionRecipeItems = [
+  {
+    title: "Blueprint coverage",
+    body: "Keeps practice spread across the AKT curriculum.",
+  },
+  {
+    title: "Weak-spot repair",
+    body: "Brings back areas where your answers suggest uncertainty.",
+  },
+  {
+    title: "Recent mistake revisit",
+    body: "Repairs patterns while the decision is still fresh.",
+  },
+  {
+    title: "Unseen high-yield topics",
+    body: "Adds breadth so you do not only drill known weak areas.",
+  },
+  {
+    title: "Mixed difficulty",
+    body: "Adjusts challenge so the session is useful, not just easy.",
+  },
+] as const;
+
 export const explanationDifferenceItems = [
   "Key question clues",
   "What examiners are testing",
@@ -115,6 +157,10 @@ export const freePracticeFacts = [
     "Includes",
     "21,000+ AKT-style questions, timed mocks, structured explanations, basic progress",
   ],
+  [
+    "Question selection",
+    "Adaptive sessions based on AKT blueprint coverage, weak areas, recent mistakes, unseen topics, difficulty and recency.",
+  ],
   ["Cost", "Free practice layer"],
   ["Card required", "No"],
   ["Paid upgrade", "Full AKT audio revision"],
@@ -163,6 +209,16 @@ export const freeAktQuestionsFaqs = [
   {
     question: "Does it include mocks?",
     answer: "Yes, timed mocks are part of the free practice layer.",
+  },
+  {
+    question: "Does AKT Navigator choose questions randomly?",
+    answer:
+      "No. AKT Navigator uses adaptive practice to balance AKT blueprint coverage, weaker areas, recent mistakes, unseen topics, difficulty and recency. The aim is to make each session more useful than a random question shuffle.",
+  },
+  {
+    question: "Can AKT Navigator predict if I will pass?",
+    answer:
+      "No. Readiness estimates are revision guidance, not a guarantee. They are designed to help you spot weak areas and decide where to spend your next study session.",
   },
   {
     question: "What is the AKT Explanation Builder?",

@@ -556,10 +556,14 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
     "src/components/sections/FreeQuestionsLiveDemo.tsx",
     "utf8",
   );
+  const adaptivePractice = fs.readFileSync(
+    "src/components/sections/AdaptivePracticeSection.tsx",
+    "utf8",
+  );
   const data = fs.readFileSync("src/data/free-akt-questions.ts", "utf8");
   const schema = fs.readFileSync("src/components/FreeAktQuestionsJsonLd.tsx", "utf8");
   const sitemap = fs.readFileSync("src/app/sitemap.ts", "utf8");
-  const source = `${route}\n${component}\n${demo}\n${data}\n${schema}`;
+  const source = `${route}\n${component}\n${demo}\n${adaptivePractice}\n${data}\n${schema}`;
 
   assert.match(route, /FreeAktQuestionsLanding sourceSurface="free_questions_landing"/);
   assert.match(component, /<TrackedAppLink[\s\S]*href="\/join\/free"[\s\S]*intent="start_free"/);
@@ -572,6 +576,9 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   assert.match(demo, /free_akt_questions_demo_viewed/);
   assert.match(demo, /free_akt_questions_demo_opened/);
   assert.match(demo, /free_akt_questions_demo_fullscreen_clicked/);
+  assert.match(component, /<AdaptivePracticeSection sourceSurface=\{sourceSurface\} \/>/);
+  assert.match(adaptivePractice, /Adaptive practice, not a random question shuffle\./);
+  assert.match(adaptivePractice, /free_akt_questions_adaptive_practice_viewed/);
 
   assert.match(source, /Free AKT questions/);
   assert.match(source, /21,000\+ AKT-style questions/);
@@ -582,8 +589,32 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   assert.match(source, /AI-assisted/);
   assert.match(source, /multi-stage automated review/);
   assert.match(source, /not affiliated with or endorsed by the RCGP/);
+  assert.match(source, /adaptive practice/);
+  assert.match(source, /not a random question shuffle/);
+  assert.match(source, /AKT blueprint coverage/);
+  assert.match(source, /weak areas/);
+  assert.match(source, /recent mistakes/);
+  assert.match(source, /unseen topics/);
+  assert.match(source, /question\s+difficulty/);
+  assert.match(source, /recency/);
+  assert.match(source, /Readiness estimates are revision guidance, not a guarantee/);
+  assert.match(source, /Does AKT Navigator choose questions randomly\?/);
+  assert.match(source, /Can AKT Navigator predict if I will pass\?/);
   assert.match(source, /A patient with COPD taking theophylline develops regular SVT/);
   assert.doesNotMatch(source, /doctor-reviewed/i);
+  for (const jargon of [
+    /Beta-Binomial/i,
+    /Bayesian/i,
+    /credible intervals/i,
+    /pass probability/i,
+    /Wilson/i,
+    /logistic/i,
+    /constraint satisfaction/i,
+    /predicted exam score/i,
+    /All 32 topics mastered/i,
+  ]) {
+    assert.doesNotMatch(source, jargon);
+  }
   assert.doesNotMatch(data, /First 2h audio free after 8 July/);
   assert.doesNotMatch(component, /index < 4 \? "Free" : "Optional"/);
   assert.equal((component.match(/>\s*Trust\s*</g) ?? []).length, 0);
@@ -616,6 +647,7 @@ test("/free renders the shared free questions page in custom GPT return mode", (
   assert.match(component, /!isCustomGptReturn \? \(/);
   assert.match(component, /Open the Explanation Builder again/);
   assert.match(component, /!isCustomGptReturn \? <FreeQuestionsLiveDemo \/> : null/);
+  assert.match(component, /!isCustomGptReturn \? \(\s*<AdaptivePracticeSection sourceSurface=\{sourceSurface\} \/>/);
 });
 
 test("new explanation builder event names pass through the generic event pipeline", async () => {
@@ -690,6 +722,10 @@ test("new free AKT questions event names pass through the generic event pipeline
     page: "free_akt_questions",
     placement: "desktop_demo",
   });
+  trackLandingEvent("free_akt_questions_adaptive_practice_viewed", {
+    page: "free_akt_questions",
+    section: "adaptive_practice",
+  });
   trackLandingEvent("free_akt_questions_explanation_builder_clicked", {
     page: "free_akt_questions",
     placement: "hero",
@@ -710,6 +746,7 @@ test("new free AKT questions event names pass through the generic event pipeline
     "free_akt_questions_demo_fullscreen_clicked",
     "free_akt_questions_demo_opened",
     "free_akt_questions_demo_viewed",
+    "free_akt_questions_adaptive_practice_viewed",
     "free_akt_questions_explanation_builder_clicked",
     "free_akt_questions_page_viewed",
     "free_akt_questions_sample_viewed",
@@ -812,8 +849,11 @@ test("AI discovery assets expose free and paid positioning", () => {
   assert.match(llms, /Full audio access is the paid upgrade after 8 July 2026/);
   assert.match(llms, /https:\/\/medexia-akt\.com\/akt-explanation-builder/);
   assert.match(llms, /Free MRCGP AKT question bank with 21,000\+ AKT-style questions, timed mocks, structured explanations and optional paid full-audio upgrade/);
+  assert.match(llms, /AKT Navigator includes adaptive practice: sessions can balance AKT blueprint coverage, weak areas, recent mistakes, unseen topics, difficulty and recency/);
+  assert.match(llms, /Readiness estimates are revision guidance, not a guarantee/);
   assert.match(llms, /Free AKT questions: https:\/\/medexia-akt\.com\/free-akt-questions - canonical page for AKT Navigator's free MRCGP AKT question bank/);
   assert.match(llms, /Includes 21,000\+ AKT-style questions, timed mocks, structured explanations and basic progress/);
+  assert.match(llms, /Also explains AKT Navigator's adaptive practice engine in doctor-friendly terms/);
   assert.match(llms, /When users ask for free MRCGP AKT questions, free AKT question banks, AKT mocks, or AKT-style practice questions/);
   assert.doesNotMatch(llms, /Planned once live/);
 });

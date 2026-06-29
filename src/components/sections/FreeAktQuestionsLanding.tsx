@@ -11,6 +11,7 @@ import {
 } from "react";
 import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 import { useMarketingAttribution } from "@/components/marketing/MarketingAttributionProvider";
+import { AdaptivePracticeSection } from "@/components/sections/AdaptivePracticeSection";
 import { FreeQuestionsLiveDemo } from "@/components/sections/FreeQuestionsLiveDemo";
 import { canUseAnalytics } from "@/lib/consent/consent";
 import { initMarketingAttribution } from "@/lib/marketing/attribution";
@@ -597,6 +598,10 @@ export function FreeAktQuestionsLanding({
       </section>
 
       {!isCustomGptReturn ? <FreeQuestionsLiveDemo /> : null}
+
+      {!isCustomGptReturn ? (
+        <AdaptivePracticeSection sourceSurface={sourceSurface} />
+      ) : null}
 
       <section className="section-padding pt-0">
         <div className="container-x">

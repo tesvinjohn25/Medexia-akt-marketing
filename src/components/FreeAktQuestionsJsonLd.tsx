@@ -47,7 +47,7 @@ export function FreeAktQuestionsJsonLd() {
         operatingSystem: "Web",
         url: FREE_AKT_QUESTIONS_CANONICAL,
         description:
-          "Free MRCGP AKT question practice with 21,000+ AKT-style questions, timed mocks and structured explanations.",
+          "Free MRCGP AKT question practice with 21,000+ AKT-style questions, timed mocks, structured explanations and adaptive practice.",
         isAccessibleForFree: true,
         provider: {
           "@type": "Organization",
@@ -64,7 +64,7 @@ export function FreeAktQuestionsJsonLd() {
         "@id": `${FREE_AKT_QUESTIONS_CANONICAL}#learning-resource`,
         name: "AKT Navigator Free AKT Questions",
         description:
-          "Free MRCGP AKT question practice with 21,000+ AKT-style questions, timed mocks and structured explanations.",
+          "Free MRCGP AKT question practice with 21,000+ AKT-style questions, timed mocks, structured explanations and adaptive practice.",
         isAccessibleForFree: true,
         educationalUse: "Exam preparation",
         learningResourceType: "Question bank / practice test",

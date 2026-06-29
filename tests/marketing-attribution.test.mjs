@@ -576,6 +576,8 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   assert.match(demo, /free_akt_questions_demo_viewed/);
   assert.match(demo, /free_akt_questions_demo_opened/);
   assert.match(demo, /free_akt_questions_demo_fullscreen_clicked/);
+  assert.match(demo, /Ready to practise for real\?/);
+  assert.match(demo, /placement: "live_demo"/);
   assert.match(component, /<AdaptivePracticeSection sourceSurface=\{sourceSurface\} \/>/);
   assert.match(adaptivePractice, /Adaptive practice, not a random question shuffle\./);
   assert.match(adaptivePractice, /free_akt_questions_adaptive_practice_viewed/);
@@ -617,6 +619,7 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   }
   assert.doesNotMatch(data, /First 2h audio free after 8 July/);
   assert.doesNotMatch(component, /index < 4 \? "Free" : "Optional"/);
+  assert.doesNotMatch(component, /Why is it free\?/);
   assert.equal((component.match(/>\s*Trust\s*</g) ?? []).length, 0);
   assert.match(component, /freeQuestionProcessSteps\.map/);
   assert.match(data, /Topic-structured generation/);

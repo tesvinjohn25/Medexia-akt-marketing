@@ -11,7 +11,7 @@ export const FREE_AKT_QUESTIONS_SOCIAL_DESCRIPTION =
   "Free AKT-style questions, timed mocks and structured explanations for UK GP trainees. No card required. Full audio revision is optional.";
 
 export const FREE_PRACTICE_ANSWER =
-  "AKT Navigator is a free MRCGP AKT question bank for UK GP trainees. It includes 21,000+ AKT-style questions, timed mocks, structured explanations and basic progress tracking. The free practice layer stays free; full audio revision is the optional paid upgrade for trainees who want to revise during commutes, walks and tired evenings.";
+  "AKT Navigator is a free MRCGP AKT question bank for UK GP trainees. It includes 21,000+ AKT-style questions, timed mocks, structured explanations and basic progress tracking. The free practice layer stays free; full audio revision is the optional paid upgrade.";
 
 export const freePracticeIncludes = [
   "21,000+ AKT-style questions",

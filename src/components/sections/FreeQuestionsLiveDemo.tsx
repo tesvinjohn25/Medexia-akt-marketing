@@ -464,6 +464,35 @@ export function FreeQuestionsLiveDemo() {
             )}
           </div>
         </div>
+
+        <div
+          className="r-up mt-8 flex flex-wrap items-center justify-center gap-3"
+          style={{ "--i": 5 } as CSSProperties}
+        >
+          <span
+            className="text-[14px] font-semibold"
+            style={{ color: "rgba(232,236,255,.72)" }}
+          >
+            Ready to practise for real?
+          </span>
+          <TrackedAppLink
+            href="/join/free"
+            intent="start_free"
+            className="btn-primary inline-block text-[14px]"
+            extraTrackingEvents={[
+              {
+                eventName: "free_akt_questions_start_free_clicked",
+                properties: {
+                  page: "free_akt_questions",
+                  placement: "live_demo",
+                  source: "free_questions_landing",
+                },
+              },
+            ]}
+          >
+            Start free AKT questions
+          </TrackedAppLink>
+        </div>
       </div>
 
       {overlayOpen && (

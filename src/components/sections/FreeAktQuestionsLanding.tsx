@@ -429,27 +429,28 @@ export function FreeAktQuestionsLanding({
               Free Practice includes
             </div>
 
-            <div className="mt-4 grid gap-3">
+            <div className="mt-4 overflow-hidden rounded-[16px] border border-white/[.07] bg-white/[.025]">
               {freePracticeIncludes.map((item, index) => (
                 <div
                   key={item}
-                  className="flex items-center justify-between gap-4 rounded-xl border border-white/[.07] bg-white/[.035] px-4 py-3"
+                  className="grid grid-cols-[12px_1fr] items-center gap-3 border-b border-white/[.06] px-4 py-3 last:border-b-0"
                 >
-                  <span className="text-[14px] font-semibold leading-[1.35]">
-                    {item}
-                  </span>
                   <span
-                    className="text-[11px] font-bold uppercase tracking-[0.16em]"
+                    className="h-1.5 w-1.5 rounded-full"
                     style={{
-                      color:
+                      background:
                         index === freePracticeIncludes.length - 1
                           ? "rgba(96,165,250,.82)"
                           : "rgba(52,211,153,.84)",
+                      boxShadow:
+                        index === freePracticeIncludes.length - 1
+                          ? "0 0 14px rgba(96,165,250,.42)"
+                          : "0 0 14px rgba(52,211,153,.42)",
                     }}
-                  >
-                    {index === freePracticeIncludes.length - 1
-                      ? "Included"
-                      : "Free"}
+                    aria-hidden
+                  />
+                  <span className="text-[14px] font-semibold leading-[1.35]">
+                    {item}
                   </span>
                 </div>
               ))}
@@ -478,17 +479,17 @@ export function FreeAktQuestionsLanding({
         </div>
       </section>
 
-      <section className="section-padding pt-0">
+      <section className="pb-8 md:pb-10">
         <div className="container-x">
           <GlassCard
-            className="p-5 md:p-7"
+            className="p-4 md:p-5"
             style={{
               background:
                 "linear-gradient(135deg, rgba(52,211,153,.075), rgba(17,19,26,.86) 46%, rgba(109,106,232,.07))",
               border: "1px solid rgba(52,211,153,.18)",
             }}
           >
-            <div className="grid gap-5 md:grid-cols-[.82fr_1.18fr] md:items-center">
+            <div className="grid gap-3 md:grid-cols-[180px_1fr] md:items-center">
               <div>
                 <p
                   className="text-[11px] font-semibold uppercase tracking-[0.22em]"
@@ -496,18 +497,17 @@ export function FreeAktQuestionsLanding({
                 >
                   Quick answer
                 </p>
-                <h2
-                  className="mt-2 text-[24px] leading-[1.12] md:text-[32px]"
+                <p
+                  className="mt-1 text-[13px] font-semibold leading-[1.4]"
                   style={{
-                    fontFamily: "var(--font-display)",
-                    letterSpacing: "-0.03em",
+                    color: "rgba(232,236,255,.7)",
                   }}
                 >
-                  What is AKT Navigator free practice?
-                </h2>
+                  Free practice, then optional audio.
+                </p>
               </div>
               <p
-                className="text-[15px] leading-[1.75] md:text-[16px]"
+                className="text-[14px] leading-[1.65] md:text-[15px]"
                 style={{ color: "rgba(232,236,255,.72)" }}
               >
                 {FREE_PRACTICE_ANSWER}
@@ -570,81 +570,49 @@ export function FreeAktQuestionsLanding({
             if audio revision helps you.
           </p>
 
-          <GlassCard
-            className="mt-5 p-5 md:p-6"
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(109,106,232,.08), rgba(17,19,26,.84) 52%, rgba(52,211,153,.055))",
-              border: "1px solid rgba(167,139,250,.14)",
-            }}
+          <p
+            className="mt-3 max-w-[850px] text-[13px] leading-[1.65] md:text-[14px]"
+            style={{ color: "rgba(232,236,255,.52)" }}
           >
-            <h3
-              className="text-[20px] leading-[1.2]"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Why is it free?
-            </h3>
-            <p
-              className="mt-3 max-w-[820px] text-[14px] leading-[1.7] md:text-[15px]"
-              style={{ color: "rgba(232,236,255,.68)" }}
-            >
-              We keep the practice layer free because the paid product is full
-              audio revision. That lets trainees start questions and mocks
-              without another upfront subscription, then upgrade only if audio
-              genuinely helps their revision.
-            </p>
-          </GlassCard>
+            We keep the practice layer free because the paid product is full
+            audio revision. Start questions and mocks without another upfront
+            subscription, then upgrade only if audio genuinely helps.
+          </p>
         </div>
       </section>
 
       {!isCustomGptReturn ? <FreeQuestionsLiveDemo /> : null}
 
-      {!isCustomGptReturn ? (
-        <AdaptivePracticeSection sourceSurface={sourceSurface} />
-      ) : null}
-
-      <section className="section-padding pt-0">
+      <section ref={sampleRef} className="section-padding pt-0">
         <div className="container-x">
-          <div className="grid gap-7 lg:grid-cols-[.9fr_1.1fr] lg:items-start">
-            <div>
+          <div className="grid gap-7 lg:grid-cols-[.82fr_1.18fr] lg:items-start">
+            <div className="lg:sticky lg:top-24">
               <SectionHeader
                 eyebrow="Explanation quality"
                 title="Not just the answer - the clue, the trap and why the other options fail."
                 body={
-                  <p>
-                    AKT Navigator explanations are designed to teach the
-                    reasoning behind the answer, not just mark it right or
-                    wrong.
-                  </p>
+                  <>
+                    <p>
+                      AKT Navigator explanations are designed to teach the
+                      reasoning behind the answer, not just mark it right or
+                      wrong.
+                    </p>
+                    <p className="mt-3">
+                      This is the difference between a thin answer key and an
+                      explanation that helps you avoid the same trap next time.
+                    </p>
+                  </>
                 }
               />
-              {!isCustomGptReturn ? (
-                <div className="mt-6">
-                  <ExplanationBuilderLink
-                    sourceSurface={sourceSurface}
-                    placement="explanation_quality"
-                    className="btn-primary inline-block text-[14px]"
-                  />
-                </div>
-              ) : null}
-            </div>
 
-            <GlassCard
-              className="p-4 md:p-5"
-              style={{
-                background:
-                  "linear-gradient(145deg, rgba(17,19,26,.88), rgba(17,19,26,.66) 58%, rgba(109,106,232,.07))",
-                border: "1px solid rgba(167,139,250,.14)",
-              }}
-            >
-              <div className="grid gap-0 overflow-hidden rounded-[14px] border border-white/[.07] sm:grid-cols-2">
+              <div className="mt-6 overflow-hidden rounded-[16px] border border-white/[.08]">
                 {explanationDifferenceItems.map((item, index) => (
                   <div
                     key={item}
-                    className="grid grid-cols-[34px_1fr] gap-3 border-b border-white/[.06] bg-white/[.025] p-4 sm:even:border-l sm:[&:nth-last-child(-n+2)]:border-b-0"
+                    className="grid grid-cols-[30px_1fr] gap-3 border-b border-white/[.06] bg-white/[.025] px-4 py-3 last:border-b-0"
                   >
                     <span
-                      className="flex h-[24px] w-[24px] items-center justify-center rounded-full text-[10px] font-bold"
+                      className="mt-0.5 flex h-[22px] w-[22px] items-center justify-center rounded-full text-[10px] font-bold"
                       style={{
                         color:
                           index % 2 === 0
@@ -658,7 +626,7 @@ export function FreeAktQuestionsLanding({
                       {index + 1}
                     </span>
                     <h3
-                      className="text-[15px] font-semibold leading-[1.35]"
+                      className="text-[14px] font-semibold leading-[1.35]"
                       style={{ fontFamily: "var(--font-display)" }}
                     >
                       {item}
@@ -666,185 +634,121 @@ export function FreeAktQuestionsLanding({
                   </div>
                 ))}
               </div>
-            </GlassCard>
-          </div>
-        </div>
-      </section>
 
-      <section ref={sampleRef} className="section-padding pt-0">
-        <div className="container-x">
-          <SectionHeader
-            eyebrow="Sample question"
-            title="See the explanation style before you sign up."
-            body={
-              <>
-                <p>
-                  This is the difference between a thin answer key and an
-                  explanation that helps you avoid the same trap next time.
-                </p>
-                <p className="mt-3">
-                  A compact preview of the reasoning-first explanation format
-                  used inside free AKT question practice.
-                </p>
-              </>
-            }
-          />
-
-          <div className="mt-6 grid gap-4 lg:grid-cols-[.94fr_1.06fr]">
-            <GlassCard className="p-5 md:p-6">
-              <p
-                className="text-[11px] font-bold uppercase tracking-[0.20em]"
-                style={{ color: "rgba(96,165,250,.88)" }}
-              >
-                AKT-style SBA
-              </p>
-              <p
-                className="mt-4 text-[15px] leading-[1.7]"
-                style={{ color: "rgba(232,236,255,.84)" }}
-              >
-                {sampleFreeAktQuestion.question}
-              </p>
-              <ol
-                className="mt-5 space-y-2 text-[14px] leading-[1.55]"
-                style={{ color: "rgba(232,236,255,.64)" }}
-              >
-                {sampleFreeAktQuestion.options.map((option) => (
-                  <li key={option}>{option}</li>
-                ))}
-              </ol>
-            </GlassCard>
-
-            <GlassCard
-              className="p-5 md:p-6"
-              style={{
-                background:
-                  "linear-gradient(145deg, rgba(17,19,26,.9), rgba(17,19,26,.66) 58%, rgba(52,211,153,.08))",
-                border: "1px solid rgba(52,211,153,.16)",
-              }}
-            >
-              <p
-                className="text-[11px] font-bold uppercase tracking-[0.20em]"
-                style={{ color: "rgba(52,211,153,.86)" }}
-              >
-                Explanation preview
-              </p>
-              <p
-                className="mt-3 text-[13px] leading-[1.6]"
-                style={{ color: "rgba(232,236,255,.64)" }}
-              >
-                Inside AKT Navigator, questions are already explained in this
-                style.
-              </p>
-
-              {[
-                ["Correct answer", sampleFreeAktQuestion.correctAnswer],
-                ["Key clue", sampleFreeAktQuestion.keyClue],
-                ["Examiner trap", sampleFreeAktQuestion.examinerTrap],
-                ["Why the near-miss is wrong", sampleFreeAktQuestion.nearMiss],
-                ["AKT takeaway", sampleFreeAktQuestion.takeaway],
-              ].map(([label, body]) => (
-                <div key={label} className="mt-4 border-t border-white/[.07] pt-4">
-                  <h3
-                    className="text-[12px] font-bold uppercase tracking-[0.16em]"
-                    style={{
-                      color:
-                        label === "Correct answer"
-                          ? "rgba(52,211,153,.86)"
-                          : "rgba(197,170,255,.84)",
-                    }}
-                  >
-                    {label}
-                  </h3>
-                  <p
-                    className="mt-1 text-[14px] leading-[1.65]"
-                    style={{ color: "rgba(232,236,255,.72)" }}
-                  >
-                    {body}
-                  </p>
-                </div>
-              ))}
-
-              <div className="mt-6">
+              <div className="mt-6 flex flex-wrap gap-3">
                 <StartFreeLink
                   sourceSurface={sourceSurface}
                   placement="sample"
                   className="btn-primary inline-block text-[14px]"
                 />
+                {isCustomGptReturn ? (
+                  <ExplanationBuilderLink
+                    sourceSurface={sourceSurface}
+                    placement="builder_section"
+                    className="inline-flex items-center text-[13px] font-semibold text-white/55 transition hover:text-white/80"
+                  >
+                    Open the Explanation Builder again
+                  </ExplanationBuilderLink>
+                ) : (
+                  <ExplanationBuilderLink
+                    sourceSurface={sourceSurface}
+                    placement="explanation_quality"
+                    className="btn-secondary inline-flex items-center text-[14px]"
+                  />
+                )}
+              </div>
+            </div>
+
+            <GlassCard
+              className="p-5 md:p-6"
+              style={{
+                background:
+                  "linear-gradient(145deg, rgba(17,19,26,.9), rgba(17,19,26,.68) 56%, rgba(52,211,153,.07))",
+                border: "1px solid rgba(52,211,153,.16)",
+              }}
+            >
+              <div className="grid gap-5 xl:grid-cols-[.92fr_1.08fr]">
+                <div>
+                  <p
+                    className="text-[11px] font-bold uppercase tracking-[0.20em]"
+                    style={{ color: "rgba(96,165,250,.88)" }}
+                  >
+                    AKT-style SBA
+                  </p>
+                  <p
+                    className="mt-4 text-[15px] leading-[1.7]"
+                    style={{ color: "rgba(232,236,255,.84)" }}
+                  >
+                    {sampleFreeAktQuestion.question}
+                  </p>
+                  <ol
+                    className="mt-5 space-y-2 text-[14px] leading-[1.55]"
+                    style={{ color: "rgba(232,236,255,.64)" }}
+                  >
+                    {sampleFreeAktQuestion.options.map((option) => (
+                      <li key={option}>{option}</li>
+                    ))}
+                  </ol>
+                </div>
+
+                <div>
+                  <p
+                    className="text-[11px] font-bold uppercase tracking-[0.20em]"
+                    style={{ color: "rgba(52,211,153,.86)" }}
+                  >
+                    Explanation preview
+                  </p>
+                  <p
+                    className="mt-3 text-[13px] leading-[1.6]"
+                    style={{ color: "rgba(232,236,255,.64)" }}
+                  >
+                    Inside AKT Navigator, questions are already explained in
+                    this style.
+                  </p>
+
+                  {[
+                    ["Correct answer", sampleFreeAktQuestion.correctAnswer],
+                    ["Key clue", sampleFreeAktQuestion.keyClue],
+                    ["Examiner trap", sampleFreeAktQuestion.examinerTrap],
+                    [
+                      "Why the near-miss is wrong",
+                      sampleFreeAktQuestion.nearMiss,
+                    ],
+                    ["AKT takeaway", sampleFreeAktQuestion.takeaway],
+                  ].map(([label, body]) => (
+                    <div
+                      key={label}
+                      className="mt-4 border-t border-white/[.07] pt-4"
+                    >
+                      <h3
+                        className="text-[12px] font-bold uppercase tracking-[0.16em]"
+                        style={{
+                          color:
+                            label === "Correct answer"
+                              ? "rgba(52,211,153,.86)"
+                              : "rgba(197,170,255,.84)",
+                        }}
+                      >
+                        {label}
+                      </h3>
+                      <p
+                        className="mt-1 text-[14px] leading-[1.65]"
+                        style={{ color: "rgba(232,236,255,.72)" }}
+                      >
+                        {body}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </GlassCard>
           </div>
         </div>
       </section>
 
-      <section className="section-padding pt-0">
-        <div className="container-x">
-          <GlassCard
-            className="p-6 md:p-8"
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(109,106,232,.10), rgba(17,19,26,.88) 44%, rgba(52,211,153,.07))",
-              border: "1px solid rgba(167,139,250,.18)",
-            }}
-          >
-            <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
-              <div>
-                <h2
-                  className="text-[27px] leading-[1.12] md:text-[38px]"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    letterSpacing: "-0.035em",
-                  }}
-                >
-                  {isCustomGptReturn
-                    ? "Ready to keep practising inside AKT Navigator?"
-                    : "Want to test the explanation style on your own question?"}
-                </h2>
-                <p
-                  className="mt-4 max-w-[720px] text-[15px] leading-[1.7] md:text-[16px]"
-                  style={{ color: "rgba(232,236,255,.70)" }}
-                >
-                  {isCustomGptReturn
-                    ? "You have already seen the explanation style in the Custom GPT. The next step is free AKT question practice with mocks, structured explanations and progress tracking."
-                    : "Paste any AKT-style SBA into the free AKT Explanation Builder and get a teaching-card breakdown: key clues, examiner trap, near-miss answer, why-wrong explanations and a check-your-understanding prompt."}
-                </p>
-              </div>
-              <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
-                {isCustomGptReturn ? (
-                  <>
-                    <StartFreeLink
-                      sourceSurface={sourceSurface}
-                      placement="comparison"
-                      className="btn-primary inline-flex justify-center text-[14px]"
-                    />
-                    <ExplanationBuilderLink
-                      sourceSurface={sourceSurface}
-                      placement="builder_section"
-                      className="inline-flex justify-center text-[13px] font-semibold text-white/55 transition hover:text-white/80"
-                    >
-                      Open the Explanation Builder again
-                    </ExplanationBuilderLink>
-                  </>
-                ) : (
-                  <>
-                    <ExplanationBuilderLink
-                      sourceSurface={sourceSurface}
-                      placement="builder_section"
-                      className="btn-primary inline-flex justify-center text-[14px]"
-                    />
-                    <StartFreeLink
-                      sourceSurface={sourceSurface}
-                      placement="comparison"
-                      className="btn-secondary inline-flex justify-center text-[14px]"
-                    >
-                      Or start free AKT questions
-                    </StartFreeLink>
-                  </>
-                )}
-              </div>
-            </div>
-          </GlassCard>
-        </div>
-      </section>
+      {!isCustomGptReturn ? (
+        <AdaptivePracticeSection sourceSurface={sourceSurface} />
+      ) : null}
 
       <section className="section-padding pt-0">
         <div className="container-x">
@@ -915,87 +819,92 @@ export function FreeAktQuestionsLanding({
 
       <section className="section-padding pt-0">
         <div className="container-x">
-          <SectionHeader
-            eyebrow="Fit"
-            title="Who is this best for?"
-            body={
-              <p>
-                Use it as a free practice layer alongside whichever revision
-                system gives you enough breadth, checking and confidence.
-              </p>
-            }
-          />
+          <GlassCard
+            className="p-5 md:p-7"
+            style={{
+              background:
+                "linear-gradient(145deg, rgba(17,19,26,.92), rgba(17,19,26,.72) 54%, rgba(109,106,232,.06))",
+              border: "1px solid rgba(167,139,250,.14)",
+            }}
+          >
+            <div className="grid gap-7 lg:grid-cols-[.92fr_1.08fr] lg:items-start">
+              <div>
+                <SectionHeader
+                  eyebrow="Fit"
+                  title="Who this is best for"
+                  body={
+                    <p>
+                      Use it as a free practice layer alongside whichever
+                      revision system gives you enough breadth, checking and
+                      confidence.
+                    </p>
+                  }
+                />
 
-          <div className="mt-6 grid gap-4 lg:grid-cols-2">
-            <GlassCard
-              className="p-5 md:p-6"
-              style={{
-                background:
-                  "linear-gradient(145deg, rgba(17,19,26,.9), rgba(17,19,26,.66) 58%, rgba(52,211,153,.08))",
-                border: "1px solid rgba(52,211,153,.16)",
-              }}
-            >
-              <h3
-                className="text-[20px] leading-[1.2]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Use AKT Navigator free practice if
-              </h3>
-              <div className="mt-5">
-                <FeatureList items={bestForItems} tone="green" />
-              </div>
-            </GlassCard>
+                <div className="mt-6 grid gap-6">
+                  <div>
+                    <h3
+                      className="text-[18px] leading-[1.2]"
+                      style={{ fontFamily: "var(--font-display)" }}
+                    >
+                      Use AKT Navigator free practice if
+                    </h3>
+                    <div className="mt-4">
+                      <FeatureList items={bestForItems} tone="green" />
+                    </div>
+                  </div>
 
-            <GlassCard className="p-5 md:p-6">
-              <h3
-                className="text-[20px] leading-[1.2]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                You may also want a conventional paid bank if
-              </h3>
-              <div className="mt-5">
-                <FeatureList items={conventionalBankItems} tone="blue" />
-              </div>
-            </GlassCard>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-padding pt-0">
-        <div className="container-x">
-          <GlassCard className="p-5 md:p-7">
-            <SectionHeader
-              eyebrow="Facts"
-              title="AKT Navigator free practice at a glance"
-              body={
-                <p>
-                  A compact summary for GP trainees comparing free AKT question
-                  banks, mocks and explanation quality.
-                </p>
-              }
-            />
-
-            <dl className="mt-6 grid gap-0 overflow-hidden rounded-[16px] border border-white/[.08] md:grid-cols-2">
-              {freePracticeFacts.map(([label, value]) => (
-                <div
-                  key={label}
-                  className="grid gap-2 border-b border-white/[.06] bg-white/[.025] p-4 last:border-b-0 md:grid-cols-[150px_1fr] md:even:border-l md:last:border-b md:[&:nth-last-child(-n+2)]:border-b-0"
-                >
-                  <dt
-                    className="text-[11px] font-bold uppercase tracking-[0.18em]"
-                    style={{ color: "rgba(167,139,250,.82)" }}
-                  >
-                    {label}
-                  </dt>
-                  <dd
-                    className="text-[14px] leading-[1.55]"
-                    style={{ color: "rgba(232,236,255,.74)" }}
-                  >
-                    {value}
-                  </dd>
+                  <div className="border-t border-white/[.08] pt-5">
+                    <h3
+                      className="text-[18px] leading-[1.2]"
+                      style={{ fontFamily: "var(--font-display)" }}
+                    >
+                      You may also want a conventional paid bank if
+                    </h3>
+                    <div className="mt-4">
+                      <FeatureList items={conventionalBankItems} tone="blue" />
+                    </div>
+                  </div>
                 </div>
-              ))}
-            </dl>
+              </div>
+
+              <div>
+                <SectionHeader
+                  eyebrow="Facts"
+                  title="At a glance"
+                  body={
+                    <p>
+                      A compact summary for GP trainees comparing free AKT
+                      question banks, mocks and explanation quality.
+                    </p>
+                  }
+                />
+
+                <dl
+                  className="mt-6 grid gap-0 overflow-hidden rounded-[16px] border border-white/[.08]"
+                >
+                  {freePracticeFacts.map(([label, value]) => (
+                    <div
+                      key={label}
+                      className="grid gap-2 border-b border-white/[.06] bg-white/[.025] p-4 last:border-b-0 md:grid-cols-[150px_1fr]"
+                    >
+                      <dt
+                        className="text-[11px] font-bold uppercase tracking-[0.18em]"
+                        style={{ color: "rgba(167,139,250,.82)" }}
+                      >
+                        {label}
+                      </dt>
+                      <dd
+                        className="text-[14px] leading-[1.55]"
+                        style={{ color: "rgba(232,236,255,.74)" }}
+                      >
+                        {value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </div>
           </GlassCard>
         </div>
       </section>

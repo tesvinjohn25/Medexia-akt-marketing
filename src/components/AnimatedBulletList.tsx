@@ -3,15 +3,10 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 type RevealState = "idle" | "pending" | "visible";
+type RevealTag = "ul" | "ol" | "div";
 
-export function AnimatedBulletList({
-  children,
-  className = "",
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  const ref = useRef<HTMLUListElement>(null);
+function useRevealState() {
+  const ref = useRef<HTMLElement | null>(null);
   const [revealState, setRevealState] = useState<RevealState>("idle");
 
   useEffect(() => {
@@ -51,19 +46,96 @@ export function AnimatedBulletList({
     return () => observer.disconnect();
   }, []);
 
+  return { ref, revealState };
+}
+
+function AnimatedRevealContainer({
+  as = "ul",
+  children,
+  className = "",
+}: {
+  as?: RevealTag;
+  children: ReactNode;
+  className?: string;
+}) {
+  const { ref, revealState } = useRevealState();
+  const bindRef = (node: HTMLElement | null) => {
+    ref.current = node;
+  };
+  const dataVisible =
+    revealState === "visible"
+      ? "true"
+      : revealState === "pending"
+        ? "false"
+        : "idle";
+
+  if (as === "ol") {
+    return (
+      <ol
+        ref={bindRef}
+        className={className}
+        data-bullet-list-visible={dataVisible}
+      >
+        {children}
+      </ol>
+    );
+  }
+
+  if (as === "div") {
+    return (
+      <div
+        ref={bindRef}
+        className={className}
+        data-bullet-list-visible={dataVisible}
+      >
+        {children}
+      </div>
+    );
+  }
+
   return (
     <ul
-      ref={ref}
-      className={`animated-bullet-list ${className}`}
-      data-bullet-list-visible={
-        revealState === "visible"
-          ? "true"
-          : revealState === "pending"
-            ? "false"
-            : "idle"
-      }
+      ref={bindRef}
+      className={className}
+      data-bullet-list-visible={dataVisible}
     >
       {children}
     </ul>
+  );
+}
+
+export function AnimatedBulletList({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <AnimatedRevealContainer
+      as="ul"
+      className={`animated-bullet-list ${className}`}
+    >
+      {children}
+    </AnimatedRevealContainer>
+  );
+}
+
+export function AnimatedStepList({
+  as = "div",
+  children,
+  className = "",
+}: {
+  as?: RevealTag;
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <AnimatedRevealContainer
+      as={as}
+      className={`animated-step-list ${className}`}
+    >
+      {children}
+    </AnimatedRevealContainer>
   );
 }

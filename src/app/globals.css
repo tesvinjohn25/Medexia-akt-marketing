@@ -743,6 +743,73 @@ body > * { position: relative; z-index: 1; }
   }
 }
 
+/* Numbered/process reveal: the numbered marker charges before the row text. */
+.animated-step-list .animated-step-item {
+  transition:
+    transform .4s var(--ease-glide) var(--bullet-delay, 0ms),
+    background-color .34s ease var(--bullet-delay, 0ms),
+    border-color .34s ease var(--bullet-delay, 0ms),
+    box-shadow .34s ease var(--bullet-delay, 0ms);
+}
+.animated-step-list .animated-step-marker {
+  display: inline-flex;
+  transform-origin: center;
+  transition:
+    opacity .18s ease var(--bullet-delay, 0ms),
+    transform .28s var(--ease-spring) var(--bullet-delay, 0ms),
+    filter .24s ease var(--bullet-delay, 0ms),
+    box-shadow .24s ease var(--bullet-delay, 0ms);
+}
+.animated-step-list .animated-step-text {
+  transition:
+    opacity .28s ease calc(var(--bullet-delay, 0ms) + 115ms),
+    transform .34s var(--ease-glide) calc(var(--bullet-delay, 0ms) + 115ms);
+}
+.animated-step-list[data-bullet-list-visible="false"] .animated-step-item {
+  transform: translate3d(0, 10px, 0);
+  background-color: rgba(255,255,255,.015);
+  border-color: rgba(255,255,255,.045);
+}
+.animated-step-list[data-bullet-list-visible="false"] .animated-step-marker {
+  opacity: .32;
+  transform: scale(.82);
+  filter: brightness(.62) saturate(.85);
+}
+.animated-step-list[data-bullet-list-visible="false"] .animated-step-text {
+  opacity: 0;
+  transform: translate3d(-6px, 0, 0);
+}
+.animated-step-list[data-bullet-list-visible="true"] .animated-step-item {
+  transform: translate3d(0, 0, 0);
+}
+.animated-step-list[data-bullet-list-visible="true"] .animated-step-marker {
+  opacity: 1;
+  transform: scale(1);
+  filter: none;
+  animation: animatedStepIgnite .54s var(--ease-glide) var(--bullet-delay, 0ms) both;
+}
+.animated-step-list[data-bullet-list-visible="true"] .animated-step-text {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+@keyframes animatedStepIgnite {
+  0% {
+    opacity: .32;
+    transform: scale(.82);
+    filter: brightness(.62) saturate(.85);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1.12);
+    filter: brightness(1.65) saturate(1.22);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: none;
+  }
+}
+
 /* ── Review rail — swipeable review cards on mobile ───────────
    Below md the supporting reviews are a snap carousel (same gesture
    language as the app gallery); the next card peeks at the edge so
@@ -888,7 +955,10 @@ body > * { position: relative; z-index: 1; }
   .reveal-group .star-twinkle .star { animation: none !important; opacity: 1; transform: none; }
   .animated-bullet-list .animated-bullet-item,
   .animated-bullet-list .animated-bullet-dot,
-  .animated-bullet-list .animated-bullet-text {
+  .animated-bullet-list .animated-bullet-text,
+  .animated-step-list .animated-step-item,
+  .animated-step-list .animated-step-marker,
+  .animated-step-list .animated-step-text {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;

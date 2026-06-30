@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
-import { AnimatedBulletList } from "@/components/AnimatedBulletList";
+import {
+  AnimatedBulletList,
+  AnimatedStepList,
+} from "@/components/AnimatedBulletList";
 import { Nav } from "@/components/Nav";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 
@@ -423,15 +426,20 @@ export default function ContentGovernancePage() {
             >
               Pipeline
             </p>
-            <div className="mt-5 grid gap-3">
+            <AnimatedStepList className="mt-5 grid gap-3">
               {["Draft", "Validate", "Harden", "Explain", "Report", "Correct"].map(
                 (step, index) => (
                   <div
                     key={step}
-                    className="grid grid-cols-[34px_1fr] items-center gap-3 rounded-xl border border-white/[.07] bg-white/[.025] px-3 py-2.5"
+                    className="animated-step-item grid grid-cols-[34px_1fr] items-center gap-3 rounded-xl border border-white/[.07] bg-white/[.025] px-3 py-2.5"
+                    style={
+                      {
+                        "--bullet-delay": `${Math.min(index * 70, 420)}ms`,
+                      } as CSSProperties
+                    }
                   >
                     <span
-                      className="flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-bold"
+                      className="animated-step-marker flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-bold"
                       style={{
                         color:
                           index === 0
@@ -442,13 +450,13 @@ export default function ContentGovernancePage() {
                     >
                       {index + 1}
                     </span>
-                    <span className="text-[14px] font-semibold leading-[1.3]">
+                    <span className="animated-step-text text-[14px] font-semibold leading-[1.3]">
                       {step}
                     </span>
                   </div>
                 ),
               )}
-            </div>
+            </AnimatedStepList>
             <p
               className="mt-5 border-t border-white/[.07] pt-4 text-[13px] leading-[1.6]"
               style={{ color: "rgba(232,236,255,.62)" }}
@@ -504,15 +512,20 @@ export default function ContentGovernancePage() {
           />
 
           <GlassPanel className="mt-6 p-0">
-            <ol className="overflow-hidden rounded-[16px]">
+            <AnimatedStepList as="ol" className="overflow-hidden rounded-[16px]">
               {pipelineSteps.map((step, index) => (
                 <li
                   key={step.title}
-                  className="grid gap-3 border-b border-white/[.06] bg-white/[.02] p-4 last:border-b-0 md:grid-cols-[120px_1fr]"
+                  className="animated-step-item grid gap-3 border-b border-white/[.06] bg-white/[.02] p-4 last:border-b-0 md:grid-cols-[120px_1fr]"
+                  style={
+                    {
+                      "--bullet-delay": `${Math.min(index * 70, 420)}ms`,
+                    } as CSSProperties
+                  }
                 >
                   <div>
                     <span
-                      className="text-[11px] font-bold uppercase tracking-[0.18em]"
+                      className="animated-step-marker text-[11px] font-bold uppercase tracking-[0.18em]"
                       style={{
                         color:
                           index === 0
@@ -523,7 +536,7 @@ export default function ContentGovernancePage() {
                       {step.label}
                     </span>
                   </div>
-                  <div>
+                  <div className="animated-step-text">
                     <h3
                       className="text-[17px] leading-[1.25]"
                       style={{ fontFamily: "var(--font-display)" }}
@@ -539,7 +552,7 @@ export default function ContentGovernancePage() {
                   </div>
                 </li>
               ))}
-            </ol>
+            </AnimatedStepList>
           </GlassPanel>
         </div>
       </section>

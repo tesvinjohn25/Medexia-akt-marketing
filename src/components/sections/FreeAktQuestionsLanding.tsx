@@ -9,7 +9,10 @@ import {
   type ReactNode,
   type RefObject,
 } from "react";
-import { AnimatedBulletList } from "@/components/AnimatedBulletList";
+import {
+  AnimatedBulletList,
+  AnimatedStepList,
+} from "@/components/AnimatedBulletList";
 import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 import { useMarketingAttribution } from "@/components/marketing/MarketingAttributionProvider";
 import { AdaptivePracticeSection } from "@/components/sections/AdaptivePracticeSection";
@@ -601,14 +604,19 @@ export function FreeAktQuestionsLanding({
                 }
               />
 
-              <div className="mt-6 overflow-hidden rounded-[16px] border border-white/[.08]">
+              <AnimatedStepList className="mt-6 overflow-hidden rounded-[16px] border border-white/[.08]">
                 {explanationDifferenceItems.map((item, index) => (
                   <div
                     key={item}
-                    className="grid grid-cols-[30px_1fr] gap-3 border-b border-white/[.06] bg-white/[.025] px-4 py-3 last:border-b-0"
+                    className="animated-step-item grid grid-cols-[30px_1fr] gap-3 border-b border-white/[.06] bg-white/[.025] px-4 py-3 last:border-b-0"
+                    style={
+                      {
+                        "--bullet-delay": `${Math.min(index * 70, 420)}ms`,
+                      } as CSSProperties
+                    }
                   >
                     <span
-                      className="mt-0.5 flex h-[22px] w-[22px] items-center justify-center rounded-full text-[10px] font-bold"
+                      className="animated-step-marker mt-0.5 flex h-[22px] w-[22px] items-center justify-center rounded-full text-[10px] font-bold"
                       style={{
                         color:
                           index % 2 === 0
@@ -622,14 +630,14 @@ export function FreeAktQuestionsLanding({
                       {index + 1}
                     </span>
                     <h3
-                      className="text-[14px] font-semibold leading-[1.35]"
+                      className="animated-step-text text-[14px] font-semibold leading-[1.35]"
                       style={{ fontFamily: "var(--font-display)" }}
                     >
                       {item}
                     </h3>
                   </div>
                 ))}
-              </div>
+              </AnimatedStepList>
 
               <div className="mt-6 flex flex-wrap gap-3">
                 <StartFreeLink
@@ -825,14 +833,22 @@ export function FreeAktQuestionsLanding({
                 </div>
               </div>
 
-              <ol className="overflow-hidden rounded-[16px] border border-white/[.07]">
+              <AnimatedStepList
+                as="ol"
+                className="overflow-hidden rounded-[16px] border border-white/[.07]"
+              >
                 {freeQuestionProcessSteps.map((step, index) => (
                   <li
                     key={step.title}
-                    className="grid grid-cols-[42px_1fr] gap-3 border-b border-white/[.06] bg-white/[.025] p-4 last:border-b-0"
+                    className="animated-step-item grid grid-cols-[42px_1fr] gap-3 border-b border-white/[.06] bg-white/[.025] p-4 last:border-b-0"
+                    style={
+                      {
+                        "--bullet-delay": `${Math.min(index * 70, 420)}ms`,
+                      } as CSSProperties
+                    }
                   >
                     <span
-                      className="text-[11px] font-bold uppercase tracking-[0.16em]"
+                      className="animated-step-marker text-[11px] font-bold uppercase tracking-[0.16em]"
                       style={{
                         color:
                           index === 0
@@ -843,7 +859,7 @@ export function FreeAktQuestionsLanding({
                     >
                       0{index + 1}
                     </span>
-                    <div>
+                    <div className="animated-step-text">
                       <h3
                         className="text-[15px] font-semibold leading-[1.25]"
                         style={{ fontFamily: "var(--font-display)" }}
@@ -859,7 +875,7 @@ export function FreeAktQuestionsLanding({
                     </div>
                   </li>
                 ))}
-              </ol>
+              </AnimatedStepList>
             </div>
 
             <p

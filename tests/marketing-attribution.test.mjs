@@ -600,10 +600,16 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   assert.match(adaptivePractice, /Adaptive practice, not a random question shuffle\./);
   assert.match(adaptivePractice, /free_akt_questions_adaptive_practice_viewed/);
   assert.match(component, /AnimatedBulletList/);
+  assert.match(component, /AnimatedStepList/);
+  assert.match(component, /animated-step-marker/);
+  assert.match(component, /animated-step-text/);
+  assert.match(animatedBullets, /export function AnimatedStepList/);
   assert.match(animatedBullets, /IntersectionObserver/);
   assert.match(animatedBullets, /data-bullet-list-visible/);
   assert.match(globals, /animated-bullet-dot/);
   assert.match(globals, /animated-bullet-text/);
+  assert.match(globals, /animated-step-marker/);
+  assert.match(globals, /animated-step-text/);
   assert.match(globals, /prefers-reduced-motion: reduce/);
 
   assert.match(source, /Free AKT questions/);
@@ -699,7 +705,10 @@ test("content governance page explains pipeline, caveats, schema, sitemap and fo
   assert.match(page, /clearer handling of guideline-sensitive topics/);
   assert.match(page, /sample question examples before sign-up/);
   assert.match(page, /AnimatedBulletList/);
+  assert.match(page, /AnimatedStepList/);
   assert.match(page, /animated-bullet-item/);
+  assert.match(page, /animated-step-item/);
+  assert.match(page, /animated-step-marker/);
   assert.match(animatedBullets, /prefers-reduced-motion/);
   assert.match(page, /legacy PHE resources where relevant/);
   assert.doesNotMatch(page, /In plain terms/);

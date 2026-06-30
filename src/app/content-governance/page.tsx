@@ -51,7 +51,7 @@ const pipelineSteps = [
   {
     label: "Validate",
     title: "Validate the answer",
-    body: "The marked answer is checked from a UK primary-care perspective using a source hierarchy such as NICE guidance, NICE CKS, BNF/BNFC, DVLA, FSRH/UKMEC and UKHSA/PHE where relevant.",
+    body: "The marked answer is checked from a UK primary-care perspective using a source hierarchy such as NICE guidance, NICE CKS, BNF/BNFC, DVLA, FSRH/UKMEC, UKHSA and legacy PHE resources where relevant.",
   },
   {
     label: "Harden",
@@ -95,8 +95,8 @@ const reportCategories = [
 
 const doNotClaimItems = [
   "We do not claim AKT Navigator is affiliated with or endorsed by the RCGP.",
-  "We do not claim every question is doctor-written.",
-  "We do not claim every item has been individually clinician-reviewed.",
+  "The free question bank is AI-assisted, not doctor-written.",
+  "The free question bank is not individually clinician-reviewed item by item.",
   "We do not claim our explanations replace NICE CKS, BNF/BNFC or official guidance.",
   "We do not claim readiness estimates guarantee an exam result.",
   "We do not provide clinical advice.",
@@ -122,11 +122,11 @@ const crossCheckItems = [
 ] as const;
 
 const roadmapItems = [
-  "clearer public content governance",
   "public correction/update log",
   "more visible report outcomes",
   "clearer privacy/data wording",
-  "sample/free access route for trying questions",
+  "clearer handling of guideline-sensitive topics",
+  "sample question examples before sign-up",
   "potential clinician/editorial oversight if and when established",
 ] as const;
 
@@ -378,9 +378,7 @@ export default function ContentGovernancePage() {
               This is not a claim that every question is doctor-written or
               individually clinician-reviewed. AKT Navigator is independent, not
               affiliated with or endorsed by the RCGP, and intended as a
-              supplementary exam-revision tool - not clinical advice or a sole
-              source of truth. In plain terms: the free bank is not
-              doctor-written, not individually clinician-reviewed and not a sole
+              supplementary exam-revision tool - not clinical advice and not a sole
               source of truth.
             </p>
 
@@ -473,9 +471,10 @@ export default function ContentGovernancePage() {
                 structured process: draft, validate, harden, explain, report
                 and correct. The validation stage uses a UK primary-care lens
                 and may reference sources such as NICE CKS, BNF/BNFC, DVLA,
-                FSRH/UKMEC and UKHSA/PHE where relevant. Users can report every
-                question and explanation. AKT Navigator is independent, not
-                RCGP-endorsed, and intended for exam revision only.
+                FSRH/UKMEC, UKHSA and legacy PHE resources where relevant.
+                Users can report every question and explanation. AKT Navigator
+                is independent, not RCGP-endorsed, and intended for exam
+                revision only.
               </p>
             </div>
           </GlassPanel>
@@ -566,8 +565,9 @@ export default function ContentGovernancePage() {
                 >
                   Depending on the topic, the validation stage may reference
                   NICE guidance, NICE CKS, BNF/BNFC, DVLA fitness-to-drive
-                  guidance, FSRH/UKMEC contraception guidance and UKHSA/PHE
-                  infection or vaccination guidance.
+                  guidance, FSRH/UKMEC contraception guidance, UKHSA infection
+                  or vaccination guidance, and legacy PHE resources where
+                  relevant.
                 </p>
                 <p
                   className="mt-4 rounded-xl border px-4 py-3 text-[13px] leading-[1.65]"

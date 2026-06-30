@@ -764,10 +764,11 @@ export function FreeAktQuestionsLanding({
                   style={{ color: "rgba(232,236,255,.68)" }}
                 >
                   AKT Navigator uses an AI-assisted question and explanation
-                  pipeline. Questions are structured around AKT-relevant topics,
-                  checked through multiple automated review stages, and written
-                  to teach the reasoning behind the answer - not just mark it
-                  right or wrong.
+                  pipeline. Questions are drafted as AKT-style SBAs, the marked
+                  answer is checked from a UK primary-care perspective, stems
+                  are hardened to test reasoning, and explanations are
+                  structured around the key clue, trap, wrong answers and AKT
+                  learning point.
                 </p>
                 <p
                   className="mt-3 text-[13px] leading-[1.65]"

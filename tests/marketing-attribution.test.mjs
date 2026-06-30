@@ -606,6 +606,10 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   assert.match(source, /Full audio revision\s+is the optional paid upgrade/);
   assert.match(source, /AI-assisted/);
   assert.match(source, /multi-stage automated review/i);
+  assert.match(component, /drafted as AKT-style SBAs/);
+  assert.match(component, /checked from a UK primary-care perspective/);
+  assert.match(component, /key clue, trap, wrong answers and AKT\s+learning point/);
+  assert.doesNotMatch(component, /multiple automated review stages/);
   assert.match(source, /not affiliated with or endorsed by the RCGP/);
   assert.match(source, /adaptive practice/);
   assert.match(source, /not a random question shuffle/);
@@ -683,6 +687,13 @@ test("content governance page explains pipeline, caveats, schema, sitemap and fo
   assert.match(page, /Every question and explanation has a report button/);
   assert.match(page, /Reports are used to correct, rewrite, retire or re-run items/);
   assert.match(page, /public correction\/update log/);
+  assert.match(page, /clearer handling of guideline-sensitive topics/);
+  assert.match(page, /sample question examples before sign-up/);
+  assert.match(page, /legacy PHE resources where relevant/);
+  assert.doesNotMatch(page, /In plain terms/);
+  assert.doesNotMatch(page, /clearer public content governance/);
+  assert.doesNotMatch(page, /sample\/free access route/);
+  assert.doesNotMatch(page, /UKHSA\/PHE/);
   assert.match(page, /"@type": "BreadcrumbList"/);
   assert.match(page, /"@type": "WebPage"/);
   assert.match(page, /"@type": "FAQPage"/);

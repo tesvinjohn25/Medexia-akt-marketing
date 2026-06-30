@@ -9,6 +9,7 @@ import {
   type ReactNode,
   type RefObject,
 } from "react";
+import { AnimatedBulletList } from "@/components/AnimatedBulletList";
 import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 import { useMarketingAttribution } from "@/components/marketing/MarketingAttributionProvider";
 import { AdaptivePracticeSection } from "@/components/sections/AdaptivePracticeSection";
@@ -208,7 +209,7 @@ function Dot({ tone = "violet" }: { tone?: "violet" | "green" | "blue" }) {
 
   return (
     <span
-      className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full"
+      className="animated-bullet-dot mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full"
       style={{
         background: color,
         boxShadow: `0 0 14px ${color}`,
@@ -336,14 +337,27 @@ function FeatureList({
   tone?: "violet" | "green" | "blue";
 }) {
   return (
-    <ul className="grid gap-3">
-      {items.map((item) => (
-        <li key={item} className="flex gap-3 text-[14px] leading-[1.55]">
+    <AnimatedBulletList className="grid gap-3">
+      {items.map((item, index) => (
+        <li
+          key={item}
+          className="animated-bullet-item flex gap-3 text-[14px] leading-[1.55]"
+          style={
+            {
+              "--bullet-delay": `${Math.min(index * 70, 420)}ms`,
+            } as CSSProperties
+          }
+        >
           <Dot tone={tone} />
-          <span style={{ color: "rgba(232,236,255,.72)" }}>{item}</span>
+          <span
+            className="animated-bullet-text"
+            style={{ color: "rgba(232,236,255,.72)" }}
+          >
+            {item}
+          </span>
         </li>
       ))}
-    </ul>
+    </AnimatedBulletList>
   );
 }
 

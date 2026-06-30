@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
+import { AnimatedBulletList } from "@/components/AnimatedBulletList";
 import { Nav } from "@/components/Nav";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 
@@ -243,21 +244,34 @@ function SectionIntro({
 
 function DotList({ items }: { items: readonly string[] }) {
   return (
-    <ul className="grid gap-3">
-      {items.map((item) => (
-        <li key={item} className="flex gap-3 text-[14px] leading-[1.55]">
+    <AnimatedBulletList className="grid gap-3">
+      {items.map((item, index) => (
+        <li
+          key={item}
+          className="animated-bullet-item flex gap-3 text-[14px] leading-[1.55]"
+          style={
+            {
+              "--bullet-delay": `${Math.min(index * 70, 420)}ms`,
+            } as CSSProperties
+          }
+        >
           <span
-            className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full"
+            className="animated-bullet-dot mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full"
             style={{
               background: "rgba(52,211,153,.92)",
               boxShadow: "0 0 14px rgba(52,211,153,.72)",
             }}
             aria-hidden
           />
-          <span style={{ color: "rgba(232,236,255,.72)" }}>{item}</span>
+          <span
+            className="animated-bullet-text"
+            style={{ color: "rgba(232,236,255,.72)" }}
+          >
+            {item}
+          </span>
         </li>
       ))}
-    </ul>
+    </AnimatedBulletList>
   );
 }
 

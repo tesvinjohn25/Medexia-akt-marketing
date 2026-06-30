@@ -564,10 +564,12 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
     "src/components/sections/AdaptivePracticeSection.tsx",
     "utf8",
   );
+  const animatedBullets = fs.readFileSync("src/components/AnimatedBulletList.tsx", "utf8");
+  const globals = fs.readFileSync("src/app/globals.css", "utf8");
   const data = fs.readFileSync("src/data/free-akt-questions.ts", "utf8");
   const schema = fs.readFileSync("src/components/FreeAktQuestionsJsonLd.tsx", "utf8");
   const sitemap = fs.readFileSync("src/app/sitemap.ts", "utf8");
-  const source = `${route}\n${component}\n${demo}\n${heroLoop}\n${adaptivePractice}\n${data}\n${schema}`;
+  const source = `${route}\n${component}\n${demo}\n${heroLoop}\n${adaptivePractice}\n${animatedBullets}\n${data}\n${schema}`;
 
   assert.match(route, /FreeAktQuestionsLanding sourceSurface="free_questions_landing"/);
   assert.match(component, /<TrackedAppLink[\s\S]*href="\/join\/free"[\s\S]*intent="start_free"/);
@@ -597,6 +599,12 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   assert.match(component, /<AdaptivePracticeSection sourceSurface=\{sourceSurface\} \/>/);
   assert.match(adaptivePractice, /Adaptive practice, not a random question shuffle\./);
   assert.match(adaptivePractice, /free_akt_questions_adaptive_practice_viewed/);
+  assert.match(component, /AnimatedBulletList/);
+  assert.match(animatedBullets, /IntersectionObserver/);
+  assert.match(animatedBullets, /data-bullet-list-visible/);
+  assert.match(globals, /animated-bullet-dot/);
+  assert.match(globals, /animated-bullet-text/);
+  assert.match(globals, /prefers-reduced-motion: reduce/);
 
   assert.match(source, /Free AKT questions/);
   assert.match(source, /21,000\+ AKT-style questions/);
@@ -662,9 +670,10 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
 
 test("content governance page explains pipeline, caveats, schema, sitemap and footer discovery", () => {
   const page = fs.readFileSync("src/app/content-governance/page.tsx", "utf8");
+  const animatedBullets = fs.readFileSync("src/components/AnimatedBulletList.tsx", "utf8");
   const sitemap = fs.readFileSync("src/app/sitemap.ts", "utf8");
   const footer = fs.readFileSync("src/components/sections/MinimalFooter.tsx", "utf8");
-  const source = `${page}\n${sitemap}\n${footer}`;
+  const source = `${page}\n${animatedBullets}\n${sitemap}\n${footer}`;
 
   assert.match(page, /Content governance \| AKT Navigator/);
   assert.match(page, /https:\/\/medexia-akt\.com\/content-governance/);
@@ -689,6 +698,9 @@ test("content governance page explains pipeline, caveats, schema, sitemap and fo
   assert.match(page, /public correction\/update log/);
   assert.match(page, /clearer handling of guideline-sensitive topics/);
   assert.match(page, /sample question examples before sign-up/);
+  assert.match(page, /AnimatedBulletList/);
+  assert.match(page, /animated-bullet-item/);
+  assert.match(animatedBullets, /prefers-reduced-motion/);
   assert.match(page, /legacy PHE resources where relevant/);
   assert.doesNotMatch(page, /In plain terms/);
   assert.doesNotMatch(page, /clearer public content governance/);

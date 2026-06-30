@@ -3,6 +3,8 @@ import { aktTopics } from "@/data/akt-topics";
 
 const LAST_MODIFIED = new Date("2026-06-20");
 const BRIDGE_LAST_MODIFIED = new Date("2026-06-27");
+const FREE_QUESTIONS_LAST_MODIFIED = new Date("2026-06-29");
+const CONTENT_GOVERNANCE_LAST_MODIFIED = new Date("2026-06-30");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const topicPages = aktTopics.map((topic) => ({
@@ -14,6 +16,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const contentPages = [
     {
+      url: "https://medexia-akt.com/free-akt-questions",
+      lastModified: FREE_QUESTIONS_LAST_MODIFIED,
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    },
+    {
+      url: "https://medexia-akt.com/content-governance",
+      lastModified: CONTENT_GOVERNANCE_LAST_MODIFIED,
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    },
+    {
       url: "https://medexia-akt.com/akt-explanation-builder",
       lastModified: BRIDGE_LAST_MODIFIED,
       changeFrequency: "monthly" as const,
@@ -21,7 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: "https://medexia-akt.com/free",
-      lastModified: BRIDGE_LAST_MODIFIED,
+      lastModified: FREE_QUESTIONS_LAST_MODIFIED,
       changeFrequency: "monthly" as const,
       priority: 0.6,
     },

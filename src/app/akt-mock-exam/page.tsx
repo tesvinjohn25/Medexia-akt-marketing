@@ -169,6 +169,7 @@ export default function AktMockExamPage() {
                 href: "/join/free",
                 intent: "start_free",
               },
+              { label: "Free AKT questions", href: "/free-akt-questions" },
               { label: "Read the revision plan", href: "/akt-revision-plan" },
               { label: "Revise statistics", href: "/akt-statistics" },
               { label: "Compare revision tools", href: "/best-akt-revision-tool" },

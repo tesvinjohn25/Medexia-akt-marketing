@@ -61,7 +61,29 @@ export function ProductFacts() {
                 of AKT audio stay free; full audio and premium resources are
                 the upgrade.
               </p>
+              <p
+                className="mt-3 max-w-[560px] text-[13px] leading-[1.6]"
+                style={{ color: "rgba(232,236,255,.58)" }}
+              >
+                If you mainly want screen-based practice, start with the{" "}
+                <a
+                  href="/free-akt-questions"
+                  className="font-semibold transition-colors hover:text-white"
+                  style={{ color: "rgba(52,211,153,.88)" }}
+                >
+                  free MRCGP AKT question bank
+                </a>
+                . This homepage explains the broader audio-first AKT revision
+                platform.
+              </p>
               <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
+                <a
+                  href="/free-akt-questions"
+                  className="inline-flex text-[13px] font-semibold transition-colors hover:text-white"
+                  style={{ color: "rgba(52,211,153,.88)" }}
+                >
+                  Free AKT questions &rarr;
+                </a>
                 <a
                   href="/best-akt-revision-tool"
                   className="inline-flex text-[13px] font-semibold transition-colors hover:text-white"
@@ -72,7 +94,7 @@ export function ProductFacts() {
                 <a
                   href="/akt-explanation-builder"
                   className="inline-flex text-[13px] font-semibold transition-colors hover:text-white"
-                  style={{ color: "rgba(52,211,153,.88)" }}
+                  style={{ color: "rgba(96,165,250,.88)" }}
                 >
                   Try the free explanation builder &rarr;
                 </a>

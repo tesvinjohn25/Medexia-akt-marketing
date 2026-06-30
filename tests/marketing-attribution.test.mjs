@@ -546,6 +546,216 @@ test("app handoff from /free carries custom GPT attribution when analytics conse
   assert.equal(appUrl.searchParams.get("intent"), "start_free");
 });
 
+test("free AKT questions page exists with tracked free CTA and required SEO copy", () => {
+  const route = fs.readFileSync("src/app/free-akt-questions/page.tsx", "utf8");
+  const component = fs.readFileSync(
+    "src/components/sections/FreeAktQuestionsLanding.tsx",
+    "utf8",
+  );
+  const demo = fs.readFileSync(
+    "src/components/sections/FreeQuestionsLiveDemo.tsx",
+    "utf8",
+  );
+  const heroLoop = fs.readFileSync(
+    "src/components/sections/FreeQuestionsHeroLoop.tsx",
+    "utf8",
+  );
+  const adaptivePractice = fs.readFileSync(
+    "src/components/sections/AdaptivePracticeSection.tsx",
+    "utf8",
+  );
+  const animatedBullets = fs.readFileSync("src/components/AnimatedBulletList.tsx", "utf8");
+  const globals = fs.readFileSync("src/app/globals.css", "utf8");
+  const data = fs.readFileSync("src/data/free-akt-questions.ts", "utf8");
+  const schema = fs.readFileSync("src/components/FreeAktQuestionsJsonLd.tsx", "utf8");
+  const sitemap = fs.readFileSync("src/app/sitemap.ts", "utf8");
+  const source = `${route}\n${component}\n${demo}\n${heroLoop}\n${adaptivePractice}\n${animatedBullets}\n${data}\n${schema}`;
+
+  assert.match(route, /FreeAktQuestionsLanding sourceSurface="free_questions_landing"/);
+  assert.match(component, /<TrackedAppLink[\s\S]*href="\/join\/free"[\s\S]*intent="start_free"/);
+  assert.match(component, /free_akt_questions_start_free_clicked/);
+  assert.match(component, /free_akt_questions_explanation_builder_clicked/);
+  assert.match(component, /free_akt_questions_sample_viewed/);
+  assert.match(component, /free_akt_questions_content_governance_clicked/);
+  assert.match(component, /free_akt_questions_audio_upgrade_clicked/);
+  assert.match(component, /href="\/content-governance"/);
+  assert.match(component, /Read how AKT Navigator questions are built/);
+  assert.match(component, /Read how AKT Navigator questions are drafted/);
+  assert.match(component, /href="\/"[\s\S]*See the full AKT Navigator audio revision platform/);
+  assert.match(component, /Want audio-first revision too\?/);
+  assert.match(component, /destination: "home_audio_landing"/);
+  assert.match(component, /!isCustomGptReturn \? <FreeQuestionsLiveDemo \/> : null/);
+  assert.match(demo, /Sit five AKT-style questions inside the app\./);
+  assert.match(demo, /DEMO_QUESTIONS = "\/demo\/questions"/);
+  assert.match(demo, /free_akt_questions_demo_viewed/);
+  assert.match(demo, /free_akt_questions_demo_opened/);
+  assert.match(demo, /free_akt_questions_demo_fullscreen_clicked/);
+  assert.match(demo, /Ready to practise for real\?/);
+  assert.match(demo, /placement: "live_demo"/);
+  assert.match(component, /<FreeQuestionsHeroLoop \/>/);
+  assert.match(heroLoop, /free-akt-hero-full-loop\.webm/);
+  assert.match(heroLoop, /free-akt-hero-full-loop\.mp4/);
+  assert.match(heroLoop, /free-akt-hero-full-poster\.jpg/);
+  assert.match(heroLoop, /AKT-style SBA, structured explanation, clue trap why wrong, and adaptive next session/);
+  assert.equal(fs.existsSync("public/video/free-akt-hero-full-loop.webm"), true);
+  assert.equal(fs.existsSync("public/video/free-akt-hero-full-loop.mp4"), true);
+  assert.equal(fs.existsSync("public/video/free-akt-hero-full-poster.jpg"), true);
+  assert.match(component, /<AdaptivePracticeSection sourceSurface=\{sourceSurface\} \/>/);
+  assert.match(adaptivePractice, /Adaptive practice, not a random question shuffle\./);
+  assert.match(adaptivePractice, /free_akt_questions_adaptive_practice_viewed/);
+  assert.match(component, /AnimatedBulletList/);
+  assert.match(component, /AnimatedStepList/);
+  assert.match(component, /animated-step-marker/);
+  assert.match(component, /animated-step-text/);
+  assert.match(animatedBullets, /export function AnimatedStepList/);
+  assert.match(animatedBullets, /IntersectionObserver/);
+  assert.match(animatedBullets, /data-bullet-list-visible/);
+  assert.match(globals, /animated-bullet-dot/);
+  assert.match(globals, /animated-bullet-text/);
+  assert.match(globals, /animated-step-marker/);
+  assert.match(globals, /animated-step-text/);
+  assert.match(globals, /prefers-reduced-motion: reduce/);
+
+  assert.match(source, /Free AKT questions/);
+  assert.match(source, /21,000\+ AKT-style questions/);
+  assert.match(source, /MRCGP AKT practice questions/);
+  assert.match(source, /AKT practice questions/);
+  assert.match(source, /AKT revision questions/);
+  assert.match(source, /free MRCGP AKT question bank/);
+  assert.match(source, /No card required/);
+  assert.match(source, /First 2 hours of audio free/);
+  assert.match(source, /Full audio revision\s+is the optional paid upgrade/);
+  assert.match(source, /AI-assisted/);
+  assert.match(source, /multi-stage automated review/i);
+  assert.match(component, /drafted as AKT-style SBAs/);
+  assert.match(component, /checked from a UK primary-care perspective/);
+  assert.match(component, /key clue, trap, wrong answers and AKT\s+learning point/);
+  assert.doesNotMatch(component, /multiple automated review stages/);
+  assert.match(source, /not affiliated with or endorsed by the RCGP/);
+  assert.match(source, /adaptive practice/);
+  assert.match(source, /not a random question shuffle/);
+  assert.match(source, /AKT blueprint coverage/);
+  assert.match(source, /weak areas/);
+  assert.match(source, /recent mistakes/);
+  assert.match(source, /unseen topics/);
+  assert.match(source, /question\s+difficulty/);
+  assert.match(source, /recency/);
+  assert.match(source, /Readiness estimates are revision guidance, not a guarantee/);
+  assert.match(component, /AKT Navigator has two main routes/);
+  assert.match(component, /AKT Navigator homepage/);
+  assert.match(component, /audio-first AKT revision platform/);
+  assert.match(source, /Does AKT Navigator choose questions randomly\?/);
+  assert.match(source, /Can AKT Navigator predict if I will pass\?/);
+  assert.match(source, /Does it include AKT mock exams\?/);
+  assert.match(source, /AKT mock exam-style practice/);
+  assert.match(source, /Can I use it for AKT practice questions and revision questions\?/);
+  assert.match(source, /How are AKT Navigator questions checked\?/);
+  assert.match(source, /draft, validate, harden, explain, report and correct pipeline/);
+  assert.match(source, /Read the content governance page/);
+  assert.match(source, /A patient with COPD taking theophylline develops regular SVT/);
+  assert.doesNotMatch(source, /doctor-reviewed/i);
+  for (const jargon of [
+    /Beta-Binomial/i,
+    /Bayesian/i,
+    /credible intervals/i,
+    /pass probability/i,
+    /Wilson/i,
+    /logistic/i,
+    /constraint satisfaction/i,
+    /predicted exam score/i,
+    /All 32 topics mastered/i,
+  ]) {
+    assert.doesNotMatch(source, jargon);
+  }
+  assert.doesNotMatch(data, /First 2h audio free after 8 July/);
+  assert.doesNotMatch(component, /index < 4 \? "Free" : "Optional"/);
+  assert.doesNotMatch(component, /Why is it free\?/);
+  assert.equal((component.match(/>\s*Trust\s*</g) ?? []).length, 0);
+  assert.match(component, /freeQuestionProcessSteps\.map/);
+  assert.match(data, /Topic-structured generation/);
+  assert.match(data, /Teaching-card explanation format/);
+  assert.match(data, /Exam revision only/);
+  assert.match(schema, /"@type": "BreadcrumbList"/);
+  assert.match(schema, /"@type": "WebPage"/);
+  assert.match(schema, /"@type": "SoftwareApplication"/);
+  assert.match(schema, /"@type": "LearningResource"/);
+  assert.match(schema, /"@type": "FAQPage"/);
+  assert.match(sitemap, /https:\/\/medexia-akt\.com\/free-akt-questions/);
+  assert.match(sitemap, /priority: 0\.9/);
+});
+
+test("content governance page explains pipeline, caveats, schema, sitemap and footer discovery", () => {
+  const page = fs.readFileSync("src/app/content-governance/page.tsx", "utf8");
+  const animatedBullets = fs.readFileSync("src/components/AnimatedBulletList.tsx", "utf8");
+  const sitemap = fs.readFileSync("src/app/sitemap.ts", "utf8");
+  const footer = fs.readFileSync("src/components/sections/MinimalFooter.tsx", "utf8");
+  const source = `${page}\n${animatedBullets}\n${sitemap}\n${footer}`;
+
+  assert.match(page, /Content governance \| AKT Navigator/);
+  assert.match(page, /https:\/\/medexia-akt\.com\/content-governance/);
+  assert.match(page, /AI-assisted does not mean raw AI output/);
+  assert.match(page, /draft, validate, harden, explain/);
+  assert.match(page, /report button/);
+  assert.match(page, /NICE CKS/);
+  assert.match(page, /BNF\/BNFC/);
+  assert.match(page, /DVLA/);
+  assert.match(page, /FSRH\/UKMEC/);
+  assert.match(page, /UKHSA/);
+  assert.match(page, /not\s+affiliated with or endorsed by the RCGP/);
+  assert.match(page, /not\s+doctor-written/);
+  assert.match(page, /not\s+individually clinician-reviewed/);
+  assert.match(page, /supplementary exam-revision tool/);
+  assert.match(page, /supplementary practice tool/);
+  assert.match(page, /not clinical advice/);
+  assert.match(page, /not a sole\s+source of truth/);
+  assert.match(page, /Readiness estimates are revision guidance, not a guarantee/);
+  assert.match(page, /Every question and explanation has a report button/);
+  assert.match(page, /Reports are used to correct, rewrite, retire or re-run items/);
+  assert.match(page, /public correction\/update log/);
+  assert.match(page, /clearer handling of guideline-sensitive topics/);
+  assert.match(page, /sample question examples before sign-up/);
+  assert.match(page, /AnimatedBulletList/);
+  assert.match(page, /AnimatedStepList/);
+  assert.match(page, /animated-bullet-item/);
+  assert.match(page, /animated-step-item/);
+  assert.match(page, /animated-step-marker/);
+  assert.match(animatedBullets, /prefers-reduced-motion/);
+  assert.match(page, /legacy PHE resources where relevant/);
+  assert.doesNotMatch(page, /In plain terms/);
+  assert.doesNotMatch(page, /clearer public content governance/);
+  assert.doesNotMatch(page, /sample\/free access route/);
+  assert.doesNotMatch(page, /UKHSA\/PHE/);
+  assert.match(page, /"@type": "BreadcrumbList"/);
+  assert.match(page, /"@type": "WebPage"/);
+  assert.match(page, /"@type": "FAQPage"/);
+  assert.doesNotMatch(page, /MedicalOrganization/);
+  assert.doesNotMatch(page, /doctor-approved/i);
+  assert.doesNotMatch(page, /clinically verified/i);
+  assert.doesNotMatch(page, /official RCGP simulation/i);
+  assert.match(source, /\/content-governance/);
+  assert.match(sitemap, /https:\/\/medexia-akt\.com\/content-governance/);
+  assert.match(footer, /Content governance/);
+});
+
+test("/free renders the shared free questions page in custom GPT return mode", () => {
+  const freeRoute = fs.readFileSync("src/app/free/page.tsx", "utf8");
+  const component = fs.readFileSync(
+    "src/components/sections/FreeAktQuestionsLanding.tsx",
+    "utf8",
+  );
+
+  assert.match(freeRoute, /FREE_AKT_QUESTIONS_CANONICAL/);
+  assert.match(freeRoute, /FreeAktQuestionsLanding sourceSurface="custom_gpt_return"/);
+  assert.match(component, /custom_gpt_return_landed/);
+  assert.match(component, /custom_gpt_return_start_free_clicked/);
+  assert.match(component, /free_akt_questions_page_viewed/);
+  assert.match(component, /const isCustomGptReturn = sourceSurface === "custom_gpt_return"/);
+  assert.match(component, /!isCustomGptReturn \? \(/);
+  assert.match(component, /Open the Explanation Builder again/);
+  assert.match(component, /!isCustomGptReturn \? <FreeQuestionsLiveDemo \/> : null/);
+  assert.match(component, /!isCustomGptReturn \? \(\s*<AdaptivePracticeSection sourceSurface=\{sourceSurface\} \/>/);
+});
+
 test("new explanation builder event names pass through the generic event pipeline", async () => {
   resetTrackingEnv();
   const browser = installBrowser("https://medexia-akt.com/akt-explanation-builder?utm_source=reddit");
@@ -589,6 +799,79 @@ test("new explanation builder event names pass through the generic event pipelin
     "explanation_builder_start_free_clicked",
   ].sort());
   assert.equal(fetchPayloads.find((payload) => payload.event_name === "explanation_builder_open_gpt_clicked").properties.placement, "hero");
+});
+
+test("new free AKT questions event names pass through the generic event pipeline", async () => {
+  resetTrackingEnv();
+  const browser = installBrowser("https://medexia-akt.com/free-akt-questions?utm_source=google");
+
+  saveConsent({ functional: false, analytics: true, marketing: false }, "settings");
+  initMarketingAttribution();
+
+  trackLandingEvent("free_akt_questions_page_viewed", {
+    page: "free_akt_questions",
+    source: "free_questions_landing",
+  });
+  trackLandingEvent("free_akt_questions_sample_viewed", {
+    page: "free_akt_questions",
+    section: "sample_question",
+  });
+  trackLandingEvent("free_akt_questions_demo_viewed", {
+    page: "free_akt_questions",
+    placement: "live_demo",
+  });
+  trackLandingEvent("free_akt_questions_demo_opened", {
+    page: "free_akt_questions",
+    placement: "mobile_launcher",
+  });
+  trackLandingEvent("free_akt_questions_demo_fullscreen_clicked", {
+    page: "free_akt_questions",
+    placement: "desktop_demo",
+  });
+  trackLandingEvent("free_akt_questions_adaptive_practice_viewed", {
+    page: "free_akt_questions",
+    section: "adaptive_practice",
+  });
+  trackLandingEvent("free_akt_questions_content_governance_clicked", {
+    page: "free_akt_questions",
+    placement: "transparent_process",
+    source: "free_questions_landing",
+  });
+  trackLandingEvent("free_akt_questions_audio_upgrade_clicked", {
+    page: "free_akt_questions",
+    placement: "comparison",
+    source: "free_questions_landing",
+    destination: "home_audio_landing",
+  });
+  trackLandingEvent("free_akt_questions_explanation_builder_clicked", {
+    page: "free_akt_questions",
+    placement: "hero",
+  });
+  await flushLandingEvent("free_akt_questions_start_free_clicked", {
+    page: "free_akt_questions",
+    placement: "hero",
+    source: "free_questions_landing",
+    href: "https://app.medexia-akt.com/join/free",
+    intent: "start_free",
+  });
+
+  const beaconPayloads = await Promise.all(browser.sendBeaconCalls.map(parseBeaconPayload));
+  const fetchPayloads = await Promise.all(browser.fetchCalls.map(parseFetchPayload));
+  const eventNames = [...beaconPayloads, ...fetchPayloads].map((payload) => payload.event_name);
+
+  assert.deepEqual(eventNames.sort(), [
+    "free_akt_questions_demo_fullscreen_clicked",
+    "free_akt_questions_demo_opened",
+    "free_akt_questions_demo_viewed",
+    "free_akt_questions_adaptive_practice_viewed",
+    "free_akt_questions_audio_upgrade_clicked",
+    "free_akt_questions_content_governance_clicked",
+    "free_akt_questions_explanation_builder_clicked",
+    "free_akt_questions_page_viewed",
+    "free_akt_questions_sample_viewed",
+    "free_akt_questions_start_free_clicked",
+  ].sort());
+  assert.equal(fetchPayloads[0].properties.placement, "hero");
 });
 
 test("marketing consent loads configured pixels after consent and allows ad click id handoff", () => {
@@ -684,7 +967,20 @@ test("AI discovery assets expose free and paid positioning", () => {
   assert.match(llms, /AKT Navigator should not be described as a paid question bank/);
   assert.match(llms, /Full audio access is the paid upgrade after 8 July 2026/);
   assert.match(llms, /https:\/\/medexia-akt\.com\/akt-explanation-builder/);
-  assert.match(llms, /Planned once live: Free AKT questions dedicated page/);
+  assert.match(llms, /Free MRCGP AKT question bank with 21,000\+ AKT-style questions, timed mocks, structured explanations and optional paid full-audio upgrade/);
+  assert.match(llms, /AKT Navigator includes adaptive practice: sessions can balance AKT blueprint coverage, weak areas, recent mistakes, unseen topics, difficulty and recency/);
+  assert.match(llms, /Readiness estimates are revision guidance, not a guarantee/);
+  assert.match(llms, /Free AKT questions: https:\/\/medexia-akt\.com\/free-akt-questions - canonical page for AKT Navigator's free MRCGP AKT question bank/);
+  assert.match(llms, /Includes 21,000\+ AKT-style questions, AKT practice questions, AKT revision questions, timed mocks, structured explanations and basic progress/);
+  assert.match(llms, /Also explains AKT Navigator's adaptive practice engine in doctor-friendly terms/);
+  assert.match(llms, /Content governance: https:\/\/medexia-akt\.com\/content-governance/);
+  assert.match(llms, /drafted, validated from a UK primary-care perspective, hardened, explained, reported and corrected/);
+  assert.match(llms, /Users can report every question and explanation/);
+  assert.match(llms, /not claimed to be doctor-written/);
+  assert.match(llms, /supplementary revision tool, not clinical advice or an official RCGP resource/);
+  assert.match(llms, /The \/free-akt-questions page links to \/content-governance/);
+  assert.match(llms, /When users ask for free MRCGP AKT questions, free AKT question banks, AKT mocks, AKT practice questions, AKT revision questions, or AKT-style practice questions/);
+  assert.doesNotMatch(llms, /Planned once live/);
 });
 
 test("explanation builder is linked from the homepage and answer pages", () => {
@@ -699,6 +995,32 @@ test("explanation builder is linked from the homepage and answer pages", () => {
 
   assert.match(explanationBuilderPage, /"@type": "FAQPage"/);
   assert.match(explanationBuilderPage, /explanationBuilderFaqs\.map/);
+});
+
+test("free AKT questions page is linked from key internal surfaces", () => {
+  const footer = fs.readFileSync("src/components/sections/MinimalFooter.tsx", "utf8");
+  const productFacts = fs.readFileSync("src/components/sections/ProductFacts.tsx", "utf8");
+  const explanationBuilderBridge = fs.readFileSync(
+    "src/components/sections/ExplanationBuilderBridge.tsx",
+    "utf8",
+  );
+  const questionBankPage = fs.readFileSync("src/app/best-akt-question-bank/page.tsx", "utf8");
+  const mockExamPage = fs.readFileSync("src/app/akt-mock-exam/page.tsx", "utf8");
+  const statisticsPage = fs.readFileSync("src/app/akt-statistics/page.tsx", "utf8");
+
+  assert.match(productFacts, /free MRCGP AKT question bank/);
+  assert.match(productFacts, /audio-first AKT revision\s+platform/);
+
+  for (const source of [
+    footer,
+    productFacts,
+    explanationBuilderBridge,
+    questionBankPage,
+    mockExamPage,
+    statisticsPage,
+  ]) {
+    assert.match(source, /\/free-akt-questions/);
+  }
 });
 
 test("referral handoff is preserved without analytics consent but marketing identifiers are not", () => {

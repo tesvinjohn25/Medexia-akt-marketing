@@ -34,6 +34,7 @@ import {
 type SourceSurface = "free_questions_landing" | "custom_gpt_return";
 type StartPlacement = "hero" | "sample" | "comparison" | "final";
 type BuilderPlacement = "hero" | "explanation_quality" | "builder_section";
+type ContentGovernancePlacement = "transparent_process" | "facts";
 
 function useFreeQuestionsPageTracking(sourceSurface: SourceSurface) {
   const marketing = useMarketingAttribution();
@@ -287,6 +288,41 @@ function ExplanationBuilderLink({
 
   return (
     <a href="/akt-explanation-builder" onClick={onClick} className={className}>
+      {children}
+    </a>
+  );
+}
+
+function ContentGovernanceLink({
+  sourceSurface,
+  placement,
+  className,
+  style,
+  children = "Read how AKT Navigator questions are built",
+}: {
+  sourceSurface: SourceSurface;
+  placement: ContentGovernancePlacement;
+  className?: string;
+  style?: CSSProperties;
+  children?: ReactNode;
+}) {
+  const onClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (event.defaultPrevented || !canUseAnalytics()) return;
+    initMarketingAttribution();
+    trackLandingEvent("free_akt_questions_content_governance_clicked", {
+      page: "free_akt_questions",
+      source: sourceSurface,
+      placement,
+    });
+  };
+
+  return (
+    <a
+      href="/content-governance"
+      onClick={onClick}
+      className={className}
+      style={style}
+    >
       {children}
     </a>
   );
@@ -741,6 +777,37 @@ export function FreeAktQuestionsLanding({
                   is independent and is not affiliated with or endorsed by the
                   RCGP. If something looks wrong, users can flag it for review.
                 </p>
+
+                <div
+                  className="mt-5 rounded-xl border px-4 py-3"
+                  style={{
+                    background: "rgba(255,255,255,.025)",
+                    borderColor: "rgba(255,255,255,.08)",
+                  }}
+                >
+                  <h3
+                    className="text-[15px] leading-[1.25]"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    Want the detail?
+                  </h3>
+                  <p
+                    className="mt-1.5 text-[13px] leading-[1.6]"
+                    style={{ color: "rgba(232,236,255,.60)" }}
+                  >
+                    Read how AKT Navigator questions are drafted,
+                    answer-checked, hardened, explained, reported and
+                    corrected.
+                  </p>
+                  <ContentGovernanceLink
+                    sourceSurface={sourceSurface}
+                    placement="transparent_process"
+                    className="mt-3 inline-flex text-[13px] font-semibold transition-colors hover:text-white"
+                    style={{ color: "rgba(197,170,255,.9)" } as CSSProperties}
+                  >
+                    Read how AKT Navigator questions are built →
+                  </ContentGovernanceLink>
+                </div>
               </div>
 
               <ol className="overflow-hidden rounded-[16px] border border-white/[.07]">
@@ -898,7 +965,23 @@ export function FreeAktQuestionsLanding({
                         className="text-[14px] leading-[1.55]"
                         style={{ color: "rgba(232,236,255,.74)" }}
                       >
-                        {value}
+                        {label === "Content governance" ? (
+                          <>
+                            {value}{" "}
+                            <ContentGovernanceLink
+                              sourceSurface={sourceSurface}
+                              placement="facts"
+                              className="font-semibold transition-colors hover:text-white"
+                              style={
+                                { color: "rgba(197,170,255,.9)" } as CSSProperties
+                              }
+                            >
+                              Read how questions are built.
+                            </ContentGovernanceLink>
+                          </>
+                        ) : (
+                          value
+                        )}
                       </dd>
                     </div>
                   ))}

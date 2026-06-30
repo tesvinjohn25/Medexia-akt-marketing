@@ -161,6 +161,10 @@ export const freePracticeFacts = [
     "Question selection",
     "Adaptive sessions based on AKT blueprint coverage, weak areas, recent mistakes, unseen topics, difficulty and recency.",
   ],
+  [
+    "Content governance",
+    "AI-assisted questions use a structured draft, validate, harden, explain, report and correct pipeline.",
+  ],
   ["Cost", "Free practice layer"],
   ["Card required", "No"],
   ["Paid upgrade", "Full AKT audio revision"],
@@ -194,12 +198,17 @@ export const freeAktQuestionsFaqs = [
   {
     question: "Are the questions AI-generated?",
     answer:
-      "AKT Navigator uses an AI-assisted question and explanation pipeline. The value is not raw AI output; it is the structured AKT topic mapping, multi-stage automated review, explanation format and user flagging loop. The question bank is for exam revision only, and users should cross-check current guidance where needed.",
+      "AKT Navigator uses an AI-assisted question and explanation pipeline. The value is not raw AI output; it is the structured draft, validate, harden, explain, report and correct pipeline, explanation format and user flagging loop. The question bank is not doctor-written; it is a supplementary practice tool for AKT revision, and users should cross-check current guidance where needed.",
   },
   {
     question: "Are the questions doctor-written?",
     answer:
-      "No. We do not position the free bank as doctor-written. The question bank is AI-assisted and structured through a review process. It is designed for AKT exam revision, and users should cross-check current guidance where needed.",
+      "No. We do not position the free bank as doctor-written. The question bank is AI-assisted and structured through a draft, validate, harden, explain, report and correct pipeline. It is a supplementary practice tool for AKT exam revision, and users should cross-check current guidance where needed.",
+  },
+  {
+    question: "How are AKT Navigator questions checked?",
+    answer:
+      "AKT Navigator uses an AI-assisted content pipeline: questions are drafted as AKT-style SBAs, the marked answer is checked from a UK primary-care perspective, the stem is refined to test reasoning, and explanations are structured around the key clue, trap, wrong answers and AKT learning point. Users can report every question and explanation. Read the content governance page for more detail.",
   },
   {
     question: "Is AKT Navigator RCGP-endorsed?",

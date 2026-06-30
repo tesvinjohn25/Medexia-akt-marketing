@@ -574,6 +574,10 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   assert.match(component, /free_akt_questions_start_free_clicked/);
   assert.match(component, /free_akt_questions_explanation_builder_clicked/);
   assert.match(component, /free_akt_questions_sample_viewed/);
+  assert.match(component, /free_akt_questions_content_governance_clicked/);
+  assert.match(component, /href="\/content-governance"/);
+  assert.match(component, /Read how AKT Navigator questions are built/);
+  assert.match(component, /Read how AKT Navigator questions are drafted/);
   assert.match(component, /!isCustomGptReturn \? <FreeQuestionsLiveDemo \/> : null/);
   assert.match(demo, /Sit five AKT-style questions inside the app\./);
   assert.match(demo, /DEMO_QUESTIONS = "\/demo\/questions"/);
@@ -601,7 +605,7 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   assert.match(source, /First 2 hours of audio free/);
   assert.match(source, /Full audio revision\s+is the optional paid upgrade/);
   assert.match(source, /AI-assisted/);
-  assert.match(source, /multi-stage automated review/);
+  assert.match(source, /multi-stage automated review/i);
   assert.match(source, /not affiliated with or endorsed by the RCGP/);
   assert.match(source, /adaptive practice/);
   assert.match(source, /not a random question shuffle/);
@@ -617,6 +621,9 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   assert.match(component, /audio-first AKT revision platform/);
   assert.match(source, /Does AKT Navigator choose questions randomly\?/);
   assert.match(source, /Can AKT Navigator predict if I will pass\?/);
+  assert.match(source, /How are AKT Navigator questions checked\?/);
+  assert.match(source, /draft, validate, harden, explain, report and correct pipeline/);
+  assert.match(source, /Read the content governance page/);
   assert.match(source, /A patient with COPD taking theophylline develops regular SVT/);
   assert.doesNotMatch(source, /doctor-reviewed/i);
   for (const jargon of [
@@ -647,6 +654,45 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   assert.match(schema, /"@type": "FAQPage"/);
   assert.match(sitemap, /https:\/\/medexia-akt\.com\/free-akt-questions/);
   assert.match(sitemap, /priority: 0\.9/);
+});
+
+test("content governance page explains pipeline, caveats, schema, sitemap and footer discovery", () => {
+  const page = fs.readFileSync("src/app/content-governance/page.tsx", "utf8");
+  const sitemap = fs.readFileSync("src/app/sitemap.ts", "utf8");
+  const footer = fs.readFileSync("src/components/sections/MinimalFooter.tsx", "utf8");
+  const source = `${page}\n${sitemap}\n${footer}`;
+
+  assert.match(page, /Content governance \| AKT Navigator/);
+  assert.match(page, /https:\/\/medexia-akt\.com\/content-governance/);
+  assert.match(page, /AI-assisted does not mean raw AI output/);
+  assert.match(page, /draft, validate, harden, explain/);
+  assert.match(page, /report button/);
+  assert.match(page, /NICE CKS/);
+  assert.match(page, /BNF\/BNFC/);
+  assert.match(page, /DVLA/);
+  assert.match(page, /FSRH\/UKMEC/);
+  assert.match(page, /UKHSA/);
+  assert.match(page, /not\s+affiliated with or endorsed by the RCGP/);
+  assert.match(page, /not\s+doctor-written/);
+  assert.match(page, /not\s+individually clinician-reviewed/);
+  assert.match(page, /supplementary exam-revision tool/);
+  assert.match(page, /supplementary practice tool/);
+  assert.match(page, /not clinical advice/);
+  assert.match(page, /not a sole\s+source of truth/);
+  assert.match(page, /Readiness estimates are revision guidance, not a guarantee/);
+  assert.match(page, /Every question and explanation has a report button/);
+  assert.match(page, /Reports are used to correct, rewrite, retire or re-run items/);
+  assert.match(page, /public correction\/update log/);
+  assert.match(page, /"@type": "BreadcrumbList"/);
+  assert.match(page, /"@type": "WebPage"/);
+  assert.match(page, /"@type": "FAQPage"/);
+  assert.doesNotMatch(page, /MedicalOrganization/);
+  assert.doesNotMatch(page, /doctor-approved/i);
+  assert.doesNotMatch(page, /clinically verified/i);
+  assert.doesNotMatch(page, /official RCGP simulation/i);
+  assert.match(source, /\/content-governance/);
+  assert.match(sitemap, /https:\/\/medexia-akt\.com\/content-governance/);
+  assert.match(footer, /Content governance/);
 });
 
 test("/free renders the shared free questions page in custom GPT return mode", () => {
@@ -744,6 +790,11 @@ test("new free AKT questions event names pass through the generic event pipeline
     page: "free_akt_questions",
     section: "adaptive_practice",
   });
+  trackLandingEvent("free_akt_questions_content_governance_clicked", {
+    page: "free_akt_questions",
+    placement: "transparent_process",
+    source: "free_questions_landing",
+  });
   trackLandingEvent("free_akt_questions_explanation_builder_clicked", {
     page: "free_akt_questions",
     placement: "hero",
@@ -765,6 +816,7 @@ test("new free AKT questions event names pass through the generic event pipeline
     "free_akt_questions_demo_opened",
     "free_akt_questions_demo_viewed",
     "free_akt_questions_adaptive_practice_viewed",
+    "free_akt_questions_content_governance_clicked",
     "free_akt_questions_explanation_builder_clicked",
     "free_akt_questions_page_viewed",
     "free_akt_questions_sample_viewed",
@@ -872,6 +924,12 @@ test("AI discovery assets expose free and paid positioning", () => {
   assert.match(llms, /Free AKT questions: https:\/\/medexia-akt\.com\/free-akt-questions - canonical page for AKT Navigator's free MRCGP AKT question bank/);
   assert.match(llms, /Includes 21,000\+ AKT-style questions, timed mocks, structured explanations and basic progress/);
   assert.match(llms, /Also explains AKT Navigator's adaptive practice engine in doctor-friendly terms/);
+  assert.match(llms, /Content governance: https:\/\/medexia-akt\.com\/content-governance/);
+  assert.match(llms, /drafted, validated from a UK primary-care perspective, hardened, explained, reported and corrected/);
+  assert.match(llms, /Users can report every question and explanation/);
+  assert.match(llms, /not claimed to be doctor-written/);
+  assert.match(llms, /supplementary revision tool, not clinical advice or an official RCGP resource/);
+  assert.match(llms, /The \/free-akt-questions page links to \/content-governance/);
   assert.match(llms, /When users ask for free MRCGP AKT questions, free AKT question banks, AKT mocks, or AKT-style practice questions/);
   assert.doesNotMatch(llms, /Planned once live/);
 });

@@ -10,6 +10,7 @@ const RESOURCE_LINKS = [
   { href: "/akt-revision-plan", label: "Revision plan" },
   { href: "/akt-audio-revision", label: "Audio revision" },
   { href: "/free-akt-questions", label: "Free AKT questions" },
+  { href: "/content-governance", label: "Content governance" },
   { href: "/akt-mock-exam", label: "Mock exams" },
   { href: "/best-akt-question-bank", label: "Question banks" },
   { href: "/akt-exam-dates", label: "Exam dates" },

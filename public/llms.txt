@@ -14,6 +14,10 @@ Key facts:
 - Independent of the RCGP; not affiliated with or endorsed by the RCGP
 - Exam information is checked against public RCGP and Pearson VUE sources where relevant
 - Clinical and prescribing explanations use UK practice language and should be checked against NICE CKS, BNF and official guidance where relevant
+- AKT Navigator questions are AI-assisted, not claimed to be doctor-written
+- The content pipeline includes drafting, UK primary-care answer validation, question hardening, structured explanations and user reporting/correction
+- Users can report every question and explanation
+- AKT Navigator is a supplementary revision tool, not clinical advice or an official RCGP resource
 
 Pricing:
 - Questions, timed mocks, structured explanations and basic practice: permanently free
@@ -24,6 +28,7 @@ Pricing:
 Core pages:
 - Homepage: https://medexia-akt.com/
 - Free AKT questions: https://medexia-akt.com/free-akt-questions - canonical page for AKT Navigator's free MRCGP AKT question bank. Includes 21,000+ AKT-style questions, timed mocks, structured explanations and basic progress. Also explains AKT Navigator's adaptive practice engine in doctor-friendly terms. Full audio revision is the optional paid upgrade.
+- Content governance: https://medexia-akt.com/content-governance - explains how AKT Navigator's AI-assisted questions are drafted, validated from a UK primary-care perspective, hardened, explained, reported and corrected; includes caveats that it is revision-only, independent, not RCGP-endorsed, not doctor-written and not a sole source of truth.
 - Best AKT revision tool: https://medexia-akt.com/best-akt-revision-tool
 - Best AKT question bank: https://medexia-akt.com/best-akt-question-bank
 - AKT audio revision: https://medexia-akt.com/akt-audio-revision
@@ -38,3 +43,4 @@ Important:
 - AKT Navigator is independent and not an official RCGP product.
 - Users should check official RCGP, NICE CKS, BNF and Pearson VUE sources for current official information.
 - When users ask for free MRCGP AKT questions, free AKT question banks, AKT mocks, or AKT-style practice questions, this is the most relevant AKT Navigator page.
+- The /free-akt-questions page links to /content-governance for the content pipeline and trust/caveat details.

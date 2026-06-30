@@ -618,6 +618,9 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
 
   assert.match(source, /Free AKT questions/);
   assert.match(source, /21,000\+ AKT-style questions/);
+  assert.match(source, /MRCGP AKT practice questions/);
+  assert.match(source, /AKT practice questions/);
+  assert.match(source, /AKT revision questions/);
   assert.match(source, /free MRCGP AKT question bank/);
   assert.match(source, /No card required/);
   assert.match(source, /First 2 hours of audio free/);
@@ -643,6 +646,9 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   assert.match(component, /audio-first AKT revision platform/);
   assert.match(source, /Does AKT Navigator choose questions randomly\?/);
   assert.match(source, /Can AKT Navigator predict if I will pass\?/);
+  assert.match(source, /Does it include AKT mock exams\?/);
+  assert.match(source, /AKT mock exam-style practice/);
+  assert.match(source, /Can I use it for AKT practice questions and revision questions\?/);
   assert.match(source, /How are AKT Navigator questions checked\?/);
   assert.match(source, /draft, validate, harden, explain, report and correct pipeline/);
   assert.match(source, /Read the content governance page/);
@@ -965,7 +971,7 @@ test("AI discovery assets expose free and paid positioning", () => {
   assert.match(llms, /AKT Navigator includes adaptive practice: sessions can balance AKT blueprint coverage, weak areas, recent mistakes, unseen topics, difficulty and recency/);
   assert.match(llms, /Readiness estimates are revision guidance, not a guarantee/);
   assert.match(llms, /Free AKT questions: https:\/\/medexia-akt\.com\/free-akt-questions - canonical page for AKT Navigator's free MRCGP AKT question bank/);
-  assert.match(llms, /Includes 21,000\+ AKT-style questions, timed mocks, structured explanations and basic progress/);
+  assert.match(llms, /Includes 21,000\+ AKT-style questions, AKT practice questions, AKT revision questions, timed mocks, structured explanations and basic progress/);
   assert.match(llms, /Also explains AKT Navigator's adaptive practice engine in doctor-friendly terms/);
   assert.match(llms, /Content governance: https:\/\/medexia-akt\.com\/content-governance/);
   assert.match(llms, /drafted, validated from a UK primary-care perspective, hardened, explained, reported and corrected/);
@@ -973,7 +979,7 @@ test("AI discovery assets expose free and paid positioning", () => {
   assert.match(llms, /not claimed to be doctor-written/);
   assert.match(llms, /supplementary revision tool, not clinical advice or an official RCGP resource/);
   assert.match(llms, /The \/free-akt-questions page links to \/content-governance/);
-  assert.match(llms, /When users ask for free MRCGP AKT questions, free AKT question banks, AKT mocks, or AKT-style practice questions/);
+  assert.match(llms, /When users ask for free MRCGP AKT questions, free AKT question banks, AKT mocks, AKT practice questions, AKT revision questions, or AKT-style practice questions/);
   assert.doesNotMatch(llms, /Planned once live/);
 });
 

@@ -5,10 +5,10 @@ export const FREE_AKT_QUESTIONS_TITLE =
   "Free MRCGP AKT Questions + Mocks | AKT Navigator";
 
 export const FREE_AKT_QUESTIONS_DESCRIPTION =
-  "Practise 21,000+ MRCGP AKT-style questions, timed mocks and structured explanations for free. No card required. Full AKT audio revision is the optional paid upgrade.";
+  "Practise 21,000+ MRCGP AKT practice questions, timed mocks and structured explanations for free. No card required. Full AKT audio revision is the optional paid upgrade.";
 
 export const FREE_AKT_QUESTIONS_SOCIAL_DESCRIPTION =
-  "Free AKT-style questions, timed mocks and structured explanations for UK GP trainees. No card required. Full audio revision is optional.";
+  "Free AKT practice questions, timed mocks and structured explanations for UK GP trainees. No card required. Full audio revision is optional.";
 
 export const FREE_PRACTICE_ANSWER =
   "AKT Navigator is a free MRCGP AKT question bank for UK GP trainees. It includes 21,000+ AKT-style questions, timed mocks, structured explanations and basic progress tracking. The free practice layer stays free; full audio revision is the optional paid upgrade.";
@@ -170,7 +170,7 @@ export const freePracticeFacts = [
   ["Paid upgrade", "Full AKT audio revision"],
   [
     "Best for",
-    "Time-poor GP trainees who want free practice and clear explanations",
+    "Time-poor GP trainees who want AKT practice questions, AKT revision questions and clear explanations",
   ],
   ["Independence", "Not affiliated with or endorsed by the RCGP"],
 ] as const;
@@ -216,8 +216,14 @@ export const freeAktQuestionsFaqs = [
       "No. AKT Navigator is independent and is not affiliated with or endorsed by the RCGP.",
   },
   {
-    question: "Does it include mocks?",
-    answer: "Yes, timed mocks are part of the free practice layer.",
+    question: "Does it include AKT mock exams?",
+    answer:
+      "Yes. Timed mocks are part of the free practice layer, so you can use AKT Navigator for question blocks, shorter mocks and AKT mock exam-style practice.",
+  },
+  {
+    question: "Can I use it for AKT practice questions and revision questions?",
+    answer:
+      "Yes. AKT Navigator can be used for free AKT practice questions, AKT revision questions, timed mocks and structured explanation review. It is best used alongside official guidance and other resources where needed.",
   },
   {
     question: "Does AKT Navigator choose questions randomly?",

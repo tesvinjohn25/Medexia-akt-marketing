@@ -354,13 +354,16 @@ export function FreeAktQuestionsLanding({
         />
 
         <div
-          className="container-x relative z-[1] grid gap-8 pb-8 md:grid-cols-[1.05fr_.95fr] md:items-center md:gap-12 md:pb-10"
+          className="container-x relative z-[1] grid gap-7 pb-8 md:grid-cols-[1.05fr_.95fr] md:items-center md:gap-12 md:pb-10"
           style={{
             paddingTop:
               "calc(env(safe-area-inset-top, 0px) + clamp(86px, 10vw, 112px))",
           }}
         >
-          <div className="hero-enter max-w-[640px]" style={{ "--he": 0 } as CSSProperties}>
+          <div
+            className="hero-enter order-2 max-w-[640px] md:order-1"
+            style={{ "--he": 1 } as CSSProperties}
+          >
             <div className="flex flex-wrap items-center gap-2">
               <Badge tone="blue">MRCGP AKT</Badge>
               <Badge tone="green">Free question bank</Badge>
@@ -414,8 +417,8 @@ export function FreeAktQuestionsLanding({
           </div>
 
           <div
-            className="hero-enter"
-            style={{ "--he": 1 } as CSSProperties}
+            className="hero-enter order-1 -mx-1 md:order-2 md:mx-0"
+            style={{ "--he": 0 } as CSSProperties}
           >
             <FreeQuestionsHeroLoop />
           </div>

@@ -103,16 +103,16 @@ export function FreeQuestionsHeroLoop() {
           loop
           playsInline
           preload="auto"
-          poster="/video/free-akt-hero-readable-poster.jpg?v=3"
+          poster="/video/free-akt-hero-full-poster.jpg"
           aria-label="Animated AKT Navigator hero showing AKT-style SBA, structured explanation, clue trap why wrong, and adaptive next session"
           className="block aspect-square h-auto w-full object-cover"
         >
           <source
-            src="/video/free-akt-hero-readable-loop.webm?v=3"
+            src="/video/free-akt-hero-full-loop.webm"
             type="video/webm"
           />
           <source
-            src="/video/free-akt-hero-readable-loop.mp4?v=3"
+            src="/video/free-akt-hero-full-loop.mp4"
             type="video/mp4"
           />
         </video>

@@ -39,6 +39,7 @@ type SourceSurface = "free_questions_landing" | "custom_gpt_return";
 type StartPlacement = "hero" | "sample" | "comparison" | "final";
 type BuilderPlacement = "hero" | "explanation_quality" | "builder_section";
 type ContentGovernancePlacement = "transparent_process" | "facts";
+type AudioUpgradePlacement = "comparison";
 
 function useFreeQuestionsPageTracking(sourceSurface: SourceSurface) {
   const marketing = useMarketingAttribution();
@@ -332,6 +333,37 @@ function ContentGovernanceLink({
   );
 }
 
+function AudioPlatformLink({
+  sourceSurface,
+  placement,
+  className,
+  style,
+  children = "See the full AKT Navigator audio revision platform",
+}: {
+  sourceSurface: SourceSurface;
+  placement: AudioUpgradePlacement;
+  className?: string;
+  style?: CSSProperties;
+  children?: ReactNode;
+}) {
+  const onClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (event.defaultPrevented || !canUseAnalytics()) return;
+    initMarketingAttribution();
+    trackLandingEvent("free_akt_questions_audio_upgrade_clicked", {
+      page: "free_akt_questions",
+      source: sourceSurface,
+      placement,
+      destination: "home_audio_landing",
+    });
+  };
+
+  return (
+    <a href="/" onClick={onClick} className={className} style={style}>
+      {children}
+    </a>
+  );
+}
+
 function FeatureList({
   items,
   tone = "violet",
@@ -551,6 +583,30 @@ export function FreeAktQuestionsLanding({
                 <div className="mt-4">
                   <FeatureList items={optionalPaidAudioFeatures} tone="violet" />
                 </div>
+                {!isCustomGptReturn ? (
+                  <div
+                    className="mt-5 rounded-xl border px-4 py-3"
+                    style={{
+                      background: "rgba(255,255,255,.025)",
+                      borderColor: "rgba(167,139,250,.12)",
+                    }}
+                  >
+                    <p
+                      className="text-[13px] font-semibold leading-[1.45]"
+                      style={{ color: "rgba(232,236,255,.78)" }}
+                    >
+                      Want audio-first revision too?
+                    </p>
+                    <AudioPlatformLink
+                      sourceSurface={sourceSurface}
+                      placement="comparison"
+                      className="mt-1.5 inline-flex text-[13px] font-semibold leading-[1.5] transition-colors hover:text-white"
+                      style={{ color: "rgba(197,170,255,.9)" }}
+                    >
+                      See the full AKT Navigator audio revision platform →
+                    </AudioPlatformLink>
+                  </div>
+                ) : null}
               </div>
             </div>
 

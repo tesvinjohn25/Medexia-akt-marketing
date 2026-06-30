@@ -577,9 +577,13 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
   assert.match(component, /free_akt_questions_explanation_builder_clicked/);
   assert.match(component, /free_akt_questions_sample_viewed/);
   assert.match(component, /free_akt_questions_content_governance_clicked/);
+  assert.match(component, /free_akt_questions_audio_upgrade_clicked/);
   assert.match(component, /href="\/content-governance"/);
   assert.match(component, /Read how AKT Navigator questions are built/);
   assert.match(component, /Read how AKT Navigator questions are drafted/);
+  assert.match(component, /href="\/"[\s\S]*See the full AKT Navigator audio revision platform/);
+  assert.match(component, /Want audio-first revision too\?/);
+  assert.match(component, /destination: "home_audio_landing"/);
   assert.match(component, /!isCustomGptReturn \? <FreeQuestionsLiveDemo \/> : null/);
   assert.match(demo, /Sit five AKT-style questions inside the app\./);
   assert.match(demo, /DEMO_QUESTIONS = "\/demo\/questions"/);
@@ -827,6 +831,12 @@ test("new free AKT questions event names pass through the generic event pipeline
     placement: "transparent_process",
     source: "free_questions_landing",
   });
+  trackLandingEvent("free_akt_questions_audio_upgrade_clicked", {
+    page: "free_akt_questions",
+    placement: "comparison",
+    source: "free_questions_landing",
+    destination: "home_audio_landing",
+  });
   trackLandingEvent("free_akt_questions_explanation_builder_clicked", {
     page: "free_akt_questions",
     placement: "hero",
@@ -848,6 +858,7 @@ test("new free AKT questions event names pass through the generic event pipeline
     "free_akt_questions_demo_opened",
     "free_akt_questions_demo_viewed",
     "free_akt_questions_adaptive_practice_viewed",
+    "free_akt_questions_audio_upgrade_clicked",
     "free_akt_questions_content_governance_clicked",
     "free_akt_questions_explanation_builder_clicked",
     "free_akt_questions_page_viewed",

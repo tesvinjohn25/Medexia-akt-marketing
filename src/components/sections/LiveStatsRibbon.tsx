@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useCountUp } from "@/hooks/useCountUp";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { isPreCutover } from "@/lib/offer-phase";
 
 function formatNumber(n: number): string {
   if (n >= 1000) return n.toLocaleString("en-GB");
@@ -127,8 +128,9 @@ export function LiveStatsRibbon() {
         className="mt-8 md:mt-10 text-center text-[13px] md:text-[14px] font-medium"
         style={{ color: "rgba(52,211,153,.9)" }}
       >
-        Full access is free until 8 July. Questions and mocks stay free after
-        that; £59 Early Access is only before 8 July, then full audio is £79.
+        {isPreCutover()
+          ? "Full access is free until 8 July. Questions and mocks stay free after that; £59 Early Access is only before 8 July, then full audio is £79."
+          : "Questions and mocks are free forever. Your first 2 hours of AKT audio are free; full audio access is £79 for 4 months."}
       </p>
     </div>
   );

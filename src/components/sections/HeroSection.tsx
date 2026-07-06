@@ -5,7 +5,11 @@ import { ExamCountdown } from "./ExamCountdown";
 import { HeroVideo } from "./HeroVideo";
 import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 import { useMarketingAttribution } from "@/components/marketing/MarketingAttributionProvider";
-import { OFFER_IDS, canShowReferralEarlybirdOffer } from "@/lib/marketing/attribution";
+import {
+  OFFER_IDS,
+  canShowReferralEarlybirdOffer,
+  isPreOfferCutover,
+} from "@/lib/marketing/attribution";
 
 export function HeroSection() {
   // The keynote cascade is visibility-triggered, not load-triggered:
@@ -14,7 +18,9 @@ export function HeroSection() {
   const { ref, visible } = useScrollReveal(0.1);
   const marketing = useMarketingAttribution();
   const referralCode = marketing?.active_referral?.referral_code ?? null;
-  const isPreCutover = marketing?.offer_context.phase !== "post_2026_07_08";
+  const isPreCutover = marketing
+    ? marketing.offer_context.phase !== "post_2026_07_08"
+    : isPreOfferCutover();
   const hasReferralOffer = canShowReferralEarlybirdOffer(referralCode);
 
   return (
@@ -121,7 +127,9 @@ export function HeroSection() {
                   className="text-[10px] tracking-[0.14em] uppercase font-bold"
                   style={{ color: "rgba(197,170,255,.9)" }}
                 >
-                  Full audio free until 8 July
+                  {isPreCutover
+                    ? "Full audio free until 8 July"
+                    : "First 2 hours of audio free"}
                 </span>
               </span>
             </div>

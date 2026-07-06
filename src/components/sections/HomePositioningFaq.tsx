@@ -1,6 +1,7 @@
-import { homePositioningFaqs } from "@/data/product-positioning";
+import { getHomePositioningFaqs } from "@/data/product-positioning";
 
 export function HomePositioningFaq() {
+  const homePositioningFaqs = getHomePositioningFaqs();
   return (
     <section className="section-padding pt-8 md:pt-10">
       <div className="container-x">

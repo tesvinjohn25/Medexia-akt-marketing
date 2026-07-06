@@ -6,6 +6,7 @@ import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 import { AiAnswerBox } from "@/components/sections/AiAnswerBox";
 import { aktTopics } from "@/data/akt-topics";
+import { getOfferPhase, phased, type OfferPhase } from "@/lib/offer-phase";
 
 export const metadata: Metadata = {
   title: "MRCGP AKT Audio Revision — 90+ Hours",
@@ -46,7 +47,7 @@ const sourceLinks = [
   },
 ];
 
-const audioFaqs = [
+const getAudioFaqs = (phase: OfferPhase) => [
   {
     question: "Is there MRCGP AKT audio revision?",
     answer:
@@ -74,22 +75,33 @@ const audioFaqs = [
   },
   {
     question: "Can I try AKT audio for free?",
-    answer:
+    answer: phased(
+      phase,
       "Yes. Full access is free until 8 July 2026. After that, Free Practice includes 2 hours of AKT audio across any audiobook, and you can use the demo route to hear a sample before committing.",
+      "Yes. Free Practice includes 2 hours of AKT audio across any audiobook, and you can use the demo route to hear a sample before committing.",
+    ),
   },
   {
     question: "How much free AKT audio is included?",
-    answer:
+    answer: phased(
+      phase,
       "After 8 July 2026, Free Practice includes 2 hours of AKT audio across any audiobook. Full access to the 90+ hour library is the paid upgrade.",
+      "Free Practice includes 2 hours of AKT audio across any audiobook. Full access to the 90+ hour library is the paid upgrade.",
+    ),
   },
   {
     question: "How much does full AKT audio access cost?",
-    answer:
+    answer: phased(
+      phase,
       "Full access is free until 8 July 2026. Early Access is £59 before 8 July for 4 months of access starting 8 July; standard Full Audio Access is £79 for 4 months from 8 July onwards. Questions remain free.",
+      "Full Audio Access is £79 for 4 months and unlocks the complete 90+ hour AKT audio library. Questions, mocks and your first 2 hours of audio remain free.",
+    ),
   },
 ];
 
 export default function AktAudioRevisionPage() {
+  const phase = getOfferPhase();
+  const audioFaqs = getAudioFaqs(phase);
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -118,12 +130,15 @@ export default function AktAudioRevisionPage() {
         ],
         offers: {
           "@type": "AggregateOffer",
-          lowPrice: "59",
+          lowPrice: phased(phase, "59", "0"),
           highPrice: "79",
           priceCurrency: "GBP",
           offerCount: 2,
-          description:
+          description: phased(
+            phase,
             "Full AKT Navigator access is free until 8 July 2026. Early Access is £59 before then for access starting 8 July; standard full audio access is £79 for 4 months.",
+            "Free Practice includes 2 hours of AKT audio. Full Audio Access is £79 for 4 months and unlocks the complete 90+ hour library.",
+          ),
         },
       },
       {
@@ -226,7 +241,11 @@ export default function AktAudioRevisionPage() {
             {[
               { stat: "90+", label: "Hours of audio" },
               { stat: "32", label: "RCGP topics" },
-              { stat: "£59", label: "Early access" },
+              phased(
+                phase,
+                { stat: "£59", label: "Early access" },
+                { stat: "£79", label: "Full audio access" },
+              ),
             ].map((item) => (
               <div
                 key={item.label}
@@ -280,9 +299,11 @@ export default function AktAudioRevisionPage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
-              Use the free audio allowance to test whether AKT audio fits your
-              life. After 8 July, Free Practice includes 2 hours of AKT audio;
-              full access to the 90+ hour library is the paid upgrade.
+              {phased(
+                phase,
+                "Use the free audio allowance to test whether AKT audio fits your life. After 8 July, Free Practice includes 2 hours of AKT audio; full access to the 90+ hour library is the paid upgrade.",
+                "Use the free audio allowance to test whether AKT audio fits your life. Free Practice includes 2 hours of AKT audio; full access to the 90+ hour library is the paid upgrade at £79 for 4 months.",
+              )}
             </p>
           </div>
 

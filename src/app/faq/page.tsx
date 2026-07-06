@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
 import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { FAQ } from "@/components/sections/FAQ";
-import { FAQS } from "@/data/faq";
+import { getFaqs } from "@/data/faq";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 
@@ -42,6 +42,7 @@ const sourceLinks = [
 ];
 
 export default function FaqPage() {
+  const faqs = getFaqs();
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -56,7 +57,7 @@ export default function FaqPage() {
       },
       {
         "@type": "FAQPage",
-        mainEntity: FAQS.map((faq) => ({
+        mainEntity: faqs.map((faq) => ({
           "@type": "Question",
           name: faq.q,
           acceptedAnswer: {

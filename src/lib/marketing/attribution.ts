@@ -4,6 +4,7 @@ import {
   canUseMarketing,
   hasConsentDecision,
 } from "../consent/consent";
+import { OFFER_CUTOVER_UK } from "../offer-phase";
 
 export const MARKETING_STORAGE_KEYS = {
   visitorId: "mx_visitor_id",
@@ -120,7 +121,6 @@ const TOUCH_PARAM_KEYS = [
 const REFERRAL_PARAM_KEYS = ["ref", "referral", "referral_code", "r"] as const;
 const AD_CLICK_PARAM_KEYS = ["gclid", "gbraid", "wbraid", "fbclid", "ttclid", "msclkid"] as const;
 const UTM_PARAM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"] as const;
-const OFFER_CUTOVER_UK = new Date("2026-07-08T00:00:00+01:00");
 const COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 90;
 const CUSTOM_GPT_RETURN_ATTRIBUTION = {
   utm_source: "custom_gpt",

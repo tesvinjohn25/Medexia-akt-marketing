@@ -8,4 +8,5 @@ export {
   size,
   contentType,
   runtime,
+  revalidate,
 } from "./opengraph-image";

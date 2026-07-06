@@ -7,6 +7,7 @@ import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 import { AiAnswerBox } from "@/components/sections/AiAnswerBox";
 import { aktTopics } from "@/data/akt-topics";
 import { EXAM_FORMAT } from "@/data/exam-dates";
+import { getOfferPhase, phased } from "@/lib/offer-phase";
 
 export const metadata: Metadata = {
   title: "How to Pass the AKT — Study Guide for GP Trainees (2026)",
@@ -552,7 +553,11 @@ export default function HowToPassTheAktPage() {
                 {
                   href: "/akt-audio-revision",
                   title: "Audio revision",
-                  desc: "90+ hours; £59 Early Access before 8 July",
+                  desc: phased(
+                    getOfferPhase(),
+                    "90+ hours; £59 Early Access before 8 July",
+                    "90+ hours; £79 full audio access",
+                  ),
                 },
                 {
                   href: "/best-akt-question-bank",

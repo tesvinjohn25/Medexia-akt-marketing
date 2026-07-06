@@ -1,7 +1,8 @@
 import {
-  alwaysFreeItems,
-  paidAfterJulyItems,
+  getAlwaysFreeItems,
+  paidTierItems,
 } from "@/data/product-positioning";
+import { getOfferPhase, phased } from "@/lib/offer-phase";
 
 function CheckIcon() {
   return (
@@ -23,6 +24,8 @@ function CheckIcon() {
 }
 
 export function ProductFacts() {
+  const phase = getOfferPhase();
+  const alwaysFreeItems = getAlwaysFreeItems(phase);
   return (
     <section className="section-padding py-8 md:py-10">
       <div className="container-x">
@@ -56,10 +59,11 @@ export function ProductFacts() {
                 className="mt-3 max-w-[560px] text-[14px] leading-[1.6] md:text-[15px]"
                 style={{ color: "rgba(232,236,255,.72)" }}
               >
-                Before 8 July, the whole product is free to try. From 8 July
-                onwards, questions, mocks, explanations and your first 2 hours
-                of AKT audio stay free; full audio and premium resources are
-                the upgrade.
+                {phased(
+                  phase,
+                  "Before 8 July, the whole product is free to try. From 8 July onwards, questions, mocks, explanations and your first 2 hours of AKT audio stay free; full audio and premium resources are the upgrade.",
+                  "Questions, mocks, explanations and your first 2 hours of AKT audio are free. Full audio and premium resources are the upgrade — £79 for 4 months.",
+                )}
               </p>
               <p
                 className="mt-3 max-w-[560px] text-[13px] leading-[1.6]"
@@ -141,13 +145,13 @@ export function ProductFacts() {
                   className="text-[13px] font-semibold"
                   style={{ color: "var(--fg-high)" }}
                 >
-                  Paid after 8 July
+                  {phased(phase, "Paid after 8 July", "Paid upgrade — £79")}
                 </h3>
                 <ul
                   className="mt-3 grid gap-2 text-[13px] leading-[1.45]"
                   style={{ color: "rgba(232,236,255,.72)" }}
                 >
-                  {paidAfterJulyItems.map((item) => (
+                  {paidTierItems.map((item) => (
                     <li key={item} className="flex gap-2">
                       <span style={{ color: "rgba(167,139,250,.95)" }}>
                         <CheckIcon />

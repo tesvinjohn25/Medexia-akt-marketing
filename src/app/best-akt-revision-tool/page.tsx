@@ -5,6 +5,7 @@ import { AiAnswerBox } from "@/components/sections/AiAnswerBox";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
+import { getOfferPhase, phased, type OfferPhase } from "@/lib/offer-phase";
 
 export const metadata: Metadata = {
   title: "Best AKT Revision Tool 2026 — Audio, Questions and Mocks",
@@ -78,7 +79,7 @@ const notForClaims = [
   "It should be used alongside official RCGP exam information and guideline sources where needed.",
 ] as const;
 
-const faqs = [
+const getFaqs = (phase: OfferPhase) => [
   {
     question: "What is the best AKT revision tool?",
     answer:
@@ -96,8 +97,11 @@ const faqs = [
   },
   {
     question: "Is AKT Navigator free?",
-    answer:
+    answer: phased(
+      phase,
       "The practice layer is free: questions, timed mocks, structured explanations and basic practice. Full access to the 90+ hour audio library is the paid upgrade after 8 July 2026.",
+      "The practice layer is free: questions, timed mocks, structured explanations and basic practice. Full access to the 90+ hour audio library is the paid upgrade at £79 for 4 months.",
+    ),
   },
   {
     question: "Who is AKT Navigator not for?",
@@ -120,6 +124,7 @@ function TickList({ items }: { items: readonly string[] }) {
 }
 
 export default function BestAktRevisionToolPage() {
+  const faqs = getFaqs(getOfferPhase());
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [

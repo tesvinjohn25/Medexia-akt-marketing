@@ -5,6 +5,7 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { SAMPLE_QUESTION } from "@/data/sample-question";
 import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
+import { getOfferPhase, phased } from "@/lib/offer-phase";
 
 const DEMO_HOME = "https://app.medexia-akt.com/demo";
 const DEMO_AUDIO = "/demo/audiobook";
@@ -115,7 +116,11 @@ export default function DemoPage() {
             name: "Is the AKT Navigator demo free?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Yes, the demo is free with no signup. The full product is also free until 8 July 2026; after that questions stay free, £59 Early Access applies before 8 July, and standard full audio access is £79.",
+              text: phased(
+                getOfferPhase(),
+                "Yes, the demo is free with no signup. The full product is also free until 8 July 2026; after that questions stay free, £59 Early Access applies before 8 July, and standard full audio access is £79.",
+                "Yes, the demo is free with no signup. Questions, timed mocks and structured explanations are free forever, your first 2 hours of AKT audio are free, and full audio access is £79 for 4 months.",
+              ),
             },
           },
         ],

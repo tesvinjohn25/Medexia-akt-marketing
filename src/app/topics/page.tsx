@@ -5,22 +5,28 @@ import { TopicGrid } from "@/components/sections/TopicGrid";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { aktTopics } from "@/data/akt-topics";
+import { getOfferPhase, phased } from "@/lib/offer-phase";
 
-export const metadata: Metadata = {
-  title: "All 32 AKT Topics — Full RCGP Curriculum Coverage",
-  description:
-    "Every topic in the RCGP AKT curriculum. Clinical (80%), Professional (10%), and Life Stages. Free AKT questions and explanations, with £59 Early Access before 8 July and £79 full audio access from 8 July.",
-  alternates: {
-    canonical: "https://medexia-akt.com/topics",
-  },
-  openGraph: {
+export function generateMetadata(): Metadata {
+  return {
     title: "All 32 AKT Topics — Full RCGP Curriculum Coverage",
-    description:
-      "Every topic in the RCGP AKT curriculum with dedicated audio, questions, and explanations.",
-    type: "website",
-    url: "https://medexia-akt.com/topics",
-  },
-};
+    description: phased(
+      getOfferPhase(),
+      "Every topic in the RCGP AKT curriculum. Clinical (80%), Professional (10%), and Life Stages. Free AKT questions and explanations, with £59 Early Access before 8 July and £79 full audio access from 8 July.",
+      "Every topic in the RCGP AKT curriculum. Clinical (80%), Professional (10%), and Life Stages. Free AKT questions and explanations, with £79 full audio access for 4 months.",
+    ),
+    alternates: {
+      canonical: "https://medexia-akt.com/topics",
+    },
+    openGraph: {
+      title: "All 32 AKT Topics — Full RCGP Curriculum Coverage",
+      description:
+        "Every topic in the RCGP AKT curriculum with dedicated audio, questions, and explanations.",
+      type: "website",
+      url: "https://medexia-akt.com/topics",
+    },
+  };
+}
 
 const sourceLinks = [
   {

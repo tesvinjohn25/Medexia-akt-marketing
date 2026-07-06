@@ -1,16 +1,47 @@
+import { EXAM_SITTINGS } from "@/data/exam-dates";
+import { getOfferPhase, phased, type OfferPhase } from "@/lib/offer-phase";
+
 export type Faq = {
   q: string;
   a: string;
 };
 
-export const FAQS: Faq[] = [
+function sittingDay(date: Date): string {
+  return date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    timeZone: "Europe/London",
+  });
+}
+
+/**
+ * "When can I sit the AKT?" stays accurate as sittings pass: the next
+ * upcoming sitting is computed from EXAM_SITTINGS at render time.
+ */
+function whenCanISitAnswer(now: Date): string {
+  const upcoming = EXAM_SITTINGS.find((s) => s.date.getTime() > now.getTime());
+  const previous = [...EXAM_SITTINGS]
+    .reverse()
+    .find((s) => s.date.getTime() <= now.getTime());
+  const nextSentence = upcoming
+    ? `The next 2026 sitting is on ${sittingDay(upcoming.date)}`
+    : "Sittings run three times a year, with the next dates published by the RCGP";
+  const previousSentence = previous
+    ? `; the ${previous.label} sitting took place on ${sittingDay(previous.date)}.`
+    : ".";
+  return `The RCGP runs AKT sittings at fixed points in the year, booked through the RCGP and sat at Pearson VUE test centres. ${nextSentence}${previousSentence} You are eligible to sit the AKT from ST2 onwards, and most trainees take it during ST2 or ST3. Booking windows open in advance and places at popular test centres fill quickly, so book early once your sitting is confirmed.`;
+}
+
+export function getFaqs(now: Date = new Date()): Faq[] {
+  const phase: OfferPhase = getOfferPhase(now);
+  return [
   {
     q: "What is the MRCGP AKT?",
     a: "The Applied Knowledge Test (AKT) is one of the three components of the MRCGP, the qualifying examination for general practice in the UK, administered by the Royal College of General Practitioners (RCGP). It is a computer-based exam of 160 multiple-choice questions taken over 2 hours 40 minutes at Pearson VUE test centres. Questions cover clinical medicine (80%), evidence-based practice and statistics (10%), and organisational and professional topics (10%). GP trainees usually sit the AKT in ST2 or ST3. AKT Navigator is an independent revision resource built specifically for this exam, with free syllabus-mapped questions and 90+ hours of audio covering all 32 curriculum topics.",
   },
   {
     q: "When can I sit the AKT?",
-    a: "The RCGP runs AKT sittings at fixed points in the year, booked through the RCGP and sat at Pearson VUE test centres. The next 2026 sitting is on 7 July; the April 2026 sitting took place on 27 April. You are eligible to sit the AKT from ST2 onwards, and most trainees take it during ST2 or ST3. Booking windows open in advance and places at popular test centres fill quickly, so book early once your sitting is confirmed.",
+    a: whenCanISitAnswer(now),
   },
   {
     q: "What do I need on AKT exam day?",
@@ -198,7 +229,11 @@ export const FAQS: Faq[] = [
   },
   {
     q: "Is there a free AKT question bank?",
-    a: "Yes. AKT Navigator keeps syllabus-mapped AKT questions free, with deep structured explanations, mock exams and basic practice. Free Practice also includes 2 hours of audiobook listening across any audiobook. Full access to the 90+ hour audiobook library is separate: Early Access is £59 before 8 July 2026 for 4 months of access starting 8 July, then standard Full Audio Access is £79 for 4 months.",
+    a: phased(
+      phase,
+      "Yes. AKT Navigator keeps syllabus-mapped AKT questions free, with deep structured explanations, mock exams and basic practice. Free Practice also includes 2 hours of audiobook listening across any audiobook. Full access to the 90+ hour audiobook library is separate: Early Access is £59 before 8 July 2026 for 4 months of access starting 8 July, then standard Full Audio Access is £79 for 4 months.",
+      "Yes. AKT Navigator keeps syllabus-mapped AKT questions free, with deep structured explanations, mock exams and basic practice. Free Practice also includes 2 hours of audiobook listening across any audiobook. Full access to the 90+ hour audiobook library is separate: Full Audio Access is £79 for 4 months.",
+    ),
   },
   {
     q: "How do I know if I'm ready for the AKT?",
@@ -208,4 +243,5 @@ export const FAQS: Faq[] = [
     q: "Can I revise for the AKT while working full time?",
     a: "That's exactly why this was built. The founder is a GP trainee who knows what it's like juggling work, family, and AKT revision. Nothing out there made it easier so we built something that did. Sessions are 15 to 20 minutes of targeted questions designed around your weak spots. The audiobooks give you over 90 hours of exam content you can absorb while doing something else. You can study on the bus, between patients, or before bed. The algorithm remembers where you left off and what you need next. No planning, no wasted time, just open it and go.",
   },
-];
+  ];
+}

@@ -1,12 +1,35 @@
 import { ImageResponse } from "next/og";
+import { getOfferPhase, phased } from "@/lib/offer-phase";
 
 export const runtime = "edge";
+export const revalidate = 900;
+// Phase-neutral alt (module-level exports can be cached across the cutover;
+// the image copy itself is computed per render below).
 export const alt =
-  "AKT Navigator by Medexia — the whole AKT in 90 hours of audio. Full access free until 8 July. £59 Early Access before 8 July; £79 from 8 July.";
+  "AKT Navigator by Medexia — the whole AKT in 90 hours of audio, with free MRCGP AKT questions and timed mocks.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default function OGImage() {
+  const phase = getOfferPhase();
+  const subline = phased(
+    phase,
+    "Full access free until 8 July",
+    "Free AKT questions, mocks + 2h of audio",
+  );
+  const chips = phased(
+    phase,
+    [
+      "£59 Early Access before 8 July",
+      "£79 from 8 July",
+      "Questions + 2h audio stay free",
+    ],
+    [
+      "Free questions + timed mocks",
+      "£79 Full Audio Access · 4 months",
+      "First 2 hours of audio free",
+    ],
+  );
   return new ImageResponse(
     (
       <div
@@ -125,7 +148,7 @@ export default function OGImage() {
             letterSpacing: "-0.005em",
           }}
         >
-          Full access free until 8 July
+          {subline}
         </div>
 
         <div style={{ display: "flex", gap: "14px", marginTop: "36px" }}>
@@ -143,7 +166,7 @@ export default function OGImage() {
               letterSpacing: "-0.01em",
             }}
           >
-            £59 Early Access before 8 July
+            {chips[0]}
           </div>
           <div
             style={{
@@ -159,7 +182,7 @@ export default function OGImage() {
               letterSpacing: "-0.01em",
             }}
           >
-            £79 from 8 July
+            {chips[1]}
           </div>
           <div
             style={{
@@ -175,7 +198,7 @@ export default function OGImage() {
               letterSpacing: "-0.01em",
             }}
           >
-            Questions + 2h audio stay free
+            {chips[2]}
           </div>
         </div>
 

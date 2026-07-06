@@ -1,8 +1,29 @@
 import type { Metadata } from "next";
 import { MarketingAttributionProvider } from "@/components/marketing/MarketingAttributionProvider";
+import { getOfferPhase, phased } from "@/lib/offer-phase";
 import "./globals.css";
 
-export const metadata: Metadata = {
+// Site-wide ISR: every statically generated marketing page re-renders at
+// most 15 minutes apart, so all copy, metadata and JSON-LD flip to
+// post-cutover messaging automatically at the 8 July cutover — no manual
+// deploy required.
+export const revalidate = 900;
+
+// generateMetadata (not a module-level `metadata` const) so the description
+// is re-evaluated on every ISR regeneration and tracks the offer phase.
+export function generateMetadata(): Metadata {
+  const phase = getOfferPhase();
+  const description = phased(
+    phase,
+    "Cover the MRCGP AKT with 90+ hours of audio revision, free-forever AKT questions, timed mocks and structured explanations. Full audio paid after 8 July 2026.",
+    "Cover the MRCGP AKT with 90+ hours of audio revision, free-forever AKT questions, timed mocks and structured explanations. Full audio access £79 for 4 months.",
+  );
+  const ogDescription = phased(
+    phase,
+    "90+ hours of MRCGP AKT audio revision with free-forever AKT questions, timed mocks and structured explanations. Full audio is paid after 8 July 2026.",
+    "90+ hours of MRCGP AKT audio revision with free-forever AKT questions, timed mocks and structured explanations. Full audio access is £79 for 4 months.",
+  );
+  return {
   metadataBase: new URL("https://medexia-akt.com"),
   alternates: {
     canonical: "https://medexia-akt.com",
@@ -12,8 +33,7 @@ export const metadata: Metadata = {
       "AKT Navigator — Audio-First MRCGP AKT Revision + Free Questions",
     template: "%s | Medexia",
   },
-  description:
-    "Cover the MRCGP AKT with 90+ hours of audio revision, free-forever AKT questions, timed mocks and structured explanations. Full audio paid after 8 July 2026.",
+  description,
   keywords: [
     "AKT",
     "MRCGP AKT",
@@ -194,8 +214,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "AKT Navigator — Audio-First MRCGP AKT Revision + Free Questions",
-    description:
-      "90+ hours of MRCGP AKT audio revision with free-forever AKT questions, timed mocks and structured explanations. Full audio is paid after 8 July 2026.",
+    description: ogDescription,
     type: "website",
     url: "https://medexia-akt.com",
     siteName: "AKT Navigator by Medexia",
@@ -205,15 +224,15 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "AKT Navigator — Audio-First MRCGP AKT Revision + Free Questions",
-    description:
-      "90+ hours of MRCGP AKT audio revision with free-forever AKT questions, timed mocks and structured explanations. Full audio is paid after 8 July 2026.",
+    description: ogDescription,
     // twitter:image auto-wired from src/app/twitter-image.tsx
   },
   robots: {
     index: true,
     follow: true,
   },
-};
+  };
+}
 
 const jsonLd = {
   "@context": "https://schema.org",

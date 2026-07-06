@@ -5,6 +5,7 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 import { AiAnswerBox } from "@/components/sections/AiAnswerBox";
+import { getOfferPhase, phased, type OfferPhase } from "@/lib/offer-phase";
 
 export const metadata: Metadata = {
   title: "Free AKT Question Practice + Audio Revision | AKT Navigator",
@@ -35,7 +36,7 @@ interface QuestionBank {
   highlight?: boolean;
 }
 
-const questionBanks: QuestionBank[] = [
+const getQuestionBanks = (phase: OfferPhase): QuestionBank[] => [
   {
     name: "AKT Navigator",
     questions: "Free",
@@ -43,7 +44,11 @@ const questionBanks: QuestionBank[] = [
     reviewTools: "Adaptive review",
     explanations: "Structured · NICE/CKS/BNF-aligned",
     mockExams: "Included",
-    price: "Free questions; £59 Early Access",
+    price: phased(
+      phase,
+      "Free questions; £59 Early Access",
+      "Free questions; £79 full audio",
+    ),
     highlight: true,
   },
   {
@@ -160,6 +165,8 @@ const comparisonFaqs = [
 ];
 
 export default function BestAktQuestionBankPage() {
+  const phase = getOfferPhase();
+  const questionBanks = getQuestionBanks(phase);
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -434,10 +441,13 @@ export default function BestAktQuestionBankPage() {
             className="mt-3 text-[12px]"
             style={{ color: "var(--fg-muted)" }}
           >
-            AKT Navigator questions remain free. Full audio Early Access is £59
-            before 8 July 2026 for access starting 8 July, then £79 for 4
-            months. Prices and feature counts are sourced from provider
-            websites, last checked {LAST_CHECKED}.
+            {phased(
+              phase,
+              "AKT Navigator questions remain free. Full audio Early Access is £59 before 8 July 2026 for access starting 8 July, then £79 for 4 months.",
+              "AKT Navigator questions remain free. Full Audio Access is £79 for 4 months.",
+            )}{" "}
+            Prices and feature counts are sourced from provider websites, last
+            checked {LAST_CHECKED}.
           </p>
 
           <section className="mt-10">
@@ -655,10 +665,12 @@ export default function BestAktQuestionBankPage() {
                 className="mt-3 text-[16px] leading-[1.7]"
                 style={{ color: "var(--fg-mid)" }}
               >
-                The question bank remains free. Full audio access is separate:
-                Early Access is £59 before 8 July 2026 for 4 months of access
-                starting 8 July, then standard Full Audio Access is £79 for 4
-                months. AKT Navigator was built by a GP trainee who wanted
+                {phased(
+                  phase,
+                  "The question bank remains free. Full audio access is separate: Early Access is £59 before 8 July 2026 for 4 months of access starting 8 July, then standard Full Audio Access is £79 for 4 months.",
+                  "The question bank remains free. Full audio access is separate: Full Audio Access is £79 for 4 months.",
+                )}{" "}
+                AKT Navigator was built by a GP trainee who wanted
                 something better than what was available, so it is designed
                 around how trainees actually study: short sessions,
                 on-the-go audio, and revision time that would otherwise be

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { isPostCutover } from "@/lib/offer-phase";
 
 function shareText(referralLink: string): string {
   return `I’ve been trying AKT Navigator for AKT revision. It has free question practice and mocks, plus audio revision for when you’re too tired to sit and read. The whole product is free until 8 July. This referral link gives £10 off Early Access, so it is £49 instead of £59 before 8 July, and I get £10 back if you upgrade through it.\n\nMy link: ${referralLink}\n\nJust to be transparent, I get referral credit only after a paid upgrade. The reward is valid for my first 2 paid referrals before 8 July.`;
@@ -34,7 +35,9 @@ function EmailIcon() {
 
 export function SharePrompt({ referralLink }: { referralLink?: string | null }) {
   const [copied, setCopied] = useState(false);
-  if (!referralLink) return null;
+  // The give-£10/get-£10 Early Access referral offer ends at the 8 July
+  // cutover, so the prompt disappears with it.
+  if (!referralLink || isPostCutover()) return null;
 
   const text = shareText(referralLink);
   const emailUrl = `mailto:?subject=${encodeURIComponent("AKT Navigator")}&body=${encodeURIComponent(text)}`;

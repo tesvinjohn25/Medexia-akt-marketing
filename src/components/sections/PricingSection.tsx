@@ -6,10 +6,11 @@ import { useMarketingAttribution } from "@/components/marketing/MarketingAttribu
 import {
   OFFER_IDS,
   canShowReferralEarlybirdOffer,
+  isPreOfferCutover,
   type CtaIntent,
   type OfferId,
 } from "@/lib/marketing/attribution";
-import { pricingFaqs } from "@/data/product-positioning";
+import { getPricingFaqs } from "@/data/product-positioning";
 
 type Plan = {
   title: string;
@@ -208,8 +209,14 @@ export function PricingSection() {
   const { ref, visible } = useScrollReveal(0.05);
   const marketing = useMarketingAttribution();
   const referralCode = marketing?.active_referral?.referral_code ?? null;
-  const isPreCutover = marketing?.offer_context.phase !== "post_2026_07_08";
+  // Before the marketing snapshot hydrates (and during SSR/static render),
+  // fall back to the date check so the phase is correct either side of the
+  // 8 July cutover instead of defaulting to pre-cutover copy.
+  const isPreCutover = marketing
+    ? marketing.offer_context.phase !== "post_2026_07_08"
+    : isPreOfferCutover();
   const hasReferralOffer = canShowReferralEarlybirdOffer(referralCode);
+  const pricingFaqs = getPricingFaqs(isPreCutover ? "pre" : "post");
   const plans = isPreCutover
     ? hasReferralOffer
       ? referralPlans()

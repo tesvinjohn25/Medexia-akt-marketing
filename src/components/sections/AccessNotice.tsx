@@ -1,20 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useMarketingAttribution } from "@/components/marketing/MarketingAttributionProvider";
 import { canShowReferralEarlybirdOffer } from "@/lib/marketing/attribution";
-
-const AUDIO_ACCESS_STANDARD_START = new Date("2026-07-08T00:00:00+01:00");
+import { isPostCutover } from "@/lib/offer-phase";
 
 export function AccessNotice() {
-  const [standardPricingStarted, setStandardPricingStarted] = useState(false);
+  // Computed at render (not in an effect) so server-rendered HTML carries
+  // the correct phase for crawlers either side of the 8 July cutover.
+  const standardPricingStarted = isPostCutover();
   const marketing = useMarketingAttribution();
   const referralCode = marketing?.active_referral?.referral_code ?? null;
   const hasReferralOffer = canShowReferralEarlybirdOffer(referralCode);
-
-  useEffect(() => {
-    setStandardPricingStarted(Date.now() >= AUDIO_ACCESS_STANDARD_START.getTime());
-  }, []);
 
   return (
     <div

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import { FAQS } from "@/data/faq";
+import { getFaqs } from "@/data/faq";
 
 function ChevronIcon({ open }: { open: boolean }) {
   return (
@@ -28,6 +28,7 @@ export function FAQ({
 }: { showHeader?: boolean } = {}) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const { ref, visible } = useScrollReveal();
+  const faqs = getFaqs();
 
   return (
     <section className="section-padding">
@@ -57,7 +58,7 @@ export function FAQ({
         )}
 
         <div className={`mx-auto ${showHeader ? "mt-10" : ""} max-w-[720px] space-y-2`}>
-          {FAQS.map((faq, i) => {
+          {faqs.map((faq, i) => {
             const isOpen = openIndex === i;
             return (
               <div

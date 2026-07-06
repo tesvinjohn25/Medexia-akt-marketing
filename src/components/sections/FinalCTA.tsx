@@ -4,13 +4,19 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { ExamCountdown } from "./ExamCountdown";
 import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 import { useMarketingAttribution } from "@/components/marketing/MarketingAttributionProvider";
-import { OFFER_IDS, canShowReferralEarlybirdOffer } from "@/lib/marketing/attribution";
+import {
+  OFFER_IDS,
+  canShowReferralEarlybirdOffer,
+  isPreOfferCutover,
+} from "@/lib/marketing/attribution";
 
 export function FinalCTA() {
   const { ref, visible } = useScrollReveal();
   const marketing = useMarketingAttribution();
   const referralCode = marketing?.active_referral?.referral_code ?? null;
-  const isPreCutover = marketing?.offer_context.phase !== "post_2026_07_08";
+  const isPreCutover = marketing
+    ? marketing.offer_context.phase !== "post_2026_07_08"
+    : isPreOfferCutover();
   const hasReferralOffer = canShowReferralEarlybirdOffer(referralCode);
 
   return (

@@ -15,6 +15,23 @@ export function SchemaJsonLd() {
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "Organization",
+        "@id": "https://medexia-akt.com/#organization",
+        name: "Medexia",
+        alternateName: ["AKT Navigator", "Medexia AKT Navigator"],
+        url: "https://medexia-akt.com",
+        description:
+          "Medexia builds AKT Navigator, an audio-first MRCGP AKT revision platform for UK GP trainees with a permanently free question bank, timed mocks and structured explanations.",
+        sameAs: ["https://www.reddit.com/r/Medexia/"],
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://medexia-akt.com/#website",
+        name: "AKT Navigator by Medexia",
+        url: "https://medexia-akt.com",
+        publisher: { "@id": "https://medexia-akt.com/#organization" },
+      },
+      {
         "@type": "SoftwareApplication",
         name: "Medexia AKT Navigator",
         applicationCategory: "EducationalApplication",

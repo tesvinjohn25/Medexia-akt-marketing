@@ -164,7 +164,15 @@ export default function AktExamFeePage() {
               AKT is normally taken in <strong>ST2 or ST3</strong>. Attempt limits
               are <strong>four</strong> or <strong>six</strong> depending on when
               you entered GP specialty training. From April 2026, RCGP staged
-              payment rules apply.
+              payment rules apply. Resident doctors in England can now reclaim
+              this fee for their first two attempts —{" "}
+              <a
+                href="/akt-exam-fee-funding"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                see AKT exam fee funding
+              </a>
+              .
             </p>
           </div>
 

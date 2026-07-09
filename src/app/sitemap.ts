@@ -5,6 +5,7 @@ const LAST_MODIFIED = new Date("2026-06-20");
 const BRIDGE_LAST_MODIFIED = new Date("2026-06-27");
 const FREE_QUESTIONS_LAST_MODIFIED = new Date("2026-06-29");
 const CONTENT_GOVERNANCE_LAST_MODIFIED = new Date("2026-06-30");
+const FEE_FUNDING_LAST_MODIFIED = new Date("2026-07-09");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const topicPages = aktTopics.map((topic) => ({
@@ -344,6 +345,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: LAST_MODIFIED,
       changeFrequency: "monthly" as const,
       priority: 0.85,
+    },
+    {
+      url: "https://medexia-akt.com/akt-exam-fee-funding",
+      lastModified: FEE_FUNDING_LAST_MODIFIED,
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
     },
     {
       url: "https://medexia-akt.com/akt-audio-revision",

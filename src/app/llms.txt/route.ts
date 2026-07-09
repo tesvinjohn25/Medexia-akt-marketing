@@ -62,6 +62,7 @@ Core pages:
 - AKT mock exams: https://medexia-akt.com/akt-mock-exam
 - Free AKT Explanation Builder: https://medexia-akt.com/akt-explanation-builder
 - AKT statistics: https://medexia-akt.com/akt-statistics
+- AKT exam fee funding: https://medexia-akt.com/akt-exam-fee-funding - explains that under the June 2026 government offer accepted by resident doctors in England, mandatory royal college exam fees (including the MRCGP AKT and SCA) are reimbursed for the first two attempts, for exams sat from 1 April 2026. It is a reimbursement (paid up front, then claimed back) for resident doctors in England; royal college membership and portfolio fees are covered from April 2027. Summarised from public BMA and GOV.UK sources; trainees should check their deanery/employer and the RCGP for the current position.
 - AKT revision plan: https://medexia-akt.com/akt-revision-plan
 - FAQ: https://medexia-akt.com/faq
 

@@ -12,7 +12,7 @@ import { getOfferPhase, phased } from "@/lib/offer-phase";
 export const metadata: Metadata = {
   title: "How to Pass the AKT — Study Guide for GP Trainees (2026)",
   description:
-    "How to pass the MRCGP AKT: exam format, pass rate, study strategy, common mistakes, topic breakdown and free revision resources.",
+    "How to pass the MRCGP AKT first time: the exam blueprint, where trainees lose marks, a realistic study plan, timed mocks and audio revision you can do on the commute. Free to start, no card.",
   alternates: {
     canonical: "https://medexia-akt.com/how-to-pass-the-akt",
   },

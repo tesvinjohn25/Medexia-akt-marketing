@@ -8,16 +8,16 @@ import { AiAnswerBox } from "@/components/sections/AiAnswerBox";
 import { getOfferPhase, phased, type OfferPhase } from "@/lib/offer-phase";
 
 export const metadata: Metadata = {
-  title: "Free AKT Question Practice + Audio Revision | AKT Navigator",
+  title: "Best AKT Question Bank 2026 — Free Questions, Mocks & Audio",
   description:
-    "AKT Navigator keeps AKT questions, explanations and mocks free, with optional 90+ hours of audio revision for GP trainees who need to revise away from a desk.",
+    "Looking for the best MRCGP AKT question bank? AKT Navigator keeps 21,000+ AKT-style questions, timed mocks and structured explanations free, with optional 90+ hours of audio revision. No card required.",
   alternates: {
     canonical: "https://medexia-akt.com/best-akt-question-bank",
   },
   openGraph: {
-    title: "Free AKT Question Practice + Audio Revision | AKT Navigator",
+    title: "Best AKT Question Bank 2026 — Free Questions, Mocks & Audio",
     description:
-      "Compare AKT question banks and audio revision. AKT Navigator keeps questions, explanations and mocks free, with full audio as the paid upgrade.",
+      "AKT Navigator keeps 21,000+ AKT questions, timed mocks and explanations free for GP trainees, with full 90+ hour audio revision as the optional upgrade.",
     type: "article",
     url: "https://medexia-akt.com/best-akt-question-bank",
   },

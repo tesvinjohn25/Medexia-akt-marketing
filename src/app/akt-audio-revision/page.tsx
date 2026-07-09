@@ -9,14 +9,14 @@ import { aktTopics } from "@/data/akt-topics";
 import { getOfferPhase, phased, type OfferPhase } from "@/lib/offer-phase";
 
 export const metadata: Metadata = {
-  title: "MRCGP AKT Audio Revision — 90+ Hours",
+  title: "MRCGP AKT Audio Revision — 90+ Hours, First 2 Free",
   description:
-    "90+ hours of MRCGP AKT audio revision for GP trainees who need to keep revising on commutes, walks and tired evenings, with free-forever questions and mocks.",
+    "90+ hours of MRCGP AKT audio revision for GP trainees who need to keep revising on commutes, walks and tired evenings. First 2 hours free, no card, plus free-forever questions and mocks.",
   alternates: {
     canonical: "https://medexia-akt.com/akt-audio-revision",
   },
   openGraph: {
-    title: "MRCGP AKT Audio Revision — 90+ Hours",
+    title: "MRCGP AKT Audio Revision — 90+ Hours, First 2 Free",
     description:
       "Audio-first MRCGP AKT revision covering all 32 RCGP topics in 90+ hours, with free-forever questions, timed mocks and structured explanations.",
     type: "website",

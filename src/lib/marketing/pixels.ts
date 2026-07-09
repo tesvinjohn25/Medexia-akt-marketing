@@ -22,6 +22,29 @@ export function maybeLoadMarketingPixels(): void {
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
   const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
   const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
+  const redditPixelId = process.env.NEXT_PUBLIC_REDDIT_PIXEL_ID;
+
+  if (redditPixelId) {
+    const w = window as typeof window & { rdt?: (...args: unknown[]) => void };
+    if (!w.rdt) {
+      const rdt = (...args: unknown[]) => {
+        const self = rdt as unknown as {
+          sendEvent?: (...args: unknown[]) => void;
+          callQueue: unknown[];
+        };
+        if (self.sendEvent) {
+          self.sendEvent(...args);
+        } else {
+          self.callQueue.push(args);
+        }
+      };
+      (rdt as unknown as { callQueue: unknown[] }).callQueue = [];
+      w.rdt = rdt;
+    }
+    appendScript("mx-reddit-pixel", "https://www.redditstatic.com/ads/pixel.js");
+    w.rdt("init", redditPixelId);
+    w.rdt("track", "PageVisit");
+  }
 
   if (metaPixelId) {
     const w = window as typeof window & { fbq?: (...args: unknown[]) => void; _fbq?: unknown };

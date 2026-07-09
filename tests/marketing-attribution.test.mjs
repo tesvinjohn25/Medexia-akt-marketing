@@ -159,6 +159,7 @@ function resetTrackingEnv() {
   process.env.NEXT_PUBLIC_META_PIXEL_ID = "";
   process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID = "";
   process.env.NEXT_PUBLIC_GOOGLE_ADS_ID = "";
+  process.env.NEXT_PUBLIC_REDDIT_PIXEL_ID = "";
   process.env.NEXT_PUBLIC_CONSENT_BANNER_ENABLED = "true";
   process.env.NEXT_PUBLIC_CONSENT_VERSION = "2026-06-23-v1";
 }
@@ -348,7 +349,7 @@ test("ref query params normalize into referral_code", () => {
 test("fresh visitor before consent captures source handoff without IDs, events, pixels, or ad click ids", () => {
   resetTrackingEnv();
   setReferralFlags(false);
-  const browser = installBrowser("https://medexia-akt.com/?utm_source=reddit&utm_campaign=audio_first_post&gclid=G123");
+  const browser = installBrowser("https://medexia-akt.com/?utm_source=reddit&utm_campaign=audio_first_post&gclid=G123&rdt_cid=R123");
 
   const snapshot = initMarketingAttribution();
   trackLandingEvent("landing_page_viewed");
@@ -366,6 +367,7 @@ test("fresh visitor before consent captures source handoff without IDs, events, 
   assert.equal(appUrl.searchParams.get("utm_source"), "reddit");
   assert.equal(appUrl.searchParams.get("first_touch_source"), "reddit");
   assert.equal(appUrl.searchParams.has("gclid"), false);
+  assert.equal(appUrl.searchParams.has("rdt_cid"), false);
 });
 
 test("document.referrer becomes fallback source when no UTM is present", () => {
@@ -879,8 +881,9 @@ test("marketing consent loads configured pixels after consent and allows ad clic
   process.env.NEXT_PUBLIC_ENABLE_MARKETING_PIXELS = "true";
   process.env.NEXT_PUBLIC_META_PIXEL_ID = "123456";
   process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID = "G-TEST";
+  process.env.NEXT_PUBLIC_REDDIT_PIXEL_ID = "t2_test";
   const browser = installBrowser(
-    "https://medexia-akt.com/?utm_source=google&utm_campaign=paid_audio&gclid=G123&fbclid=F123",
+    "https://medexia-akt.com/?utm_source=google&utm_campaign=paid_audio&gclid=G123&fbclid=F123&rdt_cid=R123",
   );
 
   acceptAllConsent("banner");
@@ -890,8 +893,10 @@ test("marketing consent loads configured pixels after consent and allows ad clic
 
   assert.ok(browser.scripts.find((script) => script.id === "mx-meta-pixel"));
   assert.ok(browser.scripts.find((script) => script.id === "mx-google-tag"));
+  assert.ok(browser.scripts.find((script) => script.id === "mx-reddit-pixel"));
   assert.equal(appUrl.searchParams.get("gclid"), "G123");
   assert.equal(appUrl.searchParams.get("fbclid"), "F123");
+  assert.equal(appUrl.searchParams.get("rdt_cid"), "R123");
 });
 
 test("withdrawing consent clears non-essential storage and stops future landing events", () => {

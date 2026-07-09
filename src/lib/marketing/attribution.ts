@@ -57,6 +57,7 @@ export interface MarketingTouch {
   fbclid: string | null;
   ttclid: string | null;
   msclkid: string | null;
+  rdt_cid: string | null;
   ref: string | null;
   referral_code: string | null;
 }
@@ -112,6 +113,7 @@ const TOUCH_PARAM_KEYS = [
   "fbclid",
   "ttclid",
   "msclkid",
+  "rdt_cid",
   "ref",
   "referral",
   "referral_code",
@@ -119,7 +121,7 @@ const TOUCH_PARAM_KEYS = [
 ] as const;
 
 const REFERRAL_PARAM_KEYS = ["ref", "referral", "referral_code", "r"] as const;
-const AD_CLICK_PARAM_KEYS = ["gclid", "gbraid", "wbraid", "fbclid", "ttclid", "msclkid"] as const;
+const AD_CLICK_PARAM_KEYS = ["gclid", "gbraid", "wbraid", "fbclid", "ttclid", "msclkid", "rdt_cid"] as const;
 const UTM_PARAM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"] as const;
 const COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 90;
 const CUSTOM_GPT_RETURN_ATTRIBUTION = {
@@ -470,6 +472,7 @@ function readCurrentTouch(referralCode: string | null, includeAdClickIds: boolea
     fbclid: includeAdClickIds ? getParam(params, "fbclid", 256) : null,
     ttclid: includeAdClickIds ? getParam(params, "ttclid", 256) : null,
     msclkid: includeAdClickIds ? getParam(params, "msclkid", 256) : null,
+    rdt_cid: includeAdClickIds ? getParam(params, "rdt_cid", 256) : null,
     ref: getParam(params, "ref", 96),
     referral_code: referralCode,
   };

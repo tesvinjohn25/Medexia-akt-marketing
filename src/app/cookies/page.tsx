@@ -65,7 +65,8 @@ export default function CookiePolicyPage() {
               <ul className="mt-3 list-disc space-y-2 pl-5">
                 <li><strong>Meta Pixel</strong>: campaign measurement and retargeting. Provider: Meta.</li>
                 <li><strong>Google tag, GA4, and Google Ads</strong>: ad measurement and retargeting. Provider: Google.</li>
-                <li><strong>gclid, gbraid, wbraid, fbclid, ttclid, msclkid</strong>: ad click IDs handled only after marketing consent.</li>
+                <li><strong>Reddit Pixel</strong>: campaign measurement and retargeting. Provider: Reddit.</li>
+                <li><strong>gclid, gbraid, wbraid, fbclid, ttclid, msclkid, rdt_cid</strong>: ad click IDs handled only after marketing consent.</li>
               </ul>
               <p className="mt-3">
                 Third-party providers control some cookie durations once their

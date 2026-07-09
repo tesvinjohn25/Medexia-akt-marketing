@@ -6,6 +6,7 @@ const BRIDGE_LAST_MODIFIED = new Date("2026-06-27");
 const FREE_QUESTIONS_LAST_MODIFIED = new Date("2026-06-29");
 const CONTENT_GOVERNANCE_LAST_MODIFIED = new Date("2026-06-30");
 const FEE_FUNDING_LAST_MODIFIED = new Date("2026-07-09");
+const EXAM_DATES_LAST_MODIFIED = new Date("2026-07-09");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const topicPages = aktTopics.map((topic) => ({
@@ -72,9 +73,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: "https://medexia-akt.com/akt-exam-dates",
-      lastModified: LAST_MODIFIED,
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
+      lastModified: EXAM_DATES_LAST_MODIFIED,
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
     },
     {
       url: "https://medexia-akt.com/akt-exam-format",

@@ -8,16 +8,16 @@ import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 import { EXAM_SITTINGS, EXAM_FORMAT } from "@/data/exam-dates";
 
 export const metadata: Metadata = {
-  title: "AKT Exam Dates 2026 — July and October",
+  title: "AKT Exam Dates 2026: Booking Deadlines & Results",
   description:
-    "RCGP AKT exam dates 2026: July 7 and October 26 sittings, MyRCGP booking deadlines, results dates, 160-question format and eligibility.",
+    "All 2026 RCGP AKT sittings in one place: MyRCGP booking deadlines, Pearson VUE windows and results dates. See the next AKT date and plan your revision — free practice, no card required.",
   alternates: {
     canonical: "https://medexia-akt.com/akt-exam-dates",
   },
   openGraph: {
-    title: "AKT Exam Dates 2026 — July and October",
+    title: "AKT Exam Dates 2026: Booking Deadlines & Results",
     description:
-      "The next RCGP AKT sittings are 7 July and 26 October 2026. Booking windows, results dates, exam format and eligibility.",
+      "Every 2026 RCGP AKT sitting with MyRCGP booking deadlines, Pearson VUE windows and results dates. Check the next AKT date and start free practice.",
     type: "website",
     url: "https://medexia-akt.com/akt-exam-dates",
   },
@@ -46,7 +46,12 @@ const faqs = [
   {
     question: "When is the next MRCGP AKT exam?",
     answer:
-      "The next published MRCGP AKT sitting is 7 July 2026. The following 2026 sitting is 26 October 2026.",
+      "The next published MRCGP AKT sitting is 26 October 2026, with a final booking deadline of 1 September 2026 and results on 25 November 2026. Confirm current dates on the RCGP key dates page before booking.",
+  },
+  {
+    question: "How many times a year can you sit the AKT?",
+    answer:
+      "The RCGP runs the MRCGP AKT four times a year, with sittings typically in January, April, July and October. Exact dates, booking deadlines and results dates are published by the RCGP for each sitting.",
   },
   {
     question: "When is the October 2026 AKT booking deadline?",
@@ -59,9 +64,9 @@ const faqs = [
       "GP trainees book and manage AKT applications through MyRCGP. Pearson centre booking is accessed from the MyRCGP exam booking area.",
   },
   {
-    question: "When are July 2026 AKT results released?",
+    question: "When are AKT results released?",
     answer:
-      "The RCGP key dates page lists July 2026 AKT results for 6 August 2026 at 17:00.",
+      "AKT results are released about four to five weeks after the sitting. July 2026 results are listed for 6 August 2026 and October 2026 results for 25 November 2026, at 17:00 on the RCGP key dates page.",
   },
 ];
 
@@ -163,8 +168,9 @@ export default function AktExamDatesPage() {
             style={{ color: "var(--fg-mid)" }}
           >
             The RCGP runs the Applied Knowledge Test four times a year, in
-            January, April, July, and October. For the rest of 2026, the
-            published UK sittings are 7 July 2026 and 26 October 2026.
+            January, April, July, and October. The next published UK sitting in
+            2026 is 26 October 2026 (the April and July 2026 sittings have
+            passed).
           </p>
 
           <div
@@ -184,11 +190,10 @@ export default function AktExamDatesPage() {
               className="mt-2 text-[14px] leading-[1.65]"
               style={{ color: "var(--fg-mid)" }}
             >
-              The next MRCGP AKT sitting is <strong>7 July 2026</strong>. The
-              following sitting is <strong>26 October 2026</strong>. October
-              booking has a final booking deadline of{" "}
-              <strong>1 September 2026</strong>, with Pearson centre booking
-              from <strong>7-16 September 2026</strong>.
+              The next MRCGP AKT sitting is <strong>26 October 2026</strong>,
+              with a final booking deadline of <strong>1 September 2026</strong>,
+              Pearson centre booking from <strong>7-16 September 2026</strong>,
+              and results on <strong>25 November 2026</strong>.
             </p>
           </div>
 
@@ -384,6 +389,14 @@ export default function AktExamDatesPage() {
               and detailed explanations aligned to NICE CKS and the RCGP
               curriculum. You can{" "}
               <a
+                href="/free-akt-questions"
+                className="font-medium transition-colors"
+                style={{ color: "var(--brand-violet-light)" }}
+              >
+                practise 21,000+ free AKT questions
+              </a>
+              ,{" "}
+              <a
                 href="/how-to-pass-the-akt"
                 className="font-medium transition-colors"
                 style={{ color: "var(--brand-violet-light)" }}
@@ -392,21 +405,12 @@ export default function AktExamDatesPage() {
               </a>{" "}
               or{" "}
               <a
-                href="/akt-exam-fee"
+                href="/akt-exam-fee-funding"
                 className="font-medium transition-colors"
                 style={{ color: "var(--brand-violet-light)" }}
               >
-                check AKT fees and eligibility
-              </a>{" "}
-              or{" "}
-              <TrackedAppLink
-                href="/join/free"
-                intent="start_free"
-                className="font-medium transition-colors"
-                style={{ color: "var(--brand-violet-light)" }}
-              >
-                start free practice
-              </TrackedAppLink>
+                check whether your exam fee is funded
+              </a>
               .
             </p>
           </div>
@@ -510,7 +514,7 @@ export default function AktExamDatesPage() {
             className="mt-6 text-[12px]"
             style={{ color: "var(--fg-muted)" }}
           >
-            Exam dates sourced from RCGP.org.uk. Last reviewed June 2026.
+            Exam dates sourced from RCGP.org.uk. Last reviewed July 2026.
           </p>
         </div>
       </section>

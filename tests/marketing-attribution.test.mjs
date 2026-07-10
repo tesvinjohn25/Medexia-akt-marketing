@@ -1051,7 +1051,10 @@ test("referral handoff is preserved without analytics consent but marketing iden
 
   assert.equal(appUrl.searchParams.get("referral_code"), "REF123");
   assert.equal(appUrl.searchParams.get("ref"), "REF123");
-  assert.equal(appUrl.searchParams.get("offer_id"), OFFER_IDS.earlybird49ReferralPre);
+  // Referral handoff (referral_code/ref) is still preserved, but post-cutover the
+  // retired £49 referral offer no longer qualifies for the no-consent offer_id
+  // exception, so without analytics consent no offer_id is handed off.
+  assert.equal(appUrl.searchParams.has("offer_id"), false);
   assert.equal(appUrl.searchParams.get("utm_source"), "whatsapp");
   assert.equal(appUrl.searchParams.get("utm_campaign"), "share");
   assert.equal(appUrl.searchParams.has("mx_vid"), false);
@@ -1066,7 +1069,9 @@ test("stored referral does not show or hand off the referral price on clean visi
   acceptAllConsent("banner");
   const referralLanding = initMarketingAttribution();
   assert.equal(referralLanding.active_referral?.referral_code, "REF123");
-  assert.equal(referralLanding.offer_context.offer_id, OFFER_IDS.earlybird49ReferralPre);
+  // Post-cutover the referral early-bird price is retired; the landing resolves
+  // to the post-cutover free tier while the referral itself stays tracked.
+  assert.equal(referralLanding.offer_context.offer_id, OFFER_IDS.freePost);
   assert.equal(JSON.parse(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.referral)).referral_code, "REF123");
 
   window.location = new URL("https://medexia-akt.com/");
@@ -1086,7 +1091,9 @@ test("stored referral does not show or hand off the referral price on clean visi
 
   assert.equal(appUrl.searchParams.has("referral_code"), false);
   assert.equal(appUrl.searchParams.has("ref"), false);
-  assert.equal(appUrl.searchParams.get("offer_id"), OFFER_IDS.earlybird59Pre);
+  // Post-cutover an explicitly-passed retired referral offer id is ignored and
+  // falls back to the post-cutover free tier.
+  assert.equal(appUrl.searchParams.get("offer_id"), OFFER_IDS.freePost);
 });
 
 test("functional-only consent persists referral continuity without analytics identifiers", () => {

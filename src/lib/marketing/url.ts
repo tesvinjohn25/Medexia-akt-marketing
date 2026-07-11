@@ -144,6 +144,7 @@ export function buildAppUrl(
     setIfPresent(url.searchParams, "fbclid", last?.fbclid ?? first?.fbclid);
     setIfPresent(url.searchParams, "ttclid", last?.ttclid ?? first?.ttclid);
     setIfPresent(url.searchParams, "msclkid", last?.msclkid ?? first?.msclkid);
+    setIfPresent(url.searchParams, "rdt_cid", first?.rdt_cid ?? last?.rdt_cid);
   }
 
   setIfPresent(url.searchParams, "intent", options.intent);

@@ -880,7 +880,7 @@ test("marketing consent loads configured pixels after consent and allows ad clic
   process.env.NEXT_PUBLIC_META_PIXEL_ID = "123456";
   process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID = "G-TEST";
   const browser = installBrowser(
-    "https://medexia-akt.com/?utm_source=google&utm_campaign=paid_audio&gclid=G123&fbclid=F123",
+    "https://medexia-akt.com/?utm_source=reddit&utm_campaign=paid_audio&gclid=G123&fbclid=F123&rdt_cid=R123",
   );
 
   acceptAllConsent("banner");
@@ -892,6 +892,7 @@ test("marketing consent loads configured pixels after consent and allows ad clic
   assert.ok(browser.scripts.find((script) => script.id === "mx-google-tag"));
   assert.equal(appUrl.searchParams.get("gclid"), "G123");
   assert.equal(appUrl.searchParams.get("fbclid"), "F123");
+  assert.equal(appUrl.searchParams.get("rdt_cid"), "R123");
 });
 
 test("withdrawing consent clears non-essential storage and stops future landing events", () => {

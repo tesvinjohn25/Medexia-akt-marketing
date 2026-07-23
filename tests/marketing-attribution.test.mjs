@@ -33,7 +33,11 @@ const {
   normalizeReferralCode,
 } = await importBundled("src/lib/marketing/attribution.ts");
 const { getPricingFaqs } = await importBundled("src/data/product-positioning.ts");
-const { buildAppFallbackUrl, buildAppUrl } = await importBundled("src/lib/marketing/url.ts");
+const {
+  buildAppFallbackUrl,
+  buildAppUrl,
+  getAppHandoffConsentSignature,
+} = await importBundled("src/lib/marketing/url.ts");
 const {
   CONSENT_STORAGE_KEY,
   acceptAllConsent,
@@ -933,6 +937,35 @@ test("marketing consent loads configured pixels after consent and allows ad clic
     ad_user_data: "denied",
     ad_personalization: "denied",
   });
+});
+
+test("app handoff consent signature changes when marketing consent is withdrawn", () => {
+  resetTrackingEnv();
+  installBrowser("https://medexia-akt.com/?utm_source=google&gclid=G123");
+
+  assert.equal(
+    getAppHandoffConsentSignature(),
+    "pending|analytics:0|marketing:0",
+  );
+
+  acceptAllConsent("banner");
+  assert.equal(
+    getAppHandoffConsentSignature(),
+    "decided|analytics:1|marketing:1",
+  );
+
+  saveConsent(
+    { functional: true, analytics: true, marketing: false },
+    "settings",
+  );
+  assert.equal(
+    getAppHandoffConsentSignature(),
+    "decided|analytics:1|marketing:0",
+  );
+  assert.equal(
+    new URL(buildAppUrl("/join/free", { intent: "start_free" })).searchParams.get("mx_mc"),
+    "0",
+  );
 });
 
 test("withdrawing consent clears non-essential storage and stops future landing events", () => {

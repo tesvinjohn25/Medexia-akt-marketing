@@ -60,6 +60,14 @@ export function getAppOrigin(): string {
   }
 }
 
+export function getAppHandoffConsentSignature(): string {
+  return [
+    hasConsentDecision() ? "decided" : "pending",
+    canUseAnalytics() ? "analytics:1" : "analytics:0",
+    canUseMarketing() ? "marketing:1" : "marketing:0",
+  ].join("|");
+}
+
 export function buildAppFallbackUrl(
   pathOrExistingUrl: string,
   options: {

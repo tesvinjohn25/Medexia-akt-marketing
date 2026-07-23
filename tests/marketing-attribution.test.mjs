@@ -33,7 +33,11 @@ const {
   normalizeReferralCode,
 } = await importBundled("src/lib/marketing/attribution.ts");
 const { getPricingFaqs } = await importBundled("src/data/product-positioning.ts");
-const { buildAppFallbackUrl, buildAppUrl } = await importBundled("src/lib/marketing/url.ts");
+const {
+  buildAppFallbackUrl,
+  buildAppUrl,
+  getAppHandoffConsentSignature,
+} = await importBundled("src/lib/marketing/url.ts");
 const {
   CONSENT_STORAGE_KEY,
   acceptAllConsent,
@@ -368,6 +372,8 @@ test("fresh visitor before consent captures source handoff without IDs, events, 
   assert.equal(appUrl.searchParams.get("first_touch_source"), "reddit");
   assert.equal(appUrl.searchParams.has("gclid"), false);
   assert.equal(appUrl.searchParams.has("rdt_cid"), false);
+  assert.equal(appUrl.searchParams.has("mx_mc"), false);
+  assert.equal(appUrl.searchParams.has("mx_ac"), false);
 });
 
 test("document.referrer becomes fallback source when no UTM is present", () => {
@@ -440,6 +446,7 @@ test("reject all stores the decision and leaves analytics and pixels disabled", 
   initMarketingAttribution();
   trackLandingEvent("landing_page_viewed");
   maybeLoadMarketingPixels();
+  const appUrl = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
 
   assert.equal(consent.analytics, false);
   assert.equal(consent.marketing, false);
@@ -448,6 +455,8 @@ test("reject all stores the decision and leaves analytics and pixels disabled", 
   assert.equal(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.firstTouch), null);
   assert.equal(browser.sendBeaconCalls.length, 0);
   assert.equal(browser.scripts.length, 0);
+  assert.equal(appUrl.searchParams.get("mx_mc"), "0");
+  assert.equal(appUrl.searchParams.get("mx_ac"), "0");
 });
 
 test("consent_updated without analytics consent sends only a minimal consent audit payload", async () => {
@@ -512,6 +521,8 @@ test("analytics consent creates first-party attribution without loading pixels o
   assert.equal(appUrl.searchParams.get("utm_source"), "reddit");
   assert.ok(appUrl.searchParams.get("mx_vid"));
   assert.equal(appUrl.searchParams.has("gclid"), false);
+  assert.equal(appUrl.searchParams.get("mx_mc"), "0");
+  assert.equal(appUrl.searchParams.get("mx_ac"), "1");
 });
 
 test("/free route creates custom GPT attribution without visible UTM parameters", () => {
@@ -876,11 +887,26 @@ test("new free AKT questions event names pass through the generic event pipeline
   assert.equal(fetchPayloads[0].properties.placement, "hero");
 });
 
+test("disabled pixel switch does not update an unrelated pre-existing Google tag", () => {
+  resetTrackingEnv();
+  process.env.NEXT_PUBLIC_GOOGLE_ADS_ID = "AW-18343035898";
+  const browser = installBrowser("https://medexia-akt.com/");
+  const calls = [];
+  window.gtag = (...args) => calls.push(args);
+
+  acceptAllConsent("banner");
+  maybeLoadMarketingPixels();
+
+  assert.deepEqual(calls, []);
+  assert.equal(browser.scripts.length, 0);
+});
+
 test("marketing consent loads configured pixels after consent and allows ad click id handoff", () => {
   resetTrackingEnv();
   process.env.NEXT_PUBLIC_ENABLE_MARKETING_PIXELS = "true";
   process.env.NEXT_PUBLIC_META_PIXEL_ID = "123456";
   process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID = "G-TEST";
+  process.env.NEXT_PUBLIC_GOOGLE_ADS_ID = "AW-18343035898";
   process.env.NEXT_PUBLIC_REDDIT_PIXEL_ID = "t2_test";
   const browser = installBrowser(
     "https://medexia-akt.com/?utm_source=google&utm_campaign=paid_audio&gclid=G123&fbclid=F123&rdt_cid=R123",
@@ -897,6 +923,49 @@ test("marketing consent loads configured pixels after consent and allows ad clic
   assert.equal(appUrl.searchParams.get("gclid"), "G123");
   assert.equal(appUrl.searchParams.get("fbclid"), "F123");
   assert.equal(appUrl.searchParams.get("rdt_cid"), "R123");
+  assert.equal(appUrl.searchParams.get("mx_mc"), "1");
+  assert.equal(appUrl.searchParams.get("mx_ac"), "1");
+
+  rejectAllConsent("footer");
+  maybeLoadMarketingPixels();
+  const consentUpdates = window.dataLayer.filter(
+    (entry) => Array.isArray(entry) && entry[0] === "consent" && entry[1] === "update",
+  );
+  assert.deepEqual(consentUpdates.at(-1)[2], {
+    analytics_storage: "denied",
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+  });
+});
+
+test("app handoff consent signature changes when marketing consent is withdrawn", () => {
+  resetTrackingEnv();
+  installBrowser("https://medexia-akt.com/?utm_source=google&gclid=G123");
+
+  assert.equal(
+    getAppHandoffConsentSignature(),
+    "pending|analytics:0|marketing:0",
+  );
+
+  acceptAllConsent("banner");
+  assert.equal(
+    getAppHandoffConsentSignature(),
+    "decided|analytics:1|marketing:1",
+  );
+
+  saveConsent(
+    { functional: true, analytics: true, marketing: false },
+    "settings",
+  );
+  assert.equal(
+    getAppHandoffConsentSignature(),
+    "decided|analytics:1|marketing:0",
+  );
+  assert.equal(
+    new URL(buildAppUrl("/join/free", { intent: "start_free" })).searchParams.get("mx_mc"),
+    "0",
+  );
 });
 
 test("withdrawing consent clears non-essential storage and stops future landing events", () => {

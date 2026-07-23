@@ -8,7 +8,11 @@ import {
   type AnchorHTMLAttributes,
   type MouseEvent,
 } from "react";
-import { buildAppFallbackUrl, buildAppUrl } from "@/lib/marketing/url";
+import {
+  buildAppFallbackUrl,
+  buildAppUrl,
+  getAppHandoffConsentSignature,
+} from "@/lib/marketing/url";
 import { flushLandingEvent, trackLandingEvent } from "@/lib/marketing/events";
 import {
   OFFER_IDS,
@@ -35,9 +39,11 @@ export function useTrackedAppUrl(
   } = {},
 ): string {
   const snapshot = useMarketingAttribution();
+  const consentSignature = getAppHandoffConsentSignature();
   const signature = useMemo(
     () =>
       [
+        consentSignature,
         snapshot?.mx_visitor_id,
         snapshot?.mx_session_id,
         snapshot?.active_referral?.referral_code,
@@ -55,7 +61,7 @@ export function useTrackedAppUrl(
         options.intent,
         options.offerId,
       ].join("|"),
-    [snapshot, options.intent, options.offerId],
+    [consentSignature, snapshot, options.intent, options.offerId],
   );
   const [trackedHref, setTrackedHref] = useState(() =>
     buildAppFallbackUrl(href, { intent: options.intent, offerId: options.offerId }),

@@ -6,7 +6,11 @@ import {
   type CtaIntent,
   type OfferId,
 } from "./attribution";
-import { canUseAnalytics, canUseMarketing } from "../consent/consent";
+import {
+  canUseAnalytics,
+  canUseMarketing,
+  hasConsentDecision,
+} from "../consent/consent";
 
 const DEFAULT_APP_BASE_URL = "https://app.medexia-akt.com";
 const MARKETING_SITE_ORIGIN = "https://medexia-akt.com";
@@ -54,6 +58,14 @@ export function getAppOrigin(): string {
   } catch {
     return DEFAULT_APP_BASE_URL;
   }
+}
+
+export function getAppHandoffConsentSignature(): string {
+  return [
+    hasConsentDecision() ? "decided" : "pending",
+    canUseAnalytics() ? "analytics:1" : "analytics:0",
+    canUseMarketing() ? "marketing:1" : "marketing:0",
+  ].join("|");
 }
 
 export function buildAppFallbackUrl(
@@ -107,6 +119,16 @@ export function buildAppUrl(
             ? snapshot.offer_context.offer_id
             : null,
       });
+
+  // The app lives on a separate origin and deliberately does not infer
+  // consent from the presence of UTM parameters. Carry the explicit landing
+  // decision on every CTA handoff so the app can either initialise Google Ads
+  // measurement or actively clear a previously granted state. Before a user
+  // decides, neither marker is sent and the app remains measurement-off.
+  if (hasConsentDecision()) {
+    url.searchParams.set("mx_mc", canUseMarketing() ? "1" : "0");
+    url.searchParams.set("mx_ac", canUseAnalytics() ? "1" : "0");
+  }
 
   setIfPresent(url.searchParams, "utm_source", handoffTouch?.source);
   setIfPresent(url.searchParams, "utm_medium", handoffTouch?.medium);

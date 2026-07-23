@@ -12,6 +12,11 @@ const nextConfig = {
     // is present in the build when the host env var is not set.
     NEXT_PUBLIC_REDDIT_PIXEL_ID:
       process.env.NEXT_PUBLIC_REDDIT_PIXEL_ID || "a2_jblgfmfklr4a",
+    // Google Ads ids are public tag identifiers, not secrets. Keeping the
+    // production id as a committed fallback prevents a missing host variable
+    // from silently disabling conversion measurement in a future build.
+    NEXT_PUBLIC_GOOGLE_ADS_ID:
+      process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || "AW-18343035898",
   },
 };
 

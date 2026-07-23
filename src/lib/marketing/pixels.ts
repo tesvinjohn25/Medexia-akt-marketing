@@ -1,6 +1,7 @@
 import { canUseAnalytics, canUseMarketing } from "../consent/consent";
 
 let loaded = false;
+let googleManaged = false;
 
 function envEnabled(): boolean {
   return process.env.NEXT_PUBLIC_ENABLE_MARKETING_PIXELS === "true";
@@ -16,13 +17,31 @@ function appendScript(id: string, src: string): void {
 }
 
 export function maybeLoadMarketingPixels(): void {
-  if (loaded || typeof window === "undefined" || typeof document === "undefined") return;
-  if (!envEnabled() || !canUseMarketing()) return;
+  if (typeof window === "undefined" || typeof document === "undefined") return;
 
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
   const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
   const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
   const redditPixelId = process.env.NEXT_PUBLIC_REDDIT_PIXEL_ID;
+  const googleId = gaMeasurementId || googleAdsId;
+  const existingWindow = window as typeof window & {
+    dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
+  };
+
+  // Consent can be withdrawn after the tag has loaded. Google Consent Mode
+  // must receive that denial even though we cannot unload an already-executed
+  // script. This runs before the `loaded` guard for exactly that reason.
+  if (envEnabled() && googleManaged && googleId && existingWindow.gtag) {
+    existingWindow.gtag("consent", "update", {
+      analytics_storage: canUseAnalytics() ? "granted" : "denied",
+      ad_storage: canUseMarketing() ? "granted" : "denied",
+      ad_user_data: canUseMarketing() ? "granted" : "denied",
+      ad_personalization: canUseMarketing() ? "granted" : "denied",
+    });
+  }
+
+  if (loaded || !envEnabled() || !canUseMarketing()) return;
 
   if (redditPixelId) {
     const w = window as typeof window & { rdt?: (...args: unknown[]) => void };
@@ -63,7 +82,6 @@ export function maybeLoadMarketingPixels(): void {
     w.fbq("track", "PageView");
   }
 
-  const googleId = gaMeasurementId || googleAdsId;
   if (googleId) {
     const w = window as typeof window & {
       dataLayer?: unknown[];
@@ -81,14 +99,15 @@ export function maybeLoadMarketingPixels(): void {
     });
     w.gtag("consent", "update", {
       analytics_storage: canUseAnalytics() ? "granted" : "denied",
-      ad_storage: "granted",
-      ad_user_data: "granted",
-      ad_personalization: "granted",
+      ad_storage: canUseMarketing() ? "granted" : "denied",
+      ad_user_data: canUseMarketing() ? "granted" : "denied",
+      ad_personalization: canUseMarketing() ? "granted" : "denied",
     });
     appendScript("mx-google-tag", `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(googleId)}`);
     w.gtag("js", new Date());
     if (gaMeasurementId) w.gtag("config", gaMeasurementId);
     if (googleAdsId) w.gtag("config", googleAdsId);
+    googleManaged = true;
   }
 
   loaded = true;

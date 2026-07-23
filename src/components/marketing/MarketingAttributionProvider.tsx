@@ -12,8 +12,6 @@ import { Analytics } from "@vercel/analytics/next";
 import { ConsentBanner } from "@/components/consent/ConsentBanner";
 import {
   canUseAnalytics,
-  canUseFunctional,
-  canUseMarketing,
   CONSENT_CHANGED_EVENT,
   getStoredConsent,
   type ConsentRecord,
@@ -46,7 +44,6 @@ export function MarketingAttributionProvider({ children }: { children: ReactNode
 
   useEffect(() => {
     const analyticsAllowed = canUseAnalytics();
-    const marketingAllowed = canUseMarketing();
     const next = initMarketingAttribution();
     setSnapshot(next);
 
@@ -63,9 +60,10 @@ export function MarketingAttributionProvider({ children }: { children: ReactNode
       }
     }
 
-    if (marketingAllowed) {
-      maybeLoadMarketingPixels();
-    }
+    // Always call on a consent change. The loader itself still refuses to add
+    // scripts before marketing consent, while an already-loaded Google tag can
+    // receive a later denied update when consent is withdrawn.
+    maybeLoadMarketingPixels();
   }, [consent?.updatedAt]);
 
   const value = useMemo(() => snapshot, [snapshot]);

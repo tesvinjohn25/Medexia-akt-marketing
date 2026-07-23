@@ -8,7 +8,7 @@ Add names only; do not commit values.
 | `NEXT_PUBLIC_ENABLE_MARKETING_PIXELS` | Master switch for third-party pixels | `false` |
 | `NEXT_PUBLIC_META_PIXEL_ID` | Meta Pixel id | empty |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | GA4 measurement id | empty |
-| `NEXT_PUBLIC_GOOGLE_ADS_ID` | Google Ads tag id | empty |
+| `NEXT_PUBLIC_GOOGLE_ADS_ID` | Google Ads tag id (public, not a secret) | `AW-18343035898` |
 | `NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT` | First-party event endpoint | `https://app.medexia-akt.com/api/marketing/events` |
 | `NEXT_PUBLIC_REFERRAL_SPRINT_ENABLED` | Allows referral-sprint public copy when a referral code is present | `true` |
 | `NEXT_PUBLIC_REFERRAL_FRIEND_DISCOUNT_ENABLED` | Allows public `£49` friend-side referral price copy | `true` |

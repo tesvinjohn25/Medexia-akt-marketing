@@ -8,6 +8,7 @@ This landing repo records first-party marketing events only after analytics cons
 | `landing_offer_viewed` | Offer context is calculated on page load | `event_id`, `mx_visitor_id`, `mx_session_id`, `offer_id`, `page_path` | `phase`, `referral_code` | First-party only |
 | `referral_landing_viewed` | A referral code is present or already persisted | `event_id`, `mx_visitor_id`, `mx_session_id`, `referral_code`, `offer_id` | `page_path` | First-party only |
 | `cta_clicked_start_free` | Visitor clicks a Start Free app CTA | `event_id`, `mx_visitor_id`, `mx_session_id`, `intent`, `href`, `offer_id` | attribution snapshot | First-party only |
+| `cta_clicked_start_audio` | Visitor clicks the free audio-first app CTA | `event_id`, `mx_visitor_id`, `mx_session_id`, `intent`, `href`, `offer_id` | attribution snapshot | First-party only |
 | `cta_clicked_earlybird` | Visitor clicks a non-referral Early Access CTA | `event_id`, `mx_visitor_id`, `mx_session_id`, `intent`, `href`, `offer_id` | attribution snapshot | First-party only |
 | `cta_clicked_referral_earlybird` | Visitor clicks a referral Early Access CTA | `event_id`, `mx_visitor_id`, `mx_session_id`, `intent`, `href`, `offer_id`, `referral_code` | attribution snapshot | First-party only |
 | `cta_clicked_login` | Visitor clicks Log in | `event_id`, `mx_visitor_id`, `mx_session_id`, `intent`, `href` | attribution snapshot | First-party only |

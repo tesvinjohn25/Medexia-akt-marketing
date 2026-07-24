@@ -27,6 +27,7 @@ export type OfferId = (typeof OFFER_IDS)[keyof typeof OFFER_IDS];
 
 export type CtaIntent =
   | "start_free"
+  | "start_audio"
   | "earlybird_upgrade"
   | "referral_earlybird"
   | "demo"

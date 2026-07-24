@@ -23,6 +23,7 @@ import { useMarketingAttribution } from "./MarketingAttributionProvider";
 
 const CTA_EVENT_BY_INTENT: Record<CtaIntent, string> = {
   start_free: "cta_clicked_start_free",
+  start_audio: "cta_clicked_start_audio",
   earlybird_upgrade: "cta_clicked_earlybird",
   referral_earlybird: "cta_clicked_referral_earlybird",
   demo: "app_handoff_started",
@@ -100,14 +101,20 @@ export function TrackedAppLink({
     onClick?.(event);
     if (event.defaultPrevented) return;
 
+    // Rebuild synchronously from the latest consent and attribution state.
+    // This closes the short post-hydration window before useEffect has replaced
+    // the SSR-safe fallback href, including for modified/new-tab clicks.
+    const navigationHref = buildAppUrl(href, { intent, offerId });
+    event.currentTarget.href = navigationHref;
+
     const ctaEventName = CTA_EVENT_BY_INTENT[intent];
     const ctaProperties = {
-      href: trackedHref,
+      href: navigationHref,
       intent,
       offer_id: offerId ?? null,
     };
     const handoffProperties = {
-      href: trackedHref,
+      href: navigationHref,
       intent,
       offer_id: offerId ?? (intent === "referral_earlybird" ? OFFER_IDS.earlybird49ReferralPre : null),
     };
@@ -157,7 +164,7 @@ export function TrackedAppLink({
     });
 
     void Promise.race([Promise.allSettled(flushes), timeout]).finally(() => {
-      window.location.assign(trackedHref);
+      window.location.assign(navigationHref);
     });
   };
 

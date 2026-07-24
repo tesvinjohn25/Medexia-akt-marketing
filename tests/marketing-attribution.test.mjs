@@ -586,6 +586,12 @@ test("free AKT questions page exists with tracked free CTA and required SEO copy
 
   assert.match(route, /FreeAktQuestionsLanding sourceSurface="free_questions_landing"/);
   assert.match(component, /<TrackedAppLink[\s\S]*href="\/join\/free"[\s\S]*intent="start_free"/);
+  assert.match(component, /className="hero-enter order-1[^"]*md:order-1/);
+  assert.match(component, /className="hero-enter order-2[^"]*md:order-2/);
+  assert.match(
+    component,
+    /<h1[\s\S]*Free AKT questions,[\s\S]*mocks and explanations\.[\s\S]*<\/h1>/,
+  );
   assert.match(component, /free_akt_questions_start_free_clicked/);
   assert.match(component, /free_akt_questions_explanation_builder_clicked/);
   assert.match(component, /free_akt_questions_sample_viewed/);
@@ -990,6 +996,10 @@ test("withdrawing consent clears non-essential storage and stops future landing 
 test("consent UX exposes equal first-layer choices and granular off-by-default settings", () => {
   const banner = fs.readFileSync("src/components/consent/ConsentBanner.tsx", "utf8");
   const modal = fs.readFileSync("src/components/consent/CookieSettingsModal.tsx", "utf8");
+  const provider = fs.readFileSync(
+    "src/components/marketing/MarketingAttributionProvider.tsx",
+    "utf8",
+  );
 
   assert.match(banner, /Accept all/);
   assert.match(banner, /Reject all/);
@@ -1002,6 +1012,11 @@ test("consent UX exposes equal first-layer choices and granular off-by-default s
   assert.ok(modal.includes("functional: current?.functional ?? false"));
   assert.ok(modal.includes("analytics: current?.analytics ?? false"));
   assert.ok(modal.includes("marketing: current?.marketing ?? false"));
+  assert.match(provider, /\{consent\?\.analytics \? <Analytics \/> : null\}/);
+  assert.doesNotMatch(
+    provider,
+    /\{canUseAnalytics\(\) \? <Analytics \/> : null\}/,
+  );
 });
 
 test("homepage early access CTAs use tracked app links and earlybird intents", () => {
@@ -1016,6 +1031,60 @@ test("homepage early access CTAs use tracked app links and earlybird intents", (
   }
 
   assert.doesNotMatch(hero, /href="\/demo\/audiobook\/player"[\s\S]{0,400}Try free AKT audio/);
+});
+
+test("homepage post-cutover hero hands audio traffic to the free audio-first flow", () => {
+  const hero = fs.readFileSync("src/components/sections/HeroSection.tsx", "utf8");
+  const trackedLink = fs.readFileSync(
+    "src/components/marketing/TrackedAppLink.tsx",
+    "utf8",
+  );
+
+  assert.match(
+    hero,
+    /<TrackedAppLink[\s\S]*href="\/join\/audio"[\s\S]*intent="start_audio"/,
+  );
+  assert.match(hero, /Try 2 hours of AKT audio free/);
+  assert.match(hero, /href="\/free-akt-questions"[\s\S]*Explore free questions/);
+  assert.doesNotMatch(hero, /href="\/join\/full-access"[\s\S]{0,400}Upgrade to full audio/);
+  assert.match(hero, /className="hero-enter order-2[^"]*md:order-2/);
+  assert.match(hero, /className=\{`order-1[^`]*md:order-1/);
+  assert.match(trackedLink, /start_audio: "cta_clicked_start_audio"/);
+  assert.match(
+    trackedLink,
+    /const navigationHref = buildAppUrl\(href, \{ intent, offerId \}\);/,
+  );
+  assert.match(trackedLink, /event\.currentTarget\.href = navigationHref;/);
+  assert.match(trackedLink, /window\.location\.assign\(navigationHref\)/);
+});
+
+test("audio-first app handoff preserves consented Google Ads attribution", () => {
+  resetTrackingEnv();
+  installBrowser(
+    "https://medexia-akt.com/?utm_source=google&utm_medium=cpc&utm_campaign=akt_search_uk_oct26&utm_content=core_revision&utm_term=akt%20revision&gclid=G123",
+  );
+
+  acceptAllConsent("banner");
+  initMarketingAttribution();
+  const appUrl = new URL(
+    buildAppUrl("/join/audio", {
+      intent: "start_audio",
+      offerId: OFFER_IDS.freePost,
+    }),
+  );
+
+  assert.equal(appUrl.origin, "https://app.medexia-akt.com");
+  assert.equal(appUrl.pathname, "/join/audio");
+  assert.equal(appUrl.searchParams.get("intent"), "start_audio");
+  assert.equal(appUrl.searchParams.get("offer_id"), OFFER_IDS.freePost);
+  assert.equal(appUrl.searchParams.get("utm_source"), "google");
+  assert.equal(appUrl.searchParams.get("utm_medium"), "cpc");
+  assert.equal(appUrl.searchParams.get("utm_campaign"), "akt_search_uk_oct26");
+  assert.equal(appUrl.searchParams.get("utm_content"), "core_revision");
+  assert.equal(appUrl.searchParams.get("utm_term"), "akt revision");
+  assert.equal(appUrl.searchParams.get("gclid"), "G123");
+  assert.equal(appUrl.searchParams.get("mx_mc"), "1");
+  assert.equal(appUrl.searchParams.get("mx_ac"), "1");
 });
 
 test("homepage pricing FAQs are included in shared JSON-LD source", () => {

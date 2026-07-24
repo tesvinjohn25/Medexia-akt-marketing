@@ -47,11 +47,11 @@ export function HeroSection() {
         }}
       >
         <div className="flex flex-col md:flex-row md:items-center md:gap-12 lg:gap-16">
-          {/* Video — ABOVE text on mobile (first thing users see), right on desktop.
-              Books dissolving into headphones = notes → audio transformation.
-              Wrapped in HeroVideo (client) for loop-reliability handlers. */}
+          {/* Video follows the CTA on mobile so the first action stays above
+              the fold; it remains on the right on desktop. Books dissolving
+              into headphones = notes → audio transformation. */}
           <div
-            className="hero-enter order-1 md:order-2 md:flex-1 flex justify-center mb-6 md:mb-0"
+            className="hero-enter order-2 mt-7 flex justify-center md:order-2 md:mt-0 md:flex-1"
             style={{ "--he": 0 } as React.CSSProperties}
           >
             <div className="parallax-drift relative w-full max-w-[520px] md:max-w-[560px] lg:max-w-[620px]">
@@ -70,10 +70,10 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Text — BELOW video on mobile, left on desktop */}
+          {/* Text and the free audio CTA lead on mobile and desktop. */}
           <div
             ref={ref}
-            className={`order-2 md:order-1 md:flex-1 max-w-[580px] reveal-group ${
+            className={`order-1 max-w-[580px] reveal-group md:order-1 md:flex-1 ${
               visible ? "is-visible" : ""
             }`}
           >
@@ -181,50 +181,34 @@ export function HeroSection() {
               </span>
             </h1>
 
-            {/* Two-paragraph subhead: dream outcome, mechanism, offer. */}
+            {/* Short, outcome-first subhead keeps the free audio CTA above the
+                mobile fold while preserving the key trust terms. */}
             <p
               className="r-up mt-4 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
               style={{ color: "rgba(232,236,255,.78)", "--i": 6.5 } as React.CSSProperties}
             >
-              Feel ready for the AKT even when life leaves no desk time. AKT
-              Navigator turns commutes, walks, school runs and exhausted evenings
-              into MRCGP AKT revision, with free-forever questions, timed mocks
-              and structured explanations alongside audio.
-            </p>
-            <p
-              className="r-up mt-3 text-[15px] md:text-[17px] leading-[1.55] max-w-[480px]"
-              style={{ color: "rgba(232,236,255,.6)", "--i": 7 } as React.CSSProperties}
-            >
               {isPreCutover
-                ? "Until 8 July, the whole product is free to try. After that, questions and mocks stay free, your first 2 hours of AKT audio stay free, and full audio is the paid upgrade."
-                : "Questions and mocks stay free. Your first 2 hours of AKT audio are free; full 4-month audio access is the paid upgrade."}
+                ? "Turn commutes, walks and tired evenings into AKT revision. The whole product is free to try until 8 July."
+                : "Turn commutes, walks and tired evenings into AKT revision. Try 2 hours of audio free, with no card. Questions and mocks stay free."}
             </p>
-
-            {/* Countdown */}
-            <div
-              className="r-up mt-5 max-w-[340px]"
-              style={{ "--i": 7.8 } as React.CSSProperties}
-            >
-              <ExamCountdown variant="hero" />
-            </div>
 
             {/* CTA */}
             <div
-              className="r-scale mt-6 flex flex-wrap gap-3"
-              style={{ "--i": 8.4 } as React.CSSProperties}
+              className="r-scale mt-5 flex flex-wrap gap-3"
+              style={{ "--i": 7.4 } as React.CSSProperties}
             >
               <TrackedAppLink
                 data-hero-cta
                 className="btn-primary inline-block text-[16px]"
-                href="/join/free"
-                intent="start_free"
+                href="/join/audio"
+                intent="start_audio"
                 offerId={
                   isPreCutover
                     ? OFFER_IDS.freePre
                     : OFFER_IDS.freePost
                 }
               >
-                Start free practice &rarr;
+                Try 2 hours of AKT audio free &rarr;
               </TrackedAppLink>
               {isPreCutover ? (
                 <TrackedAppLink
@@ -245,20 +229,27 @@ export function HeroSection() {
                   Lock in {hasReferralOffer ? "£49" : "£59"} Early Access
                 </TrackedAppLink>
               ) : (
-                <TrackedAppLink
+                <a
                   className="inline-flex items-center justify-center rounded-[14px] px-5 py-3 text-[14px] font-semibold transition-colors hover:bg-white/[.08]"
-                  href="/join/full-access"
-                  intent="checkout"
-                  offerId={OFFER_IDS.standard79Post}
+                  href="/free-akt-questions"
                   style={{
                     color: "var(--fg-high)",
                     background: "rgba(255,255,255,.045)",
                     border: "1px solid rgba(255,255,255,.10)",
                   }}
                 >
-                  Upgrade to full audio
-                </TrackedAppLink>
+                  Explore free questions
+                </a>
               )}
+            </div>
+
+            {/* Exam timing supports the decision but should not displace the
+                primary experience CTA below the fold on small screens. */}
+            <div
+              className="r-up mt-5 max-w-[340px]"
+              style={{ "--i": 7.8 } as React.CSSProperties}
+            >
+              <ExamCountdown variant="hero" />
             </div>
           </div>
         </div>

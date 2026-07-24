@@ -446,7 +446,7 @@ export function FreeAktQuestionsLanding({
           }}
         >
           <div
-            className="hero-enter order-2 max-w-[640px] md:order-1"
+            className="hero-enter order-1 max-w-[640px] md:order-1"
             style={{ "--he": 1 } as CSSProperties}
           >
             <div className="flex flex-wrap items-center gap-2">
@@ -469,20 +469,12 @@ export function FreeAktQuestionsLanding({
             </h1>
 
             <p
-              className="mt-5 max-w-[560px] text-[16px] leading-[1.65] md:text-[18px]"
+              className="mt-5 max-w-[560px] text-[16px] leading-[1.6] md:text-[18px]"
               style={{ color: "rgba(232,236,255,.76)" }}
             >
               Practise MRCGP AKT-style SBAs with structured teaching
-              explanations, timed mocks and basic progress tracking. No card
-              required.
-            </p>
-
-            <p
-              className="mt-3 max-w-[540px] text-[13px] leading-[1.6] md:text-[14px]"
-              style={{ color: "rgba(232,236,255,.54)" }}
-            >
-              Questions, mocks and explanations stay free. Full audio revision
-              is the optional paid upgrade.
+              explanations and timed mocks. Questions, mocks and explanations
+              stay free; no card required.
             </p>
 
             <div className="mt-7 flex flex-wrap gap-3">
@@ -502,7 +494,7 @@ export function FreeAktQuestionsLanding({
           </div>
 
           <div
-            className="hero-enter order-1 -mx-1 md:order-2 md:mx-0"
+            className="hero-enter order-2 -mx-1 md:order-2 md:mx-0"
             style={{ "--he": 0 } as CSSProperties}
           >
             <FreeQuestionsHeroLoop />

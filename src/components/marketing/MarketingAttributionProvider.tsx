@@ -72,7 +72,7 @@ export function MarketingAttributionProvider({ children }: { children: ReactNode
     <MarketingContext.Provider value={value}>
       {children}
       <ConsentBanner />
-      {canUseAnalytics() ? <Analytics /> : null}
+      {consent?.analytics ? <Analytics /> : null}
     </MarketingContext.Provider>
   );
 }

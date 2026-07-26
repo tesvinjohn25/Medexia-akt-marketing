@@ -1,7 +1,7 @@
 import {
   attributionForEvent,
+  getInternalTestToken,
   getMarketingSnapshot,
-  isInternalTestTraffic,
   sanitizedCurrentPagePath,
 } from "./attribution";
 import { canUseAnalytics, CONSENT_VERSION } from "../consent/consent";
@@ -115,13 +115,17 @@ function buildLandingEventPayload(eventName: string, properties: LandingEventPro
   if (!analyticsAllowed) return null;
 
   const snapshot = getMarketingSnapshot();
-  const internalTestTraffic = isInternalTestTraffic();
+  const internalTestToken = getInternalTestToken();
+  const internalTestTraffic = Boolean(internalTestToken);
   return {
     event_id: randomEventId(),
     event_name: eventName,
     event_timestamp: new Date().toISOString(),
     page_path: pagePath(),
     is_test: internalTestTraffic,
+    ...(internalTestToken
+      ? { internal_test_token: internalTestToken }
+      : {}),
     traffic_type: internalTestTraffic ? "internal" : "external",
     user_agent: userAgent(),
     offer_id: snapshot.offer_context.offer_id,

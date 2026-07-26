@@ -9,6 +9,7 @@ import {
   type MouseEvent,
 } from "react";
 import {
+  appHandoffEventHref,
   buildAppFallbackUrl,
   buildAppUrl,
   getAppHandoffConsentSignature,
@@ -105,24 +106,25 @@ export function TrackedAppLink({
     // This closes the short post-hydration window before useEffect has replaced
     // the SSR-safe fallback href, including for modified/new-tab clicks.
     const navigationHref = buildAppUrl(href, { intent, offerId });
+    const eventHref = appHandoffEventHref(navigationHref);
     event.currentTarget.href = navigationHref;
 
     const ctaEventName = CTA_EVENT_BY_INTENT[intent];
     const ctaProperties = {
-      href: navigationHref,
+      href: eventHref,
       intent,
       offer_id: offerId ?? null,
     };
     const handoffProperties = {
-      href: navigationHref,
+      href: eventHref,
       intent,
       offer_id: offerId ?? (intent === "referral_earlybird" ? OFFER_IDS.earlybird49ReferralPre : null),
     };
     const extraEvents = extraTrackingEvents.map((trackingEvent) => ({
       eventName: trackingEvent.eventName,
       properties: {
-        ...ctaProperties,
         ...trackingEvent.properties,
+        ...ctaProperties,
       },
     }));
 

@@ -47,6 +47,7 @@ const {
 } = await importBundled("src/lib/marketing/attribution.ts");
 const { getPricingFaqs } = await importBundled("src/data/product-positioning.ts");
 const {
+  appHandoffEventHref,
   buildAppFallbackUrl,
   buildAppUrl,
   getAppHandoffConsentSignature,
@@ -285,6 +286,18 @@ test("flushed CTA events use fetch keepalive so navigation does not abort them",
     "source",
     "term",
   ].sort());
+});
+
+test("CTA event href keeps only the app destination and never persists handoff identifiers", () => {
+  resetTrackingEnv();
+  installBrowser("https://medexia-akt.com/");
+
+  const eventHref = appHandoffEventHref(
+    "https://app.medexia-akt.com/join/audio?mx_test=v1.1785071300.signature&utm_source=google&gclid=TEST_GCLID#chapter",
+  );
+
+  assert.equal(eventHref, "https://app.medexia-akt.com/join/audio");
+  assert.doesNotMatch(eventHref, /mx_test|utm_source|gclid|1785071300|signature/);
 });
 
 test("app url ignores a same-origin landing base to avoid CTA 404s", () => {

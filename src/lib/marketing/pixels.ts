@@ -1,4 +1,5 @@
 import { canUseAnalytics, canUseMarketing } from "../consent/consent";
+import { isInternalTestTraffic } from "./attribution";
 
 let loaded = false;
 let googleManaged = false;
@@ -19,6 +20,7 @@ function appendScript(id: string, src: string): void {
 export function maybeLoadMarketingPixels(): void {
   if (typeof window === "undefined" || typeof document === "undefined") return;
 
+  const internalTestTraffic = isInternalTestTraffic();
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
   const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
   const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
@@ -34,14 +36,14 @@ export function maybeLoadMarketingPixels(): void {
   // script. This runs before the `loaded` guard for exactly that reason.
   if (envEnabled() && googleManaged && googleId && existingWindow.gtag) {
     existingWindow.gtag("consent", "update", {
-      analytics_storage: canUseAnalytics() ? "granted" : "denied",
-      ad_storage: canUseMarketing() ? "granted" : "denied",
-      ad_user_data: canUseMarketing() ? "granted" : "denied",
-      ad_personalization: canUseMarketing() ? "granted" : "denied",
+      analytics_storage: canUseAnalytics() && !internalTestTraffic ? "granted" : "denied",
+      ad_storage: canUseMarketing() && !internalTestTraffic ? "granted" : "denied",
+      ad_user_data: canUseMarketing() && !internalTestTraffic ? "granted" : "denied",
+      ad_personalization: canUseMarketing() && !internalTestTraffic ? "granted" : "denied",
     });
   }
 
-  if (loaded || !envEnabled() || !canUseMarketing()) return;
+  if (internalTestTraffic || loaded || !envEnabled() || !canUseMarketing()) return;
 
   if (redditPixelId) {
     const w = window as typeof window & { rdt?: (...args: unknown[]) => void };

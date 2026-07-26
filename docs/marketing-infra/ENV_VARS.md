@@ -16,6 +16,8 @@ Add names only; do not commit values.
 | `NEXT_PUBLIC_CONSENT_VERSION` | Consent record and policy version | `2026-06-23-v1` |
 | `NEXT_PUBLIC_COOKIE_POLICY_URL` | Cookie policy link shown in consent UI | `/cookies` |
 | `NEXT_PUBLIC_PRIVACY_POLICY_URL` | Privacy policy link shown in consent UI | `/privacy` |
+| `NEXT_PUBLIC_INTERNAL_TEST_PUBLIC_KEY` | Ed25519 public key used by middleware, browser, and app to verify short-lived internal QA tokens | empty / internal QA disabled |
+| `INTERNAL_TEST_PRIVATE_KEY` | Local-only Ed25519 private seed used by the token-generation script; never deploy or commit | no default |
 
 Third-party pixels require all of:
 
@@ -24,6 +26,8 @@ Third-party pixels require all of:
 - user marketing consent in `mx_consent_v1`
 
 Vercel Analytics and first-party marketing events require analytics consent.
+
+`NEXT_PUBLIC_INTERNAL_TEST_PUBLIC_KEY` is safe to expose because it can verify but cannot create QA tokens. The matching `INTERNAL_TEST_PRIVATE_KEY` must remain offline/local. Without a valid public key, `mx_test` query values and cookies are rejected and cannot suppress production measurement.
 
 Referral codes are still captured and passed to the app when these referral flags are disabled. The landing page must not display the `£49` price unless both referral flags are `true`, a referral code is present, and the date is before 8 July 2026.
 

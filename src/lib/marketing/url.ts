@@ -1,8 +1,11 @@
 import {
   compactAttributionTouch,
   determineOfferContext,
+  getInternalTestToken,
   initMarketingAttribution,
+  INTERNAL_TEST_QUERY_PARAM,
   OFFER_IDS,
+  sanitizeMarketingUrl,
   type CtaIntent,
   type OfferId,
 } from "./attribution";
@@ -82,6 +85,11 @@ export function buildAppFallbackUrl(
 
   setIfPresent(url.searchParams, "intent", options.intent);
   setIfPresent(url.searchParams, "offer_id", options.offerId);
+  const internalTestToken = getInternalTestToken();
+  if (internalTestToken) {
+    url.searchParams.set(INTERNAL_TEST_QUERY_PARAM, internalTestToken);
+    url.searchParams.set("mx_mc", "0");
+  }
 
   return url.toString();
 }
@@ -103,7 +111,10 @@ export function buildAppUrl(
   const last = snapshot.last_touch;
   const firstTouch = compactAttributionTouch(first);
   const lastTouch = compactAttributionTouch(last);
-  const handoffTouch = firstTouch ?? lastTouch;
+  const handoffTouch = lastTouch ?? firstTouch;
+  const internalTestToken = getInternalTestToken();
+  const internalTestTraffic = Boolean(internalTestToken);
+  const includeAdClickIds = canUseMarketing() && !internalTestTraffic;
   const referralCode = snapshot.active_referral?.referral_code ?? null;
   const requestedOfferId =
     options.offerId === OFFER_IDS.earlybird49ReferralPre && !referralCode
@@ -125,8 +136,12 @@ export function buildAppUrl(
   // decision on every CTA handoff so the app can either initialise Google Ads
   // measurement or actively clear a previously granted state. Before a user
   // decides, neither marker is sent and the app remains measurement-off.
+  if (internalTestToken) {
+    url.searchParams.set(INTERNAL_TEST_QUERY_PARAM, internalTestToken);
+    url.searchParams.set("mx_mc", "0");
+  }
   if (hasConsentDecision()) {
-    url.searchParams.set("mx_mc", canUseMarketing() ? "1" : "0");
+    url.searchParams.set("mx_mc", includeAdClickIds ? "1" : "0");
     url.searchParams.set("mx_ac", canUseAnalytics() ? "1" : "0");
   }
 
@@ -147,8 +162,16 @@ export function buildAppUrl(
   setIfPresent(url.searchParams, "last_touch_content", lastTouch?.content);
   setIfPresent(url.searchParams, "last_touch_term", lastTouch?.term);
 
-  setIfPresent(url.searchParams, "referrer", first?.referrer ?? last?.referrer);
-  setIfPresent(url.searchParams, "first_landing_page", first?.first_landing_page ?? last?.first_landing_page);
+  setIfPresent(
+    url.searchParams,
+    "referrer",
+    sanitizeMarketingUrl(first?.referrer ?? last?.referrer, includeAdClickIds),
+  );
+  setIfPresent(
+    url.searchParams,
+    "first_landing_page",
+    sanitizeMarketingUrl(first?.first_landing_page ?? last?.first_landing_page, includeAdClickIds),
+  );
   setIfPresent(url.searchParams, "campaign_id", last?.campaign_id ?? first?.campaign_id);
 
   if (canUseAnalytics()) {
@@ -159,7 +182,7 @@ export function buildAppUrl(
     setIfPresent(url.searchParams, "offer_id", offer.offer_id);
   }
 
-  if (canUseMarketing()) {
+  if (includeAdClickIds) {
     setIfPresent(url.searchParams, "gclid", last?.gclid ?? first?.gclid);
     setIfPresent(url.searchParams, "gbraid", last?.gbraid ?? first?.gbraid);
     setIfPresent(url.searchParams, "wbraid", last?.wbraid ?? first?.wbraid);

@@ -5,6 +5,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -29,6 +30,7 @@ const MarketingContext = createContext<MarketingSnapshot | null>(null);
 export function MarketingAttributionProvider({ children }: { children: ReactNode }) {
   const [snapshot, setSnapshot] = useState<MarketingSnapshot | null>(null);
   const [consent, setConsent] = useState<ConsentRecord | null>(null);
+  const landingEventsTrackedRef = useRef(false);
 
   useEffect(() => {
     setConsent(getStoredConsent());
@@ -47,7 +49,8 @@ export function MarketingAttributionProvider({ children }: { children: ReactNode
     const next = initMarketingAttribution();
     setSnapshot(next);
 
-    if (analyticsAllowed) {
+    if (analyticsAllowed && !landingEventsTrackedRef.current) {
+      landingEventsTrackedRef.current = true;
       trackLandingEvent("landing_page_viewed");
       trackLandingEvent("landing_offer_viewed", {
         offer_id: next.offer_context.offer_id,

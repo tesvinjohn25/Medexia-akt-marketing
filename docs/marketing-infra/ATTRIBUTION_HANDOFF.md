@@ -2,6 +2,8 @@
 
 The landing site captures source attribution and appends a compact handoff to every app CTA through `buildAppUrl()`. UTM parameters win. If no UTM tag is present, the first page load classifies `document.referrer` into search, AI assistant, social, or referral source buckets so the app does not see the internal `medexia-akt.com` handoff as the acquisition source.
 
+The canonical top-level `source`/`utm_*` handoff is **last-touch** because it represents the campaign that immediately preceded the app visit. The explicit `first_touch_*` and `last_touch_*` fields are both retained so acquisition and assist reporting remain available without overloading the canonical fields.
+
 Before consent:
 
 - no `mx_visitor_id` or `mx_session_id` is created;
@@ -10,6 +12,8 @@ Before consent:
 - no Meta, Google, GA4, Google Ads, or Vercel Analytics script is loaded;
 - app links can include `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`, `first_touch_*`, `last_touch_*`, `referrer`, `first_landing_page`, `referral_code`, `ref`, referral `offer_id`, and `intent`;
 - ad click IDs are not persisted or passed.
+
+When marketing consent is not granted, ad click IDs are also removed from nested URL fields (`page_path`, `first_landing_page`, and `referrer`) before storage or handoff. This includes URL-encoded values written by an older release. Structured and nested click IDs are retained only after marketing consent.
 
 After Reject all, non-essential source storage is cleared and future handoffs do not include source attribution unless the current URL has an active referral code that must be honoured.
 
@@ -29,6 +33,8 @@ After analytics consent, local storage and first-party cookies may also contain:
 After analytics consent, session storage and a session cookie:
 
 - `mx_session_id`
+
+A controlled QA visit uses a short-lived Ed25519-signed `mx_test` token. Middleware verifies the signature, removes the token from the visible URL, and stores it in the host-only `mx_internal_test` cookie until the token expires. The browser independently verifies the cookie against the public key before it can change measurement behaviour. Unsigned, expired, or client-forged values are rejected.
 
 Cookies use `SameSite=Lax`; `Secure` is added automatically on HTTPS. `mx_consent_v1` is strictly necessary and is stored separately for about 6 months.
 
@@ -126,3 +132,29 @@ With marketing consent, app CTAs may also append:
 - `gclid`, `gbraid`, `wbraid`, `fbclid`, `ttclid`, `msclkid`
 
 Existing app URL query params are preserved.
+
+## Controlled Internal Tests
+
+Generate an Ed25519 keypair once:
+
+```text
+npm run test:marketing:keypair
+```
+
+Keep `INTERNAL_TEST_PRIVATE_KEY` offline/local. Configure only the printed `NEXT_PUBLIC_INTERNAL_TEST_PUBLIC_KEY` on the marketing deployment and app, then generate a short-lived token locally:
+
+```text
+INTERNAL_TEST_PRIVATE_KEY='...' npm run test:marketing:token
+```
+
+Open a QA journey with `?mx_test=<generated-token>`. Middleware validates the signature, redirects to a clean URL, and stores a host-only cookie until the token expiry. The signed token is appended to every app handoff as `mx_test=<generated-token>`.
+
+For marked test traffic:
+
+- Meta, Reddit, GA4, and Google Ads scripts are not loaded by the landing site;
+- any Google tag already managed by this page receives denied consent;
+- `mx_mc=0` is passed to the app even when the tester has previously granted marketing consent;
+- click IDs are neither stored nor handed to the app;
+- consented first-party events remain available for end-to-end QA with `is_test=true` and `traffic_type=internal`.
+
+The app must verify the signed token with the same public key, retain the verified marker through signup, and suppress its own ad-platform conversions for that journey. Reporting queries should exclude `is_test=true` / `traffic_type=internal`. The private key must never be deployed or committed.

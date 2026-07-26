@@ -5,10 +5,12 @@ import {
   hasConsentDecision,
 } from "../consent/consent";
 import { OFFER_CUTOVER_UK } from "../offer-phase";
+import { verifyInternalTestToken } from "./internal-test-token";
 
 export const MARKETING_STORAGE_KEYS = {
   visitorId: "mx_visitor_id",
   sessionId: "mx_session_id",
+  internalTest: "mx_internal_test",
   firstTouch: "mx_first_touch",
   lastTouch: "mx_last_touch",
   referral: "mx_referral",
@@ -124,6 +126,7 @@ const TOUCH_PARAM_KEYS = [
 const REFERRAL_PARAM_KEYS = ["ref", "referral", "referral_code", "r"] as const;
 const AD_CLICK_PARAM_KEYS = ["gclid", "gbraid", "wbraid", "fbclid", "ttclid", "msclkid", "rdt_cid"] as const;
 const UTM_PARAM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"] as const;
+export const INTERNAL_TEST_QUERY_PARAM = "mx_test";
 const COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 90;
 const CUSTOM_GPT_RETURN_ATTRIBUTION = {
   utm_source: "custom_gpt",
@@ -209,6 +212,20 @@ function safeCookieGet(key: string): string | null {
   } catch {
     return null;
   }
+}
+
+export function getInternalTestToken(): string | null {
+  const token = safeCookieGet(MARKETING_STORAGE_KEYS.internalTest);
+  return verifyInternalTestToken(
+    token,
+    process.env.NEXT_PUBLIC_INTERNAL_TEST_PUBLIC_KEY,
+  )
+    ? token
+    : null;
+}
+
+export function isInternalTestTraffic(): boolean {
+  return Boolean(getInternalTestToken());
 }
 
 function readJson<T>(key: string): T | null {
@@ -369,20 +386,94 @@ function deviceType(): string {
   return "desktop";
 }
 
-function pagePath(): string {
-  if (!isBrowser()) return "/";
-  return `${window.location.pathname}${window.location.search}`.slice(0, 1024);
+function containsNestedAdClickIdentifier(value: string): boolean {
+  const keyPattern = AD_CLICK_PARAM_KEYS.join("|");
+  const matcher = new RegExp(`(?:^|[?&#;])(?:${keyPattern})=`, "i");
+  let candidate = value;
+
+  for (let depth = 0; depth < 3; depth += 1) {
+    if (matcher.test(candidate)) return true;
+    try {
+      const decoded = decodeURIComponent(candidate);
+      if (decoded === candidate) break;
+      candidate = decoded;
+    } catch {
+      break;
+    }
+  }
+
+  return false;
 }
 
-function externalReferrer(): string | null {
+/**
+ * Removes platform click identifiers from URLs before they are stored inside
+ * other attribution fields. This second boundary is intentional: without it,
+ * a denied `gclid` could still leak through an encoded `first_landing_page` or
+ * `referrer` value even when the structured click-id fields are empty.
+ */
+export function sanitizeMarketingUrl(
+  value: string | null | undefined,
+  includeAdClickIds: boolean,
+): string | null {
+  if (!value) return null;
+  const raw = value.trim();
+  if (!raw) return null;
+
+  try {
+    const absoluteInput = /^[a-z][a-z\d+.-]*:\/\//i.test(raw) || raw.startsWith("//");
+    const parsed = new URL(raw, "https://medexia-akt.com");
+
+    for (const key of new Set(Array.from(parsed.searchParams.keys()))) {
+      const normalizedKey = key.toLowerCase();
+      const nestedValues = parsed.searchParams.getAll(key);
+      if (
+        normalizedKey === INTERNAL_TEST_QUERY_PARAM ||
+        (
+          !includeAdClickIds &&
+          (
+            (AD_CLICK_PARAM_KEYS as readonly string[]).includes(normalizedKey) ||
+            nestedValues.some((nestedValue) => containsNestedAdClickIdentifier(nestedValue))
+          )
+        )
+      ) {
+        parsed.searchParams.delete(key);
+      }
+    }
+
+    // Fragments are not needed for acquisition attribution and may themselves
+    // contain an encoded query string, so omit them in the consent-safe form.
+    parsed.hash = "";
+    const sanitized = absoluteInput
+      ? parsed.toString()
+      : `${parsed.pathname}${parsed.search}`;
+    return sanitized.slice(0, 1024);
+  } catch {
+    // A malformed value is not worth retaining if it may contain an identifier.
+    return !includeAdClickIds && containsNestedAdClickIdentifier(raw)
+      ? null
+      : raw.slice(0, 1024);
+  }
+}
+
+export function sanitizedCurrentPagePath(
+  includeAdClickIds = canUseMarketing() && !isInternalTestTraffic(),
+): string {
+  if (!isBrowser()) return "/";
+  return sanitizeMarketingUrl(
+    `${window.location.pathname}${window.location.search}`,
+    includeAdClickIds,
+  ) ?? window.location.pathname.slice(0, 1024);
+}
+
+function externalReferrer(includeAdClickIds: boolean): string | null {
   if (!isBrowser() || !document.referrer) return null;
   try {
     const ref = new URL(document.referrer);
     if (cleanHostname(ref.hostname) === cleanHostname(window.location.hostname)) return null;
     if (isInternalHostname(ref.hostname)) return null;
-    return document.referrer.slice(0, 1024);
+    return sanitizeMarketingUrl(document.referrer, includeAdClickIds);
   } catch {
-    return document.referrer.slice(0, 1024);
+    return sanitizeMarketingUrl(document.referrer, includeAdClickIds);
   }
 }
 
@@ -433,7 +524,7 @@ function readAllowedReferralSnapshot(current = readCurrentReferralSnapshot()): R
 function readCurrentTouch(referralCode: string | null, includeAdClickIds: boolean): MarketingTouch | null {
   if (!isBrowser()) return null;
   const params = new URLSearchParams(window.location.search);
-  const referrer = externalReferrer();
+  const referrer = externalReferrer(includeAdClickIds);
   const routeAttribution = customGptReturnAttribution(params);
   if (!routeAttribution && !hasMeaningfulTouch(params, referrer, includeAdClickIds)) return null;
 
@@ -462,7 +553,7 @@ function readCurrentTouch(referralCode: string | null, includeAdClickIds: boolea
     utm_content: resolvedTouch.content,
     utm_term: resolvedTouch.term,
     referrer,
-    first_landing_page: pagePath(),
+    first_landing_page: sanitizedCurrentPagePath(includeAdClickIds),
     touch_timestamp: new Date().toISOString(),
     device_type: deviceType(),
     campaign_id: getParam(params, "campaign_id", 128),
@@ -670,6 +761,7 @@ export function initMarketingAttribution(): MarketingSnapshot {
   const functionalAllowed = canUseFunctional();
   const analyticsAllowed = canUseAnalytics();
   const marketingAllowed = canUseMarketing();
+  const internalTestTraffic = isInternalTestTraffic();
   const persistentAttributionAllowed = analyticsAllowed || marketingAllowed;
   const sourceAttributionAllowed = touchStorageAllowed();
 
@@ -708,7 +800,7 @@ export function initMarketingAttribution(): MarketingSnapshot {
   }
 
   const storedReferralCode = referralCode ?? existingReferral?.referral_code ?? null;
-  const touch = readCurrentTouch(referralCode ?? null, marketingAllowed);
+  const touch = readCurrentTouch(referralCode ?? null, marketingAllowed && !internalTestTraffic);
   const firstTouch = readJson<MarketingTouch>(MARKETING_STORAGE_KEYS.firstTouch);
   if (touch && sourceAttributionAllowed) {
     if (!firstTouch) {
@@ -735,7 +827,7 @@ export function attributionForEvent(): Record<string, unknown> {
   const snapshot = getMarketingSnapshot();
   const firstTouch = toAppMarketingTouch(snapshot.first_touch);
   const lastTouch = toAppMarketingTouch(snapshot.last_touch);
-  const source = firstTouch?.source ?? lastTouch?.source ?? null;
+  const source = lastTouch?.source ?? firstTouch?.source ?? null;
   return {
     mx_visitor_id: snapshot.mx_visitor_id,
     mx_session_id: snapshot.mx_session_id,

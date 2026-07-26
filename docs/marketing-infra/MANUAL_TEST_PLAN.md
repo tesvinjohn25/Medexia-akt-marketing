@@ -39,7 +39,54 @@ Expected:
 
 - `mx_first_touch` remains the original Reddit touch.
 - `mx_last_touch.source` updates to `tpd`.
-- App CTA keeps `utm_source=reddit` for the original first-touch source and includes `last_touch_source=tpd`.
+- App CTA uses `utm_source=tpd` for the canonical last-touch source, keeps `first_touch_source=reddit`, and includes `last_touch_source=tpd`.
+
+## Click-ID Redaction
+
+Open:
+
+```text
+/?utm_source=google&utm_medium=cpc&gclid=QA_GCLID&next=https%3A%2F%2Fexample.com%2F%3Ffbclid%3DQA_FBCLID
+```
+
+Grant Analytics but leave Marketing off.
+
+Expected:
+
+- `mx_first_touch.gclid` is empty.
+- Stored `first_landing_page` and `referrer` contain no ad click IDs.
+- First-party `page_path` contains no ad click IDs.
+- The app CTA contains no top-level or URL-encoded `gclid`, `gbraid`, `wbraid`, `fbclid`, `ttclid`, `msclkid`, or `rdt_cid`.
+- Granting Marketing on a fresh, non-test visit permits the structured click-ID handoff.
+
+## Controlled Internal QA
+
+Generate a keypair once with `npm run test:marketing:keypair`. Keep the private key offline/local and configure only `NEXT_PUBLIC_INTERNAL_TEST_PUBLIC_KEY` on the marketing deployment and app. Generate a 30-minute token locally:
+
+```text
+INTERNAL_TEST_PRIVATE_KEY='...' npm run test:marketing:token
+```
+
+Use a fresh browser and open:
+
+```text
+/?mx_test=<generated-token>&utm_source=google&utm_medium=cpc&utm_campaign=qa&gclid=QA_GCLID
+```
+
+Accept all consent choices.
+
+Expected:
+
+- The first request redirects to the same URL without `mx_test`.
+- A host-only `mx_internal_test` cookie contains the signed token until it expires.
+- Client code verifies the cookie signature before setting `is_test=true` or suppressing measurement.
+- No `mx-google-tag`, `mx-meta-pixel`, or `mx-reddit-pixel` script is injected by the landing site.
+- First-party events include `is_test=true` and `traffic_type=internal`.
+- `page_path` and stored nested URL fields contain no click ID.
+- Every app CTA includes the signed `mx_test` token and `mx_mc=0`, and excludes `gclid`.
+- Navigate to another marketing page; the app CTA remains marked until token expiry.
+- Verify that an unsigned `?mx_test=1` is rejected and does not activate internal mode.
+- Clear the `mx_internal_test` cookie to end the controlled test early.
 
 ## Referral Journey
 

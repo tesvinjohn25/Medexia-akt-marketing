@@ -1,4 +1,9 @@
-import { attributionForEvent, getMarketingSnapshot } from "./attribution";
+import {
+  attributionForEvent,
+  getMarketingSnapshot,
+  isInternalTestTraffic,
+  sanitizedCurrentPagePath,
+} from "./attribution";
 import { canUseAnalytics, CONSENT_VERSION } from "../consent/consent";
 
 type LandingEventProperties = Record<string, unknown>;
@@ -32,7 +37,7 @@ function endpoint(): string {
 
 function pagePath(): string {
   if (typeof window === "undefined") return "";
-  return `${window.location.pathname}${window.location.search}`.slice(0, 1024);
+  return sanitizedCurrentPagePath();
 }
 
 function userAgent(): string | null {
@@ -110,11 +115,14 @@ function buildLandingEventPayload(eventName: string, properties: LandingEventPro
   if (!analyticsAllowed) return null;
 
   const snapshot = getMarketingSnapshot();
+  const internalTestTraffic = isInternalTestTraffic();
   return {
     event_id: randomEventId(),
     event_name: eventName,
     event_timestamp: new Date().toISOString(),
     page_path: pagePath(),
+    is_test: internalTestTraffic,
+    traffic_type: internalTestTraffic ? "internal" : "external",
     user_agent: userAgent(),
     offer_id: snapshot.offer_context.offer_id,
     referral_code: snapshot.referral?.referral_code ?? null,

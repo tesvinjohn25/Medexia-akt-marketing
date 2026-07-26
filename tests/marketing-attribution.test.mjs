@@ -4,7 +4,18 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 import { pathToFileURL } from "node:url";
+import * as ed from "@noble/ed25519";
+import { sha512 } from "@noble/hashes/sha512";
 import { build } from "esbuild";
+
+ed.etc.sha512Sync = (...messages) => sha512(ed.etc.concatBytes(...messages));
+const INTERNAL_TEST_PRIVATE_KEY = Uint8Array.from(
+  { length: 32 },
+  (_, index) => index + 1,
+);
+const INTERNAL_TEST_PUBLIC_KEY = ed.etc.bytesToHex(
+  ed.getPublicKey(INTERNAL_TEST_PRIVATE_KEY),
+);
 
 async function importBundled(entryPoint) {
   const outfile = path.join(
@@ -27,9 +38,11 @@ async function importBundled(entryPoint) {
 const {
   MARKETING_STORAGE_KEYS,
   OFFER_IDS,
+  attributionForEvent,
   determineOfferContext,
   getMarketingSnapshot,
   initMarketingAttribution,
+  isInternalTestTraffic,
   normalizeReferralCode,
 } = await importBundled("src/lib/marketing/attribution.ts");
 const { getPricingFaqs } = await importBundled("src/data/product-positioning.ts");
@@ -46,6 +59,9 @@ const {
 } = await importBundled("src/lib/consent/consent.ts");
 const { flushLandingEvent, trackLandingEvent } = await importBundled("src/lib/marketing/events.ts");
 const { maybeLoadMarketingPixels } = await importBundled("src/lib/marketing/pixels.ts");
+const { verifyInternalTestToken } = await importBundled(
+  "src/lib/marketing/internal-test-token.ts",
+);
 
 function setReferralFlags(enabled) {
   process.env.NEXT_PUBLIC_REFERRAL_SPRINT_ENABLED = enabled ? "true" : "false";
@@ -166,6 +182,7 @@ function resetTrackingEnv() {
   process.env.NEXT_PUBLIC_REDDIT_PIXEL_ID = "";
   process.env.NEXT_PUBLIC_CONSENT_BANNER_ENABLED = "true";
   process.env.NEXT_PUBLIC_CONSENT_VERSION = "2026-06-23-v1";
+  process.env.NEXT_PUBLIC_INTERNAL_TEST_PUBLIC_KEY = "";
 }
 
 async function parseBeaconPayload(call) {
@@ -182,6 +199,32 @@ async function parseFetchPayload(call) {
     return JSON.parse(await body.text());
   }
   return JSON.parse(String(body));
+}
+
+function fullyDecode(value) {
+  let decoded = value;
+  for (let depth = 0; depth < 3; depth += 1) {
+    try {
+      const next = decodeURIComponent(decoded);
+      if (next === decoded) break;
+      decoded = next;
+    } catch {
+      break;
+    }
+  }
+  return decoded;
+}
+
+function makeInternalTestToken(lifetimeSeconds = 1800) {
+  const expiresAt = Math.floor(Date.now() / 1000) + lifetimeSeconds;
+  const payload = `v1.${expiresAt}`;
+  const signature = Buffer.from(
+    ed.sign(
+      new TextEncoder().encode(payload),
+      INTERNAL_TEST_PRIVATE_KEY,
+    ),
+  ).toString("base64url");
+  return `${payload}.${signature}`;
 }
 
 test("app url fallback targets the deployed Replit app domain", () => {
@@ -393,7 +436,7 @@ test("document.referrer becomes fallback source when no UTM is present", () => {
   assert.equal(appUrl.searchParams.get("first_touch_source"), "google");
 });
 
-test("UTM tags win over document.referrer and first touch is not overwritten", () => {
+test("UTM tags win over document.referrer, first touch is retained, and canonical attribution is last-touch", () => {
   resetTrackingEnv();
   const browser = installBrowser("https://medexia-akt.com/", "https://www.google.com/search?q=akt");
 
@@ -407,9 +450,10 @@ test("UTM tags win over document.referrer and first touch is not overwritten", (
   assert.equal(JSON.parse(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.lastTouch)).source, "newsletter");
   assert.equal(snapshot.first_touch.source, "google");
   assert.equal(snapshot.last_touch.source, "newsletter");
-  assert.equal(appUrl.searchParams.get("utm_source"), "google");
+  assert.equal(appUrl.searchParams.get("utm_source"), "newsletter");
   assert.equal(appUrl.searchParams.get("first_touch_source"), "google");
   assert.equal(appUrl.searchParams.get("last_touch_source"), "newsletter");
+  assert.equal(attributionForEvent().source, "newsletter");
 });
 
 test("referrer classification covers AI, social, referral, and internal hosts", () => {
@@ -523,6 +567,48 @@ test("analytics consent creates first-party attribution without loading pixels o
   assert.equal(appUrl.searchParams.has("gclid"), false);
   assert.equal(appUrl.searchParams.get("mx_mc"), "0");
   assert.equal(appUrl.searchParams.get("mx_ac"), "1");
+});
+
+test("ad click IDs cannot leak through page_path, first_landing_page, or referrer without marketing consent", async () => {
+  resetTrackingEnv();
+  const nested = encodeURIComponent("https://example.com/next?gclid=NESTED_GCLID");
+  const browser = installBrowser(
+    `https://medexia-akt.com/?utm_source=google&utm_medium=cpc&gclid=TOP_GCLID&gbraid=TOP_GBRAID&rdt_cid=TOP_REDDIT&next=safe&next=${nested}`,
+    "https://referrer.example/post?fbclid=REF_FBCLID&redirect=https%3A%2F%2Fexample.com%2F%3Fmsclkid%3DNESTED_MSCLKID",
+  );
+
+  saveConsent({ functional: false, analytics: true, marketing: false }, "settings");
+  initMarketingAttribution();
+  trackLandingEvent("landing_page_viewed");
+
+  const storedFirst = JSON.parse(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.firstTouch));
+  assert.equal(storedFirst.gclid, null);
+  assert.equal(storedFirst.gbraid, null);
+  assert.equal(storedFirst.rdt_cid, null);
+  assert.doesNotMatch(fullyDecode(storedFirst.first_landing_page), /(?:gclid|gbraid|rdt_cid)=/i);
+  assert.doesNotMatch(fullyDecode(storedFirst.referrer), /(?:fbclid|msclkid)=/i);
+
+  // Simulate a value written by an older release so the handoff output
+  // boundary is also protected, not only new captures.
+  storedFirst.first_landing_page = "/?utm_source=google&gclid=LEGACY_GCLID";
+  storedFirst.referrer = "https://referrer.example/post?fbclid=LEGACY_FBCLID";
+  browser.localStorage.setItem(MARKETING_STORAGE_KEYS.firstTouch, JSON.stringify(storedFirst));
+
+  const appUrl = buildAppUrl("/join/free", { intent: "start_free" });
+  const decodedHandoff = fullyDecode(appUrl);
+  assert.doesNotMatch(
+    decodedHandoff,
+    /(?:^|[?&#;])(?:gclid|gbraid|wbraid|fbclid|ttclid|msclkid|rdt_cid)=/i,
+  );
+
+  assert.equal(browser.sendBeaconCalls.length, 1);
+  const payload = await parseBeaconPayload(browser.sendBeaconCalls[0]);
+  assert.doesNotMatch(
+    fullyDecode(payload.page_path),
+    /(?:^|[?&#;])(?:gclid|gbraid|wbraid|fbclid|ttclid|msclkid|rdt_cid)=/i,
+  );
+  assert.equal(payload.is_test, false);
+  assert.equal(payload.traffic_type, "external");
 });
 
 test("/free route creates custom GPT attribution without visible UTM parameters", () => {
@@ -907,6 +993,84 @@ test("disabled pixel switch does not update an unrelated pre-existing Google tag
   assert.equal(browser.scripts.length, 0);
 });
 
+test("internal test tokens require a valid, unexpired server-verifiable signature", async () => {
+  const token = makeInternalTestToken();
+  const tamperedToken = `${token.slice(0, -1)}${token.endsWith("A") ? "B" : "A"}`;
+  assert.equal(await verifyInternalTestToken(token, INTERNAL_TEST_PUBLIC_KEY), true);
+  assert.equal(await verifyInternalTestToken(tamperedToken, INTERNAL_TEST_PUBLIC_KEY), false);
+  assert.equal(
+    await verifyInternalTestToken(makeInternalTestToken(-60), INTERNAL_TEST_PUBLIC_KEY),
+    false,
+  );
+  assert.equal(
+    await verifyInternalTestToken(token, "0".repeat(64)),
+    false,
+  );
+
+  const middleware = fs.readFileSync("src/middleware.ts", "utf8");
+  assert.match(middleware, /verifyInternalTestToken/);
+  assert.match(middleware, /process\.env\.NEXT_PUBLIC_INTERNAL_TEST_PUBLIC_KEY/);
+  assert.match(middleware, /cleanUrl\.searchParams\.delete\(INTERNAL_TEST_QUERY_PARAM\)/);
+  assert.match(middleware, /setInternalTestCookie/);
+});
+
+test("an unsigned mx_test query cannot activate internal traffic suppression", () => {
+  resetTrackingEnv();
+  installBrowser(
+    "https://medexia-akt.com/?mx_test=1&utm_source=google&utm_medium=cpc&gclid=FORGED_GCLID",
+  );
+  acceptAllConsent("banner");
+  initMarketingAttribution();
+
+  const appUrl = new URL(buildAppUrl("/join/audio", { intent: "start_audio" }));
+  assert.equal(isInternalTestTraffic(), false);
+  assert.equal(appUrl.searchParams.has("mx_test"), false);
+  assert.equal(appUrl.searchParams.get("mx_mc"), "1");
+  assert.equal(appUrl.searchParams.get("gclid"), "FORGED_GCLID");
+});
+
+test("internal test traffic is marked across the app handoff and cannot load pixels or forward conversion identifiers", async () => {
+  resetTrackingEnv();
+  process.env.NEXT_PUBLIC_ENABLE_MARKETING_PIXELS = "true";
+  process.env.NEXT_PUBLIC_META_PIXEL_ID = "123456";
+  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID = "G-TEST";
+  process.env.NEXT_PUBLIC_GOOGLE_ADS_ID = "AW-18343035898";
+  process.env.NEXT_PUBLIC_REDDIT_PIXEL_ID = "t2_test";
+  process.env.NEXT_PUBLIC_INTERNAL_TEST_PUBLIC_KEY = INTERNAL_TEST_PUBLIC_KEY;
+  const signedTestToken = makeInternalTestToken();
+  const browser = installBrowser(
+    "https://medexia-akt.com/?utm_source=google&utm_medium=cpc&utm_campaign=qa&gclid=TEST_GCLID",
+  );
+  document.cookie = `${MARKETING_STORAGE_KEYS.internalTest}=${encodeURIComponent(signedTestToken)}; Path=/`;
+
+  acceptAllConsent("banner");
+  initMarketingAttribution();
+  maybeLoadMarketingPixels();
+  trackLandingEvent("landing_page_viewed");
+
+  const appUrl = new URL(buildAppUrl("/join/audio", { intent: "start_audio" }));
+  assert.equal(isInternalTestTraffic(), true);
+  assert.equal(browser.scripts.length, 0);
+  assert.equal(appUrl.searchParams.get("mx_test"), signedTestToken);
+  assert.equal(appUrl.searchParams.get("mx_mc"), "0");
+  assert.equal(appUrl.searchParams.get("mx_ac"), "1");
+  assert.equal(appUrl.searchParams.has("gclid"), false);
+  assert.doesNotMatch(fullyDecode(appUrl.toString()), /(?:^|[?&#;])gclid=/i);
+
+  const payload = await parseBeaconPayload(browser.sendBeaconCalls[0]);
+  assert.equal(payload.is_test, true);
+  assert.equal(payload.traffic_type, "internal");
+  assert.doesNotMatch(fullyDecode(payload.page_path), /(?:^|[?&#;])gclid=/i);
+
+  // The session marker protects subsequent client-side navigation even after
+  // the visible query marker is no longer present.
+  window.location = new URL("https://medexia-akt.com/free");
+  assert.equal(isInternalTestTraffic(), true);
+  const subsequentHandoff = new URL(buildAppFallbackUrl("/join/free", { intent: "start_free" }));
+  assert.equal(subsequentHandoff.searchParams.get("mx_test"), signedTestToken);
+  assert.equal(subsequentHandoff.searchParams.get("mx_mc"), "0");
+});
+
 test("marketing consent loads configured pixels after consent and allows ad click id handoff", () => {
   resetTrackingEnv();
   process.env.NEXT_PUBLIC_ENABLE_MARKETING_PIXELS = "true";
@@ -1017,6 +1181,9 @@ test("consent UX exposes equal first-layer choices and granular off-by-default s
     provider,
     /\{canUseAnalytics\(\) \? <Analytics \/> : null\}/,
   );
+  assert.match(provider, /const landingEventsTrackedRef = useRef\(false\)/);
+  assert.match(provider, /analyticsAllowed && !landingEventsTrackedRef\.current/);
+  assert.match(provider, /landingEventsTrackedRef\.current = true/);
 });
 
 test("homepage early access CTAs use tracked app links and earlybird intents", () => {

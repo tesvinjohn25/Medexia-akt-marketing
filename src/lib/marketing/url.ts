@@ -71,6 +71,20 @@ export function getAppHandoffConsentSignature(): string {
   ].join("|");
 }
 
+/**
+ * Event properties only need the handoff destination, not its attribution
+ * query string. Keeping query parameters here would duplicate first/last-touch
+ * data and could persist short-lived QA tokens or platform click identifiers.
+ */
+export function appHandoffEventHref(value: string): string {
+  try {
+    const url = new URL(value, appBaseUrl({ avoidCurrentOrigin: true }));
+    return `${url.origin}${url.pathname}`.slice(0, 1024);
+  } catch {
+    return "";
+  }
+}
+
 export function buildAppFallbackUrl(
   pathOrExistingUrl: string,
   options: {

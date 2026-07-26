@@ -995,7 +995,10 @@ test("disabled pixel switch does not update an unrelated pre-existing Google tag
 
 test("internal test tokens require a valid, unexpired server-verifiable signature", async () => {
   const token = makeInternalTestToken();
-  const tamperedToken = `${token.slice(0, -1)}${token.endsWith("A") ? "B" : "A"}`;
+  const [version, expiresAt, signature] = token.split(".");
+  const tamperedSignature =
+    `${signature.slice(0, 10)}${signature[10] === "A" ? "B" : "A"}${signature.slice(11)}`;
+  const tamperedToken = `${version}.${expiresAt}.${tamperedSignature}`;
   assert.equal(await verifyInternalTestToken(token, INTERNAL_TEST_PUBLIC_KEY), true);
   assert.equal(await verifyInternalTestToken(tamperedToken, INTERNAL_TEST_PUBLIC_KEY), false);
   assert.equal(
@@ -1059,6 +1062,7 @@ test("internal test traffic is marked across the app handoff and cannot load pix
 
   const payload = await parseBeaconPayload(browser.sendBeaconCalls[0]);
   assert.equal(payload.is_test, true);
+  assert.equal(payload.internal_test_token, signedTestToken);
   assert.equal(payload.traffic_type, "internal");
   assert.doesNotMatch(fullyDecode(payload.page_path), /(?:^|[?&#;])gclid=/i);
 

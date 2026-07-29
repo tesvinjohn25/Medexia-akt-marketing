@@ -195,22 +195,29 @@ export default function DemoPage() {
               kind="questions"
             />
             <div
-              className="mx-auto mt-5 flex max-w-[390px] flex-col items-stretch gap-3 text-center"
+              className="mx-auto mt-4 flex max-w-[390px] flex-col items-center gap-2.5 text-center"
               data-focused-demo-cta="questions"
+              data-cta-hierarchy="secondary"
             >
+              <p
+                className="text-[11px] font-semibold uppercase tracking-[0.14em]"
+                style={{ color: "rgba(232,236,255,.66)" }}
+              >
+                Ready to keep practising?
+              </p>
               <TrackedAppLink
                 href="/join/free"
                 intent="start_free"
-                className="btn-primary block text-[15px]"
+                className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/15 bg-white/[.035] px-6 text-[14px] font-semibold text-white/75 transition duration-200 hover:border-white/25 hover:bg-white/[.07] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet-300"
               >
-                Create your free account &mdash; questions stay free
+                Create a free account
               </TrackedAppLink>
               <p
-                className="text-[12px] leading-[1.55]"
-                style={{ color: "var(--fg-mid)" }}
+                className="max-w-[340px] text-[12px] leading-[1.55]"
+                style={{ color: "var(--fg-mid)", opacity: 0.65 }}
               >
-                Demo: no account or card needed. AKT-style revision content,
-                independent of and not endorsed by the RCGP.
+                The demo needs no account or card. Questions, explanations and
+                timed mocks stay free after signup.
               </p>
             </div>
           </div>

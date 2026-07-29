@@ -1276,10 +1276,34 @@ test("focused landing demos use isolated, environment-aware app paths", () => {
   assert.match(demo, /data-focused-demo-cta="questions"/);
   assert.match(
     demo,
-    /Create your free account &mdash; questions stay free/,
+    /data-focused-demo-cta="questions"[\s\S]*data-cta-hierarchy="secondary"/,
+  );
+  assert.match(
+    demo,
+    />\s*Create a free account\s*</,
   );
   assert.match(audio, /data-focused-demo-cta="audio"/);
+  assert.match(
+    audio,
+    /data-focused-demo-cta="audio"[\s\S]*data-cta-hierarchy="secondary"/,
+  );
   assert.match(audio, />\s*Start 2 free hours\s*</);
+  assert.doesNotMatch(
+    demo,
+    /data-focused-demo-cta="questions"[\s\S]{0,500}className="btn-primary/,
+  );
+  assert.doesNotMatch(
+    audio,
+    /data-focused-demo-cta="audio"[\s\S]{0,500}className="btn-primary/,
+  );
+  assert.match(
+    launcher,
+    /data-focused-demo-primary-action=\{kind\}/,
+  );
+  assert.match(launcher, /Play audio demo/);
+  assert.match(launcher, /Start 5-question demo/);
+  assert.match(launcher, /ariaLabel: "Play audio demo"/);
+  assert.match(launcher, /ariaLabel: "Start 5-question demo"/);
   assert.doesNotMatch(demo, /\bpriority(?:\s|=)/);
   assert.doesNotMatch(demo, /\bpreload=/);
   assert.match(

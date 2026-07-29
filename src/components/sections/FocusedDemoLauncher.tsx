@@ -18,18 +18,20 @@ type FocusedDemoLauncherProps = {
 
 const content = {
   audio: {
-    ariaLabel: "Start the AKT audio demo",
+    ariaLabel: "Play audio demo",
     dialogLabel: "AKT Navigator audio demo",
     kicker: "A real chapter · no signup",
     title: "Hear how AKT audio revision feels.",
     detail: "Opens directly in the focused audio player.",
+    action: "Play audio demo",
   },
   questions: {
-    ariaLabel: "Start the five-question AKT demo",
+    ariaLabel: "Start 5-question demo",
     dialogLabel: "AKT Navigator five-question demo",
     kicker: "5 AKT-style questions · no signup",
     title: "Answer the first question now.",
     detail: "Opens directly in the focused question flow.",
+    action: "Start 5-question demo",
   },
 } as const;
 
@@ -152,8 +154,11 @@ export function FocusedDemoLauncher({
         >
           {copy.detail}
         </span>
-        <span className="btn-primary relative mt-5 px-8 text-[15px]">
-          Start demo &rarr;
+        <span
+          className="btn-primary relative mt-5 min-h-12 px-9 text-[16px]"
+          data-focused-demo-primary-action={kind}
+        >
+          {copy.action} &rarr;
         </span>
       </button>
 

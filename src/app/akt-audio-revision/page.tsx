@@ -225,22 +225,29 @@ export default function AktAudioRevisionPage() {
           <div className="relative mx-auto w-full max-w-[430px]">
             <FocusedDemoLauncher demoPath={DEMO_AUDIO} kind="audio" />
             <div
-              className="mx-auto mt-5 flex max-w-[390px] flex-col items-stretch gap-3 text-center"
+              className="mx-auto mt-4 flex max-w-[390px] flex-col items-center gap-2.5 text-center"
               data-focused-demo-cta="audio"
+              data-cta-hierarchy="secondary"
             >
+              <p
+                className="text-[11px] font-semibold uppercase tracking-[0.14em]"
+                style={{ color: "rgba(232,236,255,.66)" }}
+              >
+                Ready to continue?
+              </p>
               <TrackedAppLink
                 href="/join/audio"
                 intent="start_audio"
-                className="btn-primary block text-[15px]"
+                className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/15 bg-white/[.035] px-6 text-[14px] font-semibold text-white/75 transition duration-200 hover:border-white/25 hover:bg-white/[.07] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet-300"
               >
                 Start 2 free hours
               </TrackedAppLink>
               <p
-                className="text-[12px] leading-[1.55]"
-                style={{ color: "var(--fg-mid)" }}
+                className="max-w-[340px] text-[12px] leading-[1.55]"
+                style={{ color: "var(--fg-mid)", opacity: 0.65 }}
               >
-                Demo: no account needed. Free audio allowance: no card needed.
-                Questions and timed mocks stay free.
+                The demo needs no account. Your two free audio hours need no
+                card, and questions and timed mocks stay free.
               </p>
             </div>
           </div>

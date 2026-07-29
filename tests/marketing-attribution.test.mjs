@@ -1242,36 +1242,44 @@ test("homepage post-cutover hero hands audio traffic to the free audio-first flo
   assert.match(trackedLink, /window\.location\.assign\(navigationHref\)/);
 });
 
-test("demo landing uses environment-aware tracked app paths and AKT-style wording", () => {
+test("focused landing demos use isolated, environment-aware app paths", () => {
   const demo = fs.readFileSync("src/app/demo/page.tsx", "utf8");
   const audio = fs.readFileSync("src/app/akt-audio-revision/page.tsx", "utf8");
+  const launcher = fs.readFileSync(
+    "src/components/sections/FocusedDemoLauncher.tsx",
+    "utf8",
+  );
+  const overlayHook = fs.readFileSync(
+    "src/hooks/useDemoOverlay.ts",
+    "utf8",
+  );
 
-  assert.match(demo, /const DEMO_AUDIO = "\/demo\/audio"/);
-  assert.match(demo, /const DEMO_QUESTIONS = "\/demo\/questions"/);
+  assert.match(demo, /const DEMO_QUESTIONS = "\/demo\/sample-question"/);
   assert.match(audio, /const DEMO_AUDIO = "\/demo\/audio"/);
   assert.match(
     demo,
-    /const DEMO_HOME = new URL\("\/demo", getAppOrigin\(\)\)\.toString\(\)/,
+    /const DEMO_HOME = new URL\(DEMO_QUESTIONS, getAppOrigin\(\)\)\.toString\(\)/,
   );
-  assert.doesNotMatch(demo, /https:\/\/app\.medexia-akt\.com\/demo/);
-  assert.match(demo, /<TrackedAppLink[\s\S]*href=\{DEMO_QUESTIONS\}[\s\S]*intent="demo"/);
-  assert.match(demo, /<TrackedAppLink[\s\S]*href=\{DEMO_AUDIO\}[\s\S]*intent="demo"/);
-  assert.match(audio, /<TrackedAppLink[\s\S]*href=\{DEMO_AUDIO\}[\s\S]*intent="demo"/);
+  assert.match(
+    demo,
+    /<FocusedDemoLauncher[\s\S]*demoPath=\{DEMO_QUESTIONS\}[\s\S]*kind="questions"/,
+  );
+  assert.match(
+    audio,
+    /<FocusedDemoLauncher demoPath=\{DEMO_AUDIO\} kind="audio" \/>/,
+  );
+  assert.doesNotMatch(demo, /DEMO_AUDIO|\/demo\/audio|Hear the audio sample/);
   assert.match(demo, /Try five free AKT-style sample questions/);
   assert.doesNotMatch(demo, /(?:five|5) real AKT(?:-style)? questions/i);
+  assert.doesNotMatch(demo, /appshots\//);
+  assert.doesNotMatch(audio, /appshots\//);
+  assert.match(demo, /data-focused-demo-cta="questions"/);
   assert.match(
     demo,
-    /src="\/appshots\/demo-question-current-430x932\.png"/,
+    /Create your free account &mdash; questions stay free/,
   );
-  assert.match(
-    demo,
-    /alt="AKT Navigator sample-question screen showing an atrial fibrillation question and answer options"/,
-  );
-  assert.match(
-    demo,
-    /Current AKT Navigator sample-question practice screen/,
-  );
-  assert.doesNotMatch(demo, /appshots\/question\.jpg/);
+  assert.match(audio, /data-focused-demo-cta="audio"/);
+  assert.match(audio, />\s*Start 2 free hours\s*</);
   assert.doesNotMatch(demo, /\bpriority(?:\s|=)/);
   assert.doesNotMatch(demo, /\bpreload=/);
   assert.match(
@@ -1283,7 +1291,7 @@ test("demo landing uses environment-aware tracked app paths and AKT-style wordin
   assert.match(demo, />\s*Why the other options are wrong\s*</);
   assert.match(
     demo,
-    /structured explanation — Understanding the Question, Key points, and Why the other options are wrong — ending/,
+    /followed by a structured explanation — Understanding the Question, Key points, and Why the other options are wrong — before your final results/,
   );
   assert.doesNotMatch(demo, /key points for your AKT/i);
   assert.match(
@@ -1294,10 +1302,53 @@ test("demo landing uses environment-aware tracked app paths and AKT-style wordin
     demo,
     /className="container-x relative grid gap-8[^"]*\b(?:pb-10|md:pb-14)\b/,
   );
+  assert.match(
+    launcher,
+    /const demoUrl = useTrackedAppUrl\(demoPath, \{ intent: "demo" \}\)/,
+  );
+  assert.match(
+    launcher,
+    /trackLandingEvent\("app_handoff_started", \{/,
+  );
+  assert.match(launcher, /setLaunchUrl\(latestDemoUrl\)/);
+  assert.match(launcher, /href: appHandoffEventHref\(latestDemoUrl\)/);
+  assert.match(launcher, /intent: "demo"/);
+  assert.match(launcher, /src=\{launchUrl \?\? demoUrl\}/);
+  assert.match(launcher, /overlayOpen \? \([\s\S]*<iframe/);
+  assert.doesNotMatch(
+    launcher.slice(0, launcher.indexOf("{overlayOpen ? (")),
+    /<iframe/,
+  );
+  assert.match(launcher, /sm:h-\[min\(820px,calc\(100dvh-40px\)\)\]/);
+  assert.match(launcher, /h-\[100dvh\]/);
+  assert.match(launcher, /Exit demo/);
+  assert.match(launcher, /ref=\{triggerRef\}/);
+  assert.match(launcher, /ref=\{dialogRef\}/);
+  assert.match(launcher, /data-demo-focus-guard/);
+  assert.match(launcher, /querySelector<HTMLButtonElement>\("\[data-demo-exit\]"\)/);
+  assert.match(overlayHook, /window\.history\.pushState\(\{ aktDemo: true \}, ""\)/);
+  assert.match(overlayHook, /window\.history\.back\(\)/);
+  assert.match(overlayHook, /event\.key === "Escape"/);
+  assert.match(overlayHook, /event\.key !== "Tab"/);
+  assert.match(overlayHook, /event\.shiftKey && active === first/);
+  assert.match(overlayHook, /!event\.shiftKey && active === last/);
+  assert.match(overlayHook, /const restoreFocus = useCallback/);
+  assert.match(overlayHook, /focusTarget\?\.isConnected/);
+  assert.match(overlayHook, /focusTarget\.focus\(\)/);
+  assert.match(overlayHook, /restoreFocus\(\)/);
+  assert.match(overlayHook, /event\.data\?\.type === "akt-demo-exit"/);
+  assert.match(overlayHook, /document\.body\.style\.overflow = "hidden"/);
+  assert.match(overlayHook, /iframeOnOurOrigin\(frameRef\.current\)/);
 
   const liveDemo = fs.readFileSync(
     "src/components/sections/LiveDemo.tsx",
     "utf8",
+  );
+  assert.match(liveDemo, /useDemoOverlay\(\)/);
+  assert.match(liveDemo, /data-demo-focus-guard/);
+  assert.match(
+    liveDemo,
+    /querySelector<HTMLButtonElement>\("\[data-demo-exit\]"\)/,
   );
   assert.match(
     liveDemo,
@@ -1313,29 +1364,27 @@ test("demo landing uses environment-aware tracked app paths and AKT-style wordin
     buildAppFallbackUrl("/demo/audio", { intent: "demo" }),
   );
   const questionDemoUrl = new URL(
-    buildAppFallbackUrl("/demo/questions", { intent: "demo" }),
+    buildAppFallbackUrl("/demo/sample-question", { intent: "demo" }),
   );
 
   assert.equal(audioDemoUrl.origin, "https://preview-app.example.test");
   assert.equal(audioDemoUrl.pathname, "/demo/audio");
   assert.equal(audioDemoUrl.searchParams.get("intent"), "demo");
   assert.equal(questionDemoUrl.origin, "https://preview-app.example.test");
-  assert.equal(questionDemoUrl.pathname, "/demo/questions");
+  assert.equal(questionDemoUrl.pathname, "/demo/sample-question");
   assert.equal(questionDemoUrl.searchParams.get("intent"), "demo");
 });
 
-test("audio landing uses a static product screenshot without video preload", () => {
+test("focused demo launchers replace static product screenshots without eager media", () => {
   const audio = fs.readFileSync("src/app/akt-audio-revision/page.tsx", "utf8");
+  const demo = fs.readFileSync("src/app/demo/page.tsx", "utf8");
 
-  assert.match(audio, /src="\/appshots\/audio-player-current-430x932\.png"/);
-  assert.match(
-    audio,
-    /alt="AKT Navigator Neurology audiobook player showing chapter controls and chapter list"/,
-  );
-  assert.doesNotMatch(audio, /02-audio-1206x2622/);
-  assert.doesNotMatch(audio, /HeroVideo|<video|autoPlay|preload=/);
-  assert.doesNotMatch(audio, /\bpriority(?:\s|=)/);
-  assert.match(audio, /style=\{\{ color: "var\(--fg-mid\)" \}\}/);
+  for (const source of [audio, demo]) {
+    assert.doesNotMatch(source, /appshots\//);
+    assert.doesNotMatch(source, /HeroVideo|<video|autoPlay|preload=/);
+    assert.doesNotMatch(source, /\bpriority(?:\s|=)/);
+    assert.match(source, /style=\{\{ color: "var\(--fg-mid\)" \}\}/);
+  }
 });
 
 test("audio-first app handoff preserves consented Google Ads attribution", () => {

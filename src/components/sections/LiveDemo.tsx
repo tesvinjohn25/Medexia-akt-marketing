@@ -1,11 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import {
+  iframeOnOurOrigin,
+  useDemoOverlay,
+} from "@/hooks/useDemoOverlay";
 import { AudioEqualizer } from "@/components/AudioEqualizer";
 import { TrackedAppLink, useTrackedAppUrl } from "@/components/marketing/TrackedAppLink";
-import { getAppOrigin } from "@/lib/marketing/url";
 
 /**
  * The live product demo, embedded in the landing page.
@@ -33,75 +36,21 @@ import { getAppOrigin } from "@/lib/marketing/url";
 const EMBED = true;
 
 const DEMO_HOME = "/demo";
-const APP_ORIGIN = getAppOrigin();
-
-/** True when a cross-origin iframe has navigated back onto our own
- * origin (e.g. the demo's back button pointing at the marketing site). */
-function iframeOnOurOrigin(frame: HTMLIFrameElement | null): boolean {
-  try {
-    const host = frame?.contentWindow?.location.hostname;
-    return !!host && host === window.location.hostname;
-  } catch {
-    return false; // still cross-origin: still inside the demo
-  }
-}
 
 export function LiveDemo() {
   const { ref, visible } = useScrollReveal();
   const demoHome = useTrackedAppUrl(DEMO_HOME, { intent: "demo" });
-  const [overlayOpen, setOverlayOpen] = useState(false);
   const [deskFrameKey, setDeskFrameKey] = useState(0);
   const deskFrameRef = useRef<HTMLIFrameElement>(null);
-  const overlayFrameRef = useRef<HTMLIFrameElement>(null);
-  const overlayPushed = useRef(false);
-
-  // Mobile overlay: lock the page behind it and make the browser back
-  // button exit the demo instead of leaving the site.
-  const closeOverlay = useCallback(() => {
-    if (overlayPushed.current) {
-      overlayPushed.current = false;
-      window.history.back();
-    } else {
-      setOverlayOpen(false);
-    }
-  }, []);
-
-  const openOverlay = useCallback(() => {
-    window.history.pushState({ aktDemo: true }, "");
-    overlayPushed.current = true;
-    setOverlayOpen(true);
-  }, []);
-
-  useEffect(() => {
-    if (!overlayOpen) return;
-
-    const onPop = () => {
-      overlayPushed.current = false;
-      setOverlayOpen(false);
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeOverlay();
-    };
-    // Let the app close the overlay itself when embedded.
-    const onMessage = (e: MessageEvent) => {
-      if (e.origin === APP_ORIGIN && e.data?.type === "akt-demo-exit") {
-        closeOverlay();
-      }
-    };
-    window.addEventListener("popstate", onPop);
-    window.addEventListener("keydown", onKey);
-    window.addEventListener("message", onMessage);
-
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      window.removeEventListener("popstate", onPop);
-      window.removeEventListener("keydown", onKey);
-      window.removeEventListener("message", onMessage);
-      document.body.style.overflow = prevOverflow;
-    };
-  }, [overlayOpen, closeOverlay]);
+  const {
+    closeOverlay,
+    dialogRef,
+    frameRef: overlayFrameRef,
+    handleFrameLoad,
+    openOverlay,
+    overlayOpen,
+    triggerRef,
+  } = useDemoOverlay();
 
   return (
     <section
@@ -257,6 +206,7 @@ export function LiveDemo() {
         >
           {EMBED ? (
             <button
+              ref={triggerRef}
               type="button"
               onClick={openOverlay}
               className="card-shimmer relative mx-auto flex w-full max-w-[340px] flex-col items-center gap-4 overflow-hidden rounded-[26px] px-6 py-9 text-center"
@@ -321,6 +271,8 @@ export function LiveDemo() {
           exiting drops the visitor back exactly where they were. */}
       {overlayOpen && (
         <div
+          ref={dialogRef}
+          tabIndex={-1}
           className="demo-overlay fixed inset-0 z-[100] flex flex-col lg:hidden"
           style={{ background: "#06070b", overscrollBehavior: "contain" }}
           role="dialog"
@@ -353,6 +305,7 @@ export function LiveDemo() {
             <button
               type="button"
               onClick={closeOverlay}
+              data-demo-exit
               className="flex items-center gap-1.5 rounded-full px-4 py-[8px] text-[13px] font-semibold"
               style={{
                 color: "rgba(232,236,255,.9)",
@@ -380,16 +333,20 @@ export function LiveDemo() {
             src={demoHome}
             title="AKT Navigator live demo"
             allow="autoplay"
-            onLoad={() => {
-              // The demo's back button navigated the frame to the
-              // marketing site — that means "I'm done": close the
-              // overlay instead of showing the site inside itself.
-              if (iframeOnOurOrigin(overlayFrameRef.current)) {
-                closeOverlay();
-              }
-            }}
+            onLoad={handleFrameLoad}
             className="block w-full flex-1"
             style={{ border: 0, background: "#0b0d13" }}
+          />
+          <span
+            tabIndex={0}
+            aria-hidden="true"
+            data-demo-focus-guard
+            className="sr-only"
+            onFocus={() => {
+              dialogRef.current
+                ?.querySelector<HTMLButtonElement>("[data-demo-exit]")
+                ?.focus();
+            }}
           />
         </div>
       )}

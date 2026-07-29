@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Nav } from "@/components/Nav";
 import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
+import { FocusedDemoLauncher } from "@/components/sections/FocusedDemoLauncher";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { SAMPLE_QUESTION } from "@/data/sample-question";
@@ -9,21 +9,20 @@ import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 import { getOfferPhase, phased } from "@/lib/offer-phase";
 import { getAppOrigin } from "@/lib/marketing/url";
 
-const DEMO_HOME = new URL("/demo", getAppOrigin()).toString();
-const DEMO_AUDIO = "/demo/audio";
-const DEMO_QUESTIONS = "/demo/questions";
+const DEMO_QUESTIONS = "/demo/sample-question";
+const DEMO_HOME = new URL(DEMO_QUESTIONS, getAppOrigin()).toString();
 
 export const metadata: Metadata = {
-  title: "Free MRCGP AKT Sample Questions + Audio Demo",
+  title: "Free MRCGP AKT Sample Questions Demo",
   description:
-    "Try five free MRCGP AKT-style sample questions with structured explanations, or hear an AKT audio revision sample. No signup.",
+    "Try five free MRCGP AKT-style sample questions with structured explanations in the focused AKT Navigator question demo. No signup.",
   alternates: {
     canonical: "https://medexia-akt.com/demo",
   },
   openGraph: {
-    title: "Free MRCGP AKT Sample Questions + Audio Demo",
+    title: "Free MRCGP AKT Sample Questions Demo",
     description:
-      "No account needed: answer five AKT-style sample questions with structured explanations or hear an AKT audio revision sample.",
+      "No account needed: answer five AKT-style sample questions with structured explanations in the focused AKT Navigator question flow.",
     type: "website",
     url: "https://medexia-akt.com/demo",
   },
@@ -46,7 +45,7 @@ export default function DemoPage() {
         operatingSystem: "Web",
         offers: { "@type": "Offer", price: "0", priceCurrency: "GBP" },
         description:
-          "Free, no-signup demo of AKT Navigator: a narrated sample from the 90+ hour MRCGP AKT audio library and a five-question demo with structured explanations and results.",
+          "Free, no-signup five-question demo of AKT Navigator with structured explanations and results.",
         provider: {
           "@type": "Organization",
           name: "Medexia",
@@ -102,7 +101,7 @@ export default function DemoPage() {
             name: "Do I need an account to try the AKT Navigator demo?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "No. The demo is completely free and requires no signup. You can listen to an audio sample and answer five AKT-style sample questions with full explanations.",
+              text: "No. The question demo is completely free and requires no signup. You can answer five AKT-style sample questions with full explanations.",
             },
           },
           {
@@ -110,7 +109,7 @@ export default function DemoPage() {
             name: "What is in the AKT Navigator demo?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Two things: a narrated sample from the 90+ hour MRCGP AKT audio library, and a five-question demo where each answer is followed by a structured explanation — Understanding the Question, Key points, and Why the other options are wrong — ending with your results.",
+              text: "Five AKT-style sample questions. Each answer is followed by a structured explanation — Understanding the Question, Key points, and Why the other options are wrong — before your final results.",
             },
           },
           {
@@ -188,65 +187,32 @@ export default function DemoPage() {
               Understanding the Question, Key points, and Why the other options
               are wrong.
             </p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <TrackedAppLink
-                href={DEMO_QUESTIONS}
-                intent="demo"
-                className="btn-primary inline-block text-[15px]"
-              >
-                Start 5 sample questions &rarr;
-              </TrackedAppLink>
-              <TrackedAppLink
-                href={DEMO_AUDIO}
-                intent="demo"
-                className="btn-secondary inline-flex items-center text-[15px]"
-              >
-                Hear the audio sample
-              </TrackedAppLink>
-            </div>
-            <p
-              className="mt-4 text-[12px] leading-[1.5]"
-              style={{ color: "var(--fg-mid)" }}
-            >
-              No account or card needed. AKT-style revision content,
-              independent of and not endorsed by the RCGP.
-            </p>
           </div>
 
           <div className="relative mx-auto w-full max-w-[430px]">
-            <div
-              className="pointer-events-none absolute -inset-10 rounded-full"
-              aria-hidden
-              style={{
-                background:
-                  "radial-gradient(closest-side, rgba(109,106,232,.24), rgba(52,211,153,.08) 58%, transparent 80%)",
-                filter: "blur(34px)",
-              }}
+            <FocusedDemoLauncher
+              demoPath={DEMO_QUESTIONS}
+              kind="questions"
             />
             <div
-              className="relative overflow-hidden rounded-[28px] p-2"
-              style={{
-                background: "#070910",
-                border: "1px solid rgba(167,139,250,.18)",
-                boxShadow:
-                  "0 35px 120px rgba(0,0,0,.62), 0 0 90px rgba(109,106,232,.16)",
-              }}
+              className="mx-auto mt-5 flex max-w-[390px] flex-col items-stretch gap-3 text-center"
+              data-focused-demo-cta="questions"
             >
-              <Image
-                src="/appshots/demo-question-current-430x932.png"
-                alt="AKT Navigator sample-question screen showing an atrial fibrillation question and answer options"
-                width={430}
-                height={932}
-                className="block h-auto w-full rounded-[22px]"
-                sizes="(max-width: 767px) 88vw, 390px"
-              />
+              <TrackedAppLink
+                href="/join/free"
+                intent="start_free"
+                className="btn-primary block text-[15px]"
+              >
+                Create your free account &mdash; questions stay free
+              </TrackedAppLink>
+              <p
+                className="text-[12px] leading-[1.55]"
+                style={{ color: "var(--fg-mid)" }}
+              >
+                Demo: no account or card needed. AKT-style revision content,
+                independent of and not endorsed by the RCGP.
+              </p>
             </div>
-            <p
-              className="mt-3 text-center text-[12px] font-medium"
-              style={{ color: "var(--fg-mid)" }}
-            >
-              Current AKT Navigator sample-question practice screen
-            </p>
           </div>
         </div>
       </section>
@@ -463,23 +429,11 @@ export default function DemoPage() {
 
           <div className="mt-6 flex flex-wrap gap-3">
             <TrackedAppLink
-              href={DEMO_QUESTIONS}
-              intent="demo"
+              href="/join/free"
+              intent="start_free"
               className="btn-primary text-[14px]"
             >
-              Try 5 sample questions &rarr;
-            </TrackedAppLink>
-            <TrackedAppLink
-              href={DEMO_AUDIO}
-              intent="demo"
-              className="rounded-[14px] px-5 py-3 text-[14px] font-semibold transition-colors hover:bg-white/[.08]"
-              style={{
-                color: "var(--fg-high)",
-                background: "rgba(255,255,255,.045)",
-                border: "1px solid rgba(255,255,255,.10)",
-              }}
-            >
-              Or start with the audio &rarr;
+              Create your free account &mdash; questions stay free
             </TrackedAppLink>
           </div>
         </div>

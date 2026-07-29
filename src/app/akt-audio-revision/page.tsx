@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Nav } from "@/components/Nav";
 import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
+import { FocusedDemoLauncher } from "@/components/sections/FocusedDemoLauncher";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
@@ -220,65 +220,29 @@ export default function AktAudioRevisionPage() {
               Hear a real chapter now, with no signup, then use your first two
               hours of audio free.
             </p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <TrackedAppLink
-                href={DEMO_AUDIO}
-                intent="demo"
-                className="btn-primary inline-block text-[15px]"
-              >
-                Listen to a free sample &rarr;
-              </TrackedAppLink>
+          </div>
+
+          <div className="relative mx-auto w-full max-w-[430px]">
+            <FocusedDemoLauncher demoPath={DEMO_AUDIO} kind="audio" />
+            <div
+              className="mx-auto mt-5 flex max-w-[390px] flex-col items-stretch gap-3 text-center"
+              data-focused-demo-cta="audio"
+            >
               <TrackedAppLink
                 href="/join/audio"
                 intent="start_audio"
-                className="btn-secondary inline-flex items-center text-[15px]"
+                className="btn-primary block text-[15px]"
               >
                 Start 2 free hours
               </TrackedAppLink>
+              <p
+                className="text-[12px] leading-[1.55]"
+                style={{ color: "var(--fg-mid)" }}
+              >
+                Demo: no account needed. Free audio allowance: no card needed.
+                Questions and timed mocks stay free.
+              </p>
             </div>
-            <p
-              className="mt-4 text-[12px] leading-[1.5]"
-              style={{ color: "var(--fg-mid)" }}
-            >
-              Sample: no account needed. Free audio allowance: no card needed.
-              Questions and timed mocks stay free.
-            </p>
-          </div>
-
-          <div className="relative mx-auto w-full max-w-[280px] md:max-w-[300px]">
-            <div
-              className="pointer-events-none absolute -inset-10 rounded-full"
-              aria-hidden
-              style={{
-                background:
-                  "radial-gradient(closest-side, rgba(236,72,153,.18), rgba(167,139,250,.12) 48%, transparent 80%)",
-                filter: "blur(34px)",
-              }}
-            />
-            <div
-              className="relative overflow-hidden rounded-[42px] p-[9px]"
-              style={{
-                background: "#06070b",
-                border: "1px solid rgba(255,255,255,.14)",
-                boxShadow:
-                  "0 45px 130px rgba(0,0,0,.62), 0 0 80px rgba(155,107,255,.16)",
-              }}
-            >
-              <Image
-                src="/appshots/audio-player-current-430x932.png"
-                alt="AKT Navigator Neurology audiobook player showing chapter controls and chapter list"
-                width={430}
-                height={932}
-                sizes="(max-width: 767px) 72vw, 300px"
-                className="block h-auto w-full rounded-[33px]"
-              />
-            </div>
-            <p
-              className="mt-3 text-center text-[12px] font-medium"
-              style={{ color: "var(--fg-mid)" }}
-            >
-              Neurology audiobook player in AKT Navigator
-            </p>
           </div>
         </div>
       </section>

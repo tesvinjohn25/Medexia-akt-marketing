@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Nav } from "@/components/Nav";
 import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import { FinalCTA } from "@/components/sections/FinalCTA";
@@ -6,22 +7,23 @@ import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { SAMPLE_QUESTION } from "@/data/sample-question";
 import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
 import { getOfferPhase, phased } from "@/lib/offer-phase";
+import { getAppOrigin } from "@/lib/marketing/url";
 
-const DEMO_HOME = "https://app.medexia-akt.com/demo";
-const DEMO_AUDIO = "/demo/audiobook";
+const DEMO_HOME = new URL("/demo", getAppOrigin()).toString();
+const DEMO_AUDIO = "/demo/audio";
 const DEMO_QUESTIONS = "/demo/questions";
 
 export const metadata: Metadata = {
-  title: "Try AKT Navigator Free — Audio Sample + 5 Real AKT Questions",
+  title: "Free MRCGP AKT Sample Questions + Audio Demo",
   description:
-    "Try AKT Navigator free: hear a real MRCGP AKT audio sample and answer five AKT-style questions with structured explanations. No signup.",
+    "Try five free MRCGP AKT-style sample questions with structured explanations, or hear an AKT audio revision sample. No signup.",
   alternates: {
     canonical: "https://medexia-akt.com/demo",
   },
   openGraph: {
-    title: "Try AKT Navigator Free — Audio + 5 Real AKT Questions",
+    title: "Free MRCGP AKT Sample Questions + Audio Demo",
     description:
-      "No account needed: hear a real audio sample and sit five real AKT-style questions with structured, examiner-style explanations.",
+      "No account needed: answer five AKT-style sample questions with structured explanations or hear an AKT audio revision sample.",
     type: "website",
     url: "https://medexia-akt.com/demo",
   },
@@ -100,7 +102,7 @@ export default function DemoPage() {
             name: "Do I need an account to try the AKT Navigator demo?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "No. The demo is completely free and requires no signup. You can listen to a real audio sample and sit five real AKT-style questions with full explanations.",
+              text: "No. The demo is completely free and requires no signup. You can listen to an audio sample and answer five AKT-style sample questions with full explanations.",
             },
           },
           {
@@ -108,7 +110,7 @@ export default function DemoPage() {
             name: "What is in the AKT Navigator demo?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Two things: a narrated sample from the 90+ hour MRCGP AKT audio library, and a five-question demo where each answer is followed by a structured explanation — understanding the question, key points for your AKT, and why the other options are wrong — ending with your results.",
+              text: "Two things: a narrated sample from the 90+ hour MRCGP AKT audio library, and a five-question demo where each answer is followed by a structured explanation — Understanding the Question, Key points, and Why the other options are wrong — ending with your results.",
             },
           },
           {
@@ -142,114 +144,109 @@ export default function DemoPage() {
       />
       <Nav />
 
-      <section
-        className="section-padding"
-        style={{ paddingTop: "calc(80px + 48px)" }}
-      >
-        <div className="container-x max-w-[720px]">
-          <div
-            className="text-[11px] tracking-[0.22em] uppercase font-semibold"
-            style={{ color: "rgba(52,211,153,.85)" }}
-          >
-            Free demo &middot; No signup
-          </div>
-          <h1
-            className="mt-3 text-[32px] md:text-[44px] leading-[1.1]"
-            style={{
-              fontFamily: "var(--font-display)",
-              letterSpacing: "-0.03em",
-            }}
-          >
-            Try AKT Navigator before you sign up for anything.
-          </h1>
-          <p
-            className="mt-4 text-[16px] md:text-[18px] leading-[1.7]"
-            style={{ color: "var(--fg-mid)" }}
-          >
-            The demo is the real app, not a video. Listen to a narrated sample
-            from the 90+ hour MRCGP AKT audio library, then sit five real
-            AKT-style questions and see exactly how every answer is explained.
-          </p>
-
-          <div className="mt-7 flex flex-wrap gap-3">
-            <TrackedAppLink href={DEMO_AUDIO} intent="demo" className="btn-primary text-[14px]">
-              Listen to the audio demo &rarr;
-            </TrackedAppLink>
-            <TrackedAppLink
-              href={DEMO_QUESTIONS}
-              intent="demo"
-              className="rounded-[14px] px-5 py-3 text-[14px] font-semibold transition-colors hover:bg-white/[.08]"
+      <section className="relative overflow-hidden">
+        <div
+          className="pointer-events-none absolute inset-0"
+          aria-hidden
+          style={{
+            background:
+              "linear-gradient(180deg, #000 0%, rgba(7,5,14,.96) 64%, transparent 100%)",
+          }}
+        />
+        <div className="hero-noise" />
+        <div
+          data-demo-hero-content
+          className="container-x relative grid gap-8 md:grid-cols-[1.02fr_.98fr] md:items-center md:gap-12"
+          style={{
+            paddingTop:
+              "calc(env(safe-area-inset-top, 0px) + clamp(88px, 10vw, 120px))",
+            paddingBottom: "clamp(40px, 6vw, 56px)",
+          }}
+        >
+          <div className="max-w-[620px]">
+            <p
+              className="text-[11px] font-semibold uppercase tracking-[0.22em]"
+              style={{ color: "rgba(52,211,153,.86)" }}
+            >
+              Free MRCGP AKT demo · No signup
+            </p>
+            <h1
+              className="mt-4 text-[38px] leading-[1.02] md:text-[54px] lg:text-[62px]"
               style={{
-                color: "var(--fg-high)",
-                background: "rgba(255,255,255,.045)",
-                border: "1px solid rgba(255,255,255,.10)",
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.045em",
+                textShadow: "0 22px 70px rgba(0,0,0,.7)",
               }}
             >
-              Sit 5 real questions &rarr;
-            </TrackedAppLink>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-padding" style={{ paddingTop: 0 }}>
-        <div className="container-x max-w-[720px]">
-          <h2
-            className="text-[24px] md:text-[30px] leading-[1.15]"
-            style={{
-              fontFamily: "var(--font-display)",
-              letterSpacing: "-0.025em",
-            }}
-          >
-            What&rsquo;s in the demo
-          </h2>
-          <div className="mt-5 grid gap-3 md:grid-cols-2">
-            <div
-              className="rounded-[16px] p-5"
-              style={{
-                background: "rgba(236,72,153,.05)",
-                border: "1px solid rgba(236,72,153,.16)",
-              }}
+              Try five free AKT-style sample questions.
+            </h1>
+            <p
+              className="mt-5 max-w-[560px] text-[16px] leading-[1.6] md:text-[18px]"
+              style={{ color: "rgba(232,236,255,.76)" }}
             >
-              <div
-                className="text-[11px] font-bold uppercase tracking-[0.18em]"
-                style={{ color: "rgba(236,72,153,.85)" }}
+              Answer in the real AKT Navigator practice flow, then work through
+              Understanding the Question, Key points, and Why the other options
+              are wrong.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <TrackedAppLink
+                href={DEMO_QUESTIONS}
+                intent="demo"
+                className="btn-primary inline-block text-[15px]"
               >
-                The audio demo
-              </div>
-              <p
-                className="mt-2 text-[14px] md:text-[15px] leading-[1.65]"
-                style={{ color: "rgba(232,236,255,.74)" }}
+                Start 5 sample questions &rarr;
+              </TrackedAppLink>
+              <TrackedAppLink
+                href={DEMO_AUDIO}
+                intent="demo"
+                className="btn-secondary inline-flex items-center text-[15px]"
               >
-                A real chapter from the audiobook library, played in the same
-                player you&rsquo;d use to revise on a commute, at the gym or on
-                the school run. The full library covers all 32 RCGP AKT
-                curriculum topics in 90+ hours.
-              </p>
+                Hear the audio sample
+              </TrackedAppLink>
             </div>
+            <p
+              className="mt-4 text-[12px] leading-[1.5]"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              No account or card needed. AKT-style revision content,
+              independent of and not endorsed by the RCGP.
+            </p>
+          </div>
+
+          <div className="relative mx-auto w-full max-w-[430px]">
             <div
-              className="rounded-[16px] p-5"
+              className="pointer-events-none absolute -inset-10 rounded-full"
+              aria-hidden
               style={{
-                background: "rgba(167,139,250,.05)",
-                border: "1px solid rgba(167,139,250,.16)",
+                background:
+                  "radial-gradient(closest-side, rgba(109,106,232,.24), rgba(52,211,153,.08) 58%, transparent 80%)",
+                filter: "blur(34px)",
+              }}
+            />
+            <div
+              className="relative overflow-hidden rounded-[28px] p-2"
+              style={{
+                background: "#070910",
+                border: "1px solid rgba(167,139,250,.18)",
+                boxShadow:
+                  "0 35px 120px rgba(0,0,0,.62), 0 0 90px rgba(109,106,232,.16)",
               }}
             >
-              <div
-                className="text-[11px] font-bold uppercase tracking-[0.18em]"
-                style={{ color: "rgba(167,139,250,.85)" }}
-              >
-                The question demo
-              </div>
-              <p
-                className="mt-2 text-[14px] md:text-[15px] leading-[1.65]"
-                style={{ color: "rgba(232,236,255,.74)" }}
-              >
-                Five real AKT-style questions in the exam&rsquo;s
-                single-best-answer format. After each answer you get the full
-                structured explanation, and your results at the end. Questions
-                are aligned to NICE, CKS and the BNF and regularly reviewed and
-                updated.
-              </p>
+              <Image
+                src="/appshots/demo-question-current-430x932.png"
+                alt="AKT Navigator sample-question screen showing an atrial fibrillation question and answer options"
+                width={430}
+                height={932}
+                className="block h-auto w-full rounded-[22px]"
+                sizes="(max-width: 767px) 88vw, 390px"
+              />
             </div>
+            <p
+              className="mt-3 text-center text-[12px] font-medium"
+              style={{ color: "var(--fg-mid)" }}
+            >
+              Current AKT Navigator sample-question practice screen
+            </p>
           </div>
         </div>
       </section>
@@ -378,7 +375,7 @@ export default function DemoPage() {
                 className="text-[13px] font-bold uppercase tracking-[0.16em]"
                 style={{ color: "rgba(167,139,250,.9)" }}
               >
-                Understanding the question
+                Understanding the Question
               </h3>
               <p
                 className="mt-2 text-[14px] md:text-[15px] leading-[1.7]"
@@ -396,7 +393,7 @@ export default function DemoPage() {
                 className="text-[13px] font-bold uppercase tracking-[0.16em]"
                 style={{ color: "rgba(167,139,250,.9)" }}
               >
-                Key points for your AKT
+                Key points
               </h3>
               <ul className="mt-2 space-y-2">
                 {q.keyPoints.map((kp) => (
@@ -458,17 +455,23 @@ export default function DemoPage() {
           >
             Every question follows the AKT&rsquo;s single-best-answer format
             &mdash; a clinical vignette stem with plausible distractors &mdash;
-            and every answer is broken down like the example above. Content is
-            aligned to NICE, CKS and the BNF and regularly reviewed and updated
-            as guidance changes.
+            and every answer is broken down like the example above. The
+            question bank is AI-assisted and is not individually
+            clinician-reviewed item by item. For clinical decisions, use
+            current NICE CKS, BNF/BNFC and official guidance.
           </p>
 
           <div className="mt-6 flex flex-wrap gap-3">
-            <a href={DEMO_QUESTIONS} className="btn-primary text-[14px]">
-              Try 5 questions like this &rarr;
-            </a>
-            <a
+            <TrackedAppLink
+              href={DEMO_QUESTIONS}
+              intent="demo"
+              className="btn-primary text-[14px]"
+            >
+              Try 5 sample questions &rarr;
+            </TrackedAppLink>
+            <TrackedAppLink
               href={DEMO_AUDIO}
+              intent="demo"
               className="rounded-[14px] px-5 py-3 text-[14px] font-semibold transition-colors hover:bg-white/[.08]"
               style={{
                 color: "var(--fg-high)",
@@ -477,7 +480,7 @@ export default function DemoPage() {
               }}
             >
               Or start with the audio &rarr;
-            </a>
+            </TrackedAppLink>
           </div>
         </div>
       </section>

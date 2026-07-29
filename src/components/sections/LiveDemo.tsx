@@ -137,15 +137,15 @@ export function LiveDemo() {
               "--i": 1,
             } as React.CSSProperties}
           >
-            Hear it. Then sit five real questions.
+            Hear it. Then try five AKT-style questions.
           </h2>
           <p
             className="r-up mx-auto mt-3 max-w-[560px] text-[14px] md:text-[16px] leading-[1.65]"
             style={{ color: "rgba(232,236,255,.62)", "--i": 2 } as React.CSSProperties}
           >
-            This is the live app, not a mock-up. Single-best-answer format like
-            the real exam, aligned to NICE, CKS and the BNF, and regularly
-            reviewed and updated.
+            This is the live app, not a mock-up. Try the single-best-answer
+            practice flow and see the structured explanation after each
+            response.
           </p>
         </div>
 
@@ -231,10 +231,9 @@ export function LiveDemo() {
                   className="mt-1.5 text-[14px] leading-[1.6]"
                   style={{ color: "rgba(232,236,255,.68)" }}
                 >
-                  Five real AKT-style questions. Answer each one, then see the
-                  structured explanation &mdash; understanding the question,
-                  key points for your AKT, and why the other options are
-                  wrong &mdash; before your results.
+                  Five AKT-style sample questions. Answer each one, then work
+                  through Understanding the Question, Key points, and Why the
+                  other options are wrong before your results.
                 </p>
               </li>
             </ul>
@@ -302,7 +301,7 @@ export function LiveDemo() {
                 className="text-[11px] font-semibold uppercase tracking-[0.16em]"
                 style={{ color: "rgba(232,236,255,.6)" }}
               >
-                Audio + 5 real questions &middot; 2 minutes
+                Audio sample + 5 AKT-style questions
               </span>
               <span className="btn-primary mt-1 px-7 text-[14px]">
                 Start the demo &rarr;

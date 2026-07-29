@@ -1242,6 +1242,102 @@ test("homepage post-cutover hero hands audio traffic to the free audio-first flo
   assert.match(trackedLink, /window\.location\.assign\(navigationHref\)/);
 });
 
+test("demo landing uses environment-aware tracked app paths and AKT-style wording", () => {
+  const demo = fs.readFileSync("src/app/demo/page.tsx", "utf8");
+  const audio = fs.readFileSync("src/app/akt-audio-revision/page.tsx", "utf8");
+
+  assert.match(demo, /const DEMO_AUDIO = "\/demo\/audio"/);
+  assert.match(demo, /const DEMO_QUESTIONS = "\/demo\/questions"/);
+  assert.match(audio, /const DEMO_AUDIO = "\/demo\/audio"/);
+  assert.match(
+    demo,
+    /const DEMO_HOME = new URL\("\/demo", getAppOrigin\(\)\)\.toString\(\)/,
+  );
+  assert.doesNotMatch(demo, /https:\/\/app\.medexia-akt\.com\/demo/);
+  assert.match(demo, /<TrackedAppLink[\s\S]*href=\{DEMO_QUESTIONS\}[\s\S]*intent="demo"/);
+  assert.match(demo, /<TrackedAppLink[\s\S]*href=\{DEMO_AUDIO\}[\s\S]*intent="demo"/);
+  assert.match(audio, /<TrackedAppLink[\s\S]*href=\{DEMO_AUDIO\}[\s\S]*intent="demo"/);
+  assert.match(demo, /Try five free AKT-style sample questions/);
+  assert.doesNotMatch(demo, /(?:five|5) real AKT(?:-style)? questions/i);
+  assert.match(
+    demo,
+    /src="\/appshots\/demo-question-current-430x932\.png"/,
+  );
+  assert.match(
+    demo,
+    /alt="AKT Navigator sample-question screen showing an atrial fibrillation question and answer options"/,
+  );
+  assert.match(
+    demo,
+    /Current AKT Navigator sample-question practice screen/,
+  );
+  assert.doesNotMatch(demo, /appshots\/question\.jpg/);
+  assert.doesNotMatch(demo, /\bpriority(?:\s|=)/);
+  assert.doesNotMatch(demo, /\bpreload=/);
+  assert.match(
+    demo,
+    /Understanding the Question, Key points, and Why the other options\s+are wrong/,
+  );
+  assert.match(demo, />\s*Understanding the Question\s*</);
+  assert.match(demo, />\s*Key points\s*</);
+  assert.match(demo, />\s*Why the other options are wrong\s*</);
+  assert.match(
+    demo,
+    /structured explanation — Understanding the Question, Key points, and Why the other options are wrong — ending/,
+  );
+  assert.doesNotMatch(demo, /key points for your AKT/i);
+  assert.match(
+    demo,
+    /data-demo-hero-content[\s\S]*paddingBottom: "clamp\(40px, 6vw, 56px\)"/,
+  );
+  assert.doesNotMatch(
+    demo,
+    /className="container-x relative grid gap-8[^"]*\b(?:pb-10|md:pb-14)\b/,
+  );
+
+  const liveDemo = fs.readFileSync(
+    "src/components/sections/LiveDemo.tsx",
+    "utf8",
+  );
+  assert.match(
+    liveDemo,
+    /Understanding the Question, Key points, and Why the\s+other options are wrong/,
+  );
+  assert.doesNotMatch(liveDemo, /key clue|common trap/i);
+
+  resetTrackingEnv();
+  process.env.NEXT_PUBLIC_APP_BASE_URL = "https://preview-app.example.test";
+  installBrowser("https://medexia-akt.com/demo");
+
+  const audioDemoUrl = new URL(
+    buildAppFallbackUrl("/demo/audio", { intent: "demo" }),
+  );
+  const questionDemoUrl = new URL(
+    buildAppFallbackUrl("/demo/questions", { intent: "demo" }),
+  );
+
+  assert.equal(audioDemoUrl.origin, "https://preview-app.example.test");
+  assert.equal(audioDemoUrl.pathname, "/demo/audio");
+  assert.equal(audioDemoUrl.searchParams.get("intent"), "demo");
+  assert.equal(questionDemoUrl.origin, "https://preview-app.example.test");
+  assert.equal(questionDemoUrl.pathname, "/demo/questions");
+  assert.equal(questionDemoUrl.searchParams.get("intent"), "demo");
+});
+
+test("audio landing uses a static product screenshot without video preload", () => {
+  const audio = fs.readFileSync("src/app/akt-audio-revision/page.tsx", "utf8");
+
+  assert.match(audio, /src="\/appshots\/audio-player-current-430x932\.png"/);
+  assert.match(
+    audio,
+    /alt="AKT Navigator Neurology audiobook player showing chapter controls and chapter list"/,
+  );
+  assert.doesNotMatch(audio, /02-audio-1206x2622/);
+  assert.doesNotMatch(audio, /HeroVideo|<video|autoPlay|preload=/);
+  assert.doesNotMatch(audio, /\bpriority(?:\s|=)/);
+  assert.match(audio, /style=\{\{ color: "var\(--fg-mid\)" \}\}/);
+});
+
 test("audio-first app handoff preserves consented Google Ads attribution", () => {
   resetTrackingEnv();
   installBrowser(

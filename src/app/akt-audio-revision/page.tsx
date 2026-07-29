@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
 import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
+import { FocusedDemoLauncher } from "@/components/sections/FocusedDemoLauncher";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 import { TrackedAppLink } from "@/components/marketing/TrackedAppLink";
-import { AiAnswerBox } from "@/components/sections/AiAnswerBox";
 import { aktTopics } from "@/data/akt-topics";
 import { getOfferPhase, phased, type OfferPhase } from "@/lib/offer-phase";
+
+const DEMO_AUDIO = "/demo/audio";
 
 export const metadata: Metadata = {
   title: "MRCGP AKT Audio Revision — 90+ Hours, First 2 Free",
@@ -176,104 +178,87 @@ export default function AktAudioRevisionPage() {
       />
       <Nav />
 
-      <section
-        className="section-padding"
-        style={{ paddingTop: "calc(80px + 48px)" }}
-      >
-        <div className="container-x max-w-[720px]">
-          <h1
-            className="text-[32px] md:text-[44px] leading-[1.1]"
-            style={{
-              fontFamily: "var(--font-display)",
-              letterSpacing: "-0.03em",
-            }}
-          >
-            MRCGP AKT audio revision in 90+ hours
-          </h1>
-
-          <p
-            className="mt-4 text-[16px] md:text-[18px] leading-[1.7]"
-            style={{ color: "var(--fg-mid)" }}
-          >
-            AKT Navigator is an audio-first revision library for GP trainees
-            preparing for the RCGP MRCGP Applied Knowledge Test. It covers all
-            32 RCGP curriculum topics in over 90 hours, so you can revise while
-            commuting, walking, doing childcare or recovering after clinic when
-            reading is not realistic.
-          </p>
-
-          <AiAnswerBox
-            eyebrow="Audio-first AKT revision"
-            title="Short answer"
-            answer={
-              <p>
-                Yes. AKT Navigator provides 90+ hours of MRCGP AKT audio
-                revision across the RCGP curriculum. It is designed for GP
-                trainees who cannot always sit at a screen: commuting, walking,
-                exercising, cooking, childcare, or low-energy evenings after
-                clinic.
-              </p>
-            }
-            bestFor={[
-              "trainees too tired to read after work",
-              "commute, gym and walking revision",
-              "reinforcing topics after question practice",
-              "October AKT revision and repeated syllabus coverage",
-            ]}
-            nextSteps={[
-              {
-                label: "Start free practice",
-                href: "/join/free",
-                intent: "start_free",
-              },
-              {
-                label: "Listen to sample audio",
-                href: "/demo/audiobook",
-                intent: "demo",
-              },
-              { label: "Compare revision tools", href: "/best-akt-revision-tool" },
-              { label: "Plan your revision", href: "/akt-revision-plan" },
-            ]}
-          />
-
-          {/* Key stats */}
-          <div className="mt-8 grid gap-4 grid-cols-3">
-            {[
-              { stat: "90+", label: "Hours of audio" },
-              { stat: "32", label: "RCGP topics" },
-              phased(
-                phase,
-                { stat: "£59", label: "Early access" },
-                { stat: "£79", label: "Full audio access" },
-              ),
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="rounded-xl p-4 text-center"
-                style={{
-                  background: "var(--bg-surface)",
-                  border: "1px solid var(--border)",
-                }}
-              >
-                <div
-                  className="text-[24px] font-bold"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    color: "var(--brand-iris)",
-                  }}
-                >
-                  {item.stat}
-                </div>
-                <div
-                  className="text-[12px] mt-1"
-                  style={{ color: "var(--fg-muted)" }}
-                >
-                  {item.label}
-                </div>
-              </div>
-            ))}
+      <section className="relative overflow-hidden">
+        <div
+          className="pointer-events-none absolute inset-0"
+          aria-hidden
+          style={{
+            background:
+              "linear-gradient(180deg, #000 0%, rgba(7,5,14,.95) 65%, transparent 100%)",
+          }}
+        />
+        <div className="hero-noise" />
+        <div
+          className="container-x relative grid gap-7 pb-10 md:grid-cols-[1.02fr_.98fr] md:items-center md:gap-12 md:pb-14"
+          style={{
+            paddingTop:
+              "calc(env(safe-area-inset-top, 0px) + clamp(88px, 10vw, 120px))",
+          }}
+        >
+          <div className="max-w-[620px]">
+            <p
+              className="text-[11px] font-semibold uppercase tracking-[0.22em]"
+              style={{ color: "rgba(236,72,153,.88)" }}
+            >
+              90+ hours · all 32 RCGP topic areas
+            </p>
+            <h1
+              className="mt-4 text-[38px] leading-[1.02] md:text-[54px] lg:text-[62px]"
+              style={{
+                fontFamily: "var(--font-display)",
+                letterSpacing: "-0.045em",
+                textShadow: "0 22px 70px rgba(0,0,0,.7)",
+              }}
+            >
+              MRCGP AKT audio revision for the hours you can&rsquo;t read.
+            </h1>
+            <p
+              className="mt-5 max-w-[560px] text-[16px] leading-[1.6] md:text-[18px]"
+              style={{ color: "rgba(232,236,255,.76)" }}
+            >
+              Cover the AKT syllabus on commutes, walks and tired evenings.
+              Hear a real chapter now, with no signup, then use your first two
+              hours of audio free.
+            </p>
           </div>
 
+          <div className="relative mx-auto w-full max-w-[430px]">
+            <FocusedDemoLauncher demoPath={DEMO_AUDIO} kind="audio" />
+            <div
+              className="mx-auto mt-4 flex max-w-[390px] flex-col items-center gap-2.5 text-center"
+              data-focused-demo-cta="audio"
+              data-cta-hierarchy="secondary"
+            >
+              <p
+                className="text-[11px] font-semibold uppercase tracking-[0.14em]"
+                style={{ color: "rgba(232,236,255,.66)" }}
+              >
+                Ready to continue?
+              </p>
+              <TrackedAppLink
+                href="/join/audio"
+                intent="start_audio"
+                className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/15 bg-white/[.035] px-6 text-[14px] font-semibold text-white/75 transition duration-200 hover:border-white/25 hover:bg-white/[.07] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet-300"
+              >
+                Start 2 free hours
+              </TrackedAppLink>
+              <p
+                className="max-w-[340px] text-[12px] leading-[1.55]"
+                style={{ color: "var(--fg-mid)", opacity: 0.65 }}
+              >
+                The demo needs no account. Your two free audio hours need no
+                card, and questions and timed mocks stay free.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        className="section-padding"
+        style={{ paddingTop: "clamp(16px, 3vw, 32px)" }}
+      >
+        <div className="container-x max-w-[720px]">
           {/* Why audio */}
           <div className="mt-12">
             <h2
@@ -561,10 +546,10 @@ export default function AktAudioRevisionPage() {
           <div className="mt-10">
             <TrackedAppLink
               className="btn-primary inline-block text-[16px]"
-              href="/join/free"
-              intent="start_free"
+              href="/join/audio"
+              intent="start_audio"
             >
-              Try free AKT audio &rarr;
+              Start 2 free hours of AKT audio &rarr;
             </TrackedAppLink>
           </div>
 
@@ -573,8 +558,8 @@ export default function AktAudioRevisionPage() {
             className="mt-6 text-[12px]"
             style={{ color: "var(--fg-muted)" }}
           >
-            Audio content aligned to NICE CKS and the RCGP curriculum. Last
-            reviewed June 2026.
+            Independent revision resource; not affiliated with or endorsed by
+            the RCGP. For clinical decisions, use current official guidance.
           </p>
         </div>
       </section>

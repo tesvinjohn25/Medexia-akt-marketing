@@ -1242,6 +1242,175 @@ test("homepage post-cutover hero hands audio traffic to the free audio-first flo
   assert.match(trackedLink, /window\.location\.assign\(navigationHref\)/);
 });
 
+test("focused landing demos use isolated, environment-aware app paths", () => {
+  const demo = fs.readFileSync("src/app/demo/page.tsx", "utf8");
+  const audio = fs.readFileSync("src/app/akt-audio-revision/page.tsx", "utf8");
+  const launcher = fs.readFileSync(
+    "src/components/sections/FocusedDemoLauncher.tsx",
+    "utf8",
+  );
+  const overlayHook = fs.readFileSync(
+    "src/hooks/useDemoOverlay.ts",
+    "utf8",
+  );
+
+  assert.match(demo, /const DEMO_QUESTIONS = "\/demo\/sample-question"/);
+  assert.match(audio, /const DEMO_AUDIO = "\/demo\/audio"/);
+  assert.match(
+    demo,
+    /const DEMO_HOME = new URL\(DEMO_QUESTIONS, getAppOrigin\(\)\)\.toString\(\)/,
+  );
+  assert.match(
+    demo,
+    /<FocusedDemoLauncher[\s\S]*demoPath=\{DEMO_QUESTIONS\}[\s\S]*kind="questions"/,
+  );
+  assert.match(
+    audio,
+    /<FocusedDemoLauncher demoPath=\{DEMO_AUDIO\} kind="audio" \/>/,
+  );
+  assert.doesNotMatch(demo, /DEMO_AUDIO|\/demo\/audio|Hear the audio sample/);
+  assert.match(demo, /Try five free AKT-style sample questions/);
+  assert.doesNotMatch(demo, /(?:five|5) real AKT(?:-style)? questions/i);
+  assert.doesNotMatch(demo, /appshots\//);
+  assert.doesNotMatch(audio, /appshots\//);
+  assert.match(demo, /data-focused-demo-cta="questions"/);
+  assert.match(
+    demo,
+    /data-focused-demo-cta="questions"[\s\S]*data-cta-hierarchy="secondary"/,
+  );
+  assert.match(
+    demo,
+    />\s*Create a free account\s*</,
+  );
+  assert.match(audio, /data-focused-demo-cta="audio"/);
+  assert.match(
+    audio,
+    /data-focused-demo-cta="audio"[\s\S]*data-cta-hierarchy="secondary"/,
+  );
+  assert.match(audio, />\s*Start 2 free hours\s*</);
+  assert.doesNotMatch(
+    demo,
+    /data-focused-demo-cta="questions"[\s\S]{0,500}className="btn-primary/,
+  );
+  assert.doesNotMatch(
+    audio,
+    /data-focused-demo-cta="audio"[\s\S]{0,500}className="btn-primary/,
+  );
+  assert.match(
+    launcher,
+    /data-focused-demo-primary-action=\{kind\}/,
+  );
+  assert.match(launcher, /Play audio demo/);
+  assert.match(launcher, /Start 5-question demo/);
+  assert.match(launcher, /ariaLabel: "Play audio demo"/);
+  assert.match(launcher, /ariaLabel: "Start 5-question demo"/);
+  assert.doesNotMatch(demo, /\bpriority(?:\s|=)/);
+  assert.doesNotMatch(demo, /\bpreload=/);
+  assert.match(
+    demo,
+    /Understanding the Question, Key points, and Why the other options\s+are wrong/,
+  );
+  assert.match(demo, />\s*Understanding the Question\s*</);
+  assert.match(demo, />\s*Key points\s*</);
+  assert.match(demo, />\s*Why the other options are wrong\s*</);
+  assert.match(
+    demo,
+    /followed by a structured explanation — Understanding the Question, Key points, and Why the other options are wrong — before your final results/,
+  );
+  assert.doesNotMatch(demo, /key points for your AKT/i);
+  assert.match(
+    demo,
+    /data-demo-hero-content[\s\S]*paddingBottom: "clamp\(40px, 6vw, 56px\)"/,
+  );
+  assert.doesNotMatch(
+    demo,
+    /className="container-x relative grid gap-8[^"]*\b(?:pb-10|md:pb-14)\b/,
+  );
+  assert.match(
+    launcher,
+    /const demoUrl = useTrackedAppUrl\(demoPath, \{ intent: "demo" \}\)/,
+  );
+  assert.match(
+    launcher,
+    /trackLandingEvent\("app_handoff_started", \{/,
+  );
+  assert.match(launcher, /setLaunchUrl\(latestDemoUrl\)/);
+  assert.match(launcher, /href: appHandoffEventHref\(latestDemoUrl\)/);
+  assert.match(launcher, /intent: "demo"/);
+  assert.match(launcher, /src=\{launchUrl \?\? demoUrl\}/);
+  assert.match(launcher, /overlayOpen \? \([\s\S]*<iframe/);
+  assert.doesNotMatch(
+    launcher.slice(0, launcher.indexOf("{overlayOpen ? (")),
+    /<iframe/,
+  );
+  assert.match(launcher, /sm:h-\[min\(820px,calc\(100dvh-40px\)\)\]/);
+  assert.match(launcher, /h-\[100dvh\]/);
+  assert.match(launcher, /Exit demo/);
+  assert.match(launcher, /ref=\{triggerRef\}/);
+  assert.match(launcher, /ref=\{dialogRef\}/);
+  assert.match(launcher, /data-demo-focus-guard/);
+  assert.match(launcher, /querySelector<HTMLButtonElement>\("\[data-demo-exit\]"\)/);
+  assert.match(overlayHook, /window\.history\.pushState\(\{ aktDemo: true \}, ""\)/);
+  assert.match(overlayHook, /window\.history\.back\(\)/);
+  assert.match(overlayHook, /event\.key === "Escape"/);
+  assert.match(overlayHook, /event\.key !== "Tab"/);
+  assert.match(overlayHook, /event\.shiftKey && active === first/);
+  assert.match(overlayHook, /!event\.shiftKey && active === last/);
+  assert.match(overlayHook, /const restoreFocus = useCallback/);
+  assert.match(overlayHook, /focusTarget\?\.isConnected/);
+  assert.match(overlayHook, /focusTarget\.focus\(\)/);
+  assert.match(overlayHook, /restoreFocus\(\)/);
+  assert.match(overlayHook, /event\.data\?\.type === "akt-demo-exit"/);
+  assert.match(overlayHook, /document\.body\.style\.overflow = "hidden"/);
+  assert.match(overlayHook, /iframeOnOurOrigin\(frameRef\.current\)/);
+
+  const liveDemo = fs.readFileSync(
+    "src/components/sections/LiveDemo.tsx",
+    "utf8",
+  );
+  assert.match(liveDemo, /useDemoOverlay\(\)/);
+  assert.match(liveDemo, /data-demo-focus-guard/);
+  assert.match(
+    liveDemo,
+    /querySelector<HTMLButtonElement>\("\[data-demo-exit\]"\)/,
+  );
+  assert.match(
+    liveDemo,
+    /Understanding the Question, Key points, and Why the\s+other options are wrong/,
+  );
+  assert.doesNotMatch(liveDemo, /key clue|common trap/i);
+
+  resetTrackingEnv();
+  process.env.NEXT_PUBLIC_APP_BASE_URL = "https://preview-app.example.test";
+  installBrowser("https://medexia-akt.com/demo");
+
+  const audioDemoUrl = new URL(
+    buildAppFallbackUrl("/demo/audio", { intent: "demo" }),
+  );
+  const questionDemoUrl = new URL(
+    buildAppFallbackUrl("/demo/sample-question", { intent: "demo" }),
+  );
+
+  assert.equal(audioDemoUrl.origin, "https://preview-app.example.test");
+  assert.equal(audioDemoUrl.pathname, "/demo/audio");
+  assert.equal(audioDemoUrl.searchParams.get("intent"), "demo");
+  assert.equal(questionDemoUrl.origin, "https://preview-app.example.test");
+  assert.equal(questionDemoUrl.pathname, "/demo/sample-question");
+  assert.equal(questionDemoUrl.searchParams.get("intent"), "demo");
+});
+
+test("focused demo launchers replace static product screenshots without eager media", () => {
+  const audio = fs.readFileSync("src/app/akt-audio-revision/page.tsx", "utf8");
+  const demo = fs.readFileSync("src/app/demo/page.tsx", "utf8");
+
+  for (const source of [audio, demo]) {
+    assert.doesNotMatch(source, /appshots\//);
+    assert.doesNotMatch(source, /HeroVideo|<video|autoPlay|preload=/);
+    assert.doesNotMatch(source, /\bpriority(?:\s|=)/);
+    assert.match(source, /style=\{\{ color: "var\(--fg-mid\)" \}\}/);
+  }
+});
+
 test("audio-first app handoff preserves consented Google Ads attribution", () => {
   resetTrackingEnv();
   installBrowser(

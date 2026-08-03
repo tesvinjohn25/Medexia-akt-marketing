@@ -141,16 +141,29 @@ const CUSTOM_GPT_RETURN_ATTRIBUTION = {
  * additions should be reviewed alongside the ads taxonomy and app ingestion.
  */
 export const CAMPAIGN_CANONICALIZATION = {
-  akt_search_uk_oct26: "akt_search_uk_high_intent",
-} as const satisfies Readonly<Record<string, string>>;
+  akt_search_uk_oct26: {
+    byCampaignId: {
+      "24063284305": "akt_search_uk_high_intent",
+      "24061181406": "akt_search_must_win_exact",
+    },
+    // Some historic/cached touches predate stable campaign_id capture. Keep
+    // continuity with the original repair while treating this as ambiguous.
+    fallback: "akt_search_uk_high_intent",
+  },
+} as const;
 
 export function canonicalizeCampaignLabel(
   campaign: string | null | undefined,
+  campaignId?: string | null,
 ): string | null {
   if (!campaign) return null;
-  return CAMPAIGN_CANONICALIZATION[
+  const rule = CAMPAIGN_CANONICALIZATION[
     campaign as keyof typeof CAMPAIGN_CANONICALIZATION
-  ] ?? campaign;
+  ];
+  if (!rule) return campaign;
+  return rule.byCampaignId[
+    campaignId as keyof typeof rule.byCampaignId
+  ] ?? rule.fallback;
 }
 
 function isBrowser(): boolean {
@@ -340,12 +353,18 @@ function classifiedReferrerTouch(referrer: string | null): AppMarketingTouch | n
   return touch(host, "referral");
 }
 
-function compactTouchFromUtm(params: URLSearchParams): AppMarketingTouch | null {
+function compactTouchFromUtm(
+  params: URLSearchParams,
+  campaignId?: string | null,
+): AppMarketingTouch | null {
   if (!hasUtmParam(params)) return null;
   return {
     source: getParam(params, "utm_source", 128),
     medium: getParam(params, "utm_medium", 128),
-    campaign: canonicalizeCampaignLabel(getParam(params, "utm_campaign", 160)),
+    campaign: canonicalizeCampaignLabel(
+      getParam(params, "utm_campaign", 160),
+      campaignId,
+    ),
     content: getParam(params, "utm_content", 160),
     term: getParam(params, "utm_term", 160),
   };
@@ -371,7 +390,10 @@ function toAppMarketingTouch(touch: MarketingTouch | null | undefined): AppMarke
     medium: touch.medium ?? touch.utm_medium ?? null,
     // Canonicalize again at the handoff/event boundary so touches stored by an
     // older marketing release cannot reintroduce a retired campaign label.
-    campaign: canonicalizeCampaignLabel(touch.campaign ?? touch.utm_campaign),
+    campaign: canonicalizeCampaignLabel(
+      touch.campaign ?? touch.utm_campaign,
+      touch.campaign_id,
+    ),
     content: touch.content ?? touch.utm_content ?? null,
     term: touch.term ?? touch.utm_term ?? null,
   };
@@ -549,8 +571,9 @@ function readCurrentTouch(referralCode: string | null, includeAdClickIds: boolea
   if (!routeAttribution && !hasMeaningfulTouch(params, referrer, includeAdClickIds)) return null;
 
   const explicitOffer = getParam(params, "offer_id", 128);
+  const campaignId = getParam(params, "campaign_id", 128);
   const resolvedTouch =
-    compactTouchFromUtm(params) ??
+    compactTouchFromUtm(params, campaignId) ??
     compactTouchFromRouteAttribution(routeAttribution) ??
     classifiedReferrerTouch(referrer) ??
     {
@@ -576,7 +599,7 @@ function readCurrentTouch(referralCode: string | null, includeAdClickIds: boolea
     first_landing_page: sanitizedCurrentPagePath(includeAdClickIds),
     touch_timestamp: new Date().toISOString(),
     device_type: deviceType(),
-    campaign_id: getParam(params, "campaign_id", 128),
+    campaign_id: campaignId,
     offer_id: explicitOffer,
     gclid: includeAdClickIds ? getParam(params, "gclid", 256) : null,
     gbraid: includeAdClickIds ? getParam(params, "gbraid", 256) : null,

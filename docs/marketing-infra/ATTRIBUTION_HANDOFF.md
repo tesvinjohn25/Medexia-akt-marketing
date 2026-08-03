@@ -6,13 +6,15 @@ The canonical top-level `source`/`utm_*` handoff is **last-touch** because it re
 
 ## Campaign canonicalization
 
-The marketing-to-app bridge uses a reviewed, exact-match campaign alias map at both capture and handoff:
+The marketing-to-app bridge uses a reviewed, exact-match campaign alias rule at both capture and handoff. The legacy final URL label is shared by two active campaigns, so the stable Google Ads `campaign_id` selects the canonical label:
 
 ```text
-akt_search_uk_oct26 -> akt_search_uk_high_intent
+akt_search_uk_oct26 + campaign_id=24063284305 -> akt_search_uk_high_intent
+akt_search_uk_oct26 + campaign_id=24061181406 -> akt_search_must_win_exact
+akt_search_uk_oct26 + missing/unknown campaign_id -> akt_search_uk_high_intent (ambiguous fallback)
 ```
 
-This makes cached landing pages and touches stored by older releases reach the app under `akt_search_uk_high_intent`. The current `akt_search_uk_high_intent` and `akt_search_must_win_exact` labels, and every label not listed in the governed map, pass through unchanged. `campaign_id` and consented click IDs are not rewritten.
+The High Intent fallback preserves continuity for historic/cached rows that predate stable ID capture, but those rows cannot be disambiguated and should not be treated as ID-confirmed High Intent traffic. The current `akt_search_uk_high_intent` and `akt_search_must_win_exact` labels, and every label not listed in the governed rule, pass through unchanged. `campaign_id` and consented click IDs are not rewritten.
 
 The raw legacy label remains available without a new schema in the existing sanitized `first_landing_page` metadata (and in the current landing event `page_path`). Canonical campaign fields are used for first/last-touch event context and the app query-string handoff.
 

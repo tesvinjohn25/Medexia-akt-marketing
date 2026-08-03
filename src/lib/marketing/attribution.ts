@@ -135,6 +135,24 @@ const CUSTOM_GPT_RETURN_ATTRIBUTION = {
   utm_content: "short_free_link",
 } as const;
 
+/**
+ * Governed aliases for retired campaign labels that must report under their
+ * current canonical campaign. Keep this exact-match map deliberately small:
+ * additions should be reviewed alongside the ads taxonomy and app ingestion.
+ */
+export const CAMPAIGN_CANONICALIZATION = {
+  akt_search_uk_oct26: "akt_search_uk_high_intent",
+} as const satisfies Readonly<Record<string, string>>;
+
+export function canonicalizeCampaignLabel(
+  campaign: string | null | undefined,
+): string | null {
+  if (!campaign) return null;
+  return CAMPAIGN_CANONICALIZATION[
+    campaign as keyof typeof CAMPAIGN_CANONICALIZATION
+  ] ?? campaign;
+}
+
 function isBrowser(): boolean {
   return typeof window !== "undefined" && typeof document !== "undefined";
 }
@@ -327,7 +345,7 @@ function compactTouchFromUtm(params: URLSearchParams): AppMarketingTouch | null 
   return {
     source: getParam(params, "utm_source", 128),
     medium: getParam(params, "utm_medium", 128),
-    campaign: getParam(params, "utm_campaign", 160),
+    campaign: canonicalizeCampaignLabel(getParam(params, "utm_campaign", 160)),
     content: getParam(params, "utm_content", 160),
     term: getParam(params, "utm_term", 160),
   };
@@ -351,7 +369,9 @@ function toAppMarketingTouch(touch: MarketingTouch | null | undefined): AppMarke
   const compact = {
     source: touch.source ?? touch.utm_source ?? null,
     medium: touch.medium ?? touch.utm_medium ?? null,
-    campaign: touch.campaign ?? touch.utm_campaign ?? null,
+    // Canonicalize again at the handoff/event boundary so touches stored by an
+    // older marketing release cannot reintroduce a retired campaign label.
+    campaign: canonicalizeCampaignLabel(touch.campaign ?? touch.utm_campaign),
     content: touch.content ?? touch.utm_content ?? null,
     term: touch.term ?? touch.utm_term ?? null,
   };

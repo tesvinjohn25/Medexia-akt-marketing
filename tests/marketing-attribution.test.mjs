@@ -39,6 +39,7 @@ const {
   MARKETING_STORAGE_KEYS,
   OFFER_IDS,
   attributionForEvent,
+  canonicalizeCampaignLabel,
   determineOfferContext,
   getMarketingSnapshot,
   initMarketingAttribution,
@@ -1411,14 +1412,31 @@ test("focused demo launchers replace static product screenshots without eager me
   }
 });
 
-test("audio-first app handoff preserves consented Google Ads attribution", () => {
+test("Google Ads campaign aliases normalize only the governed legacy label", () => {
+  assert.equal(
+    canonicalizeCampaignLabel("akt_search_uk_oct26"),
+    "akt_search_uk_high_intent",
+  );
+  assert.equal(
+    canonicalizeCampaignLabel("akt_search_uk_high_intent"),
+    "akt_search_uk_high_intent",
+  );
+  assert.equal(
+    canonicalizeCampaignLabel("akt_search_must_win_exact"),
+    "akt_search_must_win_exact",
+  );
+  assert.equal(canonicalizeCampaignLabel("unrelated_campaign"), "unrelated_campaign");
+  assert.equal(canonicalizeCampaignLabel(null), null);
+});
+
+test("audio-first app handoff canonicalizes legacy Google Ads attribution", () => {
   resetTrackingEnv();
-  installBrowser(
-    "https://medexia-akt.com/?utm_source=google&utm_medium=cpc&utm_campaign=akt_search_uk_oct26&utm_content=core_revision&utm_term=akt%20revision&gclid=G123",
+  const browser = installBrowser(
+    "https://medexia-akt.com/?utm_source=google&utm_medium=cpc&utm_campaign=akt_search_uk_oct26&utm_content=core_revision&utm_term=akt%20revision&campaign_id=C456&gclid=G123&gbraid=GB123&wbraid=WB123",
   );
 
   acceptAllConsent("banner");
-  initMarketingAttribution();
+  const snapshot = initMarketingAttribution();
   const appUrl = new URL(
     buildAppUrl("/join/audio", {
       intent: "start_audio",
@@ -1432,12 +1450,72 @@ test("audio-first app handoff preserves consented Google Ads attribution", () =>
   assert.equal(appUrl.searchParams.get("offer_id"), OFFER_IDS.freePost);
   assert.equal(appUrl.searchParams.get("utm_source"), "google");
   assert.equal(appUrl.searchParams.get("utm_medium"), "cpc");
-  assert.equal(appUrl.searchParams.get("utm_campaign"), "akt_search_uk_oct26");
+  assert.equal(appUrl.searchParams.get("utm_campaign"), "akt_search_uk_high_intent");
+  assert.equal(appUrl.searchParams.get("first_touch_campaign"), "akt_search_uk_high_intent");
+  assert.equal(appUrl.searchParams.get("last_touch_campaign"), "akt_search_uk_high_intent");
   assert.equal(appUrl.searchParams.get("utm_content"), "core_revision");
   assert.equal(appUrl.searchParams.get("utm_term"), "akt revision");
+  assert.equal(appUrl.searchParams.get("campaign_id"), "C456");
   assert.equal(appUrl.searchParams.get("gclid"), "G123");
+  assert.equal(appUrl.searchParams.get("gbraid"), "GB123");
+  assert.equal(appUrl.searchParams.get("wbraid"), "WB123");
   assert.equal(appUrl.searchParams.get("mx_mc"), "1");
   assert.equal(appUrl.searchParams.get("mx_ac"), "1");
+  assert.equal(snapshot.first_touch?.campaign, "akt_search_uk_high_intent");
+  assert.equal(snapshot.first_touch?.utm_campaign, "akt_search_uk_high_intent");
+  assert.match(snapshot.first_touch?.first_landing_page ?? "", /akt_search_uk_oct26/);
+  assert.equal(attributionForEvent().last_touch.campaign, "akt_search_uk_high_intent");
+
+  // Simulate touches cached by a release from before the canonicalization map.
+  const legacyCachedTouch = {
+    ...snapshot.first_touch,
+    campaign: "akt_search_uk_oct26",
+    utm_campaign: "akt_search_uk_oct26",
+  };
+  browser.localStorage.setItem(
+    MARKETING_STORAGE_KEYS.firstTouch,
+    JSON.stringify(legacyCachedTouch),
+  );
+  browser.localStorage.setItem(
+    MARKETING_STORAGE_KEYS.lastTouch,
+    JSON.stringify(legacyCachedTouch),
+  );
+  window.location = new URL("https://medexia-akt.com/revision");
+
+  const cachedAppUrl = new URL(
+    buildAppUrl("/join/audio", { intent: "start_audio" }),
+  );
+  assert.equal(cachedAppUrl.searchParams.get("utm_campaign"), "akt_search_uk_high_intent");
+  assert.equal(cachedAppUrl.searchParams.get("campaign_id"), "C456");
+  assert.equal(cachedAppUrl.searchParams.get("gclid"), "G123");
+  assert.equal(attributionForEvent().last_touch.campaign, "akt_search_uk_high_intent");
+});
+
+test("legacy campaign canonicalization keeps consent and signed QA suppression intact", () => {
+  resetTrackingEnv();
+  process.env.NEXT_PUBLIC_INTERNAL_TEST_PUBLIC_KEY = INTERNAL_TEST_PUBLIC_KEY;
+  const signedTestToken = makeInternalTestToken();
+  installBrowser(
+    "https://medexia-akt.com/?utm_source=google&utm_medium=cpc&utm_campaign=akt_search_uk_oct26&campaign_id=C456&gclid=TEST_GCLID&gbraid=TEST_GBRAID&wbraid=TEST_WBRAID",
+  );
+  document.cookie = `${MARKETING_STORAGE_KEYS.internalTest}=${encodeURIComponent(signedTestToken)}; Path=/`;
+
+  saveConsent({ functional: true, analytics: true, marketing: false }, "settings");
+  initMarketingAttribution();
+  const appUrl = new URL(buildAppUrl("/join/audio", { intent: "start_audio" }));
+
+  assert.equal(appUrl.searchParams.get("utm_campaign"), "akt_search_uk_high_intent");
+  assert.equal(appUrl.searchParams.get("campaign_id"), "C456");
+  assert.equal(appUrl.searchParams.get("mx_test"), signedTestToken);
+  assert.equal(appUrl.searchParams.get("mx_mc"), "0");
+  assert.equal(appUrl.searchParams.get("mx_ac"), "1");
+  assert.equal(appUrl.searchParams.has("gclid"), false);
+  assert.equal(appUrl.searchParams.has("gbraid"), false);
+  assert.equal(appUrl.searchParams.has("wbraid"), false);
+  assert.doesNotMatch(
+    fullyDecode(appUrl.toString()),
+    /(?:^|[?&#;])(?:gclid|gbraid|wbraid)=/i,
+  );
 });
 
 test("homepage pricing FAQs are included in shared JSON-LD source", () => {

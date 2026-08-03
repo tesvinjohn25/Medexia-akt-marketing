@@ -4,6 +4,20 @@ The landing site captures source attribution and appends a compact handoff to ev
 
 The canonical top-level `source`/`utm_*` handoff is **last-touch** because it represents the campaign that immediately preceded the app visit. The explicit `first_touch_*` and `last_touch_*` fields are both retained so acquisition and assist reporting remain available without overloading the canonical fields.
 
+## Campaign canonicalization
+
+The marketing-to-app bridge uses a reviewed, exact-match campaign alias map at both capture and handoff:
+
+```text
+akt_search_uk_oct26 -> akt_search_uk_high_intent
+```
+
+This makes cached landing pages and touches stored by older releases reach the app under `akt_search_uk_high_intent`. The current `akt_search_uk_high_intent` and `akt_search_must_win_exact` labels, and every label not listed in the governed map, pass through unchanged. `campaign_id` and consented click IDs are not rewritten.
+
+The raw legacy label remains available without a new schema in the existing sanitized `first_landing_page` metadata (and in the current landing event `page_path`). Canonical campaign fields are used for first/last-touch event context and the app query-string handoff.
+
+Rollback is a code-only revert of the alias map and its boundary calls. No database cleanup, environment change, or conversion-event rollback is required. Previously canonicalized browser touches remain valid under the current campaign name.
+
 Before consent:
 
 - no `mx_visitor_id` or `mx_session_id` is created;
@@ -158,3 +172,7 @@ For marked test traffic:
 - consented first-party events remain available for end-to-end QA with `is_test=true` and `traffic_type=internal`.
 
 The app must verify the signed token with the same public key, retain the verified marker through signup, and suppress its own ad-platform conversions for that journey. Reporting queries should exclude `is_test=true` / `traffic_type=internal`. The private key must never be deployed or committed.
+
+## Known privacy risk outside this repair
+
+The existing pre-consent source-attribution storage behaviour is unchanged. Broadening the consent categories or storage semantics is intentionally outside this campaign-label repair and should be handled as a separate privacy change with its own review and migration/cleanup plan.

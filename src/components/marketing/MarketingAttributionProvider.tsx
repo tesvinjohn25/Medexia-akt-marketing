@@ -24,6 +24,7 @@ import {
 } from "@/lib/marketing/attribution";
 import { maybeLoadMarketingPixels } from "@/lib/marketing/pixels";
 import { trackLandingEvent } from "@/lib/marketing/events";
+import { capturePromoPassThroughQuery } from "@/lib/marketing/promo-pass-through";
 
 const MarketingContext = createContext<MarketingSnapshot | null>(null);
 
@@ -33,6 +34,7 @@ export function MarketingAttributionProvider({ children }: { children: ReactNode
   const landingEventsTrackedRef = useRef(false);
 
   useEffect(() => {
+    capturePromoPassThroughQuery();
     setConsent(getStoredConsent());
     setSnapshot(getMarketingSnapshot());
 

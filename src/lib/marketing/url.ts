@@ -14,6 +14,7 @@ import {
   canUseMarketing,
   hasConsentDecision,
 } from "../consent/consent";
+import { buildPromoAppPassThroughUrl } from "./promo-pass-through";
 
 const DEFAULT_APP_BASE_URL = "https://app.medexia-akt.com";
 const MARKETING_SITE_ORIGIN = "https://medexia-akt.com";
@@ -92,6 +93,9 @@ export function buildAppFallbackUrl(
     offerId?: OfferId;
   } = {},
 ): string {
+  const promoUrl = buildPromoAppPassThroughUrl();
+  if (promoUrl) return promoUrl;
+
   const base = appBaseUrl();
   const url = /^https?:\/\//i.test(pathOrExistingUrl)
     ? new URL(pathOrExistingUrl)
@@ -115,6 +119,9 @@ export function buildAppUrl(
     offerId?: OfferId;
   } = {},
 ): string {
+  const promoUrl = buildPromoAppPassThroughUrl();
+  if (promoUrl) return promoUrl;
+
   const base = appBaseUrl({ avoidCurrentOrigin: true });
   const url = /^https?:\/\//i.test(pathOrExistingUrl)
     ? new URL(pathOrExistingUrl)

@@ -54,6 +54,11 @@ const {
   getAppHandoffConsentSignature,
 } = await importBundled("src/lib/marketing/url.ts");
 const {
+  PROMO_APP_JOIN_URL,
+  PROMO_QUERY_SESSION_STORAGE_KEY,
+  capturePromoPassThroughQuery,
+} = await importBundled("src/lib/marketing/promo-pass-through.ts");
+const {
   CONSENT_STORAGE_KEY,
   acceptAllConsent,
   rejectAllConsent,
@@ -81,9 +86,9 @@ function storageMock() {
   };
 }
 
-function installBrowser(url, referrer = "") {
+function installBrowser(url, referrer = "", existingSessionStorage = null) {
   const localStorage = storageMock();
-  const sessionStorage = storageMock();
+  const sessionStorage = existingSessionStorage ?? storageMock();
   const cookies = new Map();
   const scripts = [];
   const listeners = new Map();
@@ -238,6 +243,120 @@ test("app url fallback targets the deployed Replit app domain", () => {
 
   assert.equal(appUrl.origin, "https://app.medexia-akt.com");
   assert.equal(appUrl.pathname, "/join/free");
+});
+
+test("promo landing query is passed unchanged to the fixed full-access app target", () => {
+  resetTrackingEnv();
+  const rawQuery =
+    "?promo_code=MiD%2BWESSEX%2F20&utm_source=mid_wessex_gp_training&utm_medium=registrar_committee_email&utm_campaign=midwessex_oct_2026&campaign_id=midwessex_oct_2026&offer_id=midwessex_oct26_59&intent=institutional_offer&future_param=a%2Bb";
+  const browser = installBrowser(`https://medexia-akt.com/${rawQuery}`);
+
+  const appUrl = buildAppUrl("/join/free", { intent: "start_free" });
+  const fallbackUrl = buildAppFallbackUrl("/demo", { intent: "demo" });
+
+  assert.equal(appUrl, `${PROMO_APP_JOIN_URL}${rawQuery}`);
+  assert.equal(fallbackUrl, `${PROMO_APP_JOIN_URL}${rawQuery}`);
+  assert.equal(
+    browser.sessionStorage.getItem(PROMO_QUERY_SESSION_STORAGE_KEY),
+    rawQuery,
+  );
+});
+
+test("promo query survives landing-page navigation for the browser session", () => {
+  resetTrackingEnv();
+  const rawQuery =
+    "?promo_code=FIRST-CODE&utm_source=mid_wessex_gp_training&utm_campaign=midwessex_oct_2026";
+  const browser = installBrowser(`https://medexia-akt.com/${rawQuery}`);
+
+  capturePromoPassThroughQuery();
+  window.location = new URL("https://medexia-akt.com/free-akt-questions");
+
+  assert.equal(
+    buildAppUrl("/join/audio", { intent: "start_audio" }),
+    `${PROMO_APP_JOIN_URL}${rawQuery}`,
+  );
+  assert.equal(
+    browser.sessionStorage.getItem(PROMO_QUERY_SESSION_STORAGE_KEY),
+    rawQuery,
+  );
+});
+
+test("first promo query wins and a later landing does not replace it", () => {
+  resetTrackingEnv();
+  const firstQuery = "?promo_code=FIRST&utm_source=first";
+  const browser = installBrowser(`https://medexia-akt.com/${firstQuery}`);
+
+  capturePromoPassThroughQuery();
+  window.location = new URL(
+    "https://medexia-akt.com/akt-audio-revision?promo_code=SECOND&utm_source=second",
+  );
+
+  assert.equal(capturePromoPassThroughQuery(), firstQuery);
+  assert.equal(
+    browser.sessionStorage.getItem(PROMO_QUERY_SESSION_STORAGE_KEY),
+    firstQuery,
+  );
+  assert.equal(buildAppUrl("/login", { intent: "login" }), `${PROMO_APP_JOIN_URL}${firstQuery}`);
+});
+
+test("a fresh clean entry cannot inherit a promo remembered by the browser session", () => {
+  resetTrackingEnv();
+  const promoQuery = "?promo_code=EARLIER&utm_source=registrar_email";
+  const promoVisit = installBrowser(`https://medexia-akt.com/${promoQuery}`);
+
+  assert.equal(
+    buildAppUrl("/join/free", { intent: "start_free" }),
+    `${PROMO_APP_JOIN_URL}${promoQuery}`,
+  );
+
+  const cleanVisit = installBrowser(
+    "https://medexia-akt.com/free-akt-questions",
+    "",
+    promoVisit.sessionStorage,
+  );
+  const cleanAppUrl = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
+
+  assert.equal(cleanVisit.sessionStorage.getItem(PROMO_QUERY_SESSION_STORAGE_KEY), null);
+  assert.equal(cleanAppUrl.origin, "https://app.medexia-akt.com");
+  assert.equal(cleanAppUrl.pathname, "/join/free");
+  assert.equal(cleanAppUrl.searchParams.has("promo_code"), false);
+});
+
+test("a fresh promo link replaces a stale promo remembered by the browser session", () => {
+  resetTrackingEnv();
+  const earlierVisit = installBrowser(
+    "https://medexia-akt.com/?promo_code=EARLIER&utm_source=first",
+  );
+  buildAppUrl("/join/free", { intent: "start_free" });
+
+  const currentQuery = "?promo_code=CURRENT%2BOPAQUE&utm_source=current";
+  const currentVisit = installBrowser(
+    `https://medexia-akt.com/${currentQuery}`,
+    "",
+    earlierVisit.sessionStorage,
+  );
+
+  assert.equal(
+    buildAppUrl("/join/free", { intent: "start_free" }),
+    `${PROMO_APP_JOIN_URL}${currentQuery}`,
+  );
+  assert.equal(
+    currentVisit.sessionStorage.getItem(PROMO_QUERY_SESSION_STORAGE_KEY),
+    currentQuery,
+  );
+});
+
+test("no promo parameter creates no promo state or default code", () => {
+  resetTrackingEnv();
+  const browser = installBrowser(
+    "https://medexia-akt.com/?utm_source=mid_wessex_gp_training&utm_campaign=midwessex_oct_2026",
+  );
+
+  const appUrl = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
+
+  assert.equal(browser.sessionStorage.getItem(PROMO_QUERY_SESSION_STORAGE_KEY), null);
+  assert.equal(appUrl.pathname, "/join/free");
+  assert.equal(appUrl.searchParams.has("promo_code"), false);
 });
 
 test("landing events default to the app backend bridge when no endpoint env is set", async () => {

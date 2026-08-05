@@ -4,6 +4,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useMemo,
   useState,
   type ReactNode,
 } from "react";
@@ -17,22 +18,41 @@ export type ValidatedTrialOffer = TrialValidation & {
   code: string;
 };
 
-const TrialOfferContext = createContext<ValidatedTrialOffer | null>(null);
+export type TrialOfferState = {
+  code: string | null;
+  validationSettled: boolean;
+  validatedOffer: ValidatedTrialOffer | null;
+};
+
+const TrialOfferContext = createContext<TrialOfferState>({
+  code: null,
+  validationSettled: false,
+  validatedOffer: null,
+});
 
 export function TrialOfferProvider({ children }: { children: ReactNode }) {
-  const [trial, setTrial] = useState<ValidatedTrialOffer | null>(null);
+  const [code, setCode] = useState<string | null>(null);
+  const [validationSettled, setValidationSettled] = useState(false);
+  const [validatedOffer, setValidatedOffer] =
+    useState<ValidatedTrialOffer | null>(null);
 
   useEffect(() => {
-    const code = captureTrialCode();
-    if (!code) {
-      setTrial(null);
+    const capturedCode = captureTrialCode();
+    setCode(capturedCode);
+    setValidatedOffer(null);
+    if (!capturedCode) {
+      setValidationSettled(true);
       return;
     }
 
+    setValidationSettled(false);
     const controller = new AbortController();
     let active = true;
-    void validateTrialCode(code, controller.signal).then((result) => {
-      if (active) setTrial(result ? { ...result, code } : null);
+    void validateTrialCode(capturedCode, controller.signal).then((result) => {
+      if (active) {
+        setValidatedOffer(result ? { ...result, code: capturedCode } : null);
+        setValidationSettled(true);
+      }
     });
 
     return () => {
@@ -41,15 +61,24 @@ export function TrialOfferProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
+  const value = useMemo(
+    () => ({ code, validationSettled, validatedOffer }),
+    [code, validationSettled, validatedOffer],
+  );
+
   return (
-    <TrialOfferContext.Provider value={trial}>
+    <TrialOfferContext.Provider value={value}>
       {children}
     </TrialOfferContext.Provider>
   );
 }
 
-export function useValidatedTrialOffer(): ValidatedTrialOffer | null {
+export function useTrialOfferState(): TrialOfferState {
   return useContext(TrialOfferContext);
+}
+
+export function useValidatedTrialOffer(): ValidatedTrialOffer | null {
+  return useContext(TrialOfferContext).validatedOffer;
 }
 
 export function TrialOfferBanner() {

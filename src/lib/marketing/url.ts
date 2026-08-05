@@ -15,6 +15,10 @@ import {
   hasConsentDecision,
 } from "../consent/consent";
 import { buildPromoAppPassThroughUrl } from "./promo-pass-through";
+import {
+  buildReferralAppUrl,
+  captureReferralCode,
+} from "./referral-pass-through";
 import { buildTrialAppUrl } from "./trial-pass-through";
 
 const DEFAULT_APP_BASE_URL = "https://app.medexia-akt.com";
@@ -125,6 +129,13 @@ export function buildAppFallbackUrl(
   const promoUrl = buildPromoAppPassThroughUrl();
   if (promoUrl) return promoUrl;
 
+  const referralUrl = buildReferralAppUrl(
+    captureReferralCode(),
+    pathOrExistingUrl,
+    options.intent,
+  );
+  if (referralUrl) return referralUrl;
+
   const base = appBaseUrl();
   const url = /^https?:\/\//i.test(pathOrExistingUrl)
     ? new URL(pathOrExistingUrl)
@@ -156,6 +167,13 @@ export function buildAppUrl(
 
   const promoUrl = buildPromoAppPassThroughUrl();
   if (promoUrl) return promoUrl;
+
+  const referralUrl = buildReferralAppUrl(
+    captureReferralCode(),
+    pathOrExistingUrl,
+    options.intent,
+  );
+  if (referralUrl) return referralUrl;
 
   const base = appBaseUrl({ avoidCurrentOrigin: true });
   const url = /^https?:\/\//i.test(pathOrExistingUrl)
@@ -249,11 +267,6 @@ export function buildAppUrl(
   }
 
   setIfPresent(url.searchParams, "intent", options.intent);
-
-  if (referralCode) {
-    url.searchParams.set("referral_code", referralCode);
-    url.searchParams.set("ref", referralCode);
-  }
 
   return url.toString();
 }

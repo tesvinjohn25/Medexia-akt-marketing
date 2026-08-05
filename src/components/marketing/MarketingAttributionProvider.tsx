@@ -25,11 +25,16 @@ import {
 import { maybeLoadMarketingPixels } from "@/lib/marketing/pixels";
 import { trackLandingEvent } from "@/lib/marketing/events";
 import { capturePromoPassThroughQuery } from "@/lib/marketing/promo-pass-through";
+import { captureReferralCode } from "@/lib/marketing/referral-pass-through";
 import { captureTrialCode } from "@/lib/marketing/trial-pass-through";
 import {
   TrialOfferBanner,
   TrialOfferProvider,
 } from "@/components/marketing/TrialOfferBanner";
+import {
+  ReferralOfferBanner,
+  ReferralOfferProvider,
+} from "@/components/marketing/ReferralOfferBanner";
 
 const MarketingContext = createContext<MarketingSnapshot | null>(null);
 
@@ -39,6 +44,7 @@ export function MarketingAttributionProvider({ children }: { children: ReactNode
   const landingEventsTrackedRef = useRef(false);
 
   useEffect(() => {
+    captureReferralCode();
     captureTrialCode();
     capturePromoPassThroughQuery();
     setConsent(getStoredConsent());
@@ -81,10 +87,13 @@ export function MarketingAttributionProvider({ children }: { children: ReactNode
 
   return (
     <MarketingContext.Provider value={value}>
-      <TrialOfferProvider>
-        <TrialOfferBanner />
-        {children}
-      </TrialOfferProvider>
+      <ReferralOfferProvider>
+        <TrialOfferProvider>
+          <TrialOfferBanner />
+          <ReferralOfferBanner />
+          {children}
+        </TrialOfferProvider>
+      </ReferralOfferProvider>
       <ConsentBanner />
       {consent?.analytics ? <Analytics /> : null}
     </MarketingContext.Provider>

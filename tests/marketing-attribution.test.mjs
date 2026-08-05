@@ -67,6 +67,15 @@ const {
   validateTrialCode,
 } = await importBundled("src/lib/marketing/trial-pass-through.ts");
 const {
+  REFERRAL_CODE_SESSION_STORAGE_KEY,
+  REFERRAL_FREE_APP_JOIN_URL,
+  REFERRAL_FULL_ACCESS_APP_JOIN_URL,
+  REFERRAL_VALIDATION_URL,
+  buildReferralAppUrl,
+  captureReferralCode,
+  validateReferralCode,
+} = await importBundled("src/lib/marketing/referral-pass-through.ts");
+const {
   CONSENT_STORAGE_KEY,
   acceptAllConsent,
   rejectAllConsent,
@@ -450,13 +459,232 @@ test("trial banner is globally mounted and uses validated duration and label", (
     provider,
     /<TrialOfferProvider>[\s\S]*<TrialOfferBanner\s*\/>[\s\S]*\{children\}[\s\S]*<\/TrialOfferProvider>/,
   );
-  assert.match(banner, /if \(active\) setTrial\(result \? \{ \.\.\.result, code \} : null\)/);
+  assert.match(
+    banner,
+    /setValidatedOffer\(result \? \{ \.\.\.result, code: capturedCode \} : null\)/,
+  );
+  assert.match(banner, /setValidationSettled\(true\)/);
   assert.match(banner, /\{trial\.label\} trial applied/);
   assert.match(banner, /start your \{trial\.trialDays\}-day free trial/);
   assert.match(proxy, /app\.medexia-akt\.com\/api\/trial\/validate/);
   assert.match(proxy, /cache:\s*"no-store"/);
   assert.match(trackedLink, /useState\(\(\) =>\s*buildAppHydrationUrl/);
   assert.match(trackedLink, /validatedTrialCode:\s*trialOffer\?\.code/);
+});
+
+test("referral link is held for the session and routes signup and purchase CTAs only to supported app paths", () => {
+  resetTrackingEnv();
+  const browser = installBrowser(
+    "https://medexia-akt.com/?ref=COLLEAGUE%2BCODE&utm_source=whatsapp",
+  );
+
+  assert.equal(captureReferralCode(), "COLLEAGUE+CODE");
+  assert.equal(
+    browser.sessionStorage.getItem(REFERRAL_CODE_SESSION_STORAGE_KEY),
+    "COLLEAGUE+CODE",
+  );
+
+  const freeUrl = new URL(
+    buildAppUrl("/join/audio", { intent: "start_audio" }),
+  );
+  assert.equal(freeUrl.origin + freeUrl.pathname, REFERRAL_FREE_APP_JOIN_URL);
+  assert.equal(freeUrl.searchParams.get("referral_code"), "COLLEAGUE+CODE");
+  assert.deepEqual(Array.from(freeUrl.searchParams.keys()), ["referral_code"]);
+
+  const fullAccessUrl = new URL(
+    buildAppUrl("/join/full-access", { intent: "checkout" }),
+  );
+  assert.equal(
+    fullAccessUrl.origin + fullAccessUrl.pathname,
+    REFERRAL_FULL_ACCESS_APP_JOIN_URL,
+  );
+  assert.equal(
+    fullAccessUrl.searchParams.get("referral_code"),
+    "COLLEAGUE+CODE",
+  );
+  assert.deepEqual(Array.from(fullAccessUrl.searchParams.keys()), ["referral_code"]);
+
+  assert.equal(
+    buildReferralAppUrl("COLLEAGUE+CODE", "/join/free", "start_free"),
+    `${REFERRAL_FREE_APP_JOIN_URL}?referral_code=COLLEAGUE%2BCODE`,
+  );
+});
+
+test("referral survives landing-page loads for the session and a later explicit referral replaces it", () => {
+  resetTrackingEnv();
+  const firstVisit = installBrowser("https://medexia-akt.com/?ref=FIRST-CODE");
+  assert.equal(captureReferralCode(), "FIRST-CODE");
+
+  const nextPage = installBrowser(
+    "https://medexia-akt.com/akt-audio-revision",
+    "https://medexia-akt.com/",
+    firstVisit.sessionStorage,
+  );
+  assert.equal(captureReferralCode(), "FIRST-CODE");
+  assert.equal(
+    new URL(buildAppUrl("/join/free", { intent: "start_free" })).searchParams.get(
+      "referral_code",
+    ),
+    "FIRST-CODE",
+  );
+
+  window.location = new URL("https://medexia-akt.com/?ref=SECOND-CODE");
+  assert.equal(captureReferralCode(), "SECOND-CODE");
+  assert.equal(
+    nextPage.sessionStorage.getItem(REFERRAL_CODE_SESSION_STORAGE_KEY),
+    "SECOND-CODE",
+  );
+});
+
+test("referral does not invent a code and does not hijack login, demo, or existing-user CTAs", () => {
+  resetTrackingEnv();
+  const cleanVisit = installBrowser("https://medexia-akt.com/?utm_source=google");
+  assert.equal(captureReferralCode(), null);
+  assert.equal(
+    cleanVisit.sessionStorage.getItem(REFERRAL_CODE_SESSION_STORAGE_KEY),
+    null,
+  );
+
+  window.location = new URL("https://medexia-akt.com/?ref=REF123");
+  captureReferralCode();
+  for (const [path, intent] of [
+    ["/login", "login"],
+    ["/demo", "demo"],
+    ["/library", "app_open"],
+  ]) {
+    const url = new URL(buildAppUrl(path, { intent }));
+    assert.equal(url.pathname, path);
+    assert.equal(url.searchParams.has("referral_code"), false);
+    assert.equal(url.searchParams.has("ref"), false);
+  }
+});
+
+test("referral validation accepts only a well-formed live pricing response", async () => {
+  resetTrackingEnv();
+  installBrowser("https://medexia-akt.com/?ref=REF%2F123");
+  const calls = [];
+  globalThis.fetch = async (url, options) => {
+    calls.push({ url, options });
+    return {
+      ok: true,
+      json: async () => ({
+        valid: true,
+        friendPricePence: 6900,
+        standardPricePence: 7900,
+        sprintEndsAt: "2026-11-01T00:00:00.000Z",
+      }),
+    };
+  };
+
+  assert.deepEqual(await validateReferralCode("REF/123"), {
+    valid: true,
+    friendPricePence: 6900,
+    standardPricePence: 7900,
+    sprintEndsAt: "2026-11-01T00:00:00.000Z",
+  });
+  assert.equal(calls[0].url, `${REFERRAL_VALIDATION_URL}/REF%2F123`);
+  assert.equal(calls[0].options.cache, "no-store");
+  assert.equal(calls[0].options.credentials, "omit");
+
+  globalThis.fetch = async () => ({
+    ok: true,
+    json: async () => ({
+      valid: false,
+      friendPricePence: 6900,
+      standardPricePence: 7900,
+      sprintEndsAt: "2026-11-01T00:00:00.000Z",
+    }),
+  });
+  assert.equal(await validateReferralCode("INVALID"), null);
+
+  globalThis.fetch = async () => ({
+    ok: true,
+    json: async () => ({
+      valid: true,
+      friendPricePence: 7900,
+      standardPricePence: 6900,
+      sprintEndsAt: "not-a-date",
+    }),
+  });
+  assert.equal(await validateReferralCode("MALFORMED"), null);
+});
+
+test("referral banner is globally mounted and prices come from a validated response", () => {
+  const provider = fs.readFileSync(
+    "src/components/marketing/MarketingAttributionProvider.tsx",
+    "utf8",
+  );
+  const banner = fs.readFileSync(
+    "src/components/marketing/ReferralOfferBanner.tsx",
+    "utf8",
+  );
+  const proxy = fs.readFileSync(
+    "src/app/api/referral/validate/[code]/route.ts",
+    "utf8",
+  );
+  const urlBuilder = fs.readFileSync("src/lib/marketing/url.ts", "utf8");
+  const trackedLink = fs.readFileSync(
+    "src/components/marketing/TrackedAppLink.tsx",
+    "utf8",
+  );
+
+  assert.match(
+    provider,
+    /<ReferralOfferProvider>[\s\S]*<ReferralOfferBanner\s*\/>[\s\S]*\{children\}[\s\S]*<\/ReferralOfferProvider>/,
+  );
+  assert.match(
+    banner,
+    /setCode\(capturedCode\)/,
+  );
+  assert.match(
+    banner,
+    /setValidatedOffer\(result \? \{ \.\.\.result, code: capturedCode \} : null\)/,
+  );
+  assert.match(banner, /useHeldReferralCode/);
+  assert.match(banner, /promoOwnsHandoff/);
+  assert.match(banner, /trialOwnsOrMayOwnHandoff/);
+  assert.match(banner, /useSearchParams\(\)/);
+  assert.match(banner, /A colleague shared their referral with you/);
+  assert.match(banner, /formatPrice\(referral\.friendPricePence\)/);
+  assert.match(banner, /formatPrice\(referral\.standardPricePence\)/);
+  assert.doesNotMatch(banner, /£69|£79/);
+  assert.match(proxy, /app\.medexia-akt\.com\/api\/referral\/validate/);
+  assert.match(proxy, /cache:\s*"no-store"/);
+  assert.match(urlBuilder, /buildReferralAppUrl\(/);
+  assert.match(trackedLink, /const heldReferralCode = useHeldReferralCode\(\)/);
+  assert.match(
+    trackedLink,
+    /trialOffer\?\.code,[\s\S]*heldReferralCode,[\s\S]*options\.intent/,
+  );
+});
+
+test("a validated trial owns mixed trial and referral handoffs", () => {
+  resetTrackingEnv();
+  installBrowser(
+    "https://medexia-akt.com/?trial_code=TRIAL-OWNER&ref=REFERRAL-SUPPRESSED",
+  );
+  captureReferralCode();
+
+  assert.equal(
+    buildAppUrl("/join/full-access", {
+      intent: "checkout",
+      validatedTrialCode: "TRIAL-OWNER",
+    }),
+    `${TRIAL_APP_JOIN_URL}?code=TRIAL-OWNER`,
+  );
+});
+
+test("a promo owns mixed promo and referral handoffs", () => {
+  resetTrackingEnv();
+  const query =
+    "?promo_code=PROMO-OWNER&ref=REFERRAL-SUPPRESSED&utm_source=faculty";
+  installBrowser(`https://medexia-akt.com/${query}`);
+  captureReferralCode();
+
+  assert.equal(
+    buildAppUrl("/join/free", { intent: "start_free" }),
+    `${PROMO_APP_JOIN_URL}${query}`,
+  );
 });
 
 test("promo landing query is passed unchanged to the fixed full-access app target", () => {
@@ -2026,24 +2254,25 @@ test("referral handoff is preserved without analytics consent but marketing iden
 
   const appUrl = new URL(buildAppUrl("/join/early-access", { intent: "referral_earlybird" }));
 
+  assert.equal(
+    appUrl.origin + appUrl.pathname,
+    REFERRAL_FULL_ACCESS_APP_JOIN_URL,
+  );
   assert.equal(appUrl.searchParams.get("referral_code"), "REF123");
-  assert.equal(appUrl.searchParams.get("ref"), "REF123");
-  // Referral handoff (referral_code/ref) is still preserved, but post-cutover the
-  // retired £49 referral offer no longer qualifies for the no-consent offer_id
-  // exception, so without analytics consent no offer_id is handed off.
+  assert.equal(appUrl.searchParams.has("ref"), false);
   assert.equal(appUrl.searchParams.has("offer_id"), false);
-  assert.equal(appUrl.searchParams.get("utm_source"), "whatsapp");
-  assert.equal(appUrl.searchParams.get("utm_campaign"), "share");
   assert.equal(appUrl.searchParams.has("mx_vid"), false);
   assert.equal(appUrl.searchParams.has("gclid"), false);
+  assert.deepEqual(Array.from(appUrl.searchParams.keys()), ["referral_code"]);
 });
 
-test("stored referral does not show or hand off the referral price on clean visits", () => {
+test("referral handoff remains active on clean landing pages within the same session", () => {
   resetTrackingEnv();
   setReferralFlags(true);
   const browser = installBrowser("https://medexia-akt.com/?ref=REF123&utm_source=whatsapp");
 
   acceptAllConsent("banner");
+  captureReferralCode();
   const referralLanding = initMarketingAttribution();
   assert.equal(referralLanding.active_referral?.referral_code, "REF123");
   // Post-cutover the referral early-bird price is retired; the landing resolves
@@ -2066,11 +2295,10 @@ test("stored referral does not show or hand off the referral price on clean visi
     }),
   );
 
-  assert.equal(appUrl.searchParams.has("referral_code"), false);
+  assert.equal(appUrl.pathname, "/join/full-access");
+  assert.equal(appUrl.searchParams.get("referral_code"), "REF123");
   assert.equal(appUrl.searchParams.has("ref"), false);
-  // Post-cutover an explicitly-passed retired referral offer id is ignored and
-  // falls back to the post-cutover free tier.
-  assert.equal(appUrl.searchParams.get("offer_id"), OFFER_IDS.freePost);
+  assert.equal(appUrl.searchParams.has("offer_id"), false);
 });
 
 test("functional-only consent persists referral continuity without analytics identifiers", () => {
@@ -2088,7 +2316,7 @@ test("functional-only consent persists referral continuity without analytics ide
   assert.equal(JSON.parse(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.referral)).referral_code, "REF123");
 });
 
-test("referral with analytics consent appends source attribution but still excludes ad click ids without marketing consent", () => {
+test("referral CTA remains limited to the referral code when analytics consent is present", () => {
   resetTrackingEnv();
   setReferralFlags(true);
   installBrowser(
@@ -2099,8 +2327,10 @@ test("referral with analytics consent appends source attribution but still exclu
   initMarketingAttribution();
   const appUrl = new URL(buildAppUrl("/join/early-access", { intent: "referral_earlybird" }));
 
+  assert.equal(appUrl.pathname, "/join/full-access");
   assert.equal(appUrl.searchParams.get("referral_code"), "REF123");
-  assert.equal(appUrl.searchParams.get("utm_source"), "whatsapp");
-  assert.ok(appUrl.searchParams.get("mx_vid"));
+  assert.equal(appUrl.searchParams.has("utm_source"), false);
+  assert.equal(appUrl.searchParams.has("mx_vid"), false);
   assert.equal(appUrl.searchParams.has("gclid"), false);
+  assert.deepEqual(Array.from(appUrl.searchParams.keys()), ["referral_code"]);
 });

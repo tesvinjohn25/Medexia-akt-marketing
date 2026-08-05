@@ -22,6 +22,7 @@ import {
 } from "@/lib/marketing/attribution";
 import { useMarketingAttribution } from "./MarketingAttributionProvider";
 import { useValidatedTrialOffer } from "./TrialOfferBanner";
+import { useHeldReferralCode } from "./ReferralOfferBanner";
 
 const CTA_EVENT_BY_INTENT: Record<CtaIntent, string> = {
   start_free: "cta_clicked_start_free",
@@ -43,6 +44,7 @@ export function useTrackedAppUrl(
 ): string {
   const snapshot = useMarketingAttribution();
   const trialOffer = useValidatedTrialOffer();
+  const heldReferralCode = useHeldReferralCode();
   const consentSignature = getAppHandoffConsentSignature();
   const signature = useMemo(
     () =>
@@ -63,10 +65,18 @@ export function useTrackedAppUrl(
         snapshot?.last_touch?.term,
         snapshot?.offer_context.offer_id,
         trialOffer?.code,
+        heldReferralCode,
         options.intent,
         options.offerId,
       ].join("|"),
-    [consentSignature, snapshot, trialOffer?.code, options.intent, options.offerId],
+    [
+      consentSignature,
+      snapshot,
+      trialOffer?.code,
+      heldReferralCode,
+      options.intent,
+      options.offerId,
+    ],
   );
   const [trackedHref, setTrackedHref] = useState(() =>
     buildAppHydrationUrl(href, { intent: options.intent, offerId: options.offerId }),

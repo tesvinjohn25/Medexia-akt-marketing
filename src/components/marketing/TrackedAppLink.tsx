@@ -21,6 +21,7 @@ import {
   type OfferId,
 } from "@/lib/marketing/attribution";
 import { useMarketingAttribution } from "./MarketingAttributionProvider";
+import { useValidatedTrialOffer } from "./TrialOfferBanner";
 
 const CTA_EVENT_BY_INTENT: Record<CtaIntent, string> = {
   start_free: "cta_clicked_start_free",
@@ -41,6 +42,7 @@ export function useTrackedAppUrl(
   } = {},
 ): string {
   const snapshot = useMarketingAttribution();
+  const trialOffer = useValidatedTrialOffer();
   const consentSignature = getAppHandoffConsentSignature();
   const signature = useMemo(
     () =>
@@ -60,18 +62,23 @@ export function useTrackedAppUrl(
         snapshot?.last_touch?.content,
         snapshot?.last_touch?.term,
         snapshot?.offer_context.offer_id,
+        trialOffer?.code,
         options.intent,
         options.offerId,
       ].join("|"),
-    [consentSignature, snapshot, options.intent, options.offerId],
+    [consentSignature, snapshot, trialOffer?.code, options.intent, options.offerId],
   );
   const [trackedHref, setTrackedHref] = useState(() =>
     buildAppHydrationUrl(href, { intent: options.intent, offerId: options.offerId }),
   );
 
   useEffect(() => {
-    setTrackedHref(buildAppUrl(href, { intent: options.intent, offerId: options.offerId }));
-  }, [href, signature, options.intent, options.offerId]);
+    setTrackedHref(buildAppUrl(href, {
+      intent: options.intent,
+      offerId: options.offerId,
+      validatedTrialCode: trialOffer?.code,
+    }));
+  }, [href, signature, trialOffer?.code, options.intent, options.offerId]);
 
   return trackedHref;
 }
@@ -96,6 +103,7 @@ export function TrackedAppLink({
   ...props
 }: TrackedAppLinkProps) {
   const trackedHref = useTrackedAppUrl(href, { intent, offerId });
+  const trialOffer = useValidatedTrialOffer();
   const navigatingRef = useRef(false);
 
   const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -105,7 +113,11 @@ export function TrackedAppLink({
     // Rebuild synchronously from the latest consent and attribution state.
     // This closes the short post-hydration window before useEffect has replaced
     // the SSR-safe fallback href, including for modified/new-tab clicks.
-    const navigationHref = buildAppUrl(href, { intent, offerId });
+    const navigationHref = buildAppUrl(href, {
+      intent,
+      offerId,
+      validatedTrialCode: trialOffer?.code,
+    });
     const eventHref = appHandoffEventHref(navigationHref);
     event.currentTarget.href = navigationHref;
 

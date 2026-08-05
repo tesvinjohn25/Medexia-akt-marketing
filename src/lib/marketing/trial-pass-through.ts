@@ -74,8 +74,7 @@ export function captureTrialCode(): string | null {
   return incoming;
 }
 
-export function buildTrialAppUrl(): string | null {
-  const code = captureTrialCode();
+export function buildTrialAppUrl(code: string | null | undefined): string | null {
   if (!code) return null;
 
   const url = new URL(TRIAL_APP_JOIN_URL);
@@ -117,11 +116,6 @@ export async function validateTrialCode(
     if (error instanceof DOMException && error.name === "AbortError") return null;
     return null;
   }
-}
-
-export function trialAudienceLabel(label: string): string {
-  const audience = label.replace(/\s+(registrar\s+)?committee\s*$/i, "").trim();
-  return audience || "Registrar";
 }
 
 export { TRIAL_APP_JOIN_URL, TRIAL_CODE_SESSION_STORAGE_KEY };

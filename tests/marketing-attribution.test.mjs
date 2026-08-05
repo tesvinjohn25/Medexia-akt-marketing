@@ -64,7 +64,6 @@ const {
   TRIAL_CODE_SESSION_STORAGE_KEY,
   buildTrialAppUrl,
   captureTrialCode,
-  trialAudienceLabel,
   validateTrialCode,
 } = await importBundled("src/lib/marketing/trial-pass-through.ts");
 const {
@@ -254,17 +253,41 @@ test("app url fallback targets the deployed Replit app domain", () => {
   assert.equal(appUrl.pathname, "/join/free");
 });
 
-test("trial link routes signup CTAs to the app trial join page", () => {
+test("trial link routes signup CTAs only after the code has been validated", async () => {
   resetTrackingEnv();
   const browser = installBrowser(
     "https://medexia-akt.com/?trial_code=TRIAL-RM7FAA&utm_source=mid_wessex",
   );
+  const code = captureTrialCode();
+  globalThis.fetch = async () => ({
+    ok: true,
+    json: async () => ({ valid: true, trialDays: 14, label: "Thames Valley" }),
+  });
+
+  const unvalidatedUrl = new URL(
+    buildAppUrl("/join/free", { intent: "start_free" }),
+  );
+  assert.equal(unvalidatedUrl.pathname, "/join/free");
+  assert.equal(unvalidatedUrl.searchParams.has("code"), false);
+
+  const validation = await validateTrialCode(code);
+  assert.deepEqual(validation, {
+    valid: true,
+    trialDays: 14,
+    label: "Thames Valley",
+  });
 
   assert.equal(
-    buildAppUrl("/join/free", { intent: "start_free" }),
+    buildAppUrl("/join/free", {
+      intent: "start_free",
+      validatedTrialCode: validation ? code : null,
+    }),
     `${TRIAL_APP_JOIN_URL}?code=TRIAL-RM7FAA`,
   );
-  assert.equal(buildTrialAppUrl(), `${TRIAL_APP_JOIN_URL}?code=TRIAL-RM7FAA`);
+  assert.equal(
+    buildTrialAppUrl(code),
+    `${TRIAL_APP_JOIN_URL}?code=TRIAL-RM7FAA`,
+  );
   assert.equal(
     browser.sessionStorage.getItem(TRIAL_CODE_SESSION_STORAGE_KEY),
     "TRIAL-RM7FAA",
@@ -278,17 +301,18 @@ test("trial link routes signup CTAs to the app trial join page", () => {
 test("trial link does not hijack login, demo, or existing-user app CTAs", () => {
   resetTrackingEnv();
   installBrowser("https://medexia-akt.com/?trial_code=TRIAL-RM7FAA");
+  const trialOptions = { validatedTrialCode: "TRIAL-RM7FAA" };
 
   assert.equal(
-    new URL(buildAppUrl("/login", { intent: "login" })).pathname,
+    new URL(buildAppUrl("/login", { intent: "login", ...trialOptions })).pathname,
     "/login",
   );
   assert.equal(
-    new URL(buildAppUrl("/demo", { intent: "demo" })).pathname,
+    new URL(buildAppUrl("/demo", { intent: "demo", ...trialOptions })).pathname,
     "/demo",
   );
   assert.equal(
-    new URL(buildAppUrl("/library", { intent: "app_open" })).pathname,
+    new URL(buildAppUrl("/library", { intent: "app_open", ...trialOptions })).pathname,
     "/library",
   );
 });
@@ -302,7 +326,10 @@ test("trial code survives client navigation but not a fresh clean page load", ()
   window.location = new URL("https://medexia-akt.com/akt-audio-revision");
 
   assert.equal(
-    buildAppUrl("/join/audio", { intent: "start_audio" }),
+    buildAppUrl("/join/audio", {
+      intent: "start_audio",
+      validatedTrialCode: captureTrialCode(),
+    }),
     `${TRIAL_APP_JOIN_URL}?code=TRIAL-RM7FAA`,
   );
 
@@ -311,6 +338,7 @@ test("trial code survives client navigation but not a fresh clean page load", ()
     "",
     linkedVisit.sessionStorage,
   );
+  assert.equal(captureTrialCode(), null);
   const normalUrl = new URL(buildAppUrl("/join/audio", { intent: "start_audio" }));
 
   assert.equal(cleanVisit.sessionStorage.getItem(TRIAL_CODE_SESSION_STORAGE_KEY), null);
@@ -321,9 +349,13 @@ test("trial code survives client navigation but not a fresh clean page load", ()
 test("trial code is treated as opaque when constructing the app URL", () => {
   resetTrackingEnv();
   installBrowser("https://medexia-akt.com/?trial_code=Trial%2BRM%2F7");
+  const code = captureTrialCode();
 
   assert.equal(
-    buildAppUrl("/join/free", { intent: "start_free" }),
+    buildAppUrl("/join/free", {
+      intent: "start_free",
+      validatedTrialCode: code,
+    }),
     `${TRIAL_APP_JOIN_URL}?code=Trial%2BRM%2F7`,
   );
 });
@@ -336,18 +368,17 @@ test("trial validation accepts only a well-formed live trial response", async ()
     calls.push({ url, options });
     return {
       ok: true,
-      json: async () => ({ valid: true, trialDays: 14, label: "Mid-Wessex Committee" }),
+      json: async () => ({ valid: true, trialDays: 14, label: "Thames Valley" }),
     };
   };
 
   assert.deepEqual(await validateTrialCode("TRIAL-RM7FAA"), {
     valid: true,
     trialDays: 14,
-    label: "Mid-Wessex Committee",
+    label: "Thames Valley",
   });
   assert.equal(calls[0].url, "/api/trial/validate/TRIAL-RM7FAA");
   assert.equal(calls[0].options.cache, "no-store");
-  assert.equal(trialAudienceLabel("Mid-Wessex Committee"), "Mid-Wessex");
 });
 
 test("invalid or malformed trial validation never produces a banner payload", async () => {
@@ -358,7 +389,17 @@ test("invalid or malformed trial validation never produces a banner payload", as
     json: async () => ({ valid: false, trialDays: 14, label: "Mid-Wessex Committee" }),
   });
 
-  assert.equal(await validateTrialCode("EXPIRED"), null);
+  const invalidValidation = await validateTrialCode("EXPIRED");
+  assert.equal(invalidValidation, null);
+
+  const invalidUrl = new URL(
+    buildAppUrl("/join/free", {
+      intent: "start_free",
+      validatedTrialCode: invalidValidation ? "EXPIRED" : null,
+    }),
+  );
+  assert.equal(invalidUrl.pathname, "/join/free");
+  assert.equal(invalidUrl.searchParams.has("code"), false);
 
   globalThis.fetch = async () => ({
     ok: true,
@@ -385,12 +426,17 @@ test("trial banner is globally mounted and uses validated duration and label", (
     "utf8",
   );
 
-  assert.match(provider, /<TrialOfferBanner\s*\/>[\s\S]*\{children\}/);
-  assert.match(banner, /trialAudienceLabel\(trial\.label\)/);
+  assert.match(
+    provider,
+    /<TrialOfferProvider>[\s\S]*<TrialOfferBanner\s*\/>[\s\S]*\{children\}[\s\S]*<\/TrialOfferProvider>/,
+  );
+  assert.match(banner, /if \(active\) setTrial\(result \? \{ \.\.\.result, code \} : null\)/);
+  assert.match(banner, /\{trial\.label\} trial applied/);
   assert.match(banner, /start your \{trial\.trialDays\}-day free trial/);
   assert.match(proxy, /app\.medexia-akt\.com\/api\/trial\/validate/);
   assert.match(proxy, /cache:\s*"no-store"/);
   assert.match(trackedLink, /useState\(\(\) =>\s*buildAppHydrationUrl/);
+  assert.match(trackedLink, /validatedTrialCode:\s*trialOffer\?\.code/);
 });
 
 test("promo landing query is passed unchanged to the fixed full-access app target", () => {

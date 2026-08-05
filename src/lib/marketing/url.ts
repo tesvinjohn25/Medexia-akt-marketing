@@ -114,9 +114,10 @@ export function buildAppFallbackUrl(
   options: {
     intent?: CtaIntent;
     offerId?: OfferId;
+    validatedTrialCode?: string | null;
   } = {},
 ): string {
-  const trialUrl = buildTrialAppUrl();
+  const trialUrl = buildTrialAppUrl(options.validatedTrialCode);
   if (trialUrl && options.intent !== "login" && options.intent !== "demo" && options.intent !== "app_open") {
     return trialUrl;
   }
@@ -145,9 +146,10 @@ export function buildAppUrl(
   options: {
     intent?: CtaIntent;
     offerId?: OfferId;
+    validatedTrialCode?: string | null;
   } = {},
 ): string {
-  const trialUrl = buildTrialAppUrl();
+  const trialUrl = buildTrialAppUrl(options.validatedTrialCode);
   if (trialUrl && options.intent !== "login" && options.intent !== "demo" && options.intent !== "app_open") {
     return trialUrl;
   }

@@ -37,10 +37,22 @@ function storedTrialCode(): string | null {
   }
 }
 
+function isSameSiteDocumentNavigation(): boolean {
+  if (!isBrowser() || typeof document === "undefined" || !document.referrer) {
+    return false;
+  }
+
+  try {
+    return new URL(document.referrer).origin === window.location.origin;
+  } catch {
+    return false;
+  }
+}
+
 /**
- * Keep a trial link active across client-side landing-page navigation, while
- * making every fresh document load authoritative. This prevents a clean URL
- * from inheriting a trial code remembered by an earlier page in the same tab.
+ * Keep a trial link active while the visitor follows same-site landing-page
+ * links, including links that trigger a full document load. A clean direct or
+ * external visit remains authoritative and clears an earlier code from the tab.
  */
 export function captureTrialCode(): string | null {
   if (!isBrowser()) return null;
@@ -53,6 +65,8 @@ export function captureTrialCode(): string | null {
     try {
       if (incoming) {
         window.sessionStorage.setItem(TRIAL_CODE_SESSION_STORAGE_KEY, incoming);
+      } else if (isSameSiteDocumentNavigation()) {
+        return storedTrialCode();
       } else {
         window.sessionStorage.removeItem(TRIAL_CODE_SESSION_STORAGE_KEY);
       }

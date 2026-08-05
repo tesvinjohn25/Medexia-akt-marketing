@@ -346,6 +346,26 @@ test("trial code survives client navigation but not a fresh clean page load", ()
   assert.equal(normalUrl.searchParams.has("code"), false);
 });
 
+test("trial code survives a same-site full document navigation", () => {
+  resetTrackingEnv();
+  const linkedVisit = installBrowser(
+    "https://medexia-akt.com/?trial_code=TRIAL-RM7FAA",
+  );
+  assert.equal(captureTrialCode(), "TRIAL-RM7FAA");
+
+  const nextDocument = installBrowser(
+    "https://medexia-akt.com/akt-audio-revision",
+    "https://medexia-akt.com/",
+    linkedVisit.sessionStorage,
+  );
+
+  assert.equal(captureTrialCode(), "TRIAL-RM7FAA");
+  assert.equal(
+    nextDocument.sessionStorage.getItem(TRIAL_CODE_SESSION_STORAGE_KEY),
+    "TRIAL-RM7FAA",
+  );
+});
+
 test("trial code is treated as opaque when constructing the app URL", () => {
   resetTrackingEnv();
   installBrowser("https://medexia-akt.com/?trial_code=Trial%2BRM%2F7");
@@ -1550,7 +1570,7 @@ test("homepage post-cutover hero hands audio traffic to the free audio-first flo
   assert.match(trackedLink, /start_audio: "cta_clicked_start_audio"/);
   assert.match(
     trackedLink,
-    /const navigationHref = buildAppUrl\(href, \{ intent, offerId \}\);/,
+    /const navigationHref = buildAppUrl\(href, \{[\s\S]{0,200}intent,[\s\S]{0,200}offerId,[\s\S]{0,200}validatedTrialCode: trialOffer\?\.code,[\s\S]{0,80}\}\);/,
   );
   assert.match(trackedLink, /event\.currentTarget\.href = navigationHref;/);
   assert.match(trackedLink, /window\.location\.assign\(navigationHref\)/);

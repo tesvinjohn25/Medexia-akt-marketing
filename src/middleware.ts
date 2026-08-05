@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyInternalTestToken } from "@/lib/marketing/internal-test-token";
+import { isReferralLandingRequest } from "@/lib/marketing/referral-og";
 
 const INTERNAL_TEST_QUERY_PARAM = "mx_test";
 const INTERNAL_TEST_COOKIE = "mx_internal_test";
@@ -74,6 +75,12 @@ export async function middleware(request: NextRequest) {
     } else {
       response = NextResponse.next();
     }
+  } else if (
+    isReferralLandingRequest(pathname, request.nextUrl.searchParams)
+  ) {
+    const inviteUrl = request.nextUrl.clone();
+    inviteUrl.pathname = "/invite";
+    response = NextResponse.rewrite(inviteUrl);
   } else {
     response = NextResponse.next();
   }

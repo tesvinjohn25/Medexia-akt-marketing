@@ -76,6 +76,13 @@ const {
   validateReferralCode,
 } = await importBundled("src/lib/marketing/referral-pass-through.ts");
 const {
+  REFERRAL_OG_DESCRIPTION,
+  REFERRAL_OG_IMAGE_URL,
+  REFERRAL_OG_TITLE,
+  buildReferralShareUrl,
+  isReferralLandingRequest,
+} = await importBundled("src/lib/marketing/referral-og.ts");
+const {
   CONSENT_STORAGE_KEY,
   acceptAllConsent,
   rejectAllConsent,
@@ -656,6 +663,59 @@ test("referral banner is globally mounted and prices come from a validated respo
     trackedLink,
     /trialOffer\?\.code,[\s\S]*heldReferralCode,[\s\S]*options\.intent/,
   );
+});
+
+test("only root requests carrying ref select the referral social preview", () => {
+  assert.equal(
+    isReferralLandingRequest("/", new URLSearchParams("ref=COLLEAGUE")),
+    true,
+  );
+  assert.equal(
+    isReferralLandingRequest("/", new URLSearchParams("utm_source=whatsapp")),
+    false,
+  );
+  assert.equal(
+    isReferralLandingRequest("/", new URLSearchParams("ref=")),
+    false,
+  );
+  assert.equal(
+    isReferralLandingRequest(
+      "/akt-audio-revision",
+      new URLSearchParams("ref=COLLEAGUE"),
+    ),
+    false,
+  );
+  assert.equal(
+    buildReferralShareUrl("COLLEAGUE+CODE/1"),
+    "https://medexia-akt.com/invite?ref=COLLEAGUE%2BCODE%2F1",
+  );
+});
+
+test("referral landing rewrite serves exact OG copy and image without changing homepage content", () => {
+  const middleware = fs.readFileSync("src/middleware.ts", "utf8");
+  const invitePage = fs.readFileSync("src/app/invite/page.tsx", "utf8");
+
+  assert.equal(
+    REFERRAL_OG_TITLE,
+    "You've been invited to AKT Navigator - £10 off Full Audio",
+  );
+  assert.equal(
+    REFERRAL_OG_DESCRIPTION,
+    "A colleague shared their referral link. Try it free, and pay £69 instead of £79 if you upgrade to Full Audio.",
+  );
+  assert.equal(
+    REFERRAL_OG_IMAGE_URL,
+    "https://app.medexia-akt.com/referral-og.png",
+  );
+  assert.match(middleware, /isReferralLandingRequest/);
+  assert.match(middleware, /inviteUrl\.pathname = "\/invite"/);
+  assert.match(middleware, /NextResponse\.rewrite\(inviteUrl\)/);
+  assert.match(invitePage, /if \(!referralCode\) redirect\("\/"\)/);
+  assert.match(invitePage, /url:\s*referralUrl/);
+  assert.match(invitePage, /index:\s*false/);
+  assert.match(invitePage, /width:\s*1200/);
+  assert.match(invitePage, /height:\s*630/);
+  assert.match(invitePage, /return <Home \/>/);
 });
 
 test("a validated trial owns mixed trial and referral handoffs", () => {

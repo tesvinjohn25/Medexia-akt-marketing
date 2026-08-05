@@ -10,7 +10,7 @@ import {
 } from "react";
 import {
   appHandoffEventHref,
-  buildAppFallbackUrl,
+  buildAppHydrationUrl,
   buildAppUrl,
   getAppHandoffConsentSignature,
 } from "@/lib/marketing/url";
@@ -66,7 +66,7 @@ export function useTrackedAppUrl(
     [consentSignature, snapshot, options.intent, options.offerId],
   );
   const [trackedHref, setTrackedHref] = useState(() =>
-    buildAppFallbackUrl(href, { intent: options.intent, offerId: options.offerId }),
+    buildAppHydrationUrl(href, { intent: options.intent, offerId: options.offerId }),
   );
 
   useEffect(() => {

@@ -15,6 +15,7 @@ import {
   hasConsentDecision,
 } from "../consent/consent";
 import { buildPromoAppPassThroughUrl } from "./promo-pass-through";
+import { buildTrialAppUrl } from "./trial-pass-through";
 
 const DEFAULT_APP_BASE_URL = "https://app.medexia-akt.com";
 const MARKETING_SITE_ORIGIN = "https://medexia-akt.com";
@@ -86,6 +87,28 @@ export function appHandoffEventHref(value: string): string {
   }
 }
 
+/**
+ * Produce the same initial href during SSR and browser hydration. Campaign
+ * pass-through is applied by buildAppUrl immediately after hydration; keeping
+ * this first value deterministic ensures React updates the rendered anchor.
+ */
+export function buildAppHydrationUrl(
+  pathOrExistingUrl: string,
+  options: {
+    intent?: CtaIntent;
+    offerId?: OfferId;
+  } = {},
+): string {
+  const base = appBaseUrl();
+  const url = /^https?:\/\//i.test(pathOrExistingUrl)
+    ? new URL(pathOrExistingUrl)
+    : new URL(pathOrExistingUrl.startsWith("/") ? pathOrExistingUrl : `/${pathOrExistingUrl}`, base);
+
+  setIfPresent(url.searchParams, "intent", options.intent);
+  setIfPresent(url.searchParams, "offer_id", options.offerId);
+  return url.toString();
+}
+
 export function buildAppFallbackUrl(
   pathOrExistingUrl: string,
   options: {
@@ -93,6 +116,11 @@ export function buildAppFallbackUrl(
     offerId?: OfferId;
   } = {},
 ): string {
+  const trialUrl = buildTrialAppUrl();
+  if (trialUrl && options.intent !== "login" && options.intent !== "demo" && options.intent !== "app_open") {
+    return trialUrl;
+  }
+
   const promoUrl = buildPromoAppPassThroughUrl();
   if (promoUrl) return promoUrl;
 
@@ -119,6 +147,11 @@ export function buildAppUrl(
     offerId?: OfferId;
   } = {},
 ): string {
+  const trialUrl = buildTrialAppUrl();
+  if (trialUrl && options.intent !== "login" && options.intent !== "demo" && options.intent !== "app_open") {
+    return trialUrl;
+  }
+
   const promoUrl = buildPromoAppPassThroughUrl();
   if (promoUrl) return promoUrl;
 

@@ -25,6 +25,8 @@ import {
 import { maybeLoadMarketingPixels } from "@/lib/marketing/pixels";
 import { trackLandingEvent } from "@/lib/marketing/events";
 import { capturePromoPassThroughQuery } from "@/lib/marketing/promo-pass-through";
+import { captureTrialCode } from "@/lib/marketing/trial-pass-through";
+import { TrialOfferBanner } from "@/components/marketing/TrialOfferBanner";
 
 const MarketingContext = createContext<MarketingSnapshot | null>(null);
 
@@ -34,6 +36,7 @@ export function MarketingAttributionProvider({ children }: { children: ReactNode
   const landingEventsTrackedRef = useRef(false);
 
   useEffect(() => {
+    captureTrialCode();
     capturePromoPassThroughQuery();
     setConsent(getStoredConsent());
     setSnapshot(getMarketingSnapshot());
@@ -75,6 +78,7 @@ export function MarketingAttributionProvider({ children }: { children: ReactNode
 
   return (
     <MarketingContext.Provider value={value}>
+      <TrialOfferBanner />
       {children}
       <ConsentBanner />
       {consent?.analytics ? <Analytics /> : null}

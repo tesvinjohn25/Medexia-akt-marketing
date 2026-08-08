@@ -3,6 +3,7 @@ import { isInternalTestTraffic } from "./attribution";
 
 let loaded = false;
 let googleManaged = false;
+let metaManaged = false;
 
 function envEnabled(): boolean {
   return process.env.NEXT_PUBLIC_ENABLE_MARKETING_PIXELS === "true";
@@ -29,6 +30,7 @@ export function maybeLoadMarketingPixels(): void {
   const existingWindow = window as typeof window & {
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
+    fbq?: (...args: unknown[]) => void;
   };
 
   // Consent can be withdrawn after the tag has loaded. Google Consent Mode
@@ -41,6 +43,16 @@ export function maybeLoadMarketingPixels(): void {
       ad_user_data: canUseMarketing() && !internalTestTraffic ? "granted" : "denied",
       ad_personalization: canUseMarketing() && !internalTestTraffic ? "granted" : "denied",
     });
+  }
+
+  // A script that has already executed cannot be unloaded when consent is
+  // withdrawn. Tell Meta to stop/resume event processing before the shared
+  // `loaded` guard, mirroring the Google consent update above.
+  if (envEnabled() && metaManaged && metaPixelId && existingWindow.fbq) {
+    existingWindow.fbq(
+      "consent",
+      canUseMarketing() && !internalTestTraffic ? "grant" : "revoke",
+    );
   }
 
   if (internalTestTraffic || loaded || !envEnabled() || !canUseMarketing()) return;
@@ -71,7 +83,15 @@ export function maybeLoadMarketingPixels(): void {
     const w = window as typeof window & { fbq?: (...args: unknown[]) => void; _fbq?: unknown };
     if (!w.fbq) {
       const fbq = (...args: unknown[]) => {
-        (fbq as unknown as { queue: unknown[] }).queue.push(args);
+        const self = fbq as unknown as {
+          callMethod?: (...callArgs: unknown[]) => void;
+          queue: unknown[];
+        };
+        if (self.callMethod) {
+          self.callMethod(...args);
+        } else {
+          self.queue.push(args);
+        }
       };
       (fbq as unknown as { queue: unknown[]; loaded: boolean; version: string }).queue = [];
       (fbq as unknown as { loaded: boolean }).loaded = true;
@@ -82,6 +102,7 @@ export function maybeLoadMarketingPixels(): void {
     appendScript("mx-meta-pixel", "https://connect.facebook.net/en_US/fbevents.js");
     w.fbq("init", metaPixelId);
     w.fbq("track", "PageView");
+    metaManaged = true;
   }
 
   if (googleId) {

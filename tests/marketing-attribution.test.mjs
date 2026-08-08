@@ -1734,6 +1734,12 @@ test("marketing consent loads configured pixels after consent and allows ad clic
   assert.equal(appUrl.searchParams.get("rdt_cid"), "R123");
   assert.equal(appUrl.searchParams.get("mx_mc"), "1");
   assert.equal(appUrl.searchParams.get("mx_ac"), "1");
+  assert.deepEqual(window.fbq.queue.slice(0, 2), [
+    ["init", "123456"],
+    ["track", "PageView"],
+  ]);
+  const liveMetaCalls = [];
+  window.fbq.callMethod = (...args) => liveMetaCalls.push(args);
 
   rejectAllConsent("footer");
   maybeLoadMarketingPixels();
@@ -1746,6 +1752,13 @@ test("marketing consent loads configured pixels after consent and allows ad clic
     ad_user_data: "denied",
     ad_personalization: "denied",
   });
+  assert.deepEqual(liveMetaCalls.at(-1), ["consent", "revoke"]);
+  assert.equal(window.fbq.queue.length, 2);
+
+  acceptAllConsent("settings");
+  maybeLoadMarketingPixels();
+  assert.deepEqual(liveMetaCalls.at(-1), ["consent", "grant"]);
+  assert.equal(window.fbq.queue.length, 2);
 });
 
 test("app handoff consent signature changes when marketing consent is withdrawn", () => {

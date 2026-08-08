@@ -155,7 +155,9 @@ Withdraw consent expected:
 
 - Non-essential `mx_*` attribution storage is cleared.
 - Future landing/CTA events are no-op.
-- Already loaded third-party scripts are not called again by Medexia code.
+- Google receives a denied consent update and Meta receives a consent revoke
+  command if their scripts were already loaded; re-granting consent updates
+  both providers without injecting duplicate scripts or PageView events.
 
 ## Build Checks
 

@@ -41,6 +41,7 @@ const MarketingContext = createContext<MarketingSnapshot | null>(null);
 export function MarketingAttributionProvider({ children }: { children: ReactNode }) {
   const [snapshot, setSnapshot] = useState<MarketingSnapshot | null>(null);
   const [consent, setConsent] = useState<ConsentRecord | null>(null);
+  const [consentEventRevision, setConsentEventRevision] = useState(0);
   const landingEventsTrackedRef = useRef(false);
 
   useEffect(() => {
@@ -52,6 +53,10 @@ export function MarketingAttributionProvider({ children }: { children: ReactNode
 
     const onConsentChanged = () => {
       setConsent(getStoredConsent());
+      // A server-confirmed Meta regrant intentionally re-emits the same
+      // consent record after its client marker is written. Track every event,
+      // not only updatedAt changes, so pixels receive the effective grant.
+      setConsentEventRevision((revision) => revision + 1);
     };
 
     window.addEventListener(CONSENT_CHANGED_EVENT, onConsentChanged);
@@ -81,7 +86,7 @@ export function MarketingAttributionProvider({ children }: { children: ReactNode
     // scripts before marketing consent, while an already-loaded Google tag can
     // receive a later denied update when consent is withdrawn.
     maybeLoadMarketingPixels();
-  }, [consent?.updatedAt]);
+  }, [consent?.updatedAt, consentEventRevision]);
 
   const value = useMemo(() => snapshot, [snapshot]);
 

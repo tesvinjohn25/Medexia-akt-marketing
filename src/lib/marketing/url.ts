@@ -61,6 +61,46 @@ function setIfPresent(params: URLSearchParams, key: string, value: string | null
   if (next) params.set(key, next);
 }
 
+const SPECIAL_HANDOFF_AD_CLICK_PARAMS = [
+  "gclid",
+  "gbraid",
+  "wbraid",
+  "fbclid",
+  "ttclid",
+  "msclkid",
+  "rdt_cid",
+] as const;
+
+function enrichSpecialAppHandoff(value: string): string {
+  const url = new URL(value);
+  const snapshot = initMarketingAttribution();
+  const first = snapshot.first_touch;
+  const last = snapshot.last_touch;
+  const internalTestToken = getInternalTestToken();
+  const includeAdClickIds = canUseMarketing() && !internalTestToken;
+
+  for (const key of SPECIAL_HANDOFF_AD_CLICK_PARAMS) url.searchParams.delete(key);
+  if (internalTestToken) {
+    url.searchParams.set(INTERNAL_TEST_QUERY_PARAM, internalTestToken);
+    url.searchParams.set("mx_mc", "0");
+  } else if (hasConsentDecision()) {
+    url.searchParams.set("mx_mc", includeAdClickIds ? "1" : "0");
+    url.searchParams.set("mx_ac", canUseAnalytics() ? "1" : "0");
+  }
+
+  if (includeAdClickIds) {
+    setIfPresent(url.searchParams, "gclid", last?.gclid ?? first?.gclid);
+    setIfPresent(url.searchParams, "gbraid", last?.gbraid ?? first?.gbraid);
+    setIfPresent(url.searchParams, "wbraid", last?.wbraid ?? first?.wbraid);
+    setIfPresent(url.searchParams, "fbclid", last?.fbclid ?? first?.fbclid);
+    setIfPresent(url.searchParams, "ttclid", last?.ttclid ?? first?.ttclid);
+    setIfPresent(url.searchParams, "msclkid", last?.msclkid ?? first?.msclkid);
+    setIfPresent(url.searchParams, "rdt_cid", last?.rdt_cid ?? first?.rdt_cid);
+  }
+
+  return url.toString();
+}
+
 export function getAppOrigin(): string {
   try {
     return new URL(appBaseUrl({ avoidCurrentOrigin: true })).origin;
@@ -123,9 +163,11 @@ export function buildAppFallbackUrl(
 ): string {
   const trialUrl = buildTrialAppUrl(options.validatedTrialCode);
   if (trialUrl && options.intent !== "login" && options.intent !== "demo" && options.intent !== "app_open") {
-    return trialUrl;
+    return enrichSpecialAppHandoff(trialUrl);
   }
 
+  // Institutional promo queries are deliberately opaque and remain on the
+  // marketing-site destination. They are not a direct landing-to-app handoff.
   const promoUrl = buildPromoAppPassThroughUrl();
   if (promoUrl) return promoUrl;
 
@@ -134,7 +176,7 @@ export function buildAppFallbackUrl(
     pathOrExistingUrl,
     options.intent,
   );
-  if (referralUrl) return referralUrl;
+  if (referralUrl) return enrichSpecialAppHandoff(referralUrl);
 
   const base = appBaseUrl();
   const url = /^https?:\/\//i.test(pathOrExistingUrl)
@@ -162,9 +204,11 @@ export function buildAppUrl(
 ): string {
   const trialUrl = buildTrialAppUrl(options.validatedTrialCode);
   if (trialUrl && options.intent !== "login" && options.intent !== "demo" && options.intent !== "app_open") {
-    return trialUrl;
+    return enrichSpecialAppHandoff(trialUrl);
   }
 
+  // Institutional promo queries are deliberately opaque and remain on the
+  // marketing-site destination. They are not a direct landing-to-app handoff.
   const promoUrl = buildPromoAppPassThroughUrl();
   if (promoUrl) return promoUrl;
 
@@ -173,7 +217,7 @@ export function buildAppUrl(
     pathOrExistingUrl,
     options.intent,
   );
-  if (referralUrl) return referralUrl;
+  if (referralUrl) return enrichSpecialAppHandoff(referralUrl);
 
   const base = appBaseUrl({ avoidCurrentOrigin: true });
   const url = /^https?:\/\//i.test(pathOrExistingUrl)

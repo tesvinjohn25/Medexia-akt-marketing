@@ -85,6 +85,8 @@ const {
 const {
   CONSENT_STORAGE_KEY,
   acceptAllConsent,
+  awaitMetaCapiRegrant,
+  canUseMarketing,
   rejectAllConsent,
   saveConsent,
 } = await importBundled("src/lib/consent/consent.ts");
@@ -159,7 +161,8 @@ function installBrowser(url, referrer = "", existingSessionStorage = null) {
       const [rawKey, rawValue = ""] = pair.split("=");
       const key = rawKey.trim();
       const maxAge = attributes.find((attr) => attr.trim().toLowerCase().startsWith("max-age="));
-      if (maxAge && maxAge.includes("0")) {
+      const maxAgeSeconds = maxAge ? Number(maxAge.split("=")[1]?.trim()) : null;
+      if (maxAgeSeconds !== null && Number.isFinite(maxAgeSeconds) && maxAgeSeconds <= 0) {
         cookies.delete(key);
       } else {
         cookies.set(key, decodeURIComponent(rawValue));
@@ -230,6 +233,10 @@ async function parseFetchPayload(call) {
     return JSON.parse(await body.text());
   }
   return JSON.parse(String(body));
+}
+
+function eventFetchCalls(browser) {
+  return browser.fetchCalls.filter((call) => call.options?.body !== undefined);
 }
 
 function fullyDecode(value) {
@@ -734,6 +741,33 @@ test("a validated trial owns mixed trial and referral handoffs", () => {
   );
 });
 
+test("consented trial and referral app handoffs retain Meta proof inputs", () => {
+  resetTrackingEnv();
+  installBrowser("https://medexia-akt.com/?trial_code=TRIAL-RM7FAA&fbclid=FB-TRIAL");
+  acceptAllConsent("settings");
+  initMarketingAttribution();
+  const trialUrl = new URL(buildAppUrl("/join/free", {
+    intent: "start_free",
+    validatedTrialCode: "TRIAL-RM7FAA",
+  }));
+  assert.equal(trialUrl.pathname, "/join/trial");
+  assert.equal(trialUrl.searchParams.get("code"), "TRIAL-RM7FAA");
+  assert.equal(trialUrl.searchParams.get("mx_mc"), "1");
+  assert.equal(trialUrl.searchParams.get("mx_ac"), "1");
+  assert.equal(trialUrl.searchParams.get("fbclid"), "FB-TRIAL");
+
+  resetTrackingEnv();
+  installBrowser("https://medexia-akt.com/?ref=COLLEAGUE&fbclid=FB-REFERRAL");
+  acceptAllConsent("settings");
+  initMarketingAttribution();
+  const referralUrl = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
+  assert.equal(referralUrl.pathname, "/join/free");
+  assert.equal(referralUrl.searchParams.get("referral_code"), "COLLEAGUE");
+  assert.equal(referralUrl.searchParams.get("mx_mc"), "1");
+  assert.equal(referralUrl.searchParams.get("mx_ac"), "1");
+  assert.equal(referralUrl.searchParams.get("fbclid"), "FB-REFERRAL");
+});
+
 test("a promo owns mixed promo and referral handoffs", () => {
   resetTrackingEnv();
   const query =
@@ -892,11 +926,12 @@ test("flushed CTA events use fetch keepalive so navigation does not abort them",
 
   assert.equal(ok, true);
   assert.equal(browser.sendBeaconCalls.length, 0);
-  assert.equal(browser.fetchCalls.length, 1);
-  assert.equal(browser.fetchCalls[0].endpoint, "https://app.medexia-akt.com/api/marketing/events");
-  assert.equal(browser.fetchCalls[0].options.keepalive, true);
-  assert.equal(browser.fetchCalls[0].options.credentials, "omit");
-  const payload = await parseFetchPayload(browser.fetchCalls[0]);
+  const eventCalls = eventFetchCalls(browser);
+  assert.equal(eventCalls.length, 1);
+  assert.equal(eventCalls[0].endpoint, "https://app.medexia-akt.com/api/marketing/events");
+  assert.equal(eventCalls[0].options.keepalive, true);
+  assert.equal(eventCalls[0].options.credentials, "omit");
+  const payload = await parseFetchPayload(eventCalls[0]);
   assert.equal(payload.event_name, "cta_clicked_start_free");
   assert.equal(payload.source, "reddit");
   assert.equal(payload.first_touch.source, "reddit");
@@ -1052,6 +1087,32 @@ test("fresh visitor before consent captures source handoff without IDs, events, 
   assert.equal(appUrl.searchParams.has("rdt_cid"), false);
   assert.equal(appUrl.searchParams.has("mx_mc"), false);
   assert.equal(appUrl.searchParams.has("mx_ac"), false);
+});
+
+test("stale policy consent cannot forward marketing consent or ad click ids", () => {
+  resetTrackingEnv();
+  const browser = installBrowser("https://medexia-akt.com/?utm_source=meta&fbclid=FB-STALE");
+  const staleConsent = {
+    version: "2026-06-23-v1",
+    necessary: true,
+    functional: true,
+    analytics: true,
+    marketing: true,
+    decidedAt: "2026-08-11T00:00:00.000Z",
+    updatedAt: "2026-08-11T00:00:00.000Z",
+    source: "settings",
+    policyVersion: "stale-policy",
+  };
+  const raw = JSON.stringify(staleConsent);
+  browser.localStorage.setItem(CONSENT_STORAGE_KEY, raw);
+  document.cookie = `${CONSENT_STORAGE_KEY}=${encodeURIComponent(raw)}; Path=/`;
+
+  initMarketingAttribution();
+  const appUrl = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
+
+  assert.equal(appUrl.searchParams.has("mx_mc"), false);
+  assert.equal(appUrl.searchParams.has("fbclid"), false);
+  assert.equal(appUrl.searchParams.has("mx_meta_capi_proof"), false);
 });
 
 test("document.referrer becomes fallback source when no UTM is present", () => {
@@ -1527,7 +1588,7 @@ test("new explanation builder event names pass through the generic event pipelin
   });
 
   const beaconPayloads = await Promise.all(browser.sendBeaconCalls.map(parseBeaconPayload));
-  const fetchPayloads = await Promise.all(browser.fetchCalls.map(parseFetchPayload));
+  const fetchPayloads = await Promise.all(eventFetchCalls(browser).map(parseFetchPayload));
   const eventNames = [...beaconPayloads, ...fetchPayloads].map((payload) => payload.event_name);
 
   assert.deepEqual(eventNames.sort(), [
@@ -1596,7 +1657,7 @@ test("new free AKT questions event names pass through the generic event pipeline
   });
 
   const beaconPayloads = await Promise.all(browser.sendBeaconCalls.map(parseBeaconPayload));
-  const fetchPayloads = await Promise.all(browser.fetchCalls.map(parseFetchPayload));
+  const fetchPayloads = await Promise.all(eventFetchCalls(browser).map(parseFetchPayload));
   const eventNames = [...beaconPayloads, ...fetchPayloads].map((payload) => payload.event_name);
 
   assert.deepEqual(eventNames.sort(), [
@@ -1710,7 +1771,7 @@ test("internal test traffic is marked across the app handoff and cannot load pix
   assert.equal(subsequentHandoff.searchParams.get("mx_mc"), "0");
 });
 
-test("marketing consent loads configured pixels after consent and allows ad click id handoff", () => {
+test("marketing consent loads configured pixels after consent and allows ad click id handoff", async () => {
   resetTrackingEnv();
   process.env.NEXT_PUBLIC_ENABLE_MARKETING_PIXELS = "true";
   process.env.NEXT_PUBLIC_META_PIXEL_ID = "123456";
@@ -1756,6 +1817,7 @@ test("marketing consent loads configured pixels after consent and allows ad clic
   assert.equal(window.fbq.queue.length, 2);
 
   acceptAllConsent("settings");
+  assert.equal(await awaitMetaCapiRegrant(), true);
   maybeLoadMarketingPixels();
   assert.deepEqual(liveMetaCalls.at(-1), ["consent", "grant"]);
   assert.equal(window.fbq.queue.length, 2);
@@ -1790,6 +1852,59 @@ test("app handoff consent signature changes when marketing consent is withdrawn"
   );
 });
 
+test("turning marketing off clears click ids and writes a denial epoch while analytics stays on", () => {
+  resetTrackingEnv();
+  const browser = installBrowser("https://medexia-akt.com/?utm_source=meta&fbclid=FB-WITHDRAW");
+
+  acceptAllConsent("banner");
+  initMarketingAttribution();
+  browser.localStorage.setItem("fbclid", "FB-WITHDRAW");
+  browser.sessionStorage.setItem("gclid", "G-WITHDRAW");
+  browser.cookies.set("wbraid", "W-WITHDRAW");
+  assert.ok(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.visitorId));
+
+  saveConsent(
+    { functional: true, analytics: true, marketing: false },
+    "settings",
+  );
+
+  assert.equal(browser.localStorage.getItem("fbclid"), null);
+  assert.equal(browser.sessionStorage.getItem("gclid"), null);
+  assert.equal(browser.cookies.has("wbraid"), false);
+  assert.match(browser.cookies.get("mx_meta_capi_revoked"), /^\d{13}_[a-f0-9]{32}$/);
+  assert.ok(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.visitorId));
+  const scrubbedFirstTouch = JSON.parse(
+    browser.localStorage.getItem(MARKETING_STORAGE_KEYS.firstTouch),
+  );
+  assert.equal("fbclid" in scrubbedFirstTouch, false);
+  assert.doesNotMatch(scrubbedFirstTouch.first_landing_page, /fbclid=/i);
+});
+
+test("offline withdrawal still writes the parent-domain denial epoch", async () => {
+  resetTrackingEnv();
+  const browser = installBrowser("https://medexia-akt.com/?fbclid=FB-OFFLINE");
+  acceptAllConsent("banner");
+  Object.defineProperty(globalThis, "fetch", {
+    value: () => Promise.reject(new Error("offline")),
+    configurable: true,
+  });
+
+  saveConsent(
+    { functional: true, analytics: true, marketing: false },
+    "settings",
+  );
+  await Promise.resolve();
+
+  const withdrawalEpoch = browser.cookies.get("mx_meta_capi_revoked");
+  assert.match(withdrawalEpoch, /^\d{13}_[a-f0-9]{32}$/);
+  assert.equal(canUseMarketing(), false);
+
+  acceptAllConsent("settings");
+  assert.equal(await awaitMetaCapiRegrant(), false);
+  assert.equal(canUseMarketing(), false);
+  assert.equal(browser.cookies.get("mx_meta_capi_revoked"), withdrawalEpoch);
+});
+
 test("withdrawing consent clears non-essential storage and stops future landing events", () => {
   resetTrackingEnv();
   process.env.NEXT_PUBLIC_ENABLE_MARKETING_PIXELS = "true";
@@ -1811,14 +1926,16 @@ test("withdrawing consent clears non-essential storage and stops future landing 
 
 test("consent UX exposes equal first-layer choices and granular off-by-default settings", () => {
   const banner = fs.readFileSync("src/components/consent/ConsentBanner.tsx", "utf8");
-  const modal = fs.readFileSync("src/components/consent/CookieSettingsModal.tsx", "utf8");
   const provider = fs.readFileSync(
     "src/components/marketing/MarketingAttributionProvider.tsx",
     "utf8",
   );
+  const modal = fs.readFileSync("src/components/consent/CookieSettingsModal.tsx", "utf8");
 
   assert.match(banner, /Accept all/);
   assert.match(banner, /Reject all/);
+  assert.match(provider, /consentEventRevision/);
+  assert.match(provider, /setConsentEventRevision/);
   assert.match(banner, /Manage choices/);
   assert.match(modal, /Necessary/);
   assert.match(modal, /Functional/);
@@ -1873,8 +1990,17 @@ test("homepage post-cutover hero hands audio traffic to the free audio-first flo
     trackedLink,
     /const navigationHref = buildAppUrl\(href, \{[\s\S]{0,200}intent,[\s\S]{0,200}offerId,[\s\S]{0,200}validatedTrialCode: trialOffer\?\.code,[\s\S]{0,80}\}\);/,
   );
-  assert.match(trackedLink, /event\.currentTarget\.href = navigationHref;/);
-  assert.match(trackedLink, /window\.location\.assign\(navigationHref\)/);
+  assert.match(trackedLink, /event\.currentTarget\.href = immediateHref;/);
+  assert.match(trackedLink, /addMetaMarketingConsentProof\(navigationHref\)/);
+  assert.match(
+    trackedLink,
+    /window\.location\.assign\([\s\S]{0,100}reusePrefetchedMetaMarketingConsentProof\(navigationHref, resolvedHref\)/,
+  );
+  assert.match(trackedLink, /window\.open\("about:blank", "_blank"\)/);
+  assert.match(
+    trackedLink,
+    /pendingWindow\.location\.replace\([\s\S]{0,100}reusePrefetchedMetaMarketingConsentProof\(navigationHref, resolvedHref\)/,
+  );
 });
 
 test("focused landing demos use isolated, environment-aware app paths", () => {
@@ -1969,8 +2095,12 @@ test("focused landing demos use isolated, environment-aware app paths", () => {
     launcher,
     /trackLandingEvent\("app_handoff_started", \{/,
   );
-  assert.match(launcher, /setLaunchUrl\(latestDemoUrl\)/);
-  assert.match(launcher, /href: appHandoffEventHref\(latestDemoUrl\)/);
+  assert.match(launcher, /await addMetaMarketingConsentProof\(latestDemoUrl\)/);
+  assert.match(launcher, /if \(launchingRef\.current\) return/);
+  assert.match(launcher, /launchingRef\.current = true/);
+  assert.match(launcher, /finally \{[\s\S]{0,80}launchingRef\.current = false/);
+  assert.match(launcher, /setLaunchUrl\(resolvedDemoUrl\)/);
+  assert.match(launcher, /href: appHandoffEventHref\(resolvedDemoUrl\)/);
   assert.match(launcher, /intent: "demo"/);
   assert.match(launcher, /src=\{launchUrl \?\? demoUrl\}/);
   assert.match(launcher, /overlayOpen \? \([\s\S]*<iframe/);
@@ -2037,6 +2167,10 @@ test("focused landing demos use isolated, environment-aware app paths", () => {
 test("focused demo launchers replace static product screenshots without eager media", () => {
   const audio = fs.readFileSync("src/app/akt-audio-revision/page.tsx", "utf8");
   const demo = fs.readFileSync("src/app/demo/page.tsx", "utf8");
+  const launcher = fs.readFileSync(
+    "src/components/sections/FocusedDemoLauncher.tsx",
+    "utf8",
+  );
 
   for (const source of [audio, demo]) {
     assert.doesNotMatch(source, /appshots\//);
@@ -2044,6 +2178,8 @@ test("focused demo launchers replace static product screenshots without eager me
     assert.doesNotMatch(source, /\bpriority(?:\s|=)/);
     assert.match(source, /style=\{\{ color: "var\(--fg-mid\)" \}\}/);
   }
+  assert.match(launcher, /reusePrefetchedMetaMarketingConsentProof/);
+  assert.match(launcher, /hasPrefetchedProof/);
 });
 
 test("Google Ads campaign aliases use stable IDs and preserve the governed fallback", () => {
@@ -2405,5 +2541,11 @@ test("referral CTA remains limited to the referral code when analytics consent i
   assert.equal(appUrl.searchParams.has("utm_source"), false);
   assert.equal(appUrl.searchParams.has("mx_vid"), false);
   assert.equal(appUrl.searchParams.has("gclid"), false);
-  assert.deepEqual(Array.from(appUrl.searchParams.keys()), ["referral_code"]);
+  assert.deepEqual(Array.from(appUrl.searchParams.keys()), [
+    "referral_code",
+    "mx_mc",
+    "mx_ac",
+  ]);
+  assert.equal(appUrl.searchParams.get("mx_mc"), "0");
+  assert.equal(appUrl.searchParams.get("mx_ac"), "1");
 });

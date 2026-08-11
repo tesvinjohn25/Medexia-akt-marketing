@@ -16,6 +16,10 @@ import {
 } from "@/lib/marketing/url";
 import { flushLandingEvent, trackLandingEvent } from "@/lib/marketing/events";
 import {
+  addMetaMarketingConsentProof,
+  reusePrefetchedMetaMarketingConsentProof,
+} from "@/lib/marketing/meta-consent-proof";
+import {
   OFFER_IDS,
   type CtaIntent,
   type OfferId,
@@ -34,6 +38,27 @@ const CTA_EVENT_BY_INTENT: Record<CtaIntent, string> = {
   checkout: "cta_clicked_earlybird",
   app_open: "app_handoff_started",
 };
+
+function hasMetaMarketingConsentProof(url: string): boolean {
+  try {
+    return Boolean(new URL(url).searchParams.get("mx_meta_capi_proof"));
+  } catch {
+    return false;
+  }
+}
+
+function needsMetaMarketingConsentProof(url: string): boolean {
+  try {
+    const parsed = new URL(url);
+    return (
+      parsed.searchParams.get("mx_mc") === "1" &&
+      Boolean(parsed.searchParams.get("fbclid")) &&
+      !hasMetaMarketingConsentProof(url)
+    );
+  } catch {
+    return false;
+  }
+}
 
 export function useTrackedAppUrl(
   href: string,
@@ -83,11 +108,19 @@ export function useTrackedAppUrl(
   );
 
   useEffect(() => {
-    setTrackedHref(buildAppUrl(href, {
+    let active = true;
+    const baseHref = buildAppUrl(href, {
       intent: options.intent,
       offerId: options.offerId,
       validatedTrialCode: trialOffer?.code,
-    }));
+    });
+    setTrackedHref(baseHref);
+    void addMetaMarketingConsentProof(baseHref).then((proofHref) => {
+      if (active) setTrackedHref(proofHref);
+    });
+    return () => {
+      active = false;
+    };
   }, [href, signature, trialOffer?.code, options.intent, options.offerId]);
 
   return trackedHref;
@@ -129,7 +162,14 @@ export function TrackedAppLink({
       validatedTrialCode: trialOffer?.code,
     });
     const eventHref = appHandoffEventHref(navigationHref);
-    event.currentTarget.href = navigationHref;
+    const immediateHref = reusePrefetchedMetaMarketingConsentProof(
+      navigationHref,
+      trackedHref,
+    );
+    event.currentTarget.href = immediateHref;
+    const proofHref = hasMetaMarketingConsentProof(immediateHref)
+      ? Promise.resolve(immediateHref)
+      : addMetaMarketingConsentProof(navigationHref);
 
     const ctaEventName = CTA_EVENT_BY_INTENT[intent];
     const ctaProperties = {
@@ -166,6 +206,27 @@ export function TrackedAppLink({
         trackLandingEvent(ctaEventName, ctaProperties);
       }
       trackLandingEvent("app_handoff_started", handoffProperties);
+
+      // Modified and target=_blank clicks cannot be delayed with preventDefault
+      // unless a browsing context is opened synchronously. Hold that context
+      // only when the consent proof is still pending, then navigate it once the
+      // bounded proof request has resolved.
+      if (needsMetaMarketingConsentProof(immediateHref)) {
+        const pendingWindow = window.open("about:blank", "_blank");
+        if (pendingWindow) {
+          event.preventDefault();
+          try {
+            pendingWindow.opener = null;
+          } catch {
+            // Some browsers expose opener as read-only; navigation still proceeds.
+          }
+          void proofHref.then((resolvedHref) => {
+            pendingWindow.location.replace(
+              reusePrefetchedMetaMarketingConsentProof(navigationHref, resolvedHref),
+            );
+          });
+        }
+      }
       return;
     }
 
@@ -183,12 +244,21 @@ export function TrackedAppLink({
       flushLandingEvent("app_handoff_started", handoffProperties),
     ];
 
-    const timeout = new Promise<void>((resolve) => {
-      window.setTimeout(resolve, 700);
+    const flushTimeout = new Promise<void>((resolve) => {
+      window.setTimeout(resolve, 900);
     });
 
-    void Promise.race([Promise.allSettled(flushes), timeout]).finally(() => {
-      window.location.assign(navigationHref);
+    const flushReady = Promise.race([
+      Promise.allSettled(flushes).then(() => undefined),
+      flushTimeout,
+    ]);
+    const ready = Promise.all([flushReady, proofHref]).then(
+      ([, resolvedHref]) => resolvedHref,
+    );
+    void ready.then((resolvedHref) => {
+      window.location.assign(
+        reusePrefetchedMetaMarketingConsentProof(navigationHref, resolvedHref),
+      );
     });
   };
 

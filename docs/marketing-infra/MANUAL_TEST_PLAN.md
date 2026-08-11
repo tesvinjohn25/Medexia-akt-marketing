@@ -132,6 +132,39 @@ With all pixel env vars unset or `NEXT_PUBLIC_ENABLE_MARKETING_PIXELS=false`:
 
 With env vars set, pixels still require explicit marketing consent before loading.
 
+## Meta CompleteRegistration Handoff
+
+Open a fresh landing session with a real Meta test click id, grant Marketing,
+and inspect a Start Free destination before completing registration.
+
+Expected:
+
+- Before consent, the app URL contains no `fbclid` or `mx_meta_capi_proof`.
+- After consent, the app URL contains `mx_mc=1`, the consented `fbclid`, and a
+  short-lived `mx_meta_capi_proof` minted by the landing server.
+- The proof response sets an HttpOnly, Secure, SameSite=Lax
+  `mx_meta_capi_session` cookie for `medexia-akt.com`; the raw value never appears
+  in the response body or app URL.
+- Copying the consented app URL into a separate browser profile does not
+  authorise Meta CAPI, while the original browser succeeds. Test this on HTTPS
+  hosts under `medexia-akt.com`; localhost and preview domains cannot reproduce
+  the parent-domain cookie handoff.
+- Withdrawing Marketing removes the click id and proof from subsequent app
+  navigation, including when withdrawal happens while proof minting is in flight.
+- Withdrawing Marketing writes a new `mx_meta_capi_revoked` epoch immediately. Simulate an
+  offline landing session and confirm the app still rejects the
+  retained proof on local, Google, and Apple registration paths.
+- Re-grant Marketing and start a proof request, then withdraw again before its
+  response arrives. Confirm the older acknowledgement cannot match or erase the
+  newer revocation epoch.
+- After an app-side withdrawal, revisit the landing page with stale Marketing-on
+  storage. Automatic proof prefetch must remain 403 until the user explicitly
+  saves Marketing-on and the server issues a matching HttpOnly regrant token.
+- A missing or invalid server secret fails closed: navigation continues without
+  a proof and the app does not authorise Meta CAPI delivery.
+- In Meta Test Events, a consented free signup emits exactly one
+  `CompleteRegistration` after email verification.
+
 ## Consent UX
 
 Fresh browser profile expected:

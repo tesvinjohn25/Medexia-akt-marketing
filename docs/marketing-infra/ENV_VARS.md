@@ -7,6 +7,7 @@ Add names only; do not commit values.
 | `NEXT_PUBLIC_APP_BASE_URL` | Base URL for app handoff links | `https://app.medexia-akt.com` |
 | `NEXT_PUBLIC_ENABLE_MARKETING_PIXELS` | Master switch for third-party pixels | `false` |
 | `NEXT_PUBLIC_META_PIXEL_ID` | Meta Pixel id | empty |
+| `META_CAPI_CONSENT_SECRET` | Server-only 32+ character secret used to sign consent-bound Meta registration handoffs; must exactly match the app host | empty / proof minting disabled |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | GA4 measurement id | empty |
 | `NEXT_PUBLIC_GOOGLE_ADS_ID` | Google Ads tag id (public, not a secret) | `AW-18343035898` |
 | `NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT` | First-party event endpoint | `https://app.medexia-akt.com/api/marketing/events` |
@@ -24,6 +25,21 @@ Third-party pixels require all of:
 - `NEXT_PUBLIC_ENABLE_MARKETING_PIXELS=true`
 - the relevant Meta or Google id
 - user marketing consent in `mx_consent_v1`
+
+Meta `CompleteRegistration` also requires a consent-bound landing-to-app handoff.
+The landing server signs `mx_meta_capi_proof` only when the current consent
+cookie grants Marketing and a consented `fbclid` is present. The proof is also
+bound to the 24-hour HttpOnly `mx_meta_capi_session` cookie shared with the app
+domain, so copying the handoff URL into another browser fails closed. Switching
+Marketing off synchronously writes the denial-only `mx_meta_capi_revoked` parent
+cookie; the app rejects retained proofs without relying on a withdrawal network
+request. After consent is granted again, a new proof rotates the session and
+acknowledges only the revocation epoch it received, and only when the consent
+save flow first obtained a matching HttpOnly server regrant token. A later
+withdrawal cannot be erased by a stale response or stale landing-site consent.
+Never expose
+`META_CAPI_CONSENT_SECRET` through a `NEXT_PUBLIC_*` variable, logs, or URLs;
+configure the same dedicated value on both the landing host and app host.
 
 Vercel Analytics and first-party marketing events require analytics consent.
 

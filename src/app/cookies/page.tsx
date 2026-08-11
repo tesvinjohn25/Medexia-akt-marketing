@@ -59,14 +59,23 @@ export default function CookiePolicyPage() {
             <section>
               <h2 className="text-xl font-semibold text-white">Marketing</h2>
               <p className="mt-2">
-                Optional. Used only after marketing consent and only when the
-                relevant environment variables are configured.
+                Optional marketing measurement is used only after marketing
+                consent and when the relevant environment variables are
+                configured. A first-party denial marker may also be set when
+                Marketing is switched off so an earlier Meta handoff stays
+                revoked.
               </p>
               <ul className="mt-3 list-disc space-y-2 pl-5">
                 <li><strong>Meta Pixel</strong>: campaign measurement and retargeting. Provider: Meta.</li>
                 <li><strong>Google tag, GA4, and Google Ads</strong>: ad measurement and retargeting. Provider: Google.</li>
                 <li><strong>Reddit Pixel</strong>: campaign measurement and retargeting. Provider: Reddit.</li>
                 <li><strong>gclid, gbraid, wbraid, fbclid, ttclid, msclkid, rdt_cid</strong>: ad click IDs handled only after marketing consent.</li>
+                <li><strong>mx_meta_capi_seed</strong>: a secure, HttpOnly server-random browser seed retained for up to 183 days so Meta consent handoffs cannot be reproduced in another browser. Provider: Medexia.</li>
+                <li><strong>mx_meta_capi_session</strong> (including withdrawal-scoped suffixed names): a secure, HttpOnly browser-session binding used for up to 24 hours to prevent a Meta consent handoff from being replayed in another browser. Provider: Medexia.</li>
+                <li><strong>mx_meta_capi_revoked</strong>: a denial-only marker retained for up to 183 days with your consent choice so the app can reject an earlier Meta handoff after Marketing is switched off. Provider: Medexia.</li>
+                <li><strong>mx_meta_capi_revocation_ack</strong> (withdrawal-scoped suffixed names): a secure, HttpOnly acknowledgement retained for up to 183 days so an older proof response cannot erase a newer withdrawal after an explicit regrant. Provider: Medexia.</li>
+                <li><strong>mx_meta_capi_regrant</strong> (withdrawal-scoped suffixed names): a secure, HttpOnly token retained for up to 183 days to confirm that Marketing was explicitly enabled after the matching withdrawal. Provider: Medexia.</li>
+                <li><strong>mx_meta_capi_client_regrant</strong>: a first-party marker retained for up to 183 days so the landing page does not forward marketing identifiers after an app-side withdrawal unless Marketing was explicitly enabled again for that exact withdrawal. Provider: Medexia.</li>
               </ul>
               <p className="mt-3">
                 Third-party providers control some cookie durations once their

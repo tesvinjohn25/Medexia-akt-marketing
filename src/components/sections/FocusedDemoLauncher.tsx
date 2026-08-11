@@ -1,11 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { AudioEqualizer } from "@/components/AudioEqualizer";
 import { useTrackedAppUrl } from "@/components/marketing/TrackedAppLink";
 import { useDemoOverlay } from "@/hooks/useDemoOverlay";
 import { trackLandingEvent } from "@/lib/marketing/events";
+import {
+  addMetaMarketingConsentProof,
+  reusePrefetchedMetaMarketingConsentProof,
+} from "@/lib/marketing/meta-consent-proof";
 import {
   appHandoffEventHref,
   buildAppUrl,
@@ -41,6 +45,7 @@ export function FocusedDemoLauncher({
 }: FocusedDemoLauncherProps) {
   const demoUrl = useTrackedAppUrl(demoPath, { intent: "demo" });
   const [launchUrl, setLaunchUrl] = useState<string | null>(null);
+  const launchingRef = useRef(false);
   const {
     closeOverlay,
     dialogRef,
@@ -52,15 +57,31 @@ export function FocusedDemoLauncher({
   } = useDemoOverlay();
   const copy = content[kind];
   const isAudio = kind === "audio";
-  const handleOpen = () => {
-    const latestDemoUrl = buildAppUrl(demoPath, { intent: "demo" });
-    setLaunchUrl(latestDemoUrl);
-    trackLandingEvent("app_handoff_started", {
-      href: appHandoffEventHref(latestDemoUrl),
-      intent: "demo",
-      offer_id: null,
-    });
-    openOverlay();
+  const handleOpen = async () => {
+    if (launchingRef.current) return;
+    launchingRef.current = true;
+    try {
+      const latestDemoUrl = buildAppUrl(demoPath, { intent: "demo" });
+      const prefetchedDemoUrl = reusePrefetchedMetaMarketingConsentProof(
+        latestDemoUrl,
+        demoUrl,
+      );
+      const hasPrefetchedProof = new URL(prefetchedDemoUrl).searchParams.has(
+        "mx_meta_capi_proof",
+      );
+      const resolvedDemoUrl = hasPrefetchedProof
+        ? prefetchedDemoUrl
+        : await addMetaMarketingConsentProof(latestDemoUrl);
+      setLaunchUrl(resolvedDemoUrl);
+      trackLandingEvent("app_handoff_started", {
+        href: appHandoffEventHref(resolvedDemoUrl),
+        intent: "demo",
+        offer_id: null,
+      });
+      openOverlay();
+    } finally {
+      launchingRef.current = false;
+    }
   };
 
   return (
@@ -68,7 +89,7 @@ export function FocusedDemoLauncher({
       <button
         ref={triggerRef}
         type="button"
-        onClick={handleOpen}
+        onClick={() => void handleOpen()}
         className="card-shimmer group relative mx-auto flex w-full max-w-[390px] flex-col items-center overflow-hidden rounded-[28px] px-6 py-8 text-center transition-transform duration-300 hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet-300 md:px-8 md:py-10"
         style={{
           background: isAudio

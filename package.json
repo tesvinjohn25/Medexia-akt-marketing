@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:marketing": "node --test tests/marketing-attribution.test.mjs",
+    "test:marketing": "node --test tests/marketing-attribution.test.mjs tests/meta-consent-proof.test.mjs",
     "test:marketing:keypair": "node scripts/generate-internal-test-keypair.mjs",
     "test:marketing:token": "node scripts/generate-internal-test-token.mjs"
   },

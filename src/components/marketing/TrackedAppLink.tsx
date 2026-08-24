@@ -39,21 +39,25 @@ const CTA_EVENT_BY_INTENT: Record<CtaIntent, string> = {
   app_open: "app_handoff_started",
 };
 
-function hasMetaMarketingConsentProof(url: string): boolean {
+function hasMarketingConsentProofs(url: string): boolean {
   try {
-    return Boolean(new URL(url).searchParams.get("mx_meta_capi_proof"));
+    const params = new URL(url).searchParams;
+    const metaReady = !params.get("fbclid") || Boolean(params.get("mx_meta_capi_proof"));
+    const redditReady = !params.get("rdt_cid") || Boolean(params.get("mx_reddit_capi_proof"));
+    return metaReady && redditReady;
   } catch {
     return false;
   }
 }
 
-function needsMetaMarketingConsentProof(url: string): boolean {
+function needsMarketingConsentProof(url: string): boolean {
   try {
     const parsed = new URL(url);
     return (
       parsed.searchParams.get("mx_mc") === "1" &&
-      Boolean(parsed.searchParams.get("fbclid")) &&
-      !hasMetaMarketingConsentProof(url)
+      (Boolean(parsed.searchParams.get("fbclid")) ||
+        Boolean(parsed.searchParams.get("rdt_cid"))) &&
+      !hasMarketingConsentProofs(url)
     );
   } catch {
     return false;
@@ -167,7 +171,7 @@ export function TrackedAppLink({
       trackedHref,
     );
     event.currentTarget.href = immediateHref;
-    const proofHref = hasMetaMarketingConsentProof(immediateHref)
+    const proofHref = hasMarketingConsentProofs(immediateHref)
       ? Promise.resolve(immediateHref)
       : addMetaMarketingConsentProof(navigationHref);
 
@@ -211,7 +215,7 @@ export function TrackedAppLink({
       // unless a browsing context is opened synchronously. Hold that context
       // only when the consent proof is still pending, then navigate it once the
       // bounded proof request has resolved.
-      if (needsMetaMarketingConsentProof(immediateHref)) {
+      if (needsMarketingConsentProof(immediateHref)) {
         const pendingWindow = window.open("about:blank", "_blank");
         if (pendingWindow) {
           event.preventDefault();

@@ -8,6 +8,7 @@ Add names only; do not commit values.
 | `NEXT_PUBLIC_ENABLE_MARKETING_PIXELS` | Master switch for third-party pixels | `false` |
 | `NEXT_PUBLIC_META_PIXEL_ID` | Meta Pixel id | empty |
 | `META_CAPI_CONSENT_SECRET` | Server-only 32+ character secret used to sign consent-bound Meta registration handoffs; must exactly match the app host | empty / proof minting disabled |
+| `REDDIT_CAPI_CONSENT_SECRET` | Server-only 32+ character secret used to sign consent-bound Reddit registration and activation handoffs; must exactly match the app host | empty / Reddit proof minting disabled |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | GA4 measurement id | empty |
 | `NEXT_PUBLIC_GOOGLE_ADS_ID` | Google Ads tag id (public, not a secret) | `AW-18343035898` |
 | `NEXT_PUBLIC_MARKETING_EVENTS_ENDPOINT` | First-party event endpoint | `https://app.medexia-akt.com/api/marketing/events` |
@@ -40,6 +41,16 @@ withdrawal cannot be erased by a stale response or stale landing-site consent.
 Never expose
 `META_CAPI_CONSENT_SECRET` through a `NEXT_PUBLIC_*` variable, logs, or URLs;
 configure the same dedicated value on both the landing host and app host.
+
+Reddit CAPI uses the same consent and HttpOnly browser-session binding but a
+separate signing secret. When a consented `rdt_cid` is present, the landing
+server returns `mx_reddit_capi_proof`, bound to that exact click and session.
+The app rejects copied, expired, click-mismatched, or withdrawn proofs. Never
+expose `REDDIT_CAPI_CONSENT_SECRET`; configure the same dedicated value on both
+hosts. The shared browser-session binding is currently derived using
+`META_CAPI_CONSENT_SECRET`, so the landing host also requires that variable even
+for a Reddit-only handoff. Keep Reddit delivery flags off until Event Testing
+passes.
 
 Vercel Analytics and first-party marketing events require analytics consent.
 

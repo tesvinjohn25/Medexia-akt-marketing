@@ -61,6 +61,13 @@ function setIfPresent(params: URLSearchParams, key: string, value: string | null
   if (next) params.set(key, next);
 }
 
+function currentPageClickId(key: string): string | null {
+  if (typeof window === "undefined") return null;
+  const value = new URLSearchParams(window.location.search).get(key)?.trim() || "";
+  if (!value || value.length > 256 || /[\u0000-\u001f\u007f]/.test(value)) return null;
+  return value;
+}
+
 const SPECIAL_HANDOFF_AD_CLICK_PARAMS = [
   "gclid",
   "gbraid",
@@ -95,7 +102,7 @@ function enrichSpecialAppHandoff(value: string): string {
     setIfPresent(url.searchParams, "fbclid", last?.fbclid ?? first?.fbclid);
     setIfPresent(url.searchParams, "ttclid", last?.ttclid ?? first?.ttclid);
     setIfPresent(url.searchParams, "msclkid", last?.msclkid ?? first?.msclkid);
-    setIfPresent(url.searchParams, "rdt_cid", last?.rdt_cid ?? first?.rdt_cid);
+    setIfPresent(url.searchParams, "rdt_cid", currentPageClickId("rdt_cid") ?? last?.rdt_cid ?? first?.rdt_cid);
   }
 
   return url.toString();
@@ -307,7 +314,7 @@ export function buildAppUrl(
     setIfPresent(url.searchParams, "fbclid", last?.fbclid ?? first?.fbclid);
     setIfPresent(url.searchParams, "ttclid", last?.ttclid ?? first?.ttclid);
     setIfPresent(url.searchParams, "msclkid", last?.msclkid ?? first?.msclkid);
-    setIfPresent(url.searchParams, "rdt_cid", last?.rdt_cid ?? first?.rdt_cid);
+    setIfPresent(url.searchParams, "rdt_cid", currentPageClickId("rdt_cid") ?? last?.rdt_cid ?? first?.rdt_cid);
   }
 
   setIfPresent(url.searchParams, "intent", options.intent);

@@ -125,10 +125,38 @@ test("server proof matches the app JWT contract and is click-bound", () => {
   );
 });
 
+test("server Reddit proof matches the app JWT contract and is click-bound", () => {
+  const secret = "r".repeat(48);
+  const proof = serverProof.createRedditMarketingConsentProof(
+    " RDT-CLICK-1 ",
+    META_SESSION,
+    { secret, nowSeconds: 1_700_000_000 },
+  );
+  assert.ok(proof);
+  const [headerPart, payloadPart, signature] = proof.split(".");
+  assert.deepEqual(decodeJwtPart(headerPart), { alg: "HS256", typ: "JWT" });
+  assert.deepEqual(decodeJwtPart(payloadPart), {
+    purpose: "reddit-capi-marketing-consent",
+    rdt_cid_hash: crypto.createHash("sha256").update("RDT-CLICK-1").digest("hex"),
+    session_hash: crypto.createHash("sha256").update(META_SESSION).digest("hex"),
+    aud: "reddit-capi-marketing-consent",
+    iss: "medexia-app",
+    iat: 1_700_000_000,
+    exp: 1_700_086_400,
+  });
+  assert.equal(
+    signature,
+    crypto.createHmac("sha256", secret).update(`${headerPart}.${payloadPart}`).digest("base64url"),
+  );
+});
+
 test("server proof and consent validation fail closed", () => {
   assert.equal(serverProof.createMetaMarketingConsentProof("FB", META_SESSION, { secret: "short" }), null);
   assert.equal(serverProof.createMetaMarketingConsentProof("", META_SESSION, { secret: "s".repeat(48) }), null);
   assert.equal(serverProof.createMetaMarketingConsentProof("FB", "predictable", { secret: "s".repeat(48) }), null);
+  assert.equal(serverProof.createRedditMarketingConsentProof("RDT", META_SESSION, { secret: "short" }), null);
+  assert.equal(serverProof.createRedditMarketingConsentProof("", META_SESSION, { secret: "r".repeat(48) }), null);
+  assert.equal(serverProof.createRedditMarketingConsentProof("RDT", "predictable", { secret: "r".repeat(48) }), null);
   assert.equal(serverProof.readMetaCapiSession(`mx_meta_capi_session=${META_SESSION}`), META_SESSION);
   assert.equal(serverProof.readMetaCapiSession("mx_meta_capi_session=too-short"), null);
   assert.equal(serverProof.hasActiveMetaCapiRevocation("mx_meta_capi_revoked=epoch-new"), true);
@@ -153,7 +181,9 @@ test("server proof and consent validation fail closed", () => {
 
 test("proof route enforces same-origin, current consent, JSON input, and configuration", async () => {
   const previousSecret = process.env.META_CAPI_CONSENT_SECRET;
+  const previousRedditSecret = process.env.REDDIT_CAPI_CONSENT_SECRET;
   process.env.META_CAPI_CONSENT_SECRET = "r".repeat(48);
+  process.env.REDDIT_CAPI_CONSENT_SECRET = "q".repeat(48);
   const seed = "Z".repeat(43);
   const currentConsentCookie = `mx_consent_v1=${encodeURIComponent(JSON.stringify(consentRecord(true)))}`;
   const currentCookie = `${currentConsentCookie}; mx_meta_capi_seed=${seed}`;
@@ -198,6 +228,34 @@ test("proof route enforces same-origin, current consent, JSON input, and configu
     assert.match(setCookie, /Secure/i);
     assert.match(setCookie, /SameSite=Lax/i);
     assert.match(setCookie, /Domain=medexia-akt\.com/i);
+
+    const redditAccepted = await proofRoute.POST(request({
+      body: JSON.stringify({ rdt_cid: "RDT-ROUTE-1" }),
+    }));
+    assert.equal(redditAccepted.status, 200);
+    const redditBody = await redditAccepted.json();
+    assert.equal("proof" in redditBody, false);
+    assert.equal(typeof redditBody.redditProof, "string");
+    assert.deepEqual(decodeJwtPart(redditBody.redditProof.split(".")[1]), {
+      purpose: "reddit-capi-marketing-consent",
+      rdt_cid_hash: crypto.createHash("sha256").update("RDT-ROUTE-1").digest("hex"),
+      session_hash: decodeJwtPart(redditBody.redditProof.split(".")[1]).session_hash,
+      aud: "reddit-capi-marketing-consent",
+      iss: "medexia-app",
+      iat: decodeJwtPart(redditBody.redditProof.split(".")[1]).iat,
+      exp: decodeJwtPart(redditBody.redditProof.split(".")[1]).exp,
+    });
+
+    const combinedAccepted = await proofRoute.POST(request({
+      body: JSON.stringify({
+        fbclid: "FB-COMBINED-1",
+        rdt_cid: "RDT-COMBINED-1",
+      }),
+    }));
+    assert.equal(combinedAccepted.status, 200);
+    const combinedBody = await combinedAccepted.json();
+    assert.equal(typeof combinedBody.proof, "string");
+    assert.equal(typeof combinedBody.redditProof, "string");
 
     const stableSession = "T".repeat(43);
     const reused = await proofRoute.POST(request({
@@ -282,12 +340,31 @@ test("proof route enforces same-origin, current consent, JSON input, and configu
     assert.equal((await proofRoute.POST(request({ contentType: "text/plain" }))).status, 415);
     assert.equal((await proofRoute.POST(request({ body: "{" }))).status, 400);
     assert.equal((await proofRoute.POST(request({ body: JSON.stringify({ fbclid: "x".repeat(257) }) }))).status, 400);
+    assert.equal((await proofRoute.POST(request({ body: JSON.stringify({ rdt_cid: "x".repeat(257) }) }))).status, 400);
+
+    delete process.env.REDDIT_CAPI_CONSENT_SECRET;
+    assert.equal((await proofRoute.POST(request({
+      body: JSON.stringify({ rdt_cid: "RDT-NO-CONFIG" }),
+    }))).status, 503);
+    const metaOnlyFallback = await proofRoute.POST(request({
+      body: JSON.stringify({
+        fbclid: "FB-CONFIGURED",
+        rdt_cid: "RDT-NO-CONFIG",
+      }),
+    }));
+    assert.equal(metaOnlyFallback.status, 200);
+    const metaOnlyBody = await metaOnlyFallback.json();
+    assert.equal(typeof metaOnlyBody.proof, "string");
+    assert.equal("redditProof" in metaOnlyBody, false);
+    process.env.REDDIT_CAPI_CONSENT_SECRET = "q".repeat(48);
 
     delete process.env.META_CAPI_CONSENT_SECRET;
     assert.equal((await proofRoute.POST(request())).status, 503);
   } finally {
     if (previousSecret === undefined) delete process.env.META_CAPI_CONSENT_SECRET;
     else process.env.META_CAPI_CONSENT_SECRET = previousSecret;
+    if (previousRedditSecret === undefined) delete process.env.REDDIT_CAPI_CONSENT_SECRET;
+    else process.env.REDDIT_CAPI_CONSENT_SECRET = previousRedditSecret;
   }
 });
 
@@ -310,6 +387,31 @@ test("client adds proof only for a consented fbclid handoff", async () => {
   );
   assert.equal(result.searchParams.get("fbclid"), "FB-CLIENT-1");
   assert.equal(result.searchParams.get("mx_meta_capi_proof"), signedProof);
+  assert.equal(calls, 1);
+});
+
+test("client adds a Reddit proof for a consented rdt_cid handoff", async () => {
+  installBrowserConsent(true);
+  const signedProof = serverProof.createRedditMarketingConsentProof(
+    "RDT-CLIENT-1",
+    META_SESSION,
+    { secret: "d".repeat(48) },
+  );
+  let calls = 0;
+  globalThis.fetch = async (url, options) => {
+    calls += 1;
+    assert.equal(url, "/api/marketing/meta-consent-proof");
+    assert.deepEqual(JSON.parse(options.body), { rdt_cid: "RDT-CLIENT-1" });
+    return { ok: true, json: async () => ({ redditProof: signedProof }) };
+  };
+  const result = new URL(
+    await clientProof.addMetaMarketingConsentProof(
+      "https://app.medexia-akt.com/join/audio?mx_mc=1&rdt_cid=RDT-CLIENT-1",
+    ),
+  );
+  assert.equal(result.searchParams.get("rdt_cid"), "RDT-CLIENT-1");
+  assert.equal(result.searchParams.get("mx_reddit_capi_proof"), signedProof);
+  assert.equal(result.searchParams.has("mx_meta_capi_proof"), false);
   assert.equal(calls, 1);
 });
 
@@ -367,13 +469,15 @@ test("client strips click ids and proof when consent is absent or withdrawn mid-
   };
   const denied = new URL(
     await clientProof.addMetaMarketingConsentProof(
-      "https://app.medexia-akt.com/join/free?mx_mc=1&fbclid=FB-DENIED&gclid=G-DENIED",
+      "https://app.medexia-akt.com/join/free?mx_mc=1&fbclid=FB-DENIED&gclid=G-DENIED&rdt_cid=RDT-DENIED&mx_reddit_capi_proof=stale",
     ),
   );
   assert.equal(denied.searchParams.get("mx_mc"), "0");
   assert.equal(denied.searchParams.has("fbclid"), false);
   assert.equal(denied.searchParams.has("gclid"), false);
+  assert.equal(denied.searchParams.has("rdt_cid"), false);
   assert.equal(denied.searchParams.has("mx_meta_capi_proof"), false);
+  assert.equal(denied.searchParams.has("mx_reddit_capi_proof"), false);
   assert.equal(calls, 0);
 
   const consent = installBrowserConsent(true);
@@ -387,7 +491,7 @@ test("client strips click ids and proof when consent is absent or withdrawn mid-
     markRequestStarted();
   });
   const pending = clientProof.addMetaMarketingConsentProof(
-    `https://app.medexia-akt.com/join/free?mx_mc=1&fbclid=FB-RACE&referrer=${encodeURIComponent("https://example.test/?next=" + encodeURIComponent("https://nested.test/?fbclid=FB-NESTED"))}&first_landing_page=${encodeURIComponent("/?gclid=G-NESTED&utm_source=meta")}`,
+    `https://app.medexia-akt.com/join/free?mx_mc=1&fbclid=FB-RACE&rdt_cid=RDT-RACE&mx_reddit_capi_proof=stale&referrer=${encodeURIComponent("https://example.test/?next=" + encodeURIComponent("https://nested.test/?fbclid=FB-NESTED"))}&first_landing_page=${encodeURIComponent("/?gclid=G-NESTED&utm_source=meta")}`,
   );
   await requestStarted;
   consent.writeConsent(false);
@@ -395,7 +499,9 @@ test("client strips click ids and proof when consent is absent or withdrawn mid-
   const withdrawn = new URL(await pending);
   assert.equal(withdrawn.searchParams.get("mx_mc"), "0");
   assert.equal(withdrawn.searchParams.has("fbclid"), false);
+  assert.equal(withdrawn.searchParams.has("rdt_cid"), false);
   assert.equal(withdrawn.searchParams.has("mx_meta_capi_proof"), false);
+  assert.equal(withdrawn.searchParams.has("mx_reddit_capi_proof"), false);
   assert.doesNotMatch(withdrawn.searchParams.get("referrer") || "", /fbclid|FB-NESTED/i);
   assert.doesNotMatch(withdrawn.searchParams.get("first_landing_page") || "", /gclid|G-NESTED/i);
 });
@@ -503,4 +609,37 @@ test("modified clicks reuse only a same-destination prefetched proof", () => {
   assert.equal(withdrawn.searchParams.get("mx_mc"), "0");
   assert.equal(withdrawn.searchParams.has("fbclid"), false);
   assert.equal(withdrawn.searchParams.has("mx_meta_capi_proof"), false);
+});
+
+test("modified Reddit clicks reuse only an exact same-destination prefetched proof", () => {
+  installBrowserConsent(true);
+  const base = "https://app.medexia-akt.com/join/audio?mx_mc=1&rdt_cid=RDT-PREFETCH";
+  const prefetchedProof = serverProof.createRedditMarketingConsentProof(
+    "RDT-PREFETCH",
+    META_SESSION,
+    { secret: "u".repeat(48) },
+  );
+  const reused = new URL(
+    clientProof.reusePrefetchedMetaMarketingConsentProof(
+      base,
+      `${base}&mx_reddit_capi_proof=${encodeURIComponent(prefetchedProof)}`,
+    ),
+  );
+  assert.equal(reused.searchParams.get("mx_reddit_capi_proof"), prefetchedProof);
+
+  const wrongClick = new URL(
+    clientProof.reusePrefetchedMetaMarketingConsentProof(
+      base,
+      "https://app.medexia-akt.com/join/audio?mx_mc=1&rdt_cid=OTHER&mx_reddit_capi_proof=wrong",
+    ),
+  );
+  assert.equal(wrongClick.searchParams.has("mx_reddit_capi_proof"), false);
+
+  const wrongDestination = new URL(
+    clientProof.reusePrefetchedMetaMarketingConsentProof(
+      base,
+      `https://app.medexia-akt.com/join/free?mx_mc=1&rdt_cid=RDT-PREFETCH&mx_reddit_capi_proof=${encodeURIComponent(prefetchedProof)}`,
+    ),
+  );
+  assert.equal(wrongDestination.searchParams.has("mx_reddit_capi_proof"), false);
 });

@@ -6,6 +6,7 @@ import {
 } from "../consent/consent";
 
 const META_CONSENT_AUDIENCE = "meta-capi-marketing-consent";
+const REDDIT_CONSENT_AUDIENCE = "reddit-capi-marketing-consent";
 const META_CONSENT_ISSUER = "medexia-app";
 const META_CONSENT_TTL_SECONDS = 24 * 60 * 60;
 export const META_CAPI_SESSION_COOKIE = "mx_meta_capi_session";
@@ -23,6 +24,10 @@ function encodeBase64Url(value: string | Buffer): string {
 
 function hashFbclid(fbclid: string): string {
   return crypto.createHash("sha256").update(fbclid.trim()).digest("hex");
+}
+
+function hashRedditClickId(rdtCid: string): string {
+  return crypto.createHash("sha256").update(rdtCid.trim()).digest("hex");
 }
 
 function hashSession(sessionValue: string): string {
@@ -155,6 +160,11 @@ export function getMetaConsentSecret(): string | null {
   return value.length >= 32 ? value : null;
 }
 
+export function getRedditConsentSecret(): string | null {
+  const value = (process.env.REDDIT_CAPI_CONSENT_SECRET || "").trim();
+  return value.length >= 32 ? value : null;
+}
+
 export function createMetaMarketingConsentProof(
   fbclid: string,
   sessionValue: string,
@@ -178,6 +188,39 @@ export function createMetaMarketingConsentProof(
       fbclid_hash: hashFbclid(clickId),
       session_hash: hashSession(sessionValue),
       aud: META_CONSENT_AUDIENCE,
+      iss: META_CONSENT_ISSUER,
+      iat: now,
+      exp: now + META_CONSENT_TTL_SECONDS,
+    }),
+  );
+  const unsigned = `${header}.${payload}`;
+  const signature = crypto.createHmac("sha256", secret).update(unsigned).digest("base64url");
+  return `${unsigned}.${signature}`;
+}
+
+export function createRedditMarketingConsentProof(
+  rdtCid: string,
+  sessionValue: string,
+  options: { nowSeconds?: number; secret?: string | null } = {},
+): string | null {
+  const clickId = rdtCid.trim();
+  const secret = options.secret ?? getRedditConsentSecret();
+  if (
+    !secret ||
+    secret.length < 32 ||
+    !clickId ||
+    clickId.length > 256 ||
+    !META_CAPI_SESSION_PATTERN.test(sessionValue)
+  ) return null;
+
+  const now = options.nowSeconds ?? Math.floor(Date.now() / 1000);
+  const header = encodeBase64Url(JSON.stringify({ alg: "HS256", typ: "JWT" }));
+  const payload = encodeBase64Url(
+    JSON.stringify({
+      purpose: REDDIT_CONSENT_AUDIENCE,
+      rdt_cid_hash: hashRedditClickId(clickId),
+      session_hash: hashSession(sessionValue),
+      aud: REDDIT_CONSENT_AUDIENCE,
       iss: META_CONSENT_ISSUER,
       iat: now,
       exp: now + META_CONSENT_TTL_SECONDS,

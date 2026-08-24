@@ -2,9 +2,11 @@ import { NextResponse } from "next/server";
 import crypto from "node:crypto";
 import {
   createMetaMarketingConsentProof,
+  createRedditMarketingConsentProof,
   createMetaCapiRevocationAcknowledgement,
   deriveMetaCapiSession,
   getMetaConsentSecret,
+  getRedditConsentSecret,
   hasActiveMetaCapiRevocation,
   hasCurrentMarketingConsent,
   hasServerAcknowledgedRegrant,
@@ -78,19 +80,32 @@ export async function POST(request: Request) {
   }
 
   let fbclid = "";
+  let rdtCid = "";
   try {
-    const body = (await request.json()) as { fbclid?: unknown };
+    const body = (await request.json()) as { fbclid?: unknown; rdt_cid?: unknown };
     fbclid = typeof body.fbclid === "string" ? body.fbclid.trim() : "";
+    rdtCid = typeof body.rdt_cid === "string" ? body.rdt_cid.trim() : "";
   } catch {
     return NextResponse.json({ error: "invalid_request" }, { status: 400, headers: NO_STORE_HEADERS });
   }
 
-  if (!fbclid || fbclid.length > 256 || /[\u0000-\u001f\u007f]/.test(fbclid)) {
+  const unsafeClickId = (value: string) =>
+    value.length > 256 || /[\u0000-\u001f\u007f]/.test(value);
+  if (!fbclid && !rdtCid) {
+    return NextResponse.json({ error: "click_id_required" }, { status: 400, headers: NO_STORE_HEADERS });
+  }
+  if (fbclid && unsafeClickId(fbclid)) {
     return NextResponse.json({ error: "invalid_fbclid" }, { status: 400, headers: NO_STORE_HEADERS });
+  }
+  if (rdtCid && unsafeClickId(rdtCid)) {
+    return NextResponse.json({ error: "invalid_rdt_cid" }, { status: 400, headers: NO_STORE_HEADERS });
   }
 
   if (!getMetaConsentSecret()) {
     return NextResponse.json({ error: "not_configured" }, { status: 503, headers: NO_STORE_HEADERS });
+  }
+  if (rdtCid && !getRedditConsentSecret() && !fbclid) {
+    return NextResponse.json({ error: "reddit_not_configured" }, { status: 503, headers: NO_STORE_HEADERS });
   }
 
   const cookieHeader = request.headers.get("cookie");
@@ -128,11 +143,20 @@ export async function POST(request: Request) {
   if (!sessionValue) {
     return NextResponse.json({ error: "proof_unavailable" }, { status: 503, headers: NO_STORE_HEADERS });
   }
-  const proof = createMetaMarketingConsentProof(fbclid, sessionValue);
-  if (!proof) {
+  const proof = fbclid ? createMetaMarketingConsentProof(fbclid, sessionValue) : null;
+  const redditProof = rdtCid
+    ? createRedditMarketingConsentProof(rdtCid, sessionValue)
+    : null;
+  if ((fbclid && !proof) || (rdtCid && !redditProof && !fbclid)) {
     return NextResponse.json({ error: "proof_unavailable" }, { status: 503, headers: NO_STORE_HEADERS });
   }
-  const response = NextResponse.json({ proof }, { headers: NO_STORE_HEADERS });
+  const response = NextResponse.json(
+    {
+      ...(proof ? { proof } : {}),
+      ...(redditProof ? { redditProof } : {}),
+    },
+    { headers: NO_STORE_HEADERS },
+  );
   const productionDomain = sharedCookieDomain(request);
   response.cookies.set(metaCapiSessionCookieName(cookieHeader), sessionValue, {
     httpOnly: true,

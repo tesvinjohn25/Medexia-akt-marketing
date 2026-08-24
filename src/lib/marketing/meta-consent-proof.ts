@@ -6,6 +6,7 @@ import {
 import { sanitizeMarketingUrl } from "./attribution";
 
 const META_PROOF_PARAM = "mx_meta_capi_proof";
+const REDDIT_PROOF_PARAM = "mx_reddit_capi_proof";
 const META_PROOF_ENDPOINT = "/api/marketing/meta-consent-proof";
 const PROOF_TIMEOUT_MS = 1_500;
 const AD_CLICK_PARAMS = [
@@ -19,7 +20,12 @@ const AD_CLICK_PARAMS = [
 ] as const;
 const URL_ATTRIBUTION_PARAMS = ["referrer", "first_landing_page"] as const;
 
-const proofRequests = new Map<string, Promise<string | null>>();
+interface MarketingConsentProofs {
+  metaProof: string | null;
+  redditProof: string | null;
+}
+
+const proofRequests = new Map<string, Promise<MarketingConsentProofs>>();
 
 function isCurrentProof(proof: string): boolean {
   try {
@@ -40,6 +46,7 @@ function isCurrentProof(proof: string): boolean {
 
 function stripWithdrawnMarketingData(url: URL): string {
   url.searchParams.delete(META_PROOF_PARAM);
+  url.searchParams.delete(REDDIT_PROOF_PARAM);
   for (const key of AD_CLICK_PARAMS) url.searchParams.delete(key);
   for (const key of URL_ATTRIBUTION_PARAMS) {
     const original = url.searchParams.get(key);
@@ -52,15 +59,22 @@ function stripWithdrawnMarketingData(url: URL): string {
   return url.toString();
 }
 
-async function requestProof(fbclid: string): Promise<string | null> {
+async function requestProofs(
+  fbclid: string,
+  rdtCid: string,
+): Promise<MarketingConsentProofs> {
   const generation = getMetaCapiConsentGeneration();
-  const requestKey = `${fbclid}\n${generation}`;
+  const requestKey = `${fbclid}\n${rdtCid}\n${generation}`;
   const existing = proofRequests.get(requestKey);
   if (existing) return existing;
 
   const request = (async () => {
-    if (!(await awaitMetaCapiRegrant())) return null;
-    if (getMetaCapiConsentGeneration() !== generation) return null;
+    if (!(await awaitMetaCapiRegrant())) {
+      return { metaProof: null, redditProof: null };
+    }
+    if (getMetaCapiConsentGeneration() !== generation) {
+      return { metaProof: null, redditProof: null };
+    }
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), PROOF_TIMEOUT_MS);
     try {
@@ -69,24 +83,40 @@ async function requestProof(fbclid: string): Promise<string | null> {
           method: "POST",
           credentials: "same-origin",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ fbclid }),
+          body: JSON.stringify({
+            ...(fbclid ? { fbclid } : {}),
+            ...(rdtCid ? { rdt_cid: rdtCid } : {}),
+          }),
           signal: controller.signal,
         });
         // The first request can install the server-random HttpOnly browser
         // seed. The browser applies Set-Cookie before this bounded retry.
         if (response.status === 409 && attempt === 0) continue;
-        if (!response.ok) return null;
-        const body = (await response.json()) as { proof?: unknown };
-        return getMetaCapiConsentGeneration() === generation &&
+        if (!response.ok) return { metaProof: null, redditProof: null };
+        const body = (await response.json()) as {
+          proof?: unknown;
+          redditProof?: unknown;
+        };
+        if (getMetaCapiConsentGeneration() !== generation) {
+          return { metaProof: null, redditProof: null };
+        }
+        const metaProof =
           typeof body.proof === "string" &&
           body.proof.length <= 2048 &&
           isCurrentProof(body.proof)
-          ? body.proof
-          : null;
+            ? body.proof
+            : null;
+        const redditProof =
+          typeof body.redditProof === "string" &&
+          body.redditProof.length <= 2048 &&
+          isCurrentProof(body.redditProof)
+            ? body.redditProof
+            : null;
+        return { metaProof, redditProof };
       }
-      return null;
+      return { metaProof: null, redditProof: null };
     } catch {
-      return null;
+      return { metaProof: null, redditProof: null };
     } finally {
       window.clearTimeout(timeout);
     }
@@ -117,16 +147,24 @@ export async function addMetaMarketingConsentProof(appUrl: string): Promise<stri
   ) return appUrl;
 
   url.searchParams.delete(META_PROOF_PARAM);
+  url.searchParams.delete(REDDIT_PROOF_PARAM);
   if (!canUseMarketing()) return stripWithdrawnMarketingData(url);
 
   const fbclid = url.searchParams.get("fbclid")?.trim() || "";
-  if (!fbclid || fbclid.length > 256 || url.searchParams.get("mx_mc") !== "1") {
+  const rdtCid = url.searchParams.get("rdt_cid")?.trim() || "";
+  if (
+    (!fbclid && !rdtCid) ||
+    fbclid.length > 256 ||
+    rdtCid.length > 256 ||
+    url.searchParams.get("mx_mc") !== "1"
+  ) {
     return url.toString();
   }
 
-  const proof = await requestProof(fbclid);
+  const { metaProof, redditProof } = await requestProofs(fbclid, rdtCid);
   if (!canUseMarketing()) return stripWithdrawnMarketingData(url);
-  if (proof) url.searchParams.set(META_PROOF_PARAM, proof);
+  if (fbclid && metaProof) url.searchParams.set(META_PROOF_PARAM, metaProof);
+  if (rdtCid && redditProof) url.searchParams.set(REDDIT_PROOF_PARAM, redditProof);
   return url.toString();
 }
 
@@ -150,6 +188,7 @@ export function reusePrefetchedMetaMarketingConsentProof(
   if (!canUseMarketing()) return stripWithdrawnMarketingData(current);
 
   const currentFbclid = current.searchParams.get("fbclid");
+  const currentRdtCid = current.searchParams.get("rdt_cid");
   const prefetchedProof = prefetched.searchParams.get(META_PROOF_PARAM);
   if (
     currentFbclid &&
@@ -160,6 +199,17 @@ export function reusePrefetchedMetaMarketingConsentProof(
     isCurrentProof(prefetchedProof)
   ) {
     current.searchParams.set(META_PROOF_PARAM, prefetchedProof);
+  }
+  const prefetchedRedditProof = prefetched.searchParams.get(REDDIT_PROOF_PARAM);
+  if (
+    currentRdtCid &&
+    currentRdtCid === prefetched.searchParams.get("rdt_cid") &&
+    current.origin === prefetched.origin &&
+    current.pathname === prefetched.pathname &&
+    prefetchedRedditProof &&
+    isCurrentProof(prefetchedRedditProof)
+  ) {
+    current.searchParams.set(REDDIT_PROOF_PARAM, prefetchedRedditProof);
   }
   return current.toString();
 }

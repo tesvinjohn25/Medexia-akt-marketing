@@ -1823,6 +1823,48 @@ test("marketing consent loads configured pixels after consent and allows ad clic
   assert.equal(window.fbq.queue.length, 2);
 });
 
+test("a current Reddit click overrides a stale cached click in the app handoff", () => {
+  resetTrackingEnv();
+  const browser = installBrowser(
+    "https://medexia-akt.com/?utm_source=reddit&utm_medium=cpc&utm_campaign=older-campaign&utm_content=older-v4&rdt_cid=RDT-OLD",
+  );
+  acceptAllConsent("banner");
+  const initial = initMarketingAttribution();
+  assert.equal(initial.first_touch?.rdt_cid, "RDT-OLD");
+
+  browser.localStorage.values.set(
+    MARKETING_STORAGE_KEYS.lastTouch,
+    JSON.stringify({
+      ...initial.last_touch,
+      campaign: "akt-october-2026",
+      utm_campaign: "akt-october-2026",
+      content: "two-hours-audio-october-v5",
+      utm_content: "two-hours-audio-october-v5",
+      term: "gpuk",
+      utm_term: "gpuk",
+      rdt_cid: "RDT-OLD",
+    }),
+  );
+  browser.localStorage.setItem = () => {
+    throw new Error("storage unavailable");
+  };
+
+  window.location = new URL(
+    "https://medexia-akt.com/?utm_source=reddit&utm_medium=cpc&utm_campaign=akt-october-2026&utm_content=two-hours-audio-october-v5&utm_term=gpuk&rdt_cid=RDT-CURRENT-V5",
+  );
+  const appUrl = new URL(buildAppUrl("/join/audio", { intent: "start_audio" }));
+
+  assert.equal(appUrl.searchParams.get("rdt_cid"), "RDT-CURRENT-V5");
+  assert.equal(appUrl.searchParams.get("utm_campaign"), "akt-october-2026");
+  assert.equal(appUrl.searchParams.get("utm_content"), "two-hours-audio-october-v5");
+  assert.equal(appUrl.searchParams.get("utm_term"), "gpuk");
+  assert.equal(appUrl.searchParams.get("first_touch_campaign"), "older-campaign");
+  assert.equal(
+    JSON.parse(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.firstTouch)).rdt_cid,
+    "RDT-OLD",
+  );
+});
+
 test("app handoff consent signature changes when marketing consent is withdrawn", () => {
   resetTrackingEnv();
   installBrowser("https://medexia-akt.com/?utm_source=google&gclid=G123");

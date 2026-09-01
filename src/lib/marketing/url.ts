@@ -20,6 +20,10 @@ import {
   captureReferralCode,
 } from "./referral-pass-through";
 import { buildTrialAppUrl } from "./trial-pass-through";
+import {
+  normalizeRedditClickId,
+  redditClickIdFromSearchParams,
+} from "./reddit-click-id";
 
 const DEFAULT_APP_BASE_URL = "https://app.medexia-akt.com";
 const MARKETING_SITE_ORIGIN = "https://medexia-akt.com";
@@ -61,11 +65,9 @@ function setIfPresent(params: URLSearchParams, key: string, value: string | null
   if (next) params.set(key, next);
 }
 
-function currentPageClickId(key: string): string | null {
+function currentPageRedditClickId(): string | null {
   if (typeof window === "undefined") return null;
-  const value = new URLSearchParams(window.location.search).get(key)?.trim() || "";
-  if (!value || value.length > 256 || /[\u0000-\u001f\u007f]/.test(value)) return null;
-  return value;
+  return redditClickIdFromSearchParams(new URLSearchParams(window.location.search));
 }
 
 const SPECIAL_HANDOFF_AD_CLICK_PARAMS = [
@@ -78,15 +80,64 @@ const SPECIAL_HANDOFF_AD_CLICK_PARAMS = [
   "rdt_cid",
 ] as const;
 
+type CompactTouch = ReturnType<typeof compactAttributionTouch>;
+
+function appendTouchHandoffParams(
+  params: URLSearchParams,
+  firstTouch: CompactTouch,
+  lastTouch: CompactTouch,
+): void {
+  const handoffTouch = lastTouch ?? firstTouch;
+  setIfPresent(params, "utm_source", handoffTouch?.source);
+  setIfPresent(params, "utm_medium", handoffTouch?.medium);
+  setIfPresent(params, "utm_campaign", handoffTouch?.campaign);
+  setIfPresent(params, "utm_content", handoffTouch?.content);
+  setIfPresent(params, "utm_term", handoffTouch?.term);
+
+  setIfPresent(params, "first_touch_source", firstTouch?.source);
+  setIfPresent(params, "first_touch_medium", firstTouch?.medium);
+  setIfPresent(params, "first_touch_campaign", firstTouch?.campaign);
+  setIfPresent(params, "first_touch_content", firstTouch?.content);
+  setIfPresent(params, "first_touch_term", firstTouch?.term);
+  setIfPresent(params, "last_touch_source", lastTouch?.source);
+  setIfPresent(params, "last_touch_medium", lastTouch?.medium);
+  setIfPresent(params, "last_touch_campaign", lastTouch?.campaign);
+  setIfPresent(params, "last_touch_content", lastTouch?.content);
+  setIfPresent(params, "last_touch_term", lastTouch?.term);
+}
+
+function appendAdClickIds(
+  params: URLSearchParams,
+  first: ReturnType<typeof initMarketingAttribution>["first_touch"],
+  last: ReturnType<typeof initMarketingAttribution>["last_touch"],
+): void {
+  setIfPresent(params, "gclid", last?.gclid ?? first?.gclid);
+  setIfPresent(params, "gbraid", last?.gbraid ?? first?.gbraid);
+  setIfPresent(params, "wbraid", last?.wbraid ?? first?.wbraid);
+  setIfPresent(params, "fbclid", last?.fbclid ?? first?.fbclid);
+  setIfPresent(params, "ttclid", last?.ttclid ?? first?.ttclid);
+  setIfPresent(params, "msclkid", last?.msclkid ?? first?.msclkid);
+  setIfPresent(
+    params,
+    "rdt_cid",
+    currentPageRedditClickId() ??
+      normalizeRedditClickId(last?.rdt_cid) ??
+      normalizeRedditClickId(first?.rdt_cid),
+  );
+}
+
 function enrichSpecialAppHandoff(value: string): string {
   const url = new URL(value);
   const snapshot = initMarketingAttribution();
   const first = snapshot.first_touch;
   const last = snapshot.last_touch;
+  const firstTouch = compactAttributionTouch(first);
+  const lastTouch = compactAttributionTouch(last);
   const internalTestToken = getInternalTestToken();
   const includeAdClickIds = canUseMarketing() && !internalTestToken;
 
   for (const key of SPECIAL_HANDOFF_AD_CLICK_PARAMS) url.searchParams.delete(key);
+  appendTouchHandoffParams(url.searchParams, firstTouch, lastTouch);
   if (internalTestToken) {
     url.searchParams.set(INTERNAL_TEST_QUERY_PARAM, internalTestToken);
     url.searchParams.set("mx_mc", "0");
@@ -96,13 +147,7 @@ function enrichSpecialAppHandoff(value: string): string {
   }
 
   if (includeAdClickIds) {
-    setIfPresent(url.searchParams, "gclid", last?.gclid ?? first?.gclid);
-    setIfPresent(url.searchParams, "gbraid", last?.gbraid ?? first?.gbraid);
-    setIfPresent(url.searchParams, "wbraid", last?.wbraid ?? first?.wbraid);
-    setIfPresent(url.searchParams, "fbclid", last?.fbclid ?? first?.fbclid);
-    setIfPresent(url.searchParams, "ttclid", last?.ttclid ?? first?.ttclid);
-    setIfPresent(url.searchParams, "msclkid", last?.msclkid ?? first?.msclkid);
-    setIfPresent(url.searchParams, "rdt_cid", currentPageClickId("rdt_cid") ?? last?.rdt_cid ?? first?.rdt_cid);
+    appendAdClickIds(url.searchParams, first, last);
   }
 
   return url.toString();
@@ -236,7 +281,6 @@ export function buildAppUrl(
   const last = snapshot.last_touch;
   const firstTouch = compactAttributionTouch(first);
   const lastTouch = compactAttributionTouch(last);
-  const handoffTouch = lastTouch ?? firstTouch;
   const internalTestToken = getInternalTestToken();
   const internalTestTraffic = Boolean(internalTestToken);
   const includeAdClickIds = canUseMarketing() && !internalTestTraffic;
@@ -270,22 +314,7 @@ export function buildAppUrl(
     url.searchParams.set("mx_ac", canUseAnalytics() ? "1" : "0");
   }
 
-  setIfPresent(url.searchParams, "utm_source", handoffTouch?.source);
-  setIfPresent(url.searchParams, "utm_medium", handoffTouch?.medium);
-  setIfPresent(url.searchParams, "utm_campaign", handoffTouch?.campaign);
-  setIfPresent(url.searchParams, "utm_content", handoffTouch?.content);
-  setIfPresent(url.searchParams, "utm_term", handoffTouch?.term);
-
-  setIfPresent(url.searchParams, "first_touch_source", firstTouch?.source);
-  setIfPresent(url.searchParams, "first_touch_medium", firstTouch?.medium);
-  setIfPresent(url.searchParams, "first_touch_campaign", firstTouch?.campaign);
-  setIfPresent(url.searchParams, "first_touch_content", firstTouch?.content);
-  setIfPresent(url.searchParams, "first_touch_term", firstTouch?.term);
-  setIfPresent(url.searchParams, "last_touch_source", lastTouch?.source);
-  setIfPresent(url.searchParams, "last_touch_medium", lastTouch?.medium);
-  setIfPresent(url.searchParams, "last_touch_campaign", lastTouch?.campaign);
-  setIfPresent(url.searchParams, "last_touch_content", lastTouch?.content);
-  setIfPresent(url.searchParams, "last_touch_term", lastTouch?.term);
+  appendTouchHandoffParams(url.searchParams, firstTouch, lastTouch);
 
   setIfPresent(
     url.searchParams,
@@ -308,13 +337,7 @@ export function buildAppUrl(
   }
 
   if (includeAdClickIds) {
-    setIfPresent(url.searchParams, "gclid", last?.gclid ?? first?.gclid);
-    setIfPresent(url.searchParams, "gbraid", last?.gbraid ?? first?.gbraid);
-    setIfPresent(url.searchParams, "wbraid", last?.wbraid ?? first?.wbraid);
-    setIfPresent(url.searchParams, "fbclid", last?.fbclid ?? first?.fbclid);
-    setIfPresent(url.searchParams, "ttclid", last?.ttclid ?? first?.ttclid);
-    setIfPresent(url.searchParams, "msclkid", last?.msclkid ?? first?.msclkid);
-    setIfPresent(url.searchParams, "rdt_cid", currentPageClickId("rdt_cid") ?? last?.rdt_cid ?? first?.rdt_cid);
+    appendAdClickIds(url.searchParams, first, last);
   }
 
   setIfPresent(url.searchParams, "intent", options.intent);

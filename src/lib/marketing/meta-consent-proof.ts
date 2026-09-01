@@ -4,6 +4,7 @@ import {
   getMetaCapiConsentGeneration,
 } from "../consent/consent";
 import { sanitizeMarketingUrl } from "./attribution";
+import { redditClickIdFromSearchParams } from "./reddit-click-id";
 
 const META_PROOF_PARAM = "mx_meta_capi_proof";
 const REDDIT_PROOF_PARAM = "mx_reddit_capi_proof";
@@ -151,7 +152,10 @@ export async function addMetaMarketingConsentProof(appUrl: string): Promise<stri
   if (!canUseMarketing()) return stripWithdrawnMarketingData(url);
 
   const fbclid = url.searchParams.get("fbclid")?.trim() || "";
-  const rdtCid = url.searchParams.get("rdt_cid")?.trim() || "";
+  const rdtCid = redditClickIdFromSearchParams(url.searchParams) || "";
+  if (url.searchParams.has("rdt_cid") && !rdtCid) {
+    url.searchParams.delete("rdt_cid");
+  }
   if (
     (!fbclid && !rdtCid) ||
     fbclid.length > 256 ||
@@ -188,7 +192,11 @@ export function reusePrefetchedMetaMarketingConsentProof(
   if (!canUseMarketing()) return stripWithdrawnMarketingData(current);
 
   const currentFbclid = current.searchParams.get("fbclid");
-  const currentRdtCid = current.searchParams.get("rdt_cid");
+  const currentRdtCid = redditClickIdFromSearchParams(current.searchParams);
+  if (current.searchParams.has("rdt_cid") && !currentRdtCid) {
+    current.searchParams.delete("rdt_cid");
+    current.searchParams.delete(REDDIT_PROOF_PARAM);
+  }
   const prefetchedProof = prefetched.searchParams.get(META_PROOF_PARAM);
   if (
     currentFbclid &&
@@ -200,10 +208,11 @@ export function reusePrefetchedMetaMarketingConsentProof(
   ) {
     current.searchParams.set(META_PROOF_PARAM, prefetchedProof);
   }
+  const prefetchedRedditClickId = redditClickIdFromSearchParams(prefetched.searchParams);
   const prefetchedRedditProof = prefetched.searchParams.get(REDDIT_PROOF_PARAM);
   if (
     currentRdtCid &&
-    currentRdtCid === prefetched.searchParams.get("rdt_cid") &&
+    currentRdtCid === prefetchedRedditClickId &&
     current.origin === prefetched.origin &&
     current.pathname === prefetched.pathname &&
     prefetchedRedditProof &&

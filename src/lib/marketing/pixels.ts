@@ -1,7 +1,9 @@
 import { canUseAnalytics, canUseMarketing } from "../consent/consent";
 import { isInternalTestTraffic } from "./attribution";
+import { removeInvalidRedditClickIdFromCurrentUrl } from "./reddit-click-id";
 
 let loaded = false;
+let redditManaged = false;
 let googleManaged = false;
 let metaManaged = false;
 
@@ -20,6 +22,10 @@ function appendScript(id: string, src: string): void {
 
 export function maybeLoadMarketingPixels(): void {
   if (typeof window === "undefined" || typeof document === "undefined") return;
+
+  // Reddit's browser library reads its click id from the current URL. Scrub a
+  // malformed or placeholder value before any consent-gated PageVisit call.
+  const redditUrlSafe = removeInvalidRedditClickIdFromCurrentUrl();
 
   const internalTestTraffic = isInternalTestTraffic();
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
@@ -55,9 +61,9 @@ export function maybeLoadMarketingPixels(): void {
     );
   }
 
-  if (internalTestTraffic || loaded || !envEnabled() || !canUseMarketing()) return;
+  if (internalTestTraffic || !envEnabled() || !canUseMarketing()) return;
 
-  if (redditPixelId) {
+  if (redditPixelId && redditUrlSafe && !redditManaged) {
     const w = window as typeof window & { rdt?: (...args: unknown[]) => void };
     if (!w.rdt) {
       const rdt = (...args: unknown[]) => {
@@ -77,7 +83,12 @@ export function maybeLoadMarketingPixels(): void {
     appendScript("mx-reddit-pixel", "https://www.redditstatic.com/ads/pixel.js");
     w.rdt("init", redditPixelId);
     w.rdt("track", "PageVisit");
+    redditManaged = true;
   }
+
+  // Meta and Google keep their existing single-init guard. Reddit is checked
+  // first so it can initialise later if an initially unsafe URL becomes safe.
+  if (loaded) return;
 
   if (metaPixelId) {
     const w = window as typeof window & { fbq?: (...args: unknown[]) => void; _fbq?: unknown };

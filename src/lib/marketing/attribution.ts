@@ -4,6 +4,10 @@ import {
   canUseMarketing,
   hasConsentDecision,
 } from "../consent/consent";
+import {
+  normalizeRedditClickId,
+  redditClickIdFromSearchParams,
+} from "./reddit-click-id";
 import { OFFER_CUTOVER_UK } from "../offer-phase";
 import { verifyInternalTestToken } from "./internal-test-token";
 
@@ -471,6 +475,10 @@ export function sanitizeMarketingUrl(
       if (
         normalizedKey === INTERNAL_TEST_QUERY_PARAM ||
         (
+          normalizedKey === "rdt_cid" &&
+          (nestedValues.length !== 1 || !normalizeRedditClickId(nestedValues[0]))
+        ) ||
+        (
           !includeAdClickIds &&
           (
             (AD_CLICK_PARAM_KEYS as readonly string[]).includes(normalizedKey) ||
@@ -526,12 +534,17 @@ function hasMeaningfulTouch(params: URLSearchParams, referrer: string | null, in
   return TOUCH_PARAM_KEYS.some((key) => {
     if ((UTM_PARAM_KEYS as readonly string[]).includes(key)) return false;
     if (!includeAdClickIds && (AD_CLICK_PARAM_KEYS as readonly string[]).includes(key)) return false;
+    if (key === "rdt_cid") return Boolean(redditClickIdFromSearchParams(params));
     return Boolean(getParam(params, key));
   });
 }
 
 function hasVisibleTouchParam(params: URLSearchParams): boolean {
-  return TOUCH_PARAM_KEYS.some((key) => Boolean(getParam(params, key)));
+  return TOUCH_PARAM_KEYS.some((key) =>
+    key === "rdt_cid"
+      ? Boolean(redditClickIdFromSearchParams(params))
+      : Boolean(getParam(params, key)),
+  );
 }
 
 function customGptReturnAttribution(params: URLSearchParams):
@@ -607,7 +620,7 @@ function readCurrentTouch(referralCode: string | null, includeAdClickIds: boolea
     fbclid: includeAdClickIds ? getParam(params, "fbclid", 256) : null,
     ttclid: includeAdClickIds ? getParam(params, "ttclid", 256) : null,
     msclkid: includeAdClickIds ? getParam(params, "msclkid", 256) : null,
-    rdt_cid: includeAdClickIds ? getParam(params, "rdt_cid", 256) : null,
+    rdt_cid: includeAdClickIds ? redditClickIdFromSearchParams(params) : null,
     ref: getParam(params, "ref", 96),
     referral_code: referralCode,
   };

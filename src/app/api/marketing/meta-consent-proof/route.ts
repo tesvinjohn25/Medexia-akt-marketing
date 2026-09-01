@@ -20,6 +20,7 @@ import {
   metaCapiSessionCookieName,
   scopedRevocationCookieName,
 } from "@/lib/marketing/meta-consent-proof.server";
+import { normalizeRedditClickId } from "@/lib/marketing/reddit-click-id";
 
 export const dynamic = "force-dynamic";
 
@@ -81,26 +82,30 @@ export async function POST(request: Request) {
 
   let fbclid = "";
   let rdtCid = "";
+  let suppliedRdtCid = false;
   try {
     const body = (await request.json()) as { fbclid?: unknown; rdt_cid?: unknown };
     fbclid = typeof body.fbclid === "string" ? body.fbclid.trim() : "";
-    rdtCid = typeof body.rdt_cid === "string" ? body.rdt_cid.trim() : "";
+    suppliedRdtCid = body.rdt_cid !== undefined && body.rdt_cid !== null;
+    rdtCid = normalizeRedditClickId(body.rdt_cid) ?? "";
   } catch {
     return NextResponse.json({ error: "invalid_request" }, { status: 400, headers: NO_STORE_HEADERS });
   }
 
   const unsafeClickId = (value: string) =>
     value.length > 256 || /[\u0000-\u001f\u007f]/.test(value);
+  // A malformed Reddit value must never be signed. If Meta supplied a valid
+  // click alongside it, omit only Reddit so Meta's existing proof path remains
+  // unchanged.
+  if (suppliedRdtCid && !rdtCid && !fbclid) {
+    return NextResponse.json({ error: "invalid_rdt_cid" }, { status: 400, headers: NO_STORE_HEADERS });
+  }
   if (!fbclid && !rdtCid) {
     return NextResponse.json({ error: "click_id_required" }, { status: 400, headers: NO_STORE_HEADERS });
   }
   if (fbclid && unsafeClickId(fbclid)) {
     return NextResponse.json({ error: "invalid_fbclid" }, { status: 400, headers: NO_STORE_HEADERS });
   }
-  if (rdtCid && unsafeClickId(rdtCid)) {
-    return NextResponse.json({ error: "invalid_rdt_cid" }, { status: 400, headers: NO_STORE_HEADERS });
-  }
-
   if (!getMetaConsentSecret()) {
     return NextResponse.json({ error: "not_configured" }, { status: 503, headers: NO_STORE_HEADERS });
   }

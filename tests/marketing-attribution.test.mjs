@@ -92,6 +92,10 @@ const {
 } = await importBundled("src/lib/consent/consent.ts");
 const { flushLandingEvent, trackLandingEvent } = await importBundled("src/lib/marketing/events.ts");
 const { maybeLoadMarketingPixels } = await importBundled("src/lib/marketing/pixels.ts");
+const {
+  normalizeRedditClickId,
+  removeInvalidRedditClickIdFromCurrentUrl,
+} = await importBundled("src/lib/marketing/reddit-click-id.ts");
 const { verifyInternalTestToken } = await importBundled(
   "src/lib/marketing/internal-test-token.ts",
 );
@@ -119,9 +123,17 @@ function installBrowser(url, referrer = "", existingSessionStorage = null) {
   const scripts = [];
   const listeners = new Map();
   const location = new URL(url);
+  const history = {
+    state: null,
+    replaceState: (state, _title, next) => {
+      history.state = state;
+      windowMock.location = new URL(next, windowMock.location);
+    },
+  };
 
   const windowMock = {
     location,
+    history,
     localStorage,
     sessionStorage,
     addEventListener: (event, handler) => {
@@ -276,10 +288,120 @@ test("app url fallback targets the deployed Replit app domain", () => {
   assert.equal(appUrl.pathname, "/join/free");
 });
 
+test("Reddit click ids are opaque, exact, and fail closed", () => {
+  const valid = "RDT.AbC_-:~%2F";
+  assert.equal(normalizeRedditClickId(valid), valid);
+  assert.equal(normalizeRedditClickId("x".repeat(256)), "x".repeat(256));
+
+  for (const invalid of [
+    null,
+    undefined,
+    "",
+    "undefined",
+    "NULL",
+    "(null)",
+    "missing",
+    "rdt_cid",
+    "none",
+    "has space",
+    " leading",
+    "trailing ",
+    "line\nbreak",
+    "control\u0000",
+    "replacement\uFFFD",
+    "%ZZ",
+    "%E0%A4%A",
+    "x".repeat(257),
+  ]) {
+    assert.equal(normalizeRedditClickId(invalid), null, String(invalid));
+  }
+});
+
+test("a valid opaque Reddit id survives attribution and handoff exactly", () => {
+  resetTrackingEnv();
+  const valid = "RDT.AbC_-:~%2F";
+  installBrowser(
+    `https://medexia-akt.com/?utm_source=reddit&utm_medium=cpc&utm_campaign=campaign&utm_content=creative&utm_term=gpuk&rdt_cid=${encodeURIComponent(valid)}`,
+  );
+  acceptAllConsent("banner");
+  const snapshot = initMarketingAttribution();
+  const handoff = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
+
+  assert.equal(snapshot.first_touch?.rdt_cid, valid);
+  assert.equal(snapshot.last_touch?.rdt_cid, valid);
+  assert.equal(handoff.searchParams.get("rdt_cid"), valid);
+});
+
+test("Reddit URL safety is explicit for no-id, valid, unavailable, and throwing History API paths", () => {
+  resetTrackingEnv();
+  installBrowser("https://medexia-akt.com/?utm_source=reddit");
+  assert.equal(removeInvalidRedditClickIdFromCurrentUrl(), true);
+
+  installBrowser("https://medexia-akt.com/?utm_source=reddit&rdt_cid=RDT-SAFE");
+  assert.equal(removeInvalidRedditClickIdFromCurrentUrl(), true);
+  assert.equal(new URL(window.location.href).searchParams.get("rdt_cid"), "RDT-SAFE");
+
+  installBrowser("https://medexia-akt.com/?utm_source=reddit&rdt_cid=undefined");
+  window.history = undefined;
+  assert.equal(removeInvalidRedditClickIdFromCurrentUrl(), false);
+  assert.equal(new URL(window.location.href).searchParams.get("rdt_cid"), "undefined");
+
+  installBrowser("https://medexia-akt.com/?utm_source=reddit&rdt_cid=null");
+  window.history = {
+    state: null,
+    replaceState: () => {
+      throw new Error("history unavailable");
+    },
+  };
+  assert.equal(removeInvalidRedditClickIdFromCurrentUrl(), false);
+  assert.equal(new URL(window.location.href).searchParams.get("rdt_cid"), "null");
+});
+
+test("invalid Reddit ids are removed before Pixel inspection without changing UTMs", () => {
+  const invalidQueries = [
+    "rdt_cid=",
+    "rdt_cid=undefined",
+    "rdt_cid=null",
+    "rdt_cid=rdt_cid",
+    "rdt_cid=has%20space",
+    "rdt_cid=%00control",
+    "rdt_cid=%EF%BF%BD",
+    "rdt_cid=%ZZ",
+    "rdt_cid=%E0%A4%A",
+    `rdt_cid=${"x".repeat(257)}`,
+  ];
+
+  for (const invalidQuery of invalidQueries) {
+    resetTrackingEnv();
+    const browser = installBrowser(
+      `https://medexia-akt.com/?utm_source=reddit&utm_medium=cpc&utm_campaign=campaign&utm_content=creative&utm_term=gpuk&${invalidQuery}`,
+    );
+    acceptAllConsent("banner");
+    const snapshot = initMarketingAttribution();
+    maybeLoadMarketingPixels();
+    const handoff = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
+
+    assert.equal(window.location.search.includes("rdt_cid"), false, invalidQuery);
+    const scrubbedLanding = new URL(window.location.href);
+    assert.deepEqual(
+      ["source", "medium", "campaign", "content", "term"].map((field) =>
+        scrubbedLanding.searchParams.get(`utm_${field}`),
+      ),
+      ["reddit", "cpc", "campaign", "creative", "gpuk"],
+      invalidQuery,
+    );
+    assert.equal(snapshot.last_touch?.rdt_cid, null, invalidQuery);
+    assert.doesNotMatch(snapshot.last_touch?.first_landing_page || "", /rdt_cid/i);
+    assert.equal(handoff.searchParams.has("rdt_cid"), false, invalidQuery);
+    assert.equal(handoff.searchParams.get("utm_campaign"), "campaign", invalidQuery);
+    assert.equal(browser.scripts.length, 0);
+  }
+});
+
 test("trial link routes signup CTAs only after the code has been validated", async () => {
   resetTrackingEnv();
   const browser = installBrowser(
-    "https://medexia-akt.com/?trial_code=TRIAL-RM7FAA&utm_source=mid_wessex",
+    "https://medexia-akt.com/?trial_code=TRIAL-RM7FAA&utm_source=mid_wessex&utm_medium=partner&utm_campaign=trial&utm_content=banner&utm_term=training",
   );
   const code = captureTrialCode();
   globalThis.fetch = async () => ({
@@ -300,13 +422,20 @@ test("trial link routes signup CTAs only after the code has been validated", asy
     label: "Thames Valley",
   });
 
-  assert.equal(
-    buildAppUrl("/join/free", {
-      intent: "start_free",
-      validatedTrialCode: validation ? code : null,
-    }),
-    `${TRIAL_APP_JOIN_URL}?code=TRIAL-RM7FAA`,
+  const validatedUrl = new URL(buildAppUrl("/join/free", {
+    intent: "start_free",
+    validatedTrialCode: validation ? code : null,
+  }));
+  assert.equal(validatedUrl.origin + validatedUrl.pathname, TRIAL_APP_JOIN_URL);
+  assert.equal(validatedUrl.searchParams.get("code"), "TRIAL-RM7FAA");
+  assert.deepEqual(
+    ["source", "medium", "campaign", "content", "term"].map((field) =>
+      validatedUrl.searchParams.get(`utm_${field}`),
+    ),
+    ["mid_wessex", "partner", "trial", "banner", "training"],
   );
+  assert.equal(validatedUrl.searchParams.get("first_touch_term"), "training");
+  assert.equal(validatedUrl.searchParams.get("last_touch_term"), "training");
   assert.equal(
     buildTrialAppUrl(code),
     `${TRIAL_APP_JOIN_URL}?code=TRIAL-RM7FAA`,
@@ -503,7 +632,9 @@ test("referral link is held for the session and routes signup and purchase CTAs 
   );
   assert.equal(freeUrl.origin + freeUrl.pathname, REFERRAL_FREE_APP_JOIN_URL);
   assert.equal(freeUrl.searchParams.get("referral_code"), "COLLEAGUE+CODE");
-  assert.deepEqual(Array.from(freeUrl.searchParams.keys()), ["referral_code"]);
+  assert.equal(freeUrl.searchParams.get("utm_source"), "whatsapp");
+  assert.equal(freeUrl.searchParams.get("first_touch_source"), "whatsapp");
+  assert.equal(freeUrl.searchParams.get("last_touch_source"), "whatsapp");
 
   const fullAccessUrl = new URL(
     buildAppUrl("/join/full-access", { intent: "checkout" }),
@@ -516,7 +647,7 @@ test("referral link is held for the session and routes signup and purchase CTAs 
     fullAccessUrl.searchParams.get("referral_code"),
     "COLLEAGUE+CODE",
   );
-  assert.deepEqual(Array.from(fullAccessUrl.searchParams.keys()), ["referral_code"]);
+  assert.equal(fullAccessUrl.searchParams.get("utm_source"), "whatsapp");
 
   assert.equal(
     buildReferralAppUrl("COLLEAGUE+CODE", "/join/free", "start_free"),
@@ -741,9 +872,9 @@ test("a validated trial owns mixed trial and referral handoffs", () => {
   );
 });
 
-test("consented trial and referral app handoffs retain Meta proof inputs", () => {
+test("consented trial and referral app handoffs retain full UTMs and proof inputs", () => {
   resetTrackingEnv();
-  installBrowser("https://medexia-akt.com/?trial_code=TRIAL-RM7FAA&fbclid=FB-TRIAL");
+  installBrowser("https://medexia-akt.com/?trial_code=TRIAL-RM7FAA&utm_source=reddit&utm_medium=cpc&utm_campaign=trial&utm_content=audio&utm_term=gpuk&fbclid=FB-TRIAL&rdt_cid=RDT-TRIAL");
   acceptAllConsent("settings");
   initMarketingAttribution();
   const trialUrl = new URL(buildAppUrl("/join/free", {
@@ -755,9 +886,18 @@ test("consented trial and referral app handoffs retain Meta proof inputs", () =>
   assert.equal(trialUrl.searchParams.get("mx_mc"), "1");
   assert.equal(trialUrl.searchParams.get("mx_ac"), "1");
   assert.equal(trialUrl.searchParams.get("fbclid"), "FB-TRIAL");
+  assert.equal(trialUrl.searchParams.get("rdt_cid"), "RDT-TRIAL");
+  assert.deepEqual(
+    ["source", "medium", "campaign", "content", "term"].map((field) =>
+      trialUrl.searchParams.get(`utm_${field}`),
+    ),
+    ["reddit", "cpc", "trial", "audio", "gpuk"],
+  );
+  assert.equal(trialUrl.searchParams.get("first_touch_term"), "gpuk");
+  assert.equal(trialUrl.searchParams.get("last_touch_term"), "gpuk");
 
   resetTrackingEnv();
-  installBrowser("https://medexia-akt.com/?ref=COLLEAGUE&fbclid=FB-REFERRAL");
+  installBrowser("https://medexia-akt.com/?ref=COLLEAGUE&utm_source=reddit&utm_medium=paid_social&utm_campaign=referral&utm_content=post&utm_term=akt&fbclid=FB-REFERRAL&rdt_cid=RDT-REFERRAL");
   acceptAllConsent("settings");
   initMarketingAttribution();
   const referralUrl = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
@@ -766,6 +906,12 @@ test("consented trial and referral app handoffs retain Meta proof inputs", () =>
   assert.equal(referralUrl.searchParams.get("mx_mc"), "1");
   assert.equal(referralUrl.searchParams.get("mx_ac"), "1");
   assert.equal(referralUrl.searchParams.get("fbclid"), "FB-REFERRAL");
+  assert.equal(referralUrl.searchParams.get("rdt_cid"), "RDT-REFERRAL");
+  assert.equal(referralUrl.searchParams.get("utm_campaign"), "referral");
+  assert.equal(referralUrl.searchParams.get("utm_content"), "post");
+  assert.equal(referralUrl.searchParams.get("utm_term"), "akt");
+  assert.equal(referralUrl.searchParams.get("first_touch_term"), "akt");
+  assert.equal(referralUrl.searchParams.get("last_touch_term"), "akt");
 });
 
 test("a promo owns mixed promo and referral handoffs", () => {
@@ -1087,6 +1233,111 @@ test("fresh visitor before consent captures source handoff without IDs, events, 
   assert.equal(appUrl.searchParams.has("rdt_cid"), false);
   assert.equal(appUrl.searchParams.has("mx_mc"), false);
   assert.equal(appUrl.searchParams.has("mx_ac"), false);
+});
+
+test("Reddit handoff consent states preserve existing UTM and click-id policy", () => {
+  const landing = "https://medexia-akt.com/?utm_source=reddit&utm_medium=cpc&utm_campaign=october&utm_content=audio&utm_term=gpuk&rdt_cid=RDT-CONSENT";
+
+  resetTrackingEnv();
+  installBrowser(landing);
+  initMarketingAttribution();
+  const pending = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
+  assert.equal(pending.searchParams.get("utm_term"), "gpuk");
+  assert.equal(pending.searchParams.get("first_touch_content"), "audio");
+  assert.equal(pending.searchParams.get("last_touch_campaign"), "october");
+  assert.equal(pending.searchParams.has("rdt_cid"), false);
+  assert.equal(pending.searchParams.has("mx_mc"), false);
+
+  resetTrackingEnv();
+  installBrowser(landing);
+  acceptAllConsent("banner");
+  initMarketingAttribution();
+  const granted = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
+  assert.equal(granted.searchParams.get("utm_term"), "gpuk");
+  assert.equal(granted.searchParams.get("rdt_cid"), "RDT-CONSENT");
+  assert.equal(granted.searchParams.get("mx_mc"), "1");
+
+  resetTrackingEnv();
+  installBrowser(landing);
+  rejectAllConsent("banner");
+  initMarketingAttribution();
+  const denied = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
+  assert.equal(denied.searchParams.has("utm_source"), false);
+  assert.equal(denied.searchParams.has("rdt_cid"), false);
+  assert.equal(denied.searchParams.get("mx_mc"), "0");
+});
+
+test("ordinary, trial, and referral CTAs share the full-touch consent matrix", () => {
+  const cases = [
+    {
+      name: "ordinary",
+      landingParam: "",
+      build: () => buildAppUrl("/join/free", { intent: "start_free" }),
+    },
+    {
+      name: "trial",
+      landingParam: "&trial_code=TRIAL-MATRIX",
+      build: () => buildAppUrl("/join/free", {
+        intent: "start_free",
+        validatedTrialCode: "TRIAL-MATRIX",
+      }),
+    },
+    {
+      name: "referral",
+      landingParam: "&ref=REF-MATRIX",
+      build: () => buildAppUrl("/join/free", { intent: "start_free" }),
+    },
+  ];
+  const consentStates = ["pending", "granted", "denied"];
+
+  for (const routeCase of cases) {
+    for (const consentState of consentStates) {
+      resetTrackingEnv();
+      setReferralFlags(true);
+      installBrowser(
+        `https://medexia-akt.com/?utm_source=reddit&utm_medium=cpc&utm_campaign=matrix&utm_content=creative&utm_term=gpuk&rdt_cid=RDT-MATRIX${routeCase.landingParam}`,
+      );
+      if (consentState === "granted") acceptAllConsent("banner");
+      if (consentState === "denied") rejectAllConsent("banner");
+      initMarketingAttribution();
+
+      const handoff = new URL(routeCase.build());
+      const expectedTouch = consentState === "denied"
+        ? [null, null, null, null, null]
+        : ["reddit", "cpc", "matrix", "creative", "gpuk"];
+      assert.deepEqual(
+        ["source", "medium", "campaign", "content", "term"].map((field) =>
+          handoff.searchParams.get(`utm_${field}`),
+        ),
+        expectedTouch,
+        `${routeCase.name}:${consentState}:utm`,
+      );
+      assert.deepEqual(
+        ["source", "medium", "campaign", "content", "term"].map((field) =>
+          handoff.searchParams.get(`first_touch_${field}`),
+        ),
+        expectedTouch,
+        `${routeCase.name}:${consentState}:first`,
+      );
+      assert.deepEqual(
+        ["source", "medium", "campaign", "content", "term"].map((field) =>
+          handoff.searchParams.get(`last_touch_${field}`),
+        ),
+        expectedTouch,
+        `${routeCase.name}:${consentState}:last`,
+      );
+      assert.equal(
+        handoff.searchParams.get("rdt_cid"),
+        consentState === "granted" ? "RDT-MATRIX" : null,
+        `${routeCase.name}:${consentState}:rdt`,
+      );
+      assert.equal(
+        handoff.searchParams.get("mx_mc"),
+        consentState === "pending" ? null : consentState === "granted" ? "1" : "0",
+        `${routeCase.name}:${consentState}:consent`,
+      );
+    }
+  }
 });
 
 test("stale policy consent cannot forward marketing consent or ad click ids", () => {
@@ -1779,28 +2030,66 @@ test("marketing consent loads configured pixels after consent and allows ad clic
   process.env.NEXT_PUBLIC_GOOGLE_ADS_ID = "AW-18343035898";
   process.env.NEXT_PUBLIC_REDDIT_PIXEL_ID = "t2_test";
   const browser = installBrowser(
-    "https://medexia-akt.com/?utm_source=google&utm_campaign=paid_audio&gclid=G123&fbclid=F123&rdt_cid=R123",
+    "https://medexia-akt.com/?utm_source=google&utm_campaign=paid_audio&gclid=G123&fbclid=F123&rdt_cid=undefined",
   );
+  const workingHistory = window.history;
 
   acceptAllConsent("banner");
   initMarketingAttribution();
+  window.history = undefined;
   maybeLoadMarketingPixels();
-  const appUrl = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
 
   assert.ok(browser.scripts.find((script) => script.id === "mx-meta-pixel"));
   assert.ok(browser.scripts.find((script) => script.id === "mx-google-tag"));
-  assert.ok(browser.scripts.find((script) => script.id === "mx-reddit-pixel"));
-  assert.equal(appUrl.searchParams.get("gclid"), "G123");
-  assert.equal(appUrl.searchParams.get("fbclid"), "F123");
-  assert.equal(appUrl.searchParams.get("rdt_cid"), "R123");
-  assert.equal(appUrl.searchParams.get("mx_mc"), "1");
-  assert.equal(appUrl.searchParams.get("mx_ac"), "1");
+  assert.equal(browser.scripts.some((script) => script.id === "mx-reddit-pixel"), false);
+  assert.equal(window.location.search.includes("rdt_cid=undefined"), true);
   assert.deepEqual(window.fbq.queue.slice(0, 2), [
     ["init", "123456"],
     ["track", "PageView"],
   ]);
   const liveMetaCalls = [];
   window.fbq.callMethod = (...args) => liveMetaCalls.push(args);
+
+  window.location = new URL(
+    "https://medexia-akt.com/?utm_source=google&utm_campaign=paid_audio&gclid=G123&fbclid=F123&rdt_cid=null",
+  );
+  window.history = {
+    state: null,
+    replaceState: () => {
+      throw new Error("history unavailable");
+    },
+  };
+  maybeLoadMarketingPixels();
+  assert.equal(browser.scripts.some((script) => script.id === "mx-reddit-pixel"), false);
+  assert.equal(window.location.search.includes("rdt_cid=null"), true);
+
+  window.location = new URL(
+    "https://medexia-akt.com/?utm_source=google&utm_campaign=paid_audio&gclid=G123&fbclid=F123&rdt_cid=R123",
+  );
+  window.history = workingHistory;
+  initMarketingAttribution();
+  maybeLoadMarketingPixels();
+  const appUrl = new URL(buildAppUrl("/join/free", { intent: "start_free" }));
+
+  assert.ok(browser.scripts.find((script) => script.id === "mx-reddit-pixel"));
+  assert.deepEqual(window.rdt.callQueue, [
+    ["init", "t2_test"],
+    ["track", "PageVisit"],
+  ]);
+  assert.equal(window.rdt.callQueue[1].length, 2);
+  assert.equal(appUrl.searchParams.get("gclid"), "G123");
+  assert.equal(appUrl.searchParams.get("fbclid"), "F123");
+  assert.equal(appUrl.searchParams.get("rdt_cid"), "R123");
+  assert.equal(appUrl.searchParams.get("mx_mc"), "1");
+  assert.equal(appUrl.searchParams.get("mx_ac"), "1");
+
+  window.location = new URL("https://medexia-akt.com/?utm_source=google");
+  maybeLoadMarketingPixels();
+  assert.deepEqual(window.rdt.callQueue, [
+    ["init", "t2_test"],
+    ["track", "PageVisit"],
+  ]);
+  liveMetaCalls.length = 0;
 
   rejectAllConsent("footer");
   maybeLoadMarketingPixels();
@@ -2514,7 +2803,10 @@ test("referral handoff is preserved without analytics consent but marketing iden
   assert.equal(appUrl.searchParams.has("offer_id"), false);
   assert.equal(appUrl.searchParams.has("mx_vid"), false);
   assert.equal(appUrl.searchParams.has("gclid"), false);
-  assert.deepEqual(Array.from(appUrl.searchParams.keys()), ["referral_code"]);
+  assert.equal(appUrl.searchParams.get("utm_source"), "whatsapp");
+  assert.equal(appUrl.searchParams.get("utm_campaign"), "share");
+  assert.equal(appUrl.searchParams.get("first_touch_source"), "whatsapp");
+  assert.equal(appUrl.searchParams.get("last_touch_campaign"), "share");
 });
 
 test("referral handoff remains active on clean landing pages within the same session", () => {
@@ -2567,7 +2859,7 @@ test("functional-only consent persists referral continuity without analytics ide
   assert.equal(JSON.parse(browser.localStorage.getItem(MARKETING_STORAGE_KEYS.referral)).referral_code, "REF123");
 });
 
-test("referral CTA remains limited to the referral code when analytics consent is present", () => {
+test("referral CTA retains full UTM touches without advertising ids when marketing is denied", () => {
   resetTrackingEnv();
   setReferralFlags(true);
   installBrowser(
@@ -2580,14 +2872,12 @@ test("referral CTA remains limited to the referral code when analytics consent i
 
   assert.equal(appUrl.pathname, "/join/full-access");
   assert.equal(appUrl.searchParams.get("referral_code"), "REF123");
-  assert.equal(appUrl.searchParams.has("utm_source"), false);
+  assert.equal(appUrl.searchParams.get("utm_source"), "whatsapp");
+  assert.equal(appUrl.searchParams.get("utm_campaign"), "share");
+  assert.equal(appUrl.searchParams.get("first_touch_source"), "whatsapp");
+  assert.equal(appUrl.searchParams.get("last_touch_campaign"), "share");
   assert.equal(appUrl.searchParams.has("mx_vid"), false);
   assert.equal(appUrl.searchParams.has("gclid"), false);
-  assert.deepEqual(Array.from(appUrl.searchParams.keys()), [
-    "referral_code",
-    "mx_mc",
-    "mx_ac",
-  ]);
   assert.equal(appUrl.searchParams.get("mx_mc"), "0");
   assert.equal(appUrl.searchParams.get("mx_ac"), "1");
 });

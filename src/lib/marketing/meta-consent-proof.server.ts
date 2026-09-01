@@ -4,6 +4,7 @@ import {
   CONSENT_VERSION,
   type ConsentRecord,
 } from "../consent/consent";
+import { normalizeRedditClickId } from "./reddit-click-id";
 
 const META_CONSENT_AUDIENCE = "meta-capi-marketing-consent";
 const REDDIT_CONSENT_AUDIENCE = "reddit-capi-marketing-consent";
@@ -27,7 +28,7 @@ function hashFbclid(fbclid: string): string {
 }
 
 function hashRedditClickId(rdtCid: string): string {
-  return crypto.createHash("sha256").update(rdtCid.trim()).digest("hex");
+  return crypto.createHash("sha256").update(rdtCid).digest("hex");
 }
 
 function hashSession(sessionValue: string): string {
@@ -203,13 +204,12 @@ export function createRedditMarketingConsentProof(
   sessionValue: string,
   options: { nowSeconds?: number; secret?: string | null } = {},
 ): string | null {
-  const clickId = rdtCid.trim();
+  const clickId = normalizeRedditClickId(rdtCid);
   const secret = options.secret ?? getRedditConsentSecret();
   if (
     !secret ||
     secret.length < 32 ||
     !clickId ||
-    clickId.length > 256 ||
     !META_CAPI_SESSION_PATTERN.test(sessionValue)
   ) return null;
 

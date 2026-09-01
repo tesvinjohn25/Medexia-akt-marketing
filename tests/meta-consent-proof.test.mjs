@@ -127,8 +127,9 @@ test("server proof matches the app JWT contract and is click-bound", () => {
 
 test("server Reddit proof matches the app JWT contract and is click-bound", () => {
   const secret = "r".repeat(48);
+  const clickId = "RDT.AbC_-:~%2F";
   const proof = serverProof.createRedditMarketingConsentProof(
-    " RDT-CLICK-1 ",
+    clickId,
     META_SESSION,
     { secret, nowSeconds: 1_700_000_000 },
   );
@@ -137,7 +138,7 @@ test("server Reddit proof matches the app JWT contract and is click-bound", () =
   assert.deepEqual(decodeJwtPart(headerPart), { alg: "HS256", typ: "JWT" });
   assert.deepEqual(decodeJwtPart(payloadPart), {
     purpose: "reddit-capi-marketing-consent",
-    rdt_cid_hash: crypto.createHash("sha256").update("RDT-CLICK-1").digest("hex"),
+    rdt_cid_hash: crypto.createHash("sha256").update(clickId).digest("hex"),
     session_hash: crypto.createHash("sha256").update(META_SESSION).digest("hex"),
     aud: "reddit-capi-marketing-consent",
     iss: "medexia-app",
@@ -257,6 +258,14 @@ test("proof route enforces same-origin, current consent, JSON input, and configu
     assert.equal(typeof combinedBody.proof, "string");
     assert.equal(typeof combinedBody.redditProof, "string");
 
+    const metaWithInvalidReddit = await proofRoute.POST(request({
+      body: JSON.stringify({ fbclid: "FB-STILL-VALID", rdt_cid: "undefined" }),
+    }));
+    assert.equal(metaWithInvalidReddit.status, 200);
+    const metaWithInvalidRedditBody = await metaWithInvalidReddit.json();
+    assert.equal(typeof metaWithInvalidRedditBody.proof, "string");
+    assert.equal("redditProof" in metaWithInvalidRedditBody, false);
+
     const stableSession = "T".repeat(43);
     const reused = await proofRoute.POST(request({
       cookie: `${currentCookie}; mx_meta_capi_session=${stableSession}`,
@@ -341,6 +350,33 @@ test("proof route enforces same-origin, current consent, JSON input, and configu
     assert.equal((await proofRoute.POST(request({ body: "{" }))).status, 400);
     assert.equal((await proofRoute.POST(request({ body: JSON.stringify({ fbclid: "x".repeat(257) }) }))).status, 400);
     assert.equal((await proofRoute.POST(request({ body: JSON.stringify({ rdt_cid: "x".repeat(257) }) }))).status, 400);
+    for (const invalidRdtCid of [
+      "",
+      "undefined",
+      "null",
+      "(null)",
+      "rdt_cid",
+      "has space",
+      "replacement\uFFFD",
+      "%ZZ",
+    ]) {
+      assert.equal(
+        (await proofRoute.POST(request({
+          body: JSON.stringify({ rdt_cid: invalidRdtCid }),
+        }))).status,
+        400,
+        invalidRdtCid,
+      );
+      assert.equal(
+        serverProof.createRedditMarketingConsentProof(
+          invalidRdtCid,
+          META_SESSION,
+          { secret: "r".repeat(48) },
+        ),
+        null,
+        invalidRdtCid,
+      );
+    }
 
     delete process.env.REDDIT_CAPI_CONSENT_SECRET;
     assert.equal((await proofRoute.POST(request({
@@ -413,6 +449,36 @@ test("client adds a Reddit proof for a consented rdt_cid handoff", async () => {
   assert.equal(result.searchParams.get("mx_reddit_capi_proof"), signedProof);
   assert.equal(result.searchParams.has("mx_meta_capi_proof"), false);
   assert.equal(calls, 1);
+});
+
+test("invalid Reddit ids are omitted from client proof requests", async () => {
+  installBrowserConsent(true);
+  let calls = 0;
+  globalThis.fetch = async () => {
+    calls += 1;
+    return { ok: true, json: async () => ({ redditProof: "unexpected" }) };
+  };
+
+  for (const raw of [
+    "",
+    "undefined",
+    "null",
+    "(null)",
+    "rdt_cid",
+    "has space",
+    "replacement\uFFFD",
+    "%ZZ",
+    "x".repeat(257),
+  ]) {
+    const result = new URL(
+      await clientProof.addMetaMarketingConsentProof(
+        `https://app.medexia-akt.com/join/audio?mx_mc=1&rdt_cid=${encodeURIComponent(raw)}`,
+      ),
+    );
+    assert.equal(result.searchParams.has("rdt_cid"), false, raw);
+    assert.equal(result.searchParams.has("mx_reddit_capi_proof"), false, raw);
+  }
+  assert.equal(calls, 0);
 });
 
 test("client retries once after the server-random seed handshake", async () => {

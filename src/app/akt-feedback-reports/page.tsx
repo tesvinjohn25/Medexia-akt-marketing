@@ -1,26 +1,33 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
 import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
-import { FinalCTA } from "@/components/sections/FinalCTA";
+import { FeedbackPracticeCTA } from "@/components/sections/FeedbackPracticeCTA";
+import {
+  AKT_FEEDBACK_REVIEWED_AT,
+  AKT_FEEDBACK_REVIEWED_LABEL,
+  latestAktReport,
+  latestAktPassRateSummary,
+} from "@/data/akt-feedback";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 
 export const metadata: Metadata = {
   title: "MRCGP AKT Feedback Reports and Weak Areas",
   description:
-    "Latest MRCGP AKT feedback report summary: April 2026 weak areas, recurring RCGP themes, pass rates, and what GP trainees should revise next.",
+    "July 2026 MRCGP AKT feedback: 73.17% pass rate, 112/160 pass mark, four difficulty areas and recurring revision themes from the official RCGP report.",
   alternates: {
     canonical: "https://medexia-akt.com/akt-feedback-reports",
   },
   openGraph: {
     title: "MRCGP AKT Feedback Reports and Weak Areas",
     description:
-      "Recent RCGP AKT feedback reports summarised into the weak areas GP trainees should prioritise.",
+      "July 2026 RCGP AKT feedback: cranial nerves, paediatric joints, skin rashes and respiratory conditions, with practical revision priorities.",
     type: "article",
     url: "https://medexia-akt.com/akt-feedback-reports",
   },
 };
 
 const reports = [
+  { ...latestAktReport, passRate: latestAktReport.overallPassRate },
   {
     sitting: "April 2026",
     exam: "AKT 59",
@@ -70,51 +77,43 @@ const reports = [
 const recurringThemes = [
   {
     title: "AKT neurology",
-    detail:
-      "Recognition of symptoms, diagnosis, gait disturbance and important neurological presentations appear repeatedly in recent RCGP feedback.",
+    detail: "Highlighted in three of the last four sittings: symptoms, diagnosis and cranial nerves.",
     href: "/akt-neurology",
   },
   {
-    title: "AKT prescribing and medication safety",
-    detail:
-      "Recent reports repeatedly mention side effects, drug monitoring, common medication monitoring and prescribing errors.",
-    href: "/akt-prescribing-and-medication-safety",
-  },
-  {
-    title: "Evidence and statistics",
-    detail:
-      "Practice chart interpretation and common study design terminology recur across recent reports.",
-  },
-  {
-    title: "AKT confidentiality and data protection",
-    detail:
-      "Data protection, recorded consultations, access to records and confidentiality guidance are recurring professional topics.",
-    href: "/akt-confidentiality-safeguarding-data-protection",
-  },
-  {
-    title: "AKT safeguarding and children",
-    detail:
-      "Acute illness, safeguarding, confidentiality, paediatric cancer and other child-health presentations recur in recent feedback.",
+    title: "AKT children and young people",
+    detail: "Highlighted in three of the last four sittings: acute illness, safeguarding and joint problems.",
     href: "/akt-children-young-people",
   },
   {
-    title: "AKT minor illness and urgent care",
-    detail:
-      "Minor illnesses, acute deterioration, safety-netting and common infection decisions appear in recent feedback and same-day GP practice.",
-    href: "/akt-minor-illness-urgent-care",
+    title: "AKT prescribing and medication safety",
+    detail: "Highlighted in two of the last four sittings: long-term medication side effects and prescribing errors.",
+    href: "/akt-prescribing-and-medication-safety",
   },
+  {
+    title: "AKT confidentiality and data protection",
+    detail: "Highlighted in two of the last four sittings: data protection and confidentiality guidance.",
+    href: "/akt-confidentiality-safeguarding-data-protection",
+  },
+];
+
+const julyRevisionTopics = [
+  { title: "Cranial-nerve presentations", href: "/akt-neurology" },
+  { title: "Joint disorders in children", href: "/akt-children-young-people" },
+  { title: "Skin-rash diagnosis", href: "/akt-dermatology" },
+  { title: "Common respiratory conditions", href: "/akt-respiratory" },
 ];
 
 const faqs = [
   {
     question: "What did the latest AKT feedback report say?",
     answer:
-      "The April 2026 RCGP AKT feedback report highlighted difficulty with monitoring common medications, prescribing errors, data protection around recorded consultations, safeguarding children and confidentiality, and minor illnesses.",
+      "The July 2026 RCGP AKT report highlighted cranial-nerve presentations, joint disorders in children, skin-rash diagnosis and common respiratory conditions. These are curriculum themes, not recalled examination questions.",
   },
   {
     question: "Which AKT topics keep coming up in feedback reports?",
     answer:
-      "Across recent reports, recurring themes include neurology, prescribing and medication safety, evidence in practice and chart interpretation, leadership and confidentiality, and children and safeguarding.",
+      "The July report summarises AKTs 57–60: neurology and child health appeared in three of four sittings; prescribing safety and confidentiality/data protection appeared in two of four.",
   },
   {
     question: "Should I revise only the topics in the feedback reports?",
@@ -138,7 +137,7 @@ export default function AktFeedbackReportsPage() {
           url: "https://medexia-akt.com",
         },
         datePublished: "2026-06-19",
-        dateModified: "2026-06-19",
+        dateModified: AKT_FEEDBACK_REVIEWED_AT,
       },
       {
         "@type": "FAQPage",
@@ -191,9 +190,9 @@ export default function AktFeedbackReportsPage() {
             style={{ color: "var(--fg-mid)" }}
           >
             The official RCGP AKT feedback reports are one of the best ways to
-            spot recurring exam weaknesses. The latest report is April 2026, and
-            the clearest repeated themes are neurology, prescribing, statistics
-            and evidence, confidentiality, and children&apos;s safeguarding.
+            spot recurring exam weaknesses. The latest official report covers the
+            {" "}{latestAktReport.date} sitting ({latestAktReport.exam}). Use its
+            findings to choose a manageable starting point for revision.
           </p>
 
           <div
@@ -207,19 +206,36 @@ export default function AktFeedbackReportsPage() {
               className="text-[18px] font-semibold"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Quick answer
+              Latest official report: {latestAktReport.sitting} AKT
             </h2>
             <p
               className="mt-2 text-[14px] leading-[1.65]"
               style={{ color: "var(--fg-mid)" }}
             >
-              In the April 2026 AKT feedback report, candidates struggled with
-              common medication monitoring, prescribing errors, data protection
-              around recorded consultations, safeguarding confidentiality, and
-              minor illnesses. Across the past year, neurology is the strongest
-              repeated signal.
+              {latestAktPassRateSummary} RCGP highlighted cranial-nerve
+              presentations, joint disorders in children, skin-rash diagnosis
+              and common respiratory conditions. These are broad curriculum
+              themes, not recalled examination questions. Use them to weight
+              revision while maintaining full syllabus coverage.
             </p>
           </div>
+
+          <section className="mt-10">
+            <h2 className="text-[24px] md:text-[28px] leading-[1.15]" style={{ fontFamily: "var(--font-display)" }}>
+              Start with one of July&apos;s four themes
+            </h2>
+            <p className="mt-3 text-[15px] leading-[1.65]" style={{ color: "var(--fg-mid)" }}>
+              Choose a topic guide, try free practice and review the gaps you
+              find. Add other curriculum areas as you go.
+            </p>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {julyRevisionTopics.map((topic) => (
+                <a key={topic.href} href={topic.href} className="btn-secondary text-center">
+                  {topic.title} &rarr;
+                </a>
+              ))}
+            </div>
+          </section>
 
           <section className="mt-10">
             <h2
@@ -295,7 +311,7 @@ export default function AktFeedbackReportsPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Recurring AKT weak areas
+              Recurring themes across AKTs 57–60
             </h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {recurringThemes.map((theme) => (
@@ -311,17 +327,13 @@ export default function AktFeedbackReportsPage() {
                     className="text-[15px] font-semibold"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
-                    {"href" in theme ? (
-                      <a
-                        href={theme.href}
-                        className="transition-colors"
-                        style={{ color: "var(--brand-violet-light)" }}
-                      >
-                        {theme.title}
-                      </a>
-                    ) : (
-                      theme.title
-                    )}
+                    <a
+                      href={theme.href}
+                      className="transition-colors"
+                      style={{ color: "var(--brand-violet-light)" }}
+                    >
+                      {theme.title}
+                    </a>
                   </h3>
                   <p
                     className="mt-2 text-[14px] leading-[1.6]"
@@ -352,7 +364,7 @@ export default function AktFeedbackReportsPage() {
                 },
                 {
                   title: "Turn repeated themes into short daily blocks",
-                  text: "Neurology, prescribing, confidentiality and statistics are easier to improve when you practise them repeatedly in small sessions.",
+                  text: "Choose one topic, practise a short set of questions and revisit the gaps before moving on.",
                 },
                 {
                   title: "Practise under the 160-question timing",
@@ -499,12 +511,12 @@ export default function AktFeedbackReportsPage() {
             style={{ color: "var(--fg-muted)" }}
           >
             Figures and weak-area summaries are based on official RCGP AKT
-            feedback reports. Last reviewed June 2026.
+            feedback reports. Last reviewed {AKT_FEEDBACK_REVIEWED_LABEL}.
           </p>
         </div>
       </section>
 
-      <FinalCTA />
+      <FeedbackPracticeCTA />
       <MinimalFooter />
     </main>
   );

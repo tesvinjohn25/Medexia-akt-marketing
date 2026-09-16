@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { AKT_FEEDBACK_REVIEWED_AT } from "@/data/akt-feedback";
 import { aktTopics } from "@/data/akt-topics";
 
 const LAST_MODIFIED = new Date("2026-06-20");
@@ -91,7 +92,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: "https://medexia-akt.com/akt-pass-rate",
-      lastModified: LAST_MODIFIED,
+      lastModified: new Date(AKT_FEEDBACK_REVIEWED_AT),
       changeFrequency: "monthly" as const,
       priority: 0.85,
     },
@@ -103,7 +104,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: "https://medexia-akt.com/akt-feedback-reports",
-      lastModified: LAST_MODIFIED,
+      lastModified: new Date(AKT_FEEDBACK_REVIEWED_AT),
       changeFrequency: "monthly" as const,
       priority: 0.85,
     },

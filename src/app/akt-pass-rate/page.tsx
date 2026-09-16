@@ -1,26 +1,33 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
 import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
-import { FinalCTA } from "@/components/sections/FinalCTA";
+import { FeedbackPracticeCTA } from "@/components/sections/FeedbackPracticeCTA";
+import {
+  AKT_FEEDBACK_REVIEWED_AT,
+  AKT_FEEDBACK_REVIEWED_LABEL,
+  latestAktReport,
+  latestAktPassRateSummary,
+} from "@/data/akt-feedback";
 import { MinimalFooter } from "@/components/sections/MinimalFooter";
 
 export const metadata: Metadata = {
   title: "MRCGP AKT Pass Rate and Pass Mark",
   description:
-    "MRCGP AKT pass rate and pass mark: April 2026 pass rate 80.22%, January 2026 pass rate 76.52%, with pass marks from official RCGP reports.",
+    "July 2026 MRCGP AKT pass rate: 73.17% of 1,308 candidates passed; pass mark 112/160. Compare recent sittings using official RCGP feedback reports.",
   alternates: {
     canonical: "https://medexia-akt.com/akt-pass-rate",
   },
   openGraph: {
     title: "MRCGP AKT Pass Rate and Pass Mark",
     description:
-      "Recent RCGP AKT pass rates, pass marks, candidate numbers and what the figures mean for GP trainees preparing for the exam.",
+      "July 2026 AKT: 73.17% overall pass rate, 112/160 pass mark and 1,308 candidates. Official RCGP figures with recent sitting comparisons.",
     type: "article",
     url: "https://medexia-akt.com/akt-pass-rate",
   },
 };
 
 const reports = [
+  latestAktReport,
   {
     sitting: "April 2026",
     exam: "AKT 59",
@@ -58,35 +65,26 @@ const sourceLinks = [
     href: "https://www.rcgp.org.uk/mrcgp-exams/applied-knowledge-test/further-help-support",
     label: "RCGP: AKT feedback reports",
   },
-  {
-    href: reports[0].source,
-    label: "RCGP: April 2026 AKT feedback report",
-  },
-  {
-    href: reports[1].source,
-    label: "RCGP: January 2026 AKT feedback report",
-  },
-  {
-    href: reports[2].source,
-    label: "RCGP: October 2025 AKT feedback report",
-  },
+  ...reports.map((report) => ({
+    href: report.source,
+    label: `RCGP: ${report.sitting} AKT feedback report`,
+  })),
 ];
 
 const faqs = [
   {
     question: "What is the MRCGP AKT pass rate?",
-    answer:
-      "The pass rate changes each sitting. In the April 2026 RCGP AKT feedback report, 80.22% of all candidates passed and 88.68% of UKG first-time takers passed. In January 2026, 76.52% of all candidates passed and 88.39% of UKG first-time takers passed.",
+    answer: latestAktPassRateSummary,
   },
   {
     question: "What score do you need to pass the AKT?",
     answer:
-      "There is no fixed score that guarantees a pass. The pass mark is set for each sitting. The April 2026 pass mark was 107 out of 160. The January 2026 pass mark was 108 out of 160.",
+      "There is no fixed score that guarantees a pass. The pass mark is set for each sitting. The July 2026 pass mark was 112 out of 160 (70%), compared with 107 out of 160 in April and 108 out of 160 in January 2026.",
   },
   {
     question: "Is 75% enough to pass the AKT?",
     answer:
-      "A score around 75% is usually a strong position, but the official pass mark varies by sitting. Use timed mocks to aim above the recent pass marks with a margin for exam-day pressure.",
+      "75% exceeded the July 2026 pass mark of 70%, but future pass marks vary. A question-bank or mock percentage cannot guarantee an exam result: difficulty and candidate groups differ.",
   },
 ];
 
@@ -105,7 +103,7 @@ export default function AktPassRatePage() {
           url: "https://medexia-akt.com",
         },
         datePublished: "2026-06-19",
-        dateModified: "2026-06-20",
+        dateModified: AKT_FEEDBACK_REVIEWED_AT,
       },
       {
         "@type": "FAQPage",
@@ -157,9 +155,9 @@ export default function AktPassRatePage() {
             className="mt-4 text-[16px] md:text-[18px] leading-[1.7]"
             style={{ color: "var(--fg-mid)" }}
           >
-            The AKT pass rate changes every sitting. The latest official RCGP
-            feedback reports show an overall pass rate of 80.22% in April
-            2026 and 76.52% in January 2026.
+            The latest official RCGP report covers {latestAktReport.date}.
+            The overall pass rate was {latestAktReport.overallPassRate}, compared
+            with 80.22% in April 2026 and 76.52% in January 2026.
           </p>
 
           <div
@@ -179,14 +177,19 @@ export default function AktPassRatePage() {
               className="mt-2 text-[14px] leading-[1.65]"
               style={{ color: "var(--fg-mid)" }}
             >
-              The latest RCGP AKT feedback report currently listed is April
-              2026. In that sitting, <strong>80.22%</strong> of all candidates
-              passed and the pass mark was <strong>107 out of 160</strong>. In
-              January 2026, <strong>76.52%</strong> passed and the pass mark
-              was <strong>108 out of 160</strong>. UKG first-time takers had
-              higher pass rates in both reports, at 88.68% and 88.39%.
+              {latestAktPassRateSummary} UKG means UK graduate; the first-time
+              figure is a subgroup rate, not the rate for all first attempts.
+              The pass mark (70% of available marks) and the pass rate (the
+              proportion of candidates who passed) describe different things.
             </p>
           </div>
+
+          <p className="mt-6 text-[15px] leading-[1.65]" style={{ color: "var(--fg-mid)" }}>
+            For a practical next step, explore the{" "}
+            <a href="/akt-feedback-reports" className="font-medium" style={{ color: "var(--brand-violet-light)" }}>
+              four revision themes in July&apos;s feedback report
+            </a>.
+          </p>
 
           <div className="mt-10">
             <h2
@@ -354,10 +357,9 @@ export default function AktPassRatePage() {
               className="mt-3 text-[16px] leading-[1.7]"
               style={{ color: "var(--fg-mid)" }}
             >
-              For revision planning, treat the recent pass marks as a minimum
-              line rather than a target. A timed mock score around 75% or above
-              gives more breathing room, but you still need to check pacing,
-              fatigue and weak topics before relying on the number. The{" "}
+              For revision planning, treat the recent pass marks as a
+              reference rather than a guarantee. Mock scores depend on the
+              question set, so use them to identify gaps and practise pacing. The{" "}
               <a
                 href="/akt-exam-format"
                 className="font-medium transition-colors"
@@ -524,13 +526,12 @@ export default function AktPassRatePage() {
             className="mt-6 text-[12px]"
             style={{ color: "var(--fg-muted)" }}
           >
-            Figures sourced from RCGP AKT feedback reports. Last reviewed June
-            2026.
+            Figures sourced from RCGP AKT feedback reports. Last reviewed {AKT_FEEDBACK_REVIEWED_LABEL}.
           </p>
         </div>
       </section>
 
-      <FinalCTA />
+      <FeedbackPracticeCTA />
       <MinimalFooter />
     </main>
   );
